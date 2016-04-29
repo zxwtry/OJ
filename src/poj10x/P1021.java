@@ -8,7 +8,9 @@ import java.util.Scanner;
 import java.util.Set;
 
 /*
- * 	status : Wrong Answer
+ * 	status : Accept
+ * 	Memory 	Time
+ * 	3772K	204MS
  * 	
  */
 
@@ -55,14 +57,14 @@ public class P1021 {
 				p[indexOfPoint] = new Point(scanner.nextInt(), scanner.nextInt());
 				p_this[indexOfPoint] = p[indexOfPoint];
 			}
-			arrayOfCluster = findClusters();
+			arrayOfCluster = findClusters2();
 			Arrays.sort(arrayOfCluster);
 			clusterMap_this = getClusterMap();
 			for (int indexOfPoint = 0; indexOfPoint < p.length; indexOfPoint ++) {
 				p[indexOfPoint] = new Point(scanner.nextInt(), scanner.nextInt());
 				p_other[indexOfPoint] = p[indexOfPoint];
 			}
-			arrayOfCluster = findClusters();
+			arrayOfCluster = findClusters2();
 			Arrays.sort(arrayOfCluster);
 			clusterMap_other = getClusterMap();
 			
@@ -90,6 +92,46 @@ public class P1021 {
 			}
 		}
 		scanner.close();
+	}
+	
+	static Cluster[] findClusters2() {
+		ArrayList<Cluster> arrayListCluster = new ArrayList<Cluster>();
+		int isFored[][] = new int[bigX][bigY];
+		for (int x = 0; x < bigX; x ++) {
+			Arrays.fill(isFored[x], -1);
+		}
+		for (int pIndex = 0; pIndex < p.length; pIndex ++) {
+			isFored[p[pIndex].x][p[pIndex].y] = pIndex;
+		}
+		Cluster cluster = null;
+		for (int y = 0; y < bigY; y ++) {
+			for (int x = 0; x < bigX; x ++) {
+				if (isFored[x][y] >= 0) {
+					cluster = new Cluster();
+					// cluster.pointIndex.add(isFored[x][y]);
+					addToPointIndex(cluster.pointIndex, x, y, isFored);
+					arrayListCluster.add(cluster);
+				}
+			}
+		}
+		Cluster[] clusters = new Cluster[arrayListCluster.size()];
+		for (int index = 0; index < clusters.length; index ++) {
+			clusters[index] = arrayListCluster.get(index);
+		}
+		return clusters;
+	}
+	public static void addToPointIndex(Set<Integer> pointIndex, int x, int y, int[][] isFored) {
+		if (x < 0 || x >= bigX || y < 0 || y >= bigY) {
+			return;
+		}
+		if (isFored[x][y] >= 0 && ! pointIndex.contains(isFored[x][y])) {
+			pointIndex.add(isFored[x][y]);
+			isFored[x][y] = -2;
+			addToPointIndex(pointIndex, x+1, y, isFored);
+			addToPointIndex(pointIndex, x-1, y, isFored);
+			addToPointIndex(pointIndex, x, y-1, isFored);
+			addToPointIndex(pointIndex, x, y+1, isFored);
+		}
 	}
 	static boolean getReturn() {
 		boolean returnMatch = true;
