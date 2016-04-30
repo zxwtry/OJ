@@ -2,10 +2,6 @@ package test;
 
 import java.util.Arrays;
 
-import com.sun.media.jfxmedia.control.VideoDataBuffer;
-
-import sun.reflect.generics.tree.VoidDescriptor;
-
 /*
  * 	取中点，强行算
  * 
@@ -18,6 +14,7 @@ public class TestP1021 {
 		clockwist90(arr1);
 		clockwist90(arr1);
 		clockwist90(arr1);
+		compareTwoPointArray(arr1, arr2);
 		System.out.println();
 	}
 	static void clockwist90(Point[] arr) {
