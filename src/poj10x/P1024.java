@@ -62,18 +62,15 @@ public class P1024 {
 	        		grid[y+1][x].scnt = grid[y][x].scnt + 1;
 	        		q.add(new Pair(y+1, x));
 	        	}
-	            if (0 < y && grid[y - 1][x].uwal == false && grid[y - 1][x].scnt == -1)
-	            {
+	            if (0 < y && grid[y - 1][x].uwal == false && grid[y - 1][x].scnt == -1) {
 	                grid[y - 1][x].scnt = grid[y][x].scnt + 1;
 	                q.add(new Pair(y - 1, x));
 	            }
-	            if (0 < x && grid[y][x - 1].rwal == false && grid[y][x - 1].scnt == -1)
-	            {
+	            if (0 < x && grid[y][x - 1].rwal == false && grid[y][x - 1].scnt == -1) {
 	                grid[y][x - 1].scnt = grid[y][x].scnt + 1;
 	                q.add(new Pair(y, x - 1));
 	            }
-	            if (x < w - 1 && grid[y][x].rwal == false && grid[y][x + 1].scnt == -1)
-	            {
+	            if (x < w - 1 && grid[y][x].rwal == false && grid[y][x + 1].scnt == -1) {
 	                grid[y][x + 1].scnt = grid[y][x].scnt + 1;
 	                q.add(new Pair(y, x + 1));
 	            }
@@ -82,35 +79,29 @@ public class P1024 {
 	        q.add(new Pair(desy, desx));
 	        grid[desy][desx].dcnt = 0;
 	        while(! q.isEmpty() ) {
-	            y = q.peek().data1; x = q.peek().data2;
-	            if (y < h - 1 && grid[y][x].uwal == false && grid[y + 1][x].dcnt == -1)
-	            {
+	        	Pair pair = q.poll();
+	            y = pair.data1; x = pair.data2;
+	            if (y < h - 1 && grid[y][x].uwal == false && grid[y + 1][x].dcnt == -1) {
 	                grid[y + 1][x].dcnt = grid[y][x].dcnt + 1;
 	                q.add(new Pair(y + 1, x));
 	            }
-	            if (0 < y && grid[y - 1][x].uwal == false && grid[y - 1][x].dcnt == -1)
-	            {
+	            if (0 < y && grid[y - 1][x].uwal == false && grid[y - 1][x].dcnt == -1) {
 	                grid[y - 1][x].dcnt = grid[y][x].dcnt + 1;
 	                q.add(new Pair(y - 1, x));
 	            }
-	            if (0 < x && grid[y][x - 1].rwal == false && grid[y][x - 1].dcnt == -1)
-	            {
+	            if (0 < x && grid[y][x - 1].rwal == false && grid[y][x - 1].dcnt == -1) {
 	                grid[y][x - 1].dcnt = grid[y][x].dcnt + 1;
 	                q.add(new Pair(y, x - 1));
 	            }
-	            if (x < w - 1 && grid[y][x].rwal == false && grid[y][x + 1].dcnt == -1)
-	            {
+	            if (x < w - 1 && grid[y][x].rwal == false && grid[y][x + 1].dcnt == -1) {
 	                grid[y][x + 1].dcnt = grid[y][x].dcnt + 1;
 	                q.add(new Pair(y, x + 1));
 	            }
-	            q.poll();
 	        }
-
 	        // 判断路径是否唯一最短，以及墙是否多余
 	        ok = true;
 	        for (y = 0; y < h && ok; ++y)
-	            for (x = 0; x < w && ok; ++x)
-	            {
+	            for (x = 0; x < w && ok; ++x) {
 	                if (grid[y][x].scnt == -1 || grid[y][x].dcnt == -1)
 	                    ok = false;     // 是否有封闭区域
 	                if (y < h - 1 && grid[y][x].uwal
@@ -125,8 +116,7 @@ public class P1024 {
 	                    ok = false;     // 是否存在更短路径或另一最短路径
 	            }
 	        if(ok) System.out.println( "CORRECT" );
-	        else System.out.println("INCORRECT" );
-	        
+	        else System.out.println( "INCORRECT" );
 		}
 		scanner.close();
 	}
