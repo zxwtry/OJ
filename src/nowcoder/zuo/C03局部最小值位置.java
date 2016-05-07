@@ -1,6 +1,6 @@
 package nowcoder.zuo;
 
-public class 局部最小值位置 {
+public class C03局部最小值位置 {
 	public static void main(String[] args) {
 		int[] arr = new int[]{4,1,0,3};
 		System.out.println(getLessIndex(arr));

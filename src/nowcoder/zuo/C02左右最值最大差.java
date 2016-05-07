@@ -1,6 +1,6 @@
 package nowcoder.zuo;
 
-public class 左右最值最大差 {
+public class C02左右最值最大差 {
 	public static void main(String[] args) {
 //		int[] A = new int[]{1,5,3,4,2,6,7};
 //		int[] A = new int[]{1,2,3,4,5,6,7};

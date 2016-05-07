@@ -15,7 +15,7 @@ package nowcoder.zuo;
  */
 
 
-public class 多数组中位数 {
+public class C03多数组中位数 {
 	public static void main(String[] args) {
 //		int[] arr1 = new int[]{1,2,3,3,4,9,10,11,12,13,14,15};
 //		int[] arr2 = new int[]{4,15,15,25,31,36,37,43,44,47,48,50};

@@ -1,6 +1,6 @@
 package nowcoder.zuo;
 
-public class 顺时针旋转矩阵 {
+public class C01顺时针旋转矩阵 {
 	public static void main(String[] args) {
 		int[][] mat = new int[5][5];
 		int matVal = 1;

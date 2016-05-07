@@ -1,6 +1,6 @@
 package nowcoder.zuo;
 
-public class 完全二叉树节点数 {
+public class C03完全二叉树节点数 {
 	public static void main(String[] args) {
 		TreeNode node1 = new TreeNode(1);
 		TreeNode node2 = new TreeNode(2);

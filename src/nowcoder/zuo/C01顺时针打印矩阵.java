@@ -1,6 +1,6 @@
 package nowcoder.zuo;
 
-public class 顺时针打印矩阵 {
+public class C01顺时针打印矩阵 {
 	public static void main(String[] args) {
 //		int mat[][] = {{4,46,89},{28,66,99},{26,21,71}};
 		int mat[][] = {{98,30,17},{38,96,90},{17,0,50},{44,12,67},{12,79,43},{43,63,40},{19,93,48}};

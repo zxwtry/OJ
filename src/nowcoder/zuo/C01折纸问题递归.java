@@ -1,6 +1,6 @@
 package nowcoder.zuo;
 
-public class 折纸问题递归 {
+public class C01折纸问题递归 {
 	public static void main(String[] args) {
 		String[] re = foldPaper(4);
 		for (int index = 0; index < re.length; index ++) {
