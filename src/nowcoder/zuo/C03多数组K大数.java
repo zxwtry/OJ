@@ -100,9 +100,13 @@ public class C03多数组K大数 {
     	} else {
     		int pre = kth - 1, pos = longArray.length + shortArray.length - kth;
     		int startIndex = pre - shortArray.length, endIndex = kth - 1;
+    		
     		if (longArray[startIndex] >= shortArray[shortArray.length - 1])
     			return longArray[startIndex];
     		int[] newArr1 = new int[shortArray.length], newArr2 = new int[shortArray.length];
+    		if (pos == 0 || endIndex == 0 || newArr2.length == 3) {
+    			// special use code
+    		}
     		System.arraycopy(longArray, startIndex+1, newArr1, 0, shortArray.length);
     		return getUpMedian(newArr1, shortArray);
     	}
