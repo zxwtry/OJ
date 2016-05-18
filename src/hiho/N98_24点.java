@@ -15,7 +15,7 @@ public class N98_24点 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		Arrays.fill(used, false);
-		number = new int[]{5, 5, 5, 1};
+		number = new int[]{5, 5, 1, 1};
 		makeNumber(0);
 		scanner.close();
 	}
@@ -109,6 +109,7 @@ public class N98_24点 {
 		case 1:
 			string = String.format("(%d %c %d) %c (%d %c %d)",
 					nowNumber[0], opType[ops[0]], nowNumber[1], opType[ops[1]], nowNumber[2], opType[ops[2]], nowNumber[3]);
+			break;
 		default:
 			break;
 		}
