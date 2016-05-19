@@ -1,10 +1,16 @@
 package nowcoder.zuo;
 
+/*
+ * 	STATUS : AC
+ */
+
 import java.util.Arrays;
 
 public class C04最长回文子串 {
 	public static void main(String[] args) {
-		String A = "01232101232";
+//		String A = "01232101232";
+//		String A = "012";
+		String A = "baabccc";
 		System.out.println(getLongestPalindrome(A, A.length()));
 	}
     public static int getLongestPalindrome(String A, int n) {
@@ -19,46 +25,50 @@ public class C04最长回文子串 {
     	int newLeft, newRight;
     	int recordOfMaxLength = 1;
     	for (int index = 1; index < c.length; index ++) {
-    		if (index == 13 || index == 1) {
+    		if (index == 13 || index == 1 || index == c.length - 1) {
     			System.out.println();
     		}
-    		if (RightEdge >= c.length)	break;
+    		if (RightEdge >= c.length) {
+    			break;
+    		}
     		if (index >= RightEdge) {
     			indexOfCenter = index;
-    			newLeft = index - 1;
-    			newRight = index + 1;
-    			RightEdge ++;
+    			newLeft = index;
+    			newRight = index;
     			while(newLeft >= 0 && newRight < c.length) {
     				if (c[newLeft] != c[newRight])	break;
     				newLeft --;
     				newRight ++;
-    				RightEdge ++;
     			}
-    			arr[index] = ((newRight - newLeft + 1) >> 1) + 1;
+    			arr[index] = (newRight - newLeft) >> 1;
+    			if (arr[index] + index > RightEdge)
+    				RightEdge = arr[index] + index;
     			if (arr[index] > recordOfMaxLength)
     				recordOfMaxLength = arr[index];
     		} else {
     			int mirror = (indexOfCenter << 1) - index;
-    			int length = arr[mirror] + indexOfCenter - mirror;
-    			if (length == arr[indexOfCenter]) {
+    			int length = arr[mirror] + index;
+    			if (length == RightEdge) {
         			indexOfCenter = index;
-        			newLeft = index - 1;
-        			newRight = index + 1;
-        			RightEdge ++;
+        			newLeft = index;
+        			newRight = index;
         			while(newLeft >= 0 && newRight < c.length) {
-        				if (c[newLeft --] != c[newRight ++])	break;
-        				RightEdge ++;
+        				if (c[newLeft] != c[newRight])	break;
+        				newLeft --;
+        				newRight ++;
         			}
-        			arr[index] = newRight - newLeft + 1;
+        			arr[index] = (newRight - newLeft) >> 1;
+        			if (arr[index] + index > RightEdge)
+        				RightEdge = arr[index] + index;
         			if (arr[index] > recordOfMaxLength)
         				recordOfMaxLength = arr[index];
-    			} else if (arr[mirror] + indexOfCenter - mirror < arr[indexOfCenter]){
+    			} else if (length < RightEdge){
     				arr[index] = arr[mirror];
     			} else {
     				arr[index] = RightEdge - index;
     			}
     		}
     	}
-    	return (recordOfMaxLength>>1)-1;
+    	return (recordOfMaxLength - 1);
     }
 }
