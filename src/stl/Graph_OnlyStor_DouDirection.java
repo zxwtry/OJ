@@ -33,12 +33,13 @@ public class Graph_OnlyStor_DouDirection {
 		nodesManager.add(3, 6, 2);
 		nodesManager.add(4, 5, 6);
 		nodesManager.add(6, 5, 9);
-		System.out.println(nodesManager.dijkstra(6, 6));
+		System.out.println(nodesManager.dijkstra(1, 1));
 	}
 	
 	
 	// 从这开始复制 
-	
+	static final int OUT_OF_BOUND = -1;
+	static final int NO_ROUTE = -2;
 	static class NodesManager {
 		HashMap<Integer, Node> nodes = null;
 		public NodesManager() {
@@ -50,13 +51,17 @@ public class Graph_OnlyStor_DouDirection {
 		}
 		public int dijkstra(int nodeId0, int nodeId1) {
 			if (!nodes.containsKey(nodeId0) || !nodes.containsKey(nodeId1))
-				return -1;
+				return OUT_OF_BOUND;
+			if (nodeId0 == nodeId1)
+				return 0;
 			Set<Integer> exitNodes = new HashSet<Integer>(nodes.keySet());
 			HashMap<Integer, Integer> distFromNode0 = new HashMap<Integer, Integer>(exitNodes.size());
 			Queue<Integer> queue = new LinkedList<Integer>();
 			queue.add(nodeId0);
 			distFromNode0.put(nodeId0, 0);
 			while (exitNodes.size() > 1) {
+				if (queue.isEmpty())
+					break;
 				int nodeIdSelect = queue.poll();
 				int distBase = distFromNode0.get(nodeIdSelect);
 				int[] allNeigsAndDist = getNodeById(nodeIdSelect).getAllNeigsAndDist();
@@ -73,13 +78,18 @@ public class Graph_OnlyStor_DouDirection {
 							index = allNeigsAndDist.length;
 						}
 					}
+					if (exitNodes.contains(neigId))
+						queue.add(neigId);
 				}
-				for (int index = allNeigsAndDist.length-2; index >= 0; index -= 2)
-					if (exitNodes.contains(allNeigsAndDist[index]))
-						queue.add(allNeigsAndDist[index]);
+//				for (int index = allNeigsAndDist.length-2; index >= 0; index -= 2)
+//					if (exitNodes.contains(allNeigsAndDist[index]))
+//						queue.add(allNeigsAndDist[index]);
 				exitNodes.remove(nodeIdSelect);
 			}
-			return distFromNode0.get(nodeId1);
+			if (!distFromNode0.containsKey(nodeId1))
+				return NO_ROUTE;
+			else
+				return distFromNode0.get(nodeId1);
 		}
 		private Node getNodeById(int id) {
 			if (nodes.containsKey(id)) {

@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-import com.sun.javafx.collections.SortableList;
-
 /*
  * 	适用范围：
  * 		1,	输入： {[出发节点],[目的节点],[距离]}
@@ -33,32 +31,52 @@ public class Graph_OnlyStor_OneDirection {
 		nodesManager.add(3, 6, 2);
 		nodesManager.add(4, 5, 6);
 		nodesManager.add(6, 5, 9);
-		System.out.println(nodesManager.dijkstra(6, 6));
+		System.out.println(nodesManager.dijkstra(2, 1));
 	}
-
 	
+	
+	static final int OUT_OF_BOUND = -1;
+	static final int NO_ROUTE = -2;
 	static class NodesManager {
 		HashMap<Integer, Node> nodes = null;
 		public NodesManager() {
 			nodes = new HashMap<Integer, Node>();
 		}
 		public void add(int sour, int dest, int dist) {
-			getById(sour).addOU(dest, dist);
-			getById(dest).addIN(sour, dist);
+			getNodeById(sour).addOU(dest, dist);
+			getNodeById(dest).addIN(sour, dist);
 		}
 		public int dijkstra(int sourId, int destId) {
 			if (!nodes.containsKey(sourId) || !nodes.containsKey(destId))
-				return -1;
+				return OUT_OF_BOUND;
+			if (sourId == destId)
+				return 0;
 			Set<Integer> existNodes = new HashSet<Integer>(nodes.keySet());
 			HashMap<Integer, Integer> distFromSourId = new HashMap<Integer, Integer>(nodes.size());
 			Queue<Integer> queue = new LinkedList<Integer>();
 			queue.add(sourId);
+			distFromSourId.put(sourId, 0);
 			while (existNodes.size() > 1) {
-				
+				if (queue.isEmpty())
+					break;
+				int nodeIdSelect = queue.poll();
+				int distBase = distFromSourId.get(nodeIdSelect);
+				HashMap<Integer, Integer> ou = getNodeById(nodeIdSelect).getOU();
+				for (int nextId : ou.keySet()) {
+					int dist = ou.get(nextId);
+					if (!distFromSourId.containsKey(nextId) || dist+distBase < distFromSourId.get(nextId))
+						distFromSourId.put(nextId, dist+distBase);
+					if (existNodes.contains(nextId))
+						queue.add(nextId);
+				}
+				existNodes.remove(nodeIdSelect);
 			}
-			return 0;
+			if (!distFromSourId.containsKey(destId))
+				return NO_ROUTE;
+			else
+				return distFromSourId.get(destId);
 		}
-		private Node getById(int id) {
+		public Node getNodeById(int id) {
 			if (nodes.containsKey(id)) {
 				return nodes.get(id);
 			} else {
@@ -85,6 +103,9 @@ public class Graph_OnlyStor_OneDirection {
 		public void addOU(int dest, int dist) {
 			if (!ou.containsKey(dest) || ou.get(dest) > dist)
 				ou.put(dest, dist);
+		}
+		public HashMap<Integer, Integer> getOU() {
+			return ou;
 		}
 		public int getId() {
 			return id;
