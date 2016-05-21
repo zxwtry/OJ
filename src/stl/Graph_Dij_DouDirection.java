@@ -22,7 +22,7 @@ import java.util.Set;
  * 		
  */
 
-public class Graph_OnlyStor_DouDirection {
+public class Graph_Dij_DouDirection {
 	public static void main(String[] args) {
 		NodesManager nodesManager = new NodesManager();
 		nodesManager.add(1, 2, 7);

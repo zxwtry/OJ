@@ -20,7 +20,7 @@ import java.util.Set;
  * 		
  */
 
-public class Graph_OnlyStor_OneDirection {
+public class Graph_Dij_OneDirection {
 	public static void main(String[] args) {
 		NodesManager nodesManager = new NodesManager();
 		nodesManager.add(1, 2, 7);
