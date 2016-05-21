@@ -33,10 +33,11 @@ public class Graph_OnlyStor_DouDirection {
 		nodesManager.add(3, 6, 2);
 		nodesManager.add(4, 5, 6);
 		nodesManager.add(6, 5, 9);
-		System.out.println(nodesManager.dijkstra(1, 5));
+		System.out.println(nodesManager.dijkstra(6, 6));
 	}
 	
 	
+	// 从这开始复制 
 	
 	static class NodesManager {
 		HashMap<Integer, Node> nodes = null;
@@ -46,9 +47,6 @@ public class Graph_OnlyStor_DouDirection {
 		public void add(int end0, int end1, int dist) {
 			getNodeById(end0).addNeig(end1, dist);
 			getNodeById(end1).addNeig(end0, dist);
-		}
-		public int[] getAllNeigsAndDist(int nodeId) {
-			return getNodeById(nodeId).getAllNeigsAndDist();
 		}
 		public int dijkstra(int nodeId0, int nodeId1) {
 			if (!nodes.containsKey(nodeId0) || !nodes.containsKey(nodeId1))
@@ -61,15 +59,17 @@ public class Graph_OnlyStor_DouDirection {
 			while (exitNodes.size() > 1) {
 				int nodeIdSelect = queue.poll();
 				int distBase = distFromNode0.get(nodeIdSelect);
-				int[] allNeigsAndDist = getAllNeigsAndDist(nodeIdSelect);
+				int[] allNeigsAndDist = getNodeById(nodeIdSelect).getAllNeigsAndDist();
 				for (int index = allNeigsAndDist.length; index > 0;) {
 					int dist = allNeigsAndDist[--index];
 					int neigId = allNeigsAndDist[--index];
-					dijkstraAddMap(neigId, distBase+dist, distFromNode0);
+					if (!distFromNode0.containsKey(neigId) || distBase+dist < distFromNode0.get(neigId))
+						distFromNode0.put(neigId, distBase+dist);
 					if (distFromNode0.containsKey(neigId)) {
 						int newDistBase = dist + distFromNode0.get(neigId);
 						if (newDistBase < distBase) {
 							distFromNode0.put(nodeIdSelect, newDistBase);
+							distBase = newDistBase;
 							index = allNeigsAndDist.length;
 						}
 					}
@@ -80,11 +80,6 @@ public class Graph_OnlyStor_DouDirection {
 				exitNodes.remove(nodeIdSelect);
 			}
 			return distFromNode0.get(nodeId1);
-		}
-		
-		private void dijkstraAddMap(int neigId, int newDist, HashMap<Integer, Integer> distFromNode0) {
-			if (!distFromNode0.containsKey(neigId) || newDist < distFromNode0.get(neigId))
-				distFromNode0.put(neigId, newDist);
 		}
 		private Node getNodeById(int id) {
 			if (nodes.containsKey(id)) {
@@ -123,6 +118,6 @@ public class Graph_OnlyStor_DouDirection {
 		}
 	}
 	
-	
+	// 到这复制结束 
 }
 
