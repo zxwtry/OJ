@@ -1,11 +1,17 @@
 package stl;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
+import com.sun.javafx.collections.SortableList;
 
 /*
  * 	适用范围：
- * 		1,	输入： {[节点],[节点],[距离]}
- * 		2,	双向
+ * 		1,	输入： {[出发节点],[目的节点],[距离]}
+ * 		2,	单向
  * 	实现功能：
  * 		1,	依据节点号，得到节点对象
  * 		2,	根据节点对象能够得到所有出度和入度
@@ -18,19 +24,40 @@ import java.util.HashMap;
 
 public class Graph_OnlyStor_OneDirection {
 	public static void main(String[] args) {
+		NodesManager nodesManager = new NodesManager();
+		nodesManager.add(1, 2, 7);
+		nodesManager.add(1, 3, 9);
+		nodesManager.add(1, 6, 14);
+		nodesManager.add(2, 4, 15);
+		nodesManager.add(3, 4, 11);
+		nodesManager.add(3, 6, 2);
+		nodesManager.add(4, 5, 6);
+		nodesManager.add(6, 5, 9);
+		System.out.println(nodesManager.dijkstra(6, 6));
 	}
 
 	
-	static class NodeManager {
+	static class NodesManager {
 		HashMap<Integer, Node> nodes = null;
-		public NodeManager() {
+		public NodesManager() {
 			nodes = new HashMap<Integer, Node>();
 		}
 		public void add(int sour, int dest, int dist) {
-			getById(sour).addOU(dest, dist).addIN(dest, dist);
-			getById(dest).addIN(sour, dist).addOU(sour, dist);
+			getById(sour).addOU(dest, dist);
+			getById(dest).addIN(sour, dist);
 		}
-		
+		public int dijkstra(int sourId, int destId) {
+			if (!nodes.containsKey(sourId) || !nodes.containsKey(destId))
+				return -1;
+			Set<Integer> existNodes = new HashSet<Integer>(nodes.keySet());
+			HashMap<Integer, Integer> distFromSourId = new HashMap<Integer, Integer>(nodes.size());
+			Queue<Integer> queue = new LinkedList<Integer>();
+			queue.add(sourId);
+			while (existNodes.size() > 1) {
+				
+			}
+			return 0;
+		}
 		private Node getById(int id) {
 			if (nodes.containsKey(id)) {
 				return nodes.get(id);
@@ -51,15 +78,16 @@ public class Graph_OnlyStor_OneDirection {
 			in = new HashMap<Integer, Integer>();
 			ou = new HashMap<Integer, Integer>();
 		}
-		public Node addIN(int sour, int dist) {
+		public void addIN(int sour, int dist) {
 			if (!in.containsKey(sour) || in.get(sour) > dist)
 				in.put(sour, dist);
-			return this;
 		}
-		public Node addOU(int dest, int dist) {
+		public void addOU(int dest, int dist) {
 			if (!ou.containsKey(dest) || ou.get(dest) > dist)
 				ou.put(dest, dist);
-			return this;
+		}
+		public int getId() {
+			return id;
 		}
 	}
 }
