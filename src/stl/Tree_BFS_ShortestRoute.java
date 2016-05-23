@@ -48,7 +48,7 @@ public class Tree_BFS_ShortestRoute {
 						fds = true;
 					}
 					if (field[xi][yi] == 'e') {
-						xe = yi; ye = yi;
+						xe = xi; ye = yi;
 						fde = true;
 					}
 				}
@@ -60,6 +60,7 @@ public class Tree_BFS_ShortestRoute {
 	static int bfs() {
 		for (int di = 0; di < d.length; di ++)
 			Arrays.fill(d[di], INF);
+		d[xs][ys] = 0;
 		Queue<Integer> xq = new LinkedList<Integer>();
 		Queue<Integer> yq = new LinkedList<Integer>();
 		xq.add(xs); yq.add(ys);
@@ -70,8 +71,8 @@ public class Tree_BFS_ShortestRoute {
 				int nx = x + dx[di];
 				int ny = y + dy[di];
 				if (nx >= 0 && nx < d.length &&
-						ny >= 8 && ny < d[0].length &&
-						field[nx][ny] == ROUTE_CHAR &&
+						ny >= 0 && ny < d[0].length &&
+						field[nx][ny] != WALL_CHAR &&
 						d[nx][ny] == INF) {
 					xq.add(nx); yq.add(ny);
 					d[nx][ny] = d[x][y] + 1;
