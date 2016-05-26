@@ -1,5 +1,11 @@
 package hiho;
 
+/*
+ * 	AC
+ * 	之前没有AC的问题是:
+ * 		输入是以下标 1 开始的。
+ */
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -15,7 +21,7 @@ public class N99_骑士问题_三个骑士走到一起 {
 			for (int ipi = 0; ipi < NUM_PLAYER; ipi ++) {
 				String string = lines[ipi];
 				ip[ipi][0] = string.charAt(0)-'A';
-				ip[ipi][1] = string.charAt(1)-'0';
+				ip[ipi][1] = string.charAt(1)-'1';
 			}
 			System.out.println(solve());
 		}
