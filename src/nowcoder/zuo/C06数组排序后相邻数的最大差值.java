@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class C06数组排序后相邻数的最大差值 {
 	public static void main(String[] args) {
-		int[] arr = {9,4000,309,100,2,5};
+		int[] arr = {9,4000,309,100,2,5,8201};
 		System.out.println(findMaxCha(arr));
 	}
 	static int findMaxCha(int[] arr) {
@@ -28,11 +28,7 @@ public class C06数组排序后相邻数的最大差值 {
 		Arrays.fill(cou, 0);
 		Arrays.fill(mim, Integer.MAX_VALUE);
 		Arrays.fill(mam, Integer.MIN_VALUE);
-		int[] cen = new int[arr.length+2];
 		int ran = (max-min)/(arr.length+1) + 1;
-		cen[0] = min;
-		for (int cenIndex = 1; cenIndex <= arr.length+1; cenIndex ++)
-			cen[cenIndex] = cen[cenIndex] + ran;
 		for (int index = 0; index < arr.length; index ++) {
 			int cenIndex = (arr[index] - min)/ran;
 			cou[cenIndex] ++;
