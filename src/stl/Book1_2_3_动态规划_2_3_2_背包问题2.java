@@ -28,7 +28,7 @@ import java.util.Arrays;
  */
 
 
-public class Book1_2_3_动态规划_2_3_１_背包问题2 {
+public class Book1_2_3_动态规划_2_3_2_背包问题2 {
 	final static int INF = Integer.MAX_VALUE >> 2;
 	public static void main(String[] args) {
 		ws = new int[]{2,1,3,2};

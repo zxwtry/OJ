@@ -1,6 +1,6 @@
 package stl;
 
-public class Book1_2_3_动态规划_2_3_１_空间 {
+public class Book1_2_3_动态规划_2_3_1_空间 {
 	public static void main(String[] args) {
 		ws = new int[]{2,3,2,4,8,6};
 		vs = new int[]{3,7,6,2,4,6};

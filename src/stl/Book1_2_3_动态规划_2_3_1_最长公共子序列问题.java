@@ -2,7 +2,7 @@ package stl;
 
 import java.util.Arrays;
 
-public class Book1_2_3_动态规划_2_3_１_最长公共子序列问题 {
+public class Book1_2_3_动态规划_2_3_1_最长公共子序列问题 {
 	public static void main(String[] args) {
 		str1 = "abcd";
 		str2 = "becd";
