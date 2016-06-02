@@ -39,7 +39,7 @@ public class C06动态规划的空间优化 {
 		arr[0] = mat[0][0];
 		for (int mIn = 1; mIn < M; mIn ++)
 			arr[mIn] = mat[mIn][0] + arr[mIn-1];
-		for (int nIn = 0; nIn < N; nIn ++) {
+		for (int nIn = 1; nIn < N; nIn ++) {
 			arr[0] += mat[0][nIn];
 			for (int mIn = 1; mIn < M; mIn ++)
 				arr[mIn] = Math.min(arr[mIn-1], arr[mIn])+mat[mIn][nIn];

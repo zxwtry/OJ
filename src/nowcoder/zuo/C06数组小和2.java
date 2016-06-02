@@ -1,6 +1,7 @@
 package nowcoder.zuo;
 
 /*
+AC
 题目URL:http://www.nowcoder.com/courses/6/6/2
 题目大意：
     １，给定一个数组，每一个数定义一个单调和
