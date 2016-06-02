@@ -3,6 +3,7 @@ package nowcoder.zuo;
 import java.util.Arrays;
 
 /*
+ * 	和逆序对很像。
  * 	给定一个数组，如果排序后，相邻两个数之间的差值是一定的。
  * 	找出这些差值中的最大值。
  * 	要求：
