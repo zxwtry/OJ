@@ -1,20 +1,26 @@
 package stl;
 
+import java.util.Arrays;
 import java.util.Comparator;
-
-import com.sun.corba.se.spi.presentation.rmi.IDLNameTranslator;
 
 /*
  * 	这个模拟C++ stl 里面的lower_bound，upper_bound函数
  * 	使用的是二分法来进行，时间复杂度O(log(N))
  * 	返回的都是索引
+ * 	函数介绍：
+ * 		lower_bound:
+ * 			arr[index] <= val 且 Math.abs(arr[index]-val)最小的
+ * 			返回index
+ * 		upper_bound:
+ * 			arr[index] >= val 且 Math.abs(arr[index]-val)最小的
+ * 			返回index
  */
 
 public class Array_Binary_Search {
 	public static void main(String[] args) {
 		MyComparator myComparator1 = new MyComparator(true);
 		MyComparator myComparator2 = new MyComparator(false);
-		int[] arr = {1, 9, 2, 8, 3, 7, 4, 6, 6, 4, 6, 7};
+		int[] arr = {1, 3, 3, 5, 5, 5, 7, 7, 9, 9};
 //		bubbleSort(arr, 0, arr.length-1, myComparator1);
 //		printArray(arr);
 //		bubbleSort(arr, 0, arr.length-1, myComparator2);
@@ -26,13 +32,20 @@ public class Array_Binary_Search {
 		printArray(arr);
 		bubbleSortStandard(arr, 0, arr.length-1, myComparator1);
 		printArray(arr);
-		System.out.println(lowerBound(arr, 0, arr.length-1, 1));
+		int val = 3;
+		System.out.println(lowerBound(arr, 0, arr.length-1, val));
 		bubbleSortStandard(arr, 0, arr.length-1, myComparator2);
 		printArray(arr);
-		System.out.println(lowerBound(arr, 0, arr.length-1, 1));
+		System.out.println(lowerBound(arr, 0, arr.length-1, val));
 	}
 	static void printArray(int[] arr) {
 		int ind = 0;
+		System.out.printf("index:\t");
+		while (ind < arr.length-1)
+			System.out.printf("%d ", ind++);
+		System.out.println(ind);
+		ind = 0;
+		System.out.printf("val  :\t");
 		while (ind < arr.length-1) {
 			System.out.printf("%d ", arr[ind++]);
 		}
@@ -122,7 +135,10 @@ public class Array_Binary_Search {
 			else
 				return mid;
 		}
-		return sta;
+		if (sta == end)
+			return end;
+		else
+			return sta;
 	}
 	static class MyComparator implements Comparator<Integer> {
 		boolean isUP;
