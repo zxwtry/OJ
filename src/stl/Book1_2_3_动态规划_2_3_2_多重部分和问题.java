@@ -2,8 +2,6 @@ package stl;
 
 import java.util.Arrays;
 
-import com.sun.org.apache.bcel.internal.classfile.InnerClass;
-
 /*
  * 	给定值，给定个数，求和为特定值
  */

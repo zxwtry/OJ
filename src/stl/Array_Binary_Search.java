@@ -2,10 +2,7 @@ package stl;
 
 import java.util.Comparator;
 
-import com.sun.java.swing.plaf.nimbus.AbstractRegionPainter;
-import com.sun.media.jfxmedia.control.VideoDataBuffer;
-
-import javafx.animation.ParallelTransition;
+import com.sun.corba.se.spi.presentation.rmi.IDLNameTranslator;
 
 /*
  * 	这个模拟C++ stl 里面的lower_bound，upper_bound函数
@@ -16,24 +13,36 @@ import javafx.animation.ParallelTransition;
 public class Array_Binary_Search {
 	public static void main(String[] args) {
 		MyComparator myComparator1 = new MyComparator(true);
-		System.out.println(myComparator1.compare(1, 4));
 		MyComparator myComparator2 = new MyComparator(false);
-		System.out.println(myComparator2.compare(1, 4));
-		int[] arr = {1, 9, 2, 8, 3, 7, 4, 6, 5};
+		int[] arr = {1, 9, 2, 8, 3, 7, 4, 6, 6, 4, 6, 7};
 //		bubbleSort(arr, 0, arr.length-1, myComparator1);
 //		printArray(arr);
 //		bubbleSort(arr, 0, arr.length-1, myComparator2);
 //		printArray(arr);
-		quickSort(arr, 0, arr.length-1, myComparator1);
+//		quickSort(arr, 0, arr.length-1, myComparator1);
+//		printArray(arr);
+//		quickSort(arr, 0, arr.length-1, myComparator2);
+//		printArray(arr);
 		printArray(arr);
-		quickSort(arr, 0, arr.length-1, myComparator2);
+		bubbleSortStandard(arr, 0, arr.length-1, myComparator1);
 		printArray(arr);
+		System.out.println(lowerBound(arr, 0, arr.length-1, 1));
+		bubbleSortStandard(arr, 0, arr.length-1, myComparator2);
+		printArray(arr);
+		System.out.println(lowerBound(arr, 0, arr.length-1, 1));
 	}
 	static void printArray(int[] arr) {
-		for (int val : arr)
-			System.out.printf("%d ", val);
-		System.out.println();
+		int ind = 0;
+		while (ind < arr.length-1) {
+			System.out.printf("%d ", arr[ind++]);
+		}
+		System.out.println(arr[ind]);
 	}
+	/*
+	 * 	冒泡排序：
+	 * 		标准冒泡排序进行优化好像有两种方式，
+	 * 		不过下面的这份代码并不是标准冒泡排序
+	 */
 	static void bubbleSort(int[] arr, int sta, int end,
 			Comparator<Integer> comparator) {
 		for (int ini = sta; ini <= end; ini ++) {
@@ -43,6 +52,26 @@ public class Array_Binary_Search {
 				}
 		}
 	}
+	/*
+	 * 	标准冒泡排序：
+	 * 		
+	 */
+	static void bubbleSortStandard(int[] arr, int sta, int end, Comparator<Integer> comparator) {
+		if (arr == null || arr.length == 0 || sta < 0 ||
+				sta >= end || end >= arr.length)	return;
+		boolean isSwap = true;
+		for (int ini = sta; ini < end && isSwap; ini ++) {
+			isSwap = false;
+			for (int inj = end; inj > ini; inj --) {
+				if (comparator.compare(arr[inj-1], arr[inj]) > 0) {
+					isSwap = true;
+					arr[inj]   = arr[inj-1] ^ arr[inj];
+					arr[inj-1] = arr[inj-1] ^ arr[inj];
+					arr[inj]   = arr[inj-1] ^ arr[inj];
+				}
+			}
+		}
+	}
 	static void quickSort(int[] arr, int sta, int end, Comparator<Integer> comparator) {
 		if (sta >= end)
 			return;
@@ -50,12 +79,17 @@ public class Array_Binary_Search {
 		quickSort(arr, sta, part-1, comparator);
 		quickSort(arr, part+1, end, comparator);
 	}
+	/*
+	 * 	上课的时候，无聊写了一个快排
+	 * 	注意快排进行比较的时候，如果忽略等于的情况
+	 * 	可能在数据出现相同的时候就会进入死循环
+	 */
 	static int partition(int[] arr, int sta, int end, Comparator<Integer> comparator) {
 		int pivot = arr[sta];
 		while (sta < end) {
-			while (comparator.compare(arr[end], pivot) > 0 && sta < end)	end --;
+			while (comparator.compare(arr[end], pivot) >= 0 && sta < end)	end --;
 			arr[sta] = arr[end];
-			while (comparator.compare(arr[sta], pivot) < 0 && sta < end)	sta ++;
+			while (comparator.compare(arr[sta], pivot) <= 0 && sta < end)	sta ++;
 			arr[end] = arr[sta];
 		}
 		arr[sta] = pivot;
@@ -66,8 +100,29 @@ public class Array_Binary_Search {
 		arr[inj] = arr[ini] ^ arr[inj];
 		arr[ini] = arr[ini] ^ arr[inj];
 	}
-	public static int lowerBound(int[] arr, int val, boolean isUP) {
-		return 0;
+	/*
+	 * 	使用二分进行搜索的一个前提条件是，数组有序
+	 */
+	public static int lowerBound(int[] arr, int sta, int end, int val) {
+		if (arr == null || arr.length == 0)
+			return -1;
+		if (val > Math.max(arr[0], arr[arr.length-1]) || val < Math.min(arr[0], arr[arr.length-1]))
+			return -2;
+		boolean isUP = arr[0] - arr[arr.length-1] < 0;
+		MyComparator myComparator = new MyComparator(isUP);
+		int mid = 0;
+		int com = 0;
+		while (end > sta) {
+			mid = (end + sta) >> 1;
+			com = myComparator.compare(arr[mid], val);
+			if (com > 0)
+				end = mid-1;
+			else if (com < 0)
+				sta = mid+1;
+			else
+				return mid;
+		}
+		return sta;
 	}
 	static class MyComparator implements Comparator<Integer> {
 		boolean isUP;
