@@ -1,6 +1,5 @@
 package stl;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 /*
@@ -18,9 +17,15 @@ import java.util.Comparator;
 
 public class Array_Binary_Search {
 	public static void main(String[] args) {
-		MyComparator myComparator1 = new MyComparator(true);
-		MyComparator myComparator2 = new MyComparator(false);
+//		MyComparator myComparator1 = new MyComparator(true);
+//		MyComparator myComparator2 = new MyComparator(false);
 		int[] arr = {1, 3, 3, 5, 5, 5, 7, 7, 9, 9};
+		arr = new int[]{1, 1, 3, 3, 3, 3, 5, 5, 5, 7, 7, 7, 7, 9};
+		//				0  1  2  3  4  5   6  7  8  9  10 11 12 13
+		for (int val = -2; val <= 9; val ++) {
+//			binaryIndex_HasDuplicate_Bwtween(arr, val);
+			System.out.println("val: "+val+"\t l: " + binaryIndex_BigEqual(arr, val));
+		}
 //		bubbleSort(arr, 0, arr.length-1, myComparator1);
 //		printArray(arr);
 //		bubbleSort(arr, 0, arr.length-1, myComparator2);
@@ -29,14 +34,14 @@ public class Array_Binary_Search {
 //		printArray(arr);
 //		quickSort(arr, 0, arr.length-1, myComparator2);
 //		printArray(arr);
-		printArray(arr);
-		bubbleSortStandard(arr, 0, arr.length-1, myComparator1);
-		printArray(arr);
-		int val = 3;
-		System.out.println(lowerBound(arr, 0, arr.length-1, val));
-		bubbleSortStandard(arr, 0, arr.length-1, myComparator2);
-		printArray(arr);
-		System.out.println(lowerBound(arr, 0, arr.length-1, val));
+//		printArray(arr);
+//		bubbleSortStandard(arr, 0, arr.length-1, myComparator1);
+//		printArray(arr);
+//		int val = 3;
+//		System.out.println(lowerBound(arr, 0, arr.length-1, val));
+//		bubbleSortStandard(arr, 0, arr.length-1, myComparator2);
+//		printArray(arr);
+//		System.out.println(lowerBound(arr, 0, arr.length-1, val));
 	}
 	static void printArray(int[] arr) {
 		int ind = 0;
@@ -152,5 +157,63 @@ public class Array_Binary_Search {
 			else
 				return o2 - o1;
 		}
+	}
+	static int binaryIndex_NoDuplicate_Bwtween(int[] arr, int val) {
+		int l = 0, r = arr.length-1, m;
+		boolean hasEqual = false;
+		while (l <= r) {
+			m = (l + r) >>> 1;
+			if (arr[m] > val)
+				r = m -1;
+			else if (arr[m] < val)
+				l = m + 1;
+			else {
+				hasEqual = true;
+				System.out.printf("找到相等   index:%d\n", m);
+				break;
+			}
+		}
+		if (! hasEqual)
+			System.out.printf("l:%d\tr:%d\n", l, r);
+		return 0;
+	}
+	static int binaryIndex_HasDuplicate_Bwtween(int[] arr, int val) {
+		int l = 0, r = arr.length-1, m = 0;
+		boolean hasEqual = false;
+		System.out.printf("val: %d\t\t", val);
+		while (l <= r) {
+			m = (l + r) >>> 1;
+			if (arr[m] < val)
+				l = m + 1;
+			else if (arr[m] > val)
+				r = m - 1;
+			else {
+				hasEqual = true;
+				r = m - 1;
+//				break;
+			}
+		}
+		if (hasEqual) {
+			System.out.printf("有相等的 index : %d\t\t l: %d\tr: %d \n", m, l, r);
+		} else
+			System.out.printf("l: %d\tr: %d\n", l, r);
+		return 0;
+	}
+	// arr[] >= val  且　arr[]中最小  返回index   arr[i+1] >= arr[i]
+	public static int binaryIndex_BigEqual(int[] arr, int val) {
+		int l = 0, r = arr.length-1, m = (l+r) >>> 1;
+		boolean hasEqual = false;
+		while (l <= r) {
+			if (arr[m] == val) {
+				hasEqual = true;
+				r = m - 1;
+			} else if (arr[m] > val)	r = m - 1;
+			else 	l = m + 1;
+			m = (l+r) >>> 1;
+		}
+		if (hasEqual)
+			return l;
+		else
+			return l;
 	}
 }
