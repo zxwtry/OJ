@@ -52,7 +52,7 @@ public class C08最长上升子序列 {
 			dps[i] = l + 1;
 		}
 	}
-	static void solve2() {
+	static int solve2() {
 		int len = arr.length, l, m, r, enI = 0;
 		int[] ens = new int[len];
 		ens[0] = arr[0];
@@ -70,6 +70,7 @@ public class C08最长上升子序列 {
 					ens[l] = arr[i];
 			} else ens[++enI] = arr[i];
 		}
+		return enI+1;
 //		System.out.println(enI+1);
 //		for (int val : ens)
 //			System.out.printf("%d ", val);
