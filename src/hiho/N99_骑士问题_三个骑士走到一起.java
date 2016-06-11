@@ -6,6 +6,7 @@ package hiho;
  * 		输入是以下标 1 开始的。
  */
 
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
