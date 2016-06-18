@@ -3,6 +3,8 @@ package book.编程之法;
  * 	这个全排列，非常重要
  */
 
+import tools.Utils;
+
 public class Code103字符串的全排列_递归实现 {
 	public static void main(String[] args) {
 		char[] chs = "ABC".toCharArray();
@@ -19,19 +21,11 @@ public class Code103字符串的全排列_递归实现 {
 			System.out.printf("%c\n", chs[end]);
 		} else {
 			for (int i = sta; i <= end; i ++) {
-				swap(chs, i, sta);
+				tools.Utils.swap(chs, i, sta);
+				Utils.swap(chs, i, sta);
 				solve(chs, sta+1, end);
-				swap(chs, i, sta);
+				tools.Utils.swap(chs, i, sta);
 			}
 		}
-	}
-	static void swap(char[] chs, int i, int j) {
-		int end = 0;
-		if (chs == null || (end=chs.length-1) < 1 ||
-				i < 0 || j < 0 || i > end || j > end)
-			return;
-		char tmp = chs[i];
-		chs[i] = chs[j];
-		chs[j] = tmp;
 	}
 }
