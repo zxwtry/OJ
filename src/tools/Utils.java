@@ -67,7 +67,7 @@ public class Utils {
 		}
 	}
 	// reverse区结束
-	// 打印链表
+	// 打印区
 	public static void printNode(Node head) {
 		Node tmp = head;
 		while (tmp != null) {
@@ -75,5 +75,38 @@ public class Utils {
 			tmp = tmp.next;
 		}
 		System.out.println();
+	}
+	public static void printArray(char[] arr, int n) {
+		int arrEnd = 0;
+		if (arr == null || (arrEnd = arr.length-1) < 0)
+			return;
+		for (int i = 0; i <= arrEnd; i ++) {
+			if (i % n == n - 1 || i == arrEnd)
+				System.out.println(arr[i]);
+			else
+				System.out.printf("%c\t", arr[i]);
+		}
+	}
+	public static void printNoBlank(char[] arr, int n) {
+		int arrEnd = 0;
+		if (arr == null || (arrEnd = arr.length-1) < 0)
+			return;
+		for (int i = 0; i <= arrEnd; i ++) {
+			if (i % n == n - 1 || i == arrEnd)
+				System.out.println(arr[i]);
+			else
+				System.out.printf("%c", arr[i]);
+		}
+	}
+	public static void printNoBlank(int[] arr, int n) {
+		int arrEnd = 0;
+		if (arr == null || (arrEnd = arr.length-1) < 0)
+			return;
+		for (int i = 0; i <= arrEnd; i ++) {
+			if (i % n == n - 1 || i == arrEnd)
+				System.out.println(arr[i]);
+			else
+				System.out.printf("%d", arr[i]);
+		}
 	}
 }
