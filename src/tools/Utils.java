@@ -1,5 +1,7 @@
 package tools;
 
+import tools.Models.Node;
+
 public class Utils {
 	// 开始swap区
 	public static <T> void swap(T[] arr, int i, int j) {
@@ -65,4 +67,13 @@ public class Utils {
 		}
 	}
 	// reverse区结束
+	// 打印链表
+	public static void printNode(Node head) {
+		Node tmp = head;
+		while (tmp != null) {
+			System.out.printf("%d\t", tmp.data);
+			tmp = tmp.next;
+		}
+		System.out.println();
+	}
 }
