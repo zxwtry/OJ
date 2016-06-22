@@ -3,7 +3,7 @@ package hiho;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class N98_24点_只看是否找到 {
+public class N098_24点_只看是否找到 {
 	final static int numOfNumbers = 4;
 	final static int target = 24;
 	static boolean[] used = new boolean[numOfNumbers];

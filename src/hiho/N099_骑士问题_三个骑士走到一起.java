@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class N99_骑士问题_三个骑士走到一起 {
+public class N099_骑士问题_三个骑士走到一起 {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int num = Integer.parseInt(scanner.nextLine().trim());

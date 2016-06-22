@@ -2,7 +2,7 @@ package hiho;
 
 import java.util.Scanner;
 
-public class N99_骑士问题_三个骑士走到一起_Second {
+public class N099_骑士问题_三个骑士走到一起_Second {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int num = Integer.parseInt(scanner.nextLine().trim());

@@ -2,7 +2,7 @@ package book.编程之法;
 
 import java.util.Arrays;
 
-public class Code202寻找和为定制的两个数_排序再往中靠 {
+public class Code202寻找和为定值的两个数_排序再往中靠 {
 	public static void main(String[] args) {
 		int[] arr = null;
 		arr = new int[] {1, 9, 2, 8, 3, 7, 4, 6, 5};
