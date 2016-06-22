@@ -21,6 +21,9 @@ public class Code203寻找和为定值的多个数_N问题转换为N_1问题 {
 		if (arr == null || (mj = arr.length - 1) < 0)
 			return;
 		ll = new LinkedList<Integer>();
+//		for () {
+//			
+//		}
 	}
 	static void add(int j, int mj, int s, int n) {
 		if (j > mj)	return;
@@ -29,7 +32,6 @@ public class Code203寻找和为定值的多个数_N问题转换为N_1问题 {
 			while(it.hasNext())
 				System.out.printf("%d ", it.next());
 		}
-		
 	}
 	static void sum(int s, int n) {
 		if (n <= 0 || s <= 0)	return;
