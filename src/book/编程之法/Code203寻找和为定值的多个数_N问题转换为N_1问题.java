@@ -15,11 +15,10 @@ public class Code203寻找和为定值的多个数_N问题转换为N_1问题 {
 		System.out.println(Integer.MAX_VALUE);
 		int[] arr1 = null;
 		arr1 = new int[]{1, 9, 2, 8, 3, 7, 4, 6, 5, 4, 3, 8};
-//		solve(arr1, 15);
+		solve(arr1, 15);
 	}
 	static void solve(int[] arr, int n) {
-		int mj = 0;
-		if (arr == null || (mj = arr.length - 1) < 0)
+		if (arr == null || arr.length < 1)
 			return;
 		ll = new LinkedList<Integer>();
 	}
