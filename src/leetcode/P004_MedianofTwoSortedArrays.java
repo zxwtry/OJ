@@ -20,14 +20,17 @@ The median is (2 + 3)/2 = 2.5
  */
 public class P004_MedianofTwoSortedArrays {
 	public static void main(String[] args) {
-		System.out.println(new Solution().findMedianSortedArrays(new int[] {1, 1, 3, 3}, new int[] {1, 1, 3, 3}));
+//		System.out.println(new Solution1().findMedianSortedArrays(new int[] {1, 1, 3, 3}, new int[] {1, 1, 3, 3}));
+		int k = 1;
+		System.out.println(new Solution2().findKth(new int[] { 0, 2, 4, 6, 8}, 0, 4, new int[] {1, 3, 5, 7, 9}, 0, 4, k));
 	}
 	/*
 	 *  9.33%
 	 *  7ms
 	 *  也真是够慢的。
+	 *  但确实是O(log(M+N))
 	 */
-	static class Solution {
+	static class Solution1 {
 	    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 	        if (nums1 == null || nums2 == null) {
 	        	int[] nullArr = nums1;
@@ -129,6 +132,41 @@ public class P004_MedianofTwoSortedArrays {
 				int cut = Math.min(r1 - m1, m2 - l2 + 1);
 				return findMedianSortedArraysOdd(nums1, l1, r1 - cut, nums2, l2 + cut, r2);
 			}
+		}
+	}
+	/*
+	 * 	第一份代码的最重要缺陷是代码实在是太长了。
+	 * 	第二份代码应该会非常短，只要短代码就好
+	 */
+	static class Solution2 {
+		public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+			return 0;
+		}
+		double findKth(int[] nums1, int l1, int r1, int[] nums2, int l2, int r2, int k) {
+			int d1 = r1 - l1, d2 = r2 - l2;
+			if (d1 > d2)
+				return findKth(nums2, l2, r2, nums1, l1, r1, k);
+			if (d1 == 0)
+				return nums2[l2 + k];
+			if (k == 0)
+				return Math.min(nums1[l1], nums2[l2]);
+			int p1 = Math.min(k / 2, d1), p2 = k - p1;
+			if (nums1[l1 + p1] > nums2[l2 + p2])
+				return findKth(nums1, l1 + p1, r1, nums2, l2, r2, k - p1);
+			else if (nums1[l1 + p1] < nums2[l2 + p2])
+				return findKth(nums1, l1, r1, nums2, l2 + p2, r2, k - p2);
+			else
+				return nums1[l1 + p1 - 1];
+		}
+		int findKth_zxwtry(int[] nums1, int l1, int r1, int[] nums2, int l2, int r2, int k) {
+			int d1 = r1 - l1, d2 = r2 - l2;
+			if (d1 > d2)
+				return findKth_zxwtry(nums2, l2, r2, nums1, l1, r1, k);
+			if (k == 0)
+				return Math.min(nums1[l1], nums2[l2]);
+			int p1 = Math.min((k + 1) / 2, d1) - 1, p2 = k - p1;
+			
+			return 0;
 		}
 	}
 }
