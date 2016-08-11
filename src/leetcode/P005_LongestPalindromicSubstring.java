@@ -5,7 +5,7 @@ package leetcode;
  */
 public class P005_LongestPalindromicSubstring {
 	public static void main(String[] args) {
-		System.out.println(new Solution3().longestPalindrome("abcdcban"));
+		System.out.println(new Solution4().longestPalindrome("abad"));
 	}
 	/*
 	 * 	毫无疑问manacher(不会拼错了吧)
@@ -161,6 +161,50 @@ public class P005_LongestPalindromicSubstring {
 	    		return sign;
 	    	else
 	    		return s.charAt(i >>> 1);
+	    }
+	}
+	/*
+	 * 	41 ms
+	 * 	42.07%
+	 */
+	static class Solution4 {
+		private final char sign = '#';
+	    public String longestPalindrome(String s) {
+	    	if (s == null || s.length() == 0)
+	    		return "";
+	        char[] m = new char[(s.length() << 1) + 1];
+	        for (int i = 0; i != m.length; i ++)
+	        	m[i] = (i & 0x1) == 0 ? sign : s.charAt(i >>> 1);
+	        int[] r = new int[m.length];
+	        r[0] = 0; r[1] = 1;
+	        int maxr = 2, core = 1, maxindex = 1;
+	        for (int i = 2; i != m.length; i ++) {
+	        	if (i >= maxr) {
+	        		int newr = 1;
+	        		while (i > newr - 1 && i + newr < m.length && m[i + newr] == m[i - newr])
+	        			newr ++;
+	        		r[i] = newr - 1;
+	        		maxr = i + r[i];
+	        		core = i;
+	        	} else {
+	        		int j = (core << 1) - i;
+	        		if (r[j] + i < maxr) {
+	        			r[i] = r[j];
+	        		} else {
+	        			int newr = 1;
+	        			while (i > newr - 1 && i + newr < m.length && m[i + newr] == m[i - newr])
+		        			newr ++;
+	        			r[i] = newr - 1;
+	        			maxr = i + r[i];
+	        			core = i;
+	        		}
+	        	}
+	        	if (r[maxindex] < r[i])
+	        		maxindex = i;
+	        	if (maxr == m.length)
+	        		break;
+	        }
+	        return s.substring((maxindex - r[maxindex]) >>> 1, (maxindex + r[maxindex]) >>> 1);
 	    }
 	}
 }
