@@ -14,7 +14,7 @@ Example2: x = -123, return -321
 public class P007_ReverseInteger {
 	public static void main(String[] args) {
 		System.out.println(Integer.MAX_VALUE);
-		System.out.println(new Solution3().reverse(1534239));
+		System.out.println(new Solution4().reverse(21474));
 	}
 	/*
 	 * 	代码最快，最低效的解法
@@ -80,6 +80,29 @@ public class P007_ReverseInteger {
 				x = x / 10;
 			}
 			return isNegative ? -ans : ans;
+		}
+	}
+	/*
+	 * 	人生苦短，何不用long
+	 * 	20.05% 
+	 * 	3ms
+	 * 	再也不优化了
+	 */
+	static class Solution4 {
+		public int reverse(int x) {
+			boolean isNegative = false;
+			if (x < 0) {
+				x = -x;
+				isNegative = true;
+			}
+			long ans = 0;
+			while (x > 0) {
+				ans = ans * 10 + (x % 10);
+				x = x / 10;
+			}
+			if ( (ans >> 31) != 0 )
+				return 0;
+			return isNegative ? -(int)ans : (int)ans;
 		}
 	}
 }
