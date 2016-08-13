@@ -1,12 +1,19 @@
 package leetcode;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 
 public class P010_RegularExpressionMatching {
 	public static void main(String[] args) {
-		System.out.println("abcd*".indexOf("."));
+//		System.out.println("0, true : " + new Solution().isMatch("aabb", "aab*"));
+//		System.out.println("1, true : " + new Solution().isMatch("aabb", "a*bb"));
+//		System.out.println("2, true : " + new Solution().isMatch("aabb", ".*bb"));
+//		System.out.println("3, true : " + new Solution().isMatch("aabb", ".*"));
+//		System.out.println("4, true : " + new Solution().isMatch("aabb", ".*b"));
+//		System.out.println("5, true : " + new Solution().isMatch("aabb", ".*bb"));
+		System.out.println("6, false : " + new Solution().isMatch("aabb", ".*bbb"));
+		System.out.println("7, true : " + new Solution().isMatch("aabb", "a.*b"));
+		System.out.println("8, true : " + new Solution().isMatch("aabb", "a.*bb"));
 	}
 	static class Solution {
 		private final int dot_sign = 1;
@@ -20,7 +27,7 @@ public class P010_RegularExpressionMatching {
 			int[] map = new int[lenp];
 			int dot_count = 0, star_count = 0;
 			boolean last_star = false;
-			for (int i = lenp - 1; i != 0; i --) {
+			for (int i = lenp - 1; i != -1; i --) {
 				char c = p.charAt(i);
 				if (c == '.') {
 					map[i] = last_star ? dot_star_sign : dot_sign;
@@ -109,9 +116,26 @@ public class P010_RegularExpressionMatching {
 						break;
 					}
 				}
+				if (!isStarEnded) {
+					exp_value.add(value);
+					exp_count.add(count);
+				}
 				int j = 0, iend = zip_count.size();
 				for (int i = 0; i != iend; i ++) {
-					switch()
+					if (exp_value.get(j) == null) {
+						if (exp_count.get(j) == 1)
+							j ++;
+					} else {
+						if (zip_value.get(i) == exp_value.get(j)) {
+							if (zip_count.get(i) < exp_count.get(j))
+								return false;
+							else if (zip_count.get(i) == exp_count.get(j) || exp_count.get(j) == 0)
+								j ++;
+							else
+								return false;
+						} else
+							return false;
+					}
 				}
 			}
 			return true;
