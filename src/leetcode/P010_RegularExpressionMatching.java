@@ -2,6 +2,8 @@ package leetcode;
 
 import java.util.ArrayList;
 
+import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
+
 
 public class P010_RegularExpressionMatching {
 	public static void main(String[] args) {
@@ -20,8 +22,11 @@ public class P010_RegularExpressionMatching {
 //		System.out.println(new Solution2().isMatch("abc", "..."));
 //		System.out.println(new Solution2().isMatch("abc", "a.."));
 //		System.out.println(new Solution2().isMatch("abc", ".*"));
-		System.out.println(new Solution2().isMatch("abbbcbc", "a.*c"));
+//		System.out.println(new Solution2().isMatch("abbbcbc", "a.*c"));
 //		System.out.println(new Solution2().isMatch("abc", "..."));
+//		System.out.println(new Solution3().isMatch("ab", ".*c"));
+//		System.out.println(new Solution4().isMatch("ab", ".*c"));
+//		System.out.println(new Solution4().isMatch("ab", ".*"));
 	}
 	static class Solution {
 		private final int dot_sign = 1;
@@ -194,4 +199,42 @@ public class P010_RegularExpressionMatching {
 				return str.charAt(i);
 		}
 	}
+	/*
+	 * 	40.07%
+	 * 	50ms
+	 */
+	static class Solution3 {
+		public boolean isMatch(String s, String p) {
+			if (s == null)
+				return p == null;
+			if (p == null)
+				return s == null;
+			return isMatch(s, 0, s.length(), p, 0, p.length());
+		}
+		private boolean isMatch(String s, int i, int I, String p, int j, int J) {
+			char pc = getChar(p, j, J), sc = getChar(s, i, I);
+			if (pc == '\0')	return sc == '\0';
+			if (getChar(p, j + 1, J) == '*') {
+				while (sc == pc || (pc == '.' && sc != '\0')) {
+					i ++;
+					sc = getChar(s, i, I);
+					if (isMatch(s, i - 1, I, p, j + 2, J)) {
+						return true;
+					}
+				}
+				return isMatch(s, i, I, p, j + 2, J);
+			} else {
+				if (sc == pc || (pc == '.' && sc != '\0'))
+					return isMatch(s, i + 1, I, p, j + 1, J);
+				return false;
+			}
+		}
+		private char getChar(String str, int i, int I) {
+			if (i >= I)
+				return '\0';
+			else
+				return str.charAt(i);
+		}
+	}
+	
 }
