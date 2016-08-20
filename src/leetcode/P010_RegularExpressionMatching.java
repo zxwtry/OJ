@@ -2,9 +2,6 @@ package leetcode;
 
 import java.util.ArrayList;
 
-import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
-
-
 public class P010_RegularExpressionMatching {
 	public static void main(String[] args) {
 //		System.out.println("0, true : " + new Solution().isMatch("aabb", "aab*"));
@@ -236,5 +233,41 @@ public class P010_RegularExpressionMatching {
 				return str.charAt(i);
 		}
 	}
-	
+	/*
+	 * 	 43.97%
+	 * 	 30 ms
+	 */
+	static class Solution4 {
+		public boolean isMatch(String s, String p) {
+			if (s == null)
+				return p == null;
+			if (p == null)
+				return s == null;
+			return isMatch(s.toCharArray(), 0, s.length(), p.toCharArray(), 0, p.length());
+		}
+		private boolean isMatch(char[] s, int i, int I, char[] p, int j, int J) {
+			char pc = getChar(p, j, J), sc = getChar(s, i, I);
+			if (pc == '\0')	return sc == '\0';
+			if (getChar(p, j + 1, J) == '*') {
+				while (sc == pc || (pc == '.' && sc != '\0')) {
+					i ++;
+					sc = getChar(s, i, I);
+					if (isMatch(s, i - 1, I, p, j + 2, J)) {
+						return true;
+					}
+				}
+				return isMatch(s, i, I, p, j + 2, J);
+			} else {
+				if (sc == pc || (pc == '.' && sc != '\0'))
+					return isMatch(s, i + 1, I, p, j + 1, J);
+				return false;
+			}
+		}
+		private char getChar(char[] str, int i, int I) {
+			if (i >= I)
+				return '\0';
+			else
+				return str[i];
+		}
+	}
 }
