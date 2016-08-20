@@ -11,9 +11,17 @@ public class P010_RegularExpressionMatching {
 //		System.out.println("3, true : " + new Solution().isMatch("aabb", ".*"));
 //		System.out.println("4, true : " + new Solution().isMatch("aabb", ".*b"));
 //		System.out.println("5, true : " + new Solution().isMatch("aabb", ".*bb"));
-		System.out.println("6, false : " + new Solution().isMatch("aabb", ".*bbb"));
-		System.out.println("7, true : " + new Solution().isMatch("aabb", "a.*b"));
-		System.out.println("8, true : " + new Solution().isMatch("aabb", "a.*bb"));
+//		System.out.println("6, false : " + new Solution().isMatch("aabb", ".*bbb"));
+//		System.out.println("7, true : " + new Solution().isMatch("aabb", "a.*b"));
+//		System.out.println("8, true : " + new Solution().isMatch("aabb", "a.*bb"));
+//		System.out.println(new Solution2().isMatch("abc", "ab*"));
+//		System.out.println(new Solution2().isMatch("abc", "ab."));
+//		System.out.println(new Solution2().isMatch("abc", "a.."));
+//		System.out.println(new Solution2().isMatch("abc", "..."));
+//		System.out.println(new Solution2().isMatch("abc", "a.."));
+//		System.out.println(new Solution2().isMatch("abc", ".*"));
+		System.out.println(new Solution2().isMatch("abbbcbc", "a.*c"));
+//		System.out.println(new Solution2().isMatch("abc", "..."));
 	}
 	static class Solution {
 		private final int dot_sign = 1;
@@ -32,6 +40,7 @@ public class P010_RegularExpressionMatching {
 				if (c == '.') {
 					map[i] = last_star ? dot_star_sign : dot_sign;
 					dot_count ++;
+					if (dot_count == 1) {}
 					last_star = false;
 				} else if (c == '*') {
 					map[i] = star_sign;
@@ -150,6 +159,39 @@ public class P010_RegularExpressionMatching {
 				}
 			}
 			return true;
+		}
+	}
+	/*
+	 * 	33.84% 
+	 * 	97ms
+	 */
+	static class Solution2 {
+		public boolean isMatch(String s, String p) {
+			if (s == null)
+				return p == null;
+			if (p == null)
+				return s == null;
+			return isMatch(s, 0, s.length(), p, 0, p.length());
+		}
+		private boolean isMatch(String s, int i, int I, String p, int j, int J) {
+			if (getChar(p, j, J) == '\0')	return getChar(s, i, I) == '\0';
+			if (getChar(p, j + 1, J) == '*') {
+				while (getChar(s, i, I) == getChar(p, j, J) || (getChar(p, j, J) == '.' && getChar(s, i, I) != '\0')) {
+					if (isMatch(s, i ++, I, p, j + 2, J))
+						return true;
+				}
+				return isMatch(s, i, I, p, j + 2, J);
+			} else {
+				if (getChar(s, i, I) == getChar(p, j, J) || (getChar(p, j, J) == '.' && getChar(s, i, I) != '\0'))
+					return isMatch(s, i + 1, I, p, j + 1, J);
+				return false;
+			}
+		}
+		private char getChar(String str, int i, int I) {
+			if (i >= I)
+				return '\0';
+			else
+				return str.charAt(i);
 		}
 	}
 }
