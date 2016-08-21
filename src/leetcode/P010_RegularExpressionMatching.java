@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class P010_RegularExpressionMatching {
 	public static void main(String[] args) {
-//		System.out.println("0, true : " + new Solution().isMatch("aabb", "aab*"));
-//		System.out.println("1, true : " + new Solution().isMatch("aabb", "a*bb"));
-//		System.out.println("2, true : " + new Solution().isMatch("aabb", ".*bb"));
-//		System.out.println("3, true : " + new Solution().isMatch("aabb", ".*"));
-//		System.out.println("4, true : " + new Solution().isMatch("aabb", ".*b"));
-//		System.out.println("5, true : " + new Solution().isMatch("aabb", ".*bb"));
-//		System.out.println("6, false : " + new Solution().isMatch("aabb", ".*bbb"));
-//		System.out.println("7, true : " + new Solution().isMatch("aabb", "a.*b"));
-//		System.out.println("8, true : " + new Solution().isMatch("aabb", "a.*bb"));
+		System.out.println("0, true : " + new Solution7().isMatch("aabb", "aab*"));
+		System.out.println("1, true : " + new Solution7().isMatch("aabb", "a*bb"));
+		System.out.println("2, true : " + new Solution7().isMatch("aabb", ".*bb"));
+		System.out.println("3, true : " + new Solution7().isMatch("aabb", ".*"));
+		System.out.println("4, true : " + new Solution7().isMatch("aabb", ".*b"));
+		System.out.println("5, true : " + new Solution7().isMatch("aabb", ".*bb"));
+		System.out.println("6, false : " + new Solution7().isMatch("aabb", ".*bbb"));
+		System.out.println("7, true : " + new Solution7().isMatch("aabb", "a.*b"));
+		System.out.println("8, true : " + new Solution7().isMatch("aabb", "a.*bb"));
 //		System.out.println(new Solution2().isMatch("abc", "ab*"));
 //		System.out.println(new Solution2().isMatch("abc", "ab."));
 //		System.out.println(new Solution2().isMatch("abc", "a.."));
@@ -243,31 +243,125 @@ public class P010_RegularExpressionMatching {
 				return p == null;
 			if (p == null)
 				return s == null;
-			return isMatch(s.toCharArray(), 0, s.length(), p.toCharArray(), 0, p.length());
+			return isMatchDetail(s.toCharArray(), 0, s.length(), p.toCharArray(), 0, p.length());
 		}
-		private boolean isMatch(char[] s, int i, int I, char[] p, int j, int J) {
+		private boolean isMatchDetail(char[] s, int i, int I, char[] p, int j, int J) {
 			char pc = getChar(p, j, J), sc = getChar(s, i, I);
 			if (pc == '\0')	return sc == '\0';
 			if (getChar(p, j + 1, J) == '*') {
 				while (sc == pc || (pc == '.' && sc != '\0')) {
 					i ++;
 					sc = getChar(s, i, I);
-					if (isMatch(s, i - 1, I, p, j + 2, J)) {
+					if (isMatchDetail(s, i - 1, I, p, j + 2, J)) {
+						return true;
+					}
+				}
+				return isMatchDetail(s, i, I, p, j + 2, J);
+			} else {
+				if (sc == pc || (pc == '.' && sc != '\0'))
+					return isMatchDetail(s, i + 1, I, p, j + 1, J);
+				return false;
+			}
+		}
+		private char getChar(char[] str, int i, int I) {
+			return i < I ? str[i] : '\0';
+		}
+	}
+	/*
+	 * 	43.97%
+	 * 	31 ms
+	 */
+	static class Solution5 {
+		public boolean isMatch(String s, String p) {
+			if (s == null)
+				return p == null;
+			if (p == null)
+				return s == null;
+			return isMatch(s.toCharArray(), 0, s.length(), p.toCharArray(), 0, p.length());
+		}
+		private boolean isMatch(char[] s, int i, int I, char[] p, int j, int J) {
+			if (j == J)	return i == I;
+			if (j != J-1 && p[j+1] == '*') {
+				while ((i == I && j ==J ) || (i < I && j < J && s[i] == p[j]) || (j < J && p[j] == '.' && i != I)) {
+					if (isMatch(s, i ++, I, p, j + 2, J))
+						return true;
+				}
+				return isMatch(s, i, I, p, j + 2, J);
+			} else {
+				if ((i == I && j ==J ) || (i < I && j < J && s[i] == p[j]) || (j < J && p[j] == '.' && i != I))
+					return isMatch(s, i + 1, I, p, j + 1, J);
+				return false;
+			}
+		}
+	}
+	/*
+	 * 	32 ms
+	 * 	43.58%
+	 */
+	static class Solution6 {
+		public boolean isMatch(String s, String p) {
+			if (s == null)
+				return p == null;
+			if (p == null)
+				return s == null;
+			char[] cs = new char[s.length() + 1], cp = new char[p.length() + 1];
+			int i = cs.length - 1;
+			cs[i --] = '\0';
+			while(i != -1)
+				cs[i] = s.charAt(i --);
+			i = cp.length - 1;
+			cp[i --] = '\0';
+			while(i != -1)
+				cp[i] = p.charAt(i --);
+			return isMatch(cs, 0, cs.length, cp, 0, cp.length);
+		}
+		private boolean isMatch(char[] s, int i, int I, char[] p, int j, int J) {
+			if (p[j] == '\0')	return s[i] == '\0';
+			if (p[j + 1] == '*') {
+				while (s[i] == p[j] || (p[j] == '.' && s[i] != '\0')) {
+					if (isMatch(s, i ++, I, p, j + 2, J)) {
 						return true;
 					}
 				}
 				return isMatch(s, i, I, p, j + 2, J);
 			} else {
-				if (sc == pc || (pc == '.' && sc != '\0'))
+				if (s[i] == p[j] || (p[j] == '.' && s[i] != '\0'))
 					return isMatch(s, i + 1, I, p, j + 1, J);
 				return false;
 			}
 		}
-		private char getChar(char[] str, int i, int I) {
-			if (i >= I)
-				return '\0';
-			else
-				return str[i];
+	}
+	/*
+	 * 	33 ms
+	 * 	43.58%
+	 */
+	static class Solution7 {
+		public boolean isMatch(String s, String p) {
+			if (s == null)
+				return p == null;
+			if (p == null)
+				return s == null;
+			char[] cs = new char[s.length() + 1], cp = new char[p.length() + 1];
+			cs[cs.length - 1] = '\0';
+			cp[cp.length - 1] = '\0';
+			System.arraycopy(s.toCharArray(), 0, cs, 0, cs.length - 1);
+			System.arraycopy(p.toCharArray(), 0, cp, 0, cp.length - 1);
+			return isMatch(cs, 0, cs.length, cp, 0, cp.length);
+		}
+		private boolean isMatch(char[] s, int i, int I, char[] p, int j, int J) {
+			if (p[j] == '\0')	return s[i] == '\0';
+			if (p[j + 1] == '*') {
+				while (s[i] == p[j] || (p[j] == '.' && s[i] != '\0')) {
+					if (isMatch(s, i ++, I, p, j + 2, J)) {
+						return true;
+					}
+				}
+				return isMatch(s, i, I, p, j + 2, J);
+			} else {
+				if (s[i] == p[j] || (p[j] == '.' && s[i] != '\0'))
+					return isMatch(s, i + 1, I, p, j + 1, J);
+				return false;
+			}
 		}
 	}
 }
