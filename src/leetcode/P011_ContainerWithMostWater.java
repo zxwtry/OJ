@@ -12,18 +12,18 @@ package leetcode;
 
 public class P011_ContainerWithMostWater {
 	public static void main(String[] args) {
-		System.out.println(new Solution2().maxArea(new int[]{4,4,2,11,0,11,5,11,13,8}));
-//		System.out.println(new Solution2().maxArea(new int[]{2,3,10,5,7,8,9}));
-//		System.out.println(new Solution2().maxArea(new int[]{1, 3}));
-//		System.out.println(new Solution2().maxArea(new int[]{3, 1, 3}));
-//		System.out.println(new Solution2().maxArea(new int[]{3, 1, 1, 3}));
-//		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 1, 3}));
-//		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 9, 1, 3}));
-//		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 0, 1, 3}));
-//		System.out.println(new Solution2().maxArea(new int[]{1, 1}));
-//		System.out.println(new Solution2().maxArea(new int[]{3, 3}));
-//		System.out.println(new Solution2().maxArea(new int[]{8, 9, 8, 7, 7, 7, 7, 7}));
-//		System.out.println(new Solution2().maxArea(new int[]{8, 7, 7, 7, 7, 7, 8, 9, 8}));
+//		System.out.println(new Solution2().maxArea(new int[]{4,4,2,11,0,11,5,11,13,8}));	//55
+//		System.out.println(new Solution2().maxArea(new int[]{2,3,10,5,7,8,9}));				//36
+//		System.out.println(new Solution2().maxArea(new int[]{1, 3}));						//1
+//		System.out.println(new Solution2().maxArea(new int[]{3, 1, 3}));					//6
+//		System.out.println(new Solution2().maxArea(new int[]{3, 1, 1, 3}));					//9
+		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 1, 3}));				//12
+		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 9, 1, 3}));			//15
+		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 0, 1, 3}));			//15
+//		System.out.println(new Solution2().maxArea(new int[]{1, 1}));						//1
+//		System.out.println(new Solution2().maxArea(new int[]{3, 3}));						//3
+		System.out.println(new Solution2().maxArea(new int[]{8, 9, 8, 7, 7, 7, 7, 7}));		//49
+		System.out.println(new Solution2().maxArea(new int[]{8, 7, 7, 7, 7, 7, 8, 9, 8}));	//64
 //		System.out.println(new Solution2().binarySearchUp(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17}, 0, 4, -100));
 //		System.out.println(new Solution2().binarySearchUp(new int[]{5, 5, 5, 5, 5, 5, 5, 5, 5},  0, 8, 5));
 //		System.out.println(new Solution2().binarySearchUp(new int[]{0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5},  0, 8, 5));
@@ -128,7 +128,7 @@ public class P011_ContainerWithMostWater {
 	        		vai[temp - step] = vai[temp ++];
 	        int maxArea = 0;
 	        for (i = sti; i <= maxi; i ++) {
-	        	temp = binarySearchDown(vai, maxi + 1, len, vai[i]);
+	        	temp = binarySearchUp(vai, maxi + 1, len, vai[i]);
 	        	temp = Math.min(height[vai[i]], height[vai[temp]]) * (vai[temp] - vai[i]);
 	        	maxArea = maxArea < temp ? temp : maxArea;
 	        }
