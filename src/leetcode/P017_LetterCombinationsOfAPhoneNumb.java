@@ -16,13 +16,13 @@ import java.util.List;
 
 public class P017_LetterCombinationsOfAPhoneNumb {
 	public static void main(String[] args) {
-		System.out.println(new Solution().letterCombinations(""));
+		System.out.println(new Solution1().letterCombinations("2"));
 	}
 	/*
 	 * 	2 ms
 	 * 	12.81%
 	 */
-	static class Solution {
+	static class Solution1 {
 		char tran[][] = {
 			{'a', 'b', 'c'},
 			{'d', 'e', 'f'},
@@ -44,7 +44,7 @@ public class P017_LetterCombinationsOfAPhoneNumb {
 	    }
 	    private void dfs(char[] cs, int i) {
 	    	if (i == cs.length) {
-	    		ans.add(st.toString());
+	    		ans.add(new String(st));
 	    		return;
 	    	}
 	    	int tran_i = cs[i] - '2';
@@ -52,6 +52,43 @@ public class P017_LetterCombinationsOfAPhoneNumb {
 	    		st.append(tran[tran_i][tran_j]);
 	    		dfs(cs, i + 1);
 	    		st.deleteCharAt(st.length() - 1);
+	    	}
+	    }
+	}
+	/*
+	 * 	1 ms
+	 * 	46.16%
+	 */
+	static class Solution2 {
+		char tran[][] = {
+			{'a', 'b', 'c'},
+			{'d', 'e', 'f'},
+			{'g', 'h', 'i'},
+			{'j', 'k', 'l'},
+			{'m', 'n', 'o'},
+			{'p', 'q', 'r', 's'},
+			{'t', 'u', 'v'},
+			{'w', 'x', 'y', 'z'}
+		};
+		char[] st = null;;
+    	List<String> ans = new LinkedList<String>();
+	    public List<String> letterCombinations(String digits) {
+	    	if (digits == null || digits.length() == 0)
+	    		return ans;
+	    	char[] cs = digits.toCharArray();
+	    	st = new char[cs.length];
+	    	dfs(cs, 0);
+	    	return ans;
+	    }
+	    private void dfs(char[] cs, int i) {
+	    	if (i == cs.length) {
+	    		ans.add(st.toString());
+	    		return;
+	    	}
+	    	int tran_i = cs[i] - '2';
+	    	for (int tran_j = 0; tran_j != tran[tran_i].length; tran_j ++) {
+	    		st[i] = tran[tran_i][tran_j];
+	    		dfs(cs, i + 1);
 	    	}
 	    }
 	}
