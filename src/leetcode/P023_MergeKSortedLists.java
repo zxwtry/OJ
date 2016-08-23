@@ -3,16 +3,27 @@ package leetcode;
 
 public class P023_MergeKSortedLists {
 	public static void main(String[] args) {
-		ListNode ans = new Solution1().mergeKLists(C_二维生成器(new int[][] {
-			{1, 4, 7},
-			{2, 5, 8}
+		ListNode ans = new Solution2().mergeKLists(C_二维生成器(new int[][] {
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4},
+			{1,2,3,4}
 		}));
 		B_打印链表(ans);
-		ans = new Solution1().mergeKLists(new ListNode[] {
-				null,
-				null
+		ans = new Solution2().mergeKLists(new ListNode[] {
+				new ListNode(2)
 		});
-		B_打印链表(ans);
+//		B_打印链表(ans);
 	}
 	/*
 	 * 	TLE
@@ -77,6 +88,65 @@ public class P023_MergeKSortedLists {
 				lists[mini] = temp;
 			}
 		}
+	}
+	/*
+	 * 	省点时间吧
+	 * 	还是TLE
+	 */
+	static class Solution2 {
+	    public ListNode mergeKLists(ListNode[] lists) {
+	    	if (lists == null || lists.length == 0)
+	    		return null;
+	    	int i = 0, mini = -1;
+	    	boolean isAllNull = lists[0] == null;
+			for (i = lists.length - 1, mini = 0; i != 0; i --) {
+				if (lists[mini] == null) {
+					if (lists[i] != null) {
+						mini = i;
+						isAllNull = false;
+					}
+				} else {
+					isAllNull = false;
+					if (lists[i] != null && lists[mini].val > lists[i].val)
+						mini = i;
+				}
+			}
+			if (isAllNull)
+				return null;
+			if (mini != 0) {
+				ListNode temp = lists[0];
+				lists[0] = lists[mini];
+				lists[mini] = temp;
+			}
+	    	ListNode[] cur = new ListNode[lists.length];
+	    	cur[0] = lists[0].next;
+	    	for (i = 1; i != cur.length; i ++)
+	    		cur[i] = lists[i];
+	    	ListNode pre = lists[0];
+	    	while (true) {
+	    		mini = -1;
+	    		for (i = 0; i != cur.length; i ++) {
+	    			if (cur[i] == null)
+	    				continue;
+	    			if (mini == -1 || cur[mini].val > cur[i].val)
+	    				mini = i;
+	    		}
+	    		if (mini == -1) {
+	    			break;
+	    		} else if (mini == 0) {
+	    			pre = cur[mini];
+	    			cur[mini] = cur[mini].next;
+	    		} else {
+	    			ListNode temp = cur[mini].next;
+	    		 	cur[mini].next = pre.next;
+	    		 	pre.next = cur[mini];
+	    		 	pre = cur[mini];
+	    			cur[mini] = temp;
+	    		}
+	    		
+	    	}
+	        return lists[0];
+	    }
 	}
 	static class ListNode {
 		int val;
