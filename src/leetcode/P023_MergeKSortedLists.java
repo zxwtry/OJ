@@ -148,6 +148,13 @@ public class P023_MergeKSortedLists {
 	        return lists[0];
 	    }
 	}
+	/*
+	 * 	方法太垃圾了，
+	 * 	改用两次合并法
+	 */
+	static class Solution3 {
+		
+	}
 	static class ListNode {
 		int val;
 		ListNode next;
