@@ -6,7 +6,7 @@ import java.util.List;
 
 public class P022_GenerateParentheses {
 	public static void main(String[] args) {
-		System.out.println(new Solution().generateParenthesis(2));
+		System.out.println(new Solution().generateParenthesis(14).size());
 	}
 	/*
 	 * 	4ms
@@ -50,6 +50,51 @@ public class P022_GenerateParentheses {
 	    	c[i] = right;
 	    	c[i] = right;
 	    	dfs(i + 1, n);
+	    }
+	}
+	/*
+	 * 	这种思想非常好，就是看left的最右一个
+	 * 	能够在一定程度避免2^n的悲剧
+	 * 	但是代码非常不好写，可以继续试试，20160823暂停。
+	 */
+	static class Solution2 {
+		private final char left = '(', right = ')';
+        List<String> ans = new LinkedList<String>();
+        char[] c = null;
+	    public List<String> generateParenthesis(int n) {
+	    	if (n < 1)
+	    		return ans;
+	    	int len = n << 1;
+	    	c = new char[len];
+	    	generateArray(0, len - 1);
+	    	
+	    	return ans;
+	    }
+	    private void generateArray(int sti, int eni) {
+	    	if (sti >= eni)
+	    		return;
+	    	c[sti] = left;   c[eni] = right;
+	    	if (eni == sti + 1) {
+	    		ans.add(new String(c));
+	    		return;
+	    	}
+	    	int midEnd = ((sti + eni) >>> 1) + 1, i = 0;
+	    	for (i = sti + 1; i < midEnd; i ++)
+	    		c[i] = left;
+	    	for (i = midEnd; i != eni; i ++)
+	    		c[i] = right;
+	    	ans.add(new String(c));
+	    	c[eni - 1] = left;
+	    	c[eni - 2] = right;
+	    	if (sti + 1 < eni - 3) {
+	    		generateArray(sti + 1, eni - 3);
+	    	} else {
+	    		ans.add(new String(c));
+	    		return;
+	    	}
+	    	for (i = midEnd; i < eni - 1; i ++) {
+	    		
+	    	}
 	    }
 	}
 }
