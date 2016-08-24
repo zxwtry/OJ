@@ -1,28 +1,17 @@
 package leetcode;
 
-
 public class P023_MergeKSortedLists {
 	public static void main(String[] args) {
-		ListNode ans = new Solution2().mergeKLists(C_二维生成器(new int[][] {
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4},
-			{1,2,3,4}
-		}));
-		B_打印链表(ans);
-		ans = new Solution2().mergeKLists(new ListNode[] {
-				new ListNode(2)
+		ListNode[] input = C_二维生成器(new int[][] {
+			{1,1,2,3,4},
+			{},
+			{2,2,2}
 		});
+		ListNode ans = new Solution3().mergeKLists(input);
+		B_打印链表(ans);
+//		ans = new Solution3().mergeKLists(new ListNode[] {
+//				new ListNode(2)
+//		});
 //		B_打印链表(ans);
 	}
 	/*
@@ -149,11 +138,75 @@ public class P023_MergeKSortedLists {
 	    }
 	}
 	/*
-	 * 	方法太垃圾了，
+	 * 	1 2方法太垃圾了，
 	 * 	改用两次合并法
+	 * 	7ms 
+	 * 	62.23%
+	 * 	还可以做很多改进
 	 */
 	static class Solution3 {
-		
+	    public ListNode mergeKLists(ListNode[] lists) {
+	    	if (lists == null || lists.length == 0)
+	    		return null;
+		    int i = 0, j = 0, len = lists.length, iend = (len + 1) >>> 1;
+		    while (iend != len) {
+		    	for (i = 0; i != iend; i ++) {
+		    		j = len - 1 - i;
+		    		if (i == j || lists[j] == null)
+		    			continue;
+		    		if (lists[i] == null) {
+		    			lists[i] = lists[j];
+		    			continue;
+		    		}
+		    		if (lists[i].val > lists[j].val) {
+		    			ListNode temp = lists[i];
+		    			lists[i] = lists[j];
+		    			lists[j] = temp;
+		    		}
+		    		mergeTwoLists(lists[i], lists[j]);
+		    	}
+		    	len = iend;   iend = (len + 1) >>> 1;
+		    }
+		    return lists[0];
+	    }
+	    private void mergeTwoLists(ListNode c1, ListNode c2) {
+	    	while (c1.next != null && c2.next != null) {
+ 	        	if (c1.val <= c2.val) {
+ 	        		if (c1.next.val >= c2.val) {
+ 		        		ListNode temp = c2.next;
+ 		        		c2.next = c1.next;
+ 		        		c1.next = c2;
+ 		        		c2 = temp;
+ 	        		} else {
+ 	        			c1 = c1.next;
+ 	        		}
+ 	        	} else {
+ 	        		if (c2.next.val >= c1.val) {
+ 		        		ListNode temp = c1.next;
+ 		        		c1.next = c2.next;
+ 		        		c2.next = c1;
+ 		        		c1 = temp;
+ 	        		} else {
+ 	        			c2 = c2.next;
+ 	        		}
+ 	        	}
+ 	        }
+ 	        if (c1.next == null) {
+ 	        	c1.next = c2;
+ 	        } else {
+ 		        while (c1.next != null) {
+ 		        	if (c1.next.val > c2.val)
+ 		        		break;
+ 		        	c1 = c1.next;
+ 		        }
+ 		        if (c2 != null) {
+ 		        	if (c1.next != null) {
+ 		        		c2.next = c1.next;
+ 		        	}
+ 		        	c1.next = c2;
+ 		        }
+ 	        }
+	    }
 	}
 	static class ListNode {
 		int val;
