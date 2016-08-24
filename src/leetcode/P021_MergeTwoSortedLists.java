@@ -1,5 +1,7 @@
 package leetcode;
 
+import tools.ListNode辅助.ListNode;
+
 public class P021_MergeTwoSortedLists {
 	public static void main(String[] args) {
 		ListNode node1 = new ListNode(1);
@@ -57,7 +59,11 @@ public class P021_MergeTwoSortedLists {
 //		node1_ghost.next = node3_ghost;
 //		node3_ghost.next = node6_ghost;
 		
-		ListNode ans = new Solution().mergeTwoLists(node1, node2);
+		
+		node1 = tools.ListNode辅助.A_一维生成器(new int[] {10});
+		node2 = tools.ListNode辅助.A_一维生成器(new int[] {6});
+		
+		ListNode ans = new Solution1().mergeTwoLists(node1, node2);
 		while (ans != null) {
 			System.out.println(ans.val);
 			ans = ans.next;
@@ -68,7 +74,7 @@ public class P021_MergeTwoSortedLists {
 	 * 	1ms
 	 * 	10.81%
 	 */
-	static class Solution {
+	static class Solution1 {
 	    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 	        if (l1 == null)
 	        	return l2;
@@ -117,11 +123,37 @@ public class P021_MergeTwoSortedLists {
 	        return l1;
 	    }
 	}
-	static class ListNode {
-		int val;
-		ListNode next;
-		public ListNode(int val) {
-			this.val = val;
-		}
+	/*
+	 * 	1的代码还是太麻烦了
+	 * 	肯定有更加简单的写法
+	 * 	23行，完美！
+	 * 	1ms
+	 * 	10.81%
+	 */
+	static class Solution2 {
+	    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+	    	if (l1 == null || l2 == null)
+	    		return l1 == null ? l2 : l1;
+	    	if (l1.val > l2.val)
+	    		return mergeTwoLists(l2, l1);
+	    	ListNode pre = l1, c1 = l1.next, c2 = l2;
+	    	while (c2 != null) {
+	    		while (c1 != null && c1.val <= c2.val) {
+	    			pre = c1;
+	    			c1 = c1.next;
+	    		}
+	    		if (c1 == null) {
+	    			pre.next = c2;
+	    			break;
+	    		}
+	    		pre.next = c2;
+	    		while (c2 != null && c2.val <= c1.val) {
+	    			pre = c2;
+	    			c2 = c2.next;
+	    		}
+	    		pre.next = c1;
+	    	}
+	    	return l1;
+	    }
 	}
 }
