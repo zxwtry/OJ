@@ -7,7 +7,7 @@ public class P023_MergeKSortedLists {
 			{},
 			{2,2,2}
 		});
-		ListNode ans = new Solution3().mergeKLists(input);
+		ListNode ans = new Solution4().mergeKLists(input);
 		B_打印链表(ans);
 //		ans = new Solution3().mergeKLists(new ListNode[] {
 //				new ListNode(2)
@@ -206,6 +206,56 @@ public class P023_MergeKSortedLists {
  		        	c1.next = c2;
  		        }
  	        }
+	    }
+	}
+	/*
+	 * 	更换更加高效的两链表合并算法
+	 * 	5ms
+	 * 	65.95%
+	 */
+	static class Solution4 {
+	    public ListNode mergeKLists(ListNode[] lists) {
+	    	if (lists == null || lists.length == 0)
+	    		return null;
+		    int i = 0, j = 0, len = lists.length, iend = (len + 1) >>> 1;
+		    while (iend != len) {
+		    	for (i = 0; i != iend; i ++) {
+		    		j = len - 1 - i;
+		    		if (i == j || lists[j] == null)
+		    			continue;
+		    		if (lists[i] == null) {
+		    			lists[i] = lists[j];
+		    			continue;
+		    		}
+		    		if (lists[i].val > lists[j].val) {
+		    			ListNode temp = lists[i];
+		    			lists[i] = lists[j];
+		    			lists[j] = temp;
+		    		}
+		    		mergeTwoLists(lists[i], lists[j]);
+		    	}
+		    	len = iend;   iend = (len + 1) >>> 1;
+		    }
+		    return lists[0];
+	    }
+	    private void mergeTwoLists(ListNode c1, ListNode c2) {
+	    	ListNode pre = c1; c1 = c1.next;
+	    	while (true) {
+	    		while (c1 != null && c1.val <= c2.val) {
+	    			pre = c1;
+	    			c1 = c1.next;
+	    		}
+	    		pre.next = c2;
+	    		if (c1 == null)
+	    			break;
+	    		while (c2 != null && c2.val <= c1.val) {
+	    			pre = c2;
+	    			c2 = c2.next;
+	    		}
+	    		pre.next = c1;
+	    		if (c2 == null)
+	    			break;
+	    	}
 	    }
 	}
 	static class ListNode {
