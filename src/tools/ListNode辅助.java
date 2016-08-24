@@ -24,7 +24,7 @@ public class ListNode辅助 {
 			System.out.println("=======================");
 		}
 	}
-	static ListNode A_一维生成器(int[] nums) {
+	public static ListNode A_一维生成器(int[] nums) {
 		ListNode pre = null, head = null;
 		for (int i = nums.length - 1; i != -1; i --) {
 			head = new ListNode(nums[i]);
@@ -33,14 +33,14 @@ public class ListNode辅助 {
 		}
 		return head;
 	}
-	static void B_打印链表(ListNode head) {
+	public static void B_打印链表(ListNode head) {
 		ListNode cur = head;
 		while (cur != null) {
 			System.out.println(cur.val);
 			cur = cur.next;
 		}
 	}
-	static List<ListNode> C_二维生成器(int[][] nums) {
+	public static List<ListNode> C_二维生成器(int[][] nums) {
 		List<ListNode> ans = new LinkedList<ListNode>();
 		for (int j = 0; j != nums.length; j ++) {
 			ListNode pre = null, head = null;
@@ -53,9 +53,22 @@ public class ListNode辅助 {
 		}
 		return ans;
 	}
-	static class ListNode {
-		int val;
-		ListNode next;
+	public static ListNode[] D_二维生成器_数组版(int[][] nums) {
+		ListNode[] ans = new ListNode[nums.length];
+		for (int j = 0; j != nums.length; j ++) {
+			ListNode pre = null, head = null;
+			for (int i = nums[j].length - 1; i != -1; i --) {
+				head = new ListNode(nums[j][i]);
+				head.next = pre;
+				pre = head;
+			}
+			ans[j] = head;
+		}
+		return ans;
+	}
+	public static class ListNode {
+		public int val;
+		public ListNode next;
 		public ListNode(int val) {
 			this.val = val;
 		}
