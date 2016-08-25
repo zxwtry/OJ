@@ -9,7 +9,7 @@ package leetcode;
 
 public class P028_ImplementStrStr {
 	public static void main(String[] args) {
-		System.out.println(new Solution1().strStr("abcabcabc", "ddd"));
+		System.out.println(new Solution1().strStr("abcabcabc", "cab"));
 	}
 	/*
 	 * 	不就是KMP
@@ -40,13 +40,13 @@ public class P028_ImplementStrStr {
 		public int[] getNext(char[] p) {
 			int[] next = new int[p.length];
 			next[0] = -1;
-			int pre = 0, pos = -1;
-			while (pre != p.length - 1) {
-				if (-1 == pos || p[pre] == p[pos]) {
-					pos ++;   pre ++;
-					next[pre] = pos;
+			int cur = 0, pre = -1;
+			while (cur != p.length - 1) {
+				if (pre == -1 || p[cur] == p[pre]) {
+					cur ++;   pre ++;
+					next[cur] = pre;
 				} else
-					pos = next[pos];
+					pre = next[pre];
 			}
 			return next;
 		}
