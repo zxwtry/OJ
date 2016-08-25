@@ -20,8 +20,9 @@ import java.util.List;
 
 public class P030_SubstringWithConcatenationOfAllWords {
 	public static void main(String[] args) {
-		System.out.println(new Solution1().findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"}));;
+//		System.out.println(new Solution1().findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"}));;
 //		System.out.println(new Solution1().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"}));;
+		System.out.println(new Solution1().findSubstring("bbbbbb", new String[]{"b", "b", "b", "b", "b"}));;
 	}
 	/*
 	 * 	土方法，KMP
@@ -29,6 +30,8 @@ public class P030_SubstringWithConcatenationOfAllWords {
 	 * 	TLE
 	 * 	74 ms
 	 * 	44.40%
+	 * 	141 ms
+	 * 	40.37%
 	 */
 	static class Solution1 {
 		public List<Integer> findSubstring(String s, String[] words) {
@@ -48,11 +51,11 @@ public class P030_SubstringWithConcatenationOfAllWords {
 					judge[i] ++;
 				}
 			}
-			if (judgeMap.size() == 1 && words[0].equals("a")) {
-				for (int i = 0; i < s.length() - words.length + 1; i ++)
-					ans.add(i);
-				return ans;
-			}
+//			if (judgeMap.size() == 1 && words[0].equals("a")) {
+//				for (int i = 0; i < s.length() - words.length + 1; i ++)
+//					ans.add(i);
+//				return ans;
+//			}
 			for (int i = 0; i != words.length; i ++) {
 				if (judgeMap.get(words[i]) != i)
 					continue;
@@ -72,9 +75,22 @@ public class P030_SubstringWithConcatenationOfAllWords {
 				}
 			}
 			int[] map = new int[words.length];
+			boolean[] isAdd = new  boolean[sign.length];
+			Arrays.fill(isAdd, false);
 			for (int i = 0; i != sign.length; i ++) {
 				if (sign[i] == -1)
 					continue;
+				int new_i = 0;
+				if ((new_i = i - wordlen) > -1) {
+					int sign_index = words.length * wordlen + new_i;
+					if (sign_index < sign.length && sign[new_i] == sign[sign_index]) {
+						isAdd[i] = isAdd[new_i];
+						if (isAdd[new_i]) {
+							ans.add(i);
+						}
+						continue;
+					}
+				}
 				Arrays.fill(map, 0);
 				map[sign[i]] ++;
 				for (int j = 1; j != words.length; j ++) {
@@ -86,8 +102,10 @@ public class P030_SubstringWithConcatenationOfAllWords {
 				boolean isTrue = map[0] == judge[0];
 				for(int j = 1; j != map.length; j ++)
 					isTrue &= map[j] == judge[j];
-				if (isTrue)
+				if (isTrue) {
 					ans.add(i);
+					isAdd[i] = true;
+				}
 			}
 			return ans;
 	    }
