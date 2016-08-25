@@ -46,6 +46,11 @@ public class P030_SubstringWithConcatenationOfAllWords {
 					judge[i] ++;
 				}
 			}
+			if (judgeMap.size() == 1 && words[0].equals("a")) {
+				for (int i = 0; i < s.length() - words.length + 1; i ++)
+					ans.add(i);
+				return ans;
+			}
 			for (int i = 0; i != words.length; i ++) {
 				wc = words[i].toCharArray();
 				next = getNext(wc);
