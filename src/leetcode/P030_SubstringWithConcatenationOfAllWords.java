@@ -27,6 +27,8 @@ public class P030_SubstringWithConcatenationOfAllWords {
 	 * 	土方法，KMP
 	 * 	算法正确性没有错
 	 * 	TLE
+	 * 	74 ms
+	 * 	44.40%
 	 */
 	static class Solution1 {
 		public List<Integer> findSubstring(String s, String[] words) {
@@ -52,6 +54,8 @@ public class P030_SubstringWithConcatenationOfAllWords {
 				return ans;
 			}
 			for (int i = 0; i != words.length; i ++) {
+				if (judgeMap.get(words[i]) != i)
+					continue;
 				wc = words[i].toCharArray();
 				next = getNext(wc);
 				int si = 0, pi = 0;
