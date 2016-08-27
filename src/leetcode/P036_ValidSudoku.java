@@ -10,9 +10,9 @@ import java.util.Arrays;
 
 public class P036_ValidSudoku {
 	public static void main(String[] args) {
-		System.out.println(new Solution().isValidSudoku(new char[][] {
+		System.out.println(new Solution2().isValidSudoku(new char[][] {
 			".87654321".toCharArray(),
-			"2.......1".toCharArray(),
+			"2........".toCharArray(),
 			"3........".toCharArray(),
 			"4........".toCharArray(),
 			"5........".toCharArray(),
@@ -45,6 +45,37 @@ public class P036_ValidSudoku {
 	        return true;
 	    }
 	    private boolean isValid(boolean[] isExist, int index) {
+	    	if(isExist[index])
+	    		return false;
+	    	isExist[index] = true;
+	    	return true;
+	    }
+	}
+	/*
+	 * 	6 ms
+	 * 	41.76% 
+	 */
+	static class Solution2 {
+		public boolean isValidSudoku(char[][] board) {
+	        boolean[] isExistRow = new boolean[9];
+	        boolean[] isExistColumn = new boolean[9];
+	        boolean[] isExistNine = new boolean[9];
+	        for (int i = 0; i < 9; i ++) {
+	        	Arrays.fill(isExistRow, false);
+	        	Arrays.fill(isExistColumn, false);
+	        	Arrays.fill(isExistNine, false);
+	        	for (int j = 0; j < 9; j ++) {
+	        		if (! isValid(isExistRow, board[i][j] - '1') ||
+	        				! isValid(isExistColumn, board[j][i] - '1') ||
+	        				! isValid(isExistNine, board[i/3*3+j/3][i%3*3+j%3] - '1'))
+	        			return false;
+	        	}
+	        }
+	        return true;
+	    }
+	    private boolean isValid(boolean[] isExist, int index) {
+	    	if (index < 0)
+	    		return true;
 	    	if(isExist[index])
 	    		return false;
 	    	isExist[index] = true;
