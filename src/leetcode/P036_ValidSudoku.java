@@ -82,4 +82,9 @@ public class P036_ValidSudoku {
 	    	return true;
 	    }
 	}
+	static class Solution3 {
+		public boolean isValidSudoku(char[][] board) {
+			return false;
+		}
+	}
 }
