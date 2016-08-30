@@ -17,6 +17,8 @@ public class P043_MultiplyStrings {
 	}
 	/*
 	 * 	 一个简单的大数乘法
+	 * 	8 ms
+	 * 	79.50% 
 	 */
 	static class Solution {
 	    public String multiply(String num1, String num2) {
