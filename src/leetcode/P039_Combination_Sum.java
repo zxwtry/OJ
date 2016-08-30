@@ -23,8 +23,12 @@ import java.util.List;
 
 public class P039_Combination_Sum {
 	public static void main(String[] args) {
-		System.out.println(new Solution1().combinationSum(new int[] {1}, 7));
+		System.out.println(new Solution1().combinationSum(new int[] {10, 1, 2, 7, 6, 1, 5, 1, 1, 1, 1}, 8));
 	}
+	/*
+	 * 	6 ms
+	 * 	62.68%
+	 */
 	static class Solution1 {
 		boolean[] isAccess = null;
 		int[] isAnswer = null;
@@ -54,7 +58,7 @@ public class P039_Combination_Sum {
 					ans.add(answer);
 			}
 			for (int i = index; i != candidates.length; i ++) {
-				if (! isAccess[index])
+				if (! isAccess[i])
 					continue;
 				isAnswer[i] ++;
 				searchAllAns(candidates, i, target - candidates[i]);
