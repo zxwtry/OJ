@@ -23,6 +23,8 @@ public class P041_FirstMissingPositive {
 	 * 	先假设没有重复数字
 	 * 	AC了
 	 * 	leetcode 却不告诉时间和排名
+	 * 	1 ms
+	 * 	18.19% 
 	 */
 	static class Solution1 {
 	    public int firstMissingPositive(int[] nums) {
