@@ -13,6 +13,8 @@ public class P042_TrappingRainWater {
 	}
 	/*
 	 * 	AC
+	 * 	2 ms
+	 * 	21.39%
 	 */
 	static class Solution {
 	    public int trap(int[] height) {
