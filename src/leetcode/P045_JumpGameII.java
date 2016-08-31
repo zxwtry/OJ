@@ -57,20 +57,24 @@ public class P045_JumpGameII {
 	/*
 	 * 	5 ms
 	 * 	8.21%
+	 * 	代码非常短，效率非常高
+	 * 	思想非常好，没有陷入必须要到指定的最后的一个位置的陷阱里面
+	 * 	4 ms
+	 * 	13.87%
 	 */
 	static class Solution2 {
 		int jump(int[] nums) {
 			if (nums == null || nums.length < 2)
 				return 0;
-			int ret = 0, curMax = 0, curRch = 0;
-			for (int i = 0; i < nums.length; i++) {
+			int ans = 0, curMax = 0, curRch = 0;
+			for (int i = 0; i != nums.length; i++) {
 				if (curRch < i) {
-					ret++;
+					ans ++;
 					curRch = curMax;
 				}
 				curMax = Math.max(curMax, nums[i] + i);
 			}
-			return ret;
+			return ans;
 		}
 	}
 
