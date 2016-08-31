@@ -22,7 +22,10 @@ public class P044_WildcardMatching {
 	public static void main(String[] args) {
 //		System.out.println(new Solution().isMatch("ab", "?*"));
 //		System.out.println(new Solution().isMatch("aab", "c*a*b"));
-		System.out.println(new Solution().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b"));
+		System.out.println(new Solution3().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b"));
+		System.out.println(new Solution3().isMatch("abcba", "ab*ba"));
+		System.out.println(new Solution3().isMatch("aa", "*"));
+		System.out.println(new Solution3().isMatch("a", "a*"));
 	}
 	/*
 	 * 	还是没有吃透10题
@@ -63,4 +66,41 @@ public class P044_WildcardMatching {
 			}
 		}
 	}
+	/*
+	 * 	自己按照自己的理解去写
+	 * 	还是会TLE
+	 */
+	static class Solution2 {
+		public boolean isMatch(String s, String p) {
+			if (s == null || p == null)
+				return false;
+			if (s.length() == 0 && (p.length() == 0 || p.equals("*")))
+				return true;
+			return isMatch(s.toCharArray(), 0, p.toCharArray(), 0);
+		}
+		public boolean isMatch(char[] s, int si, char[] p, int pi) {
+			if (si >= s.length || pi >= p.length) {
+				boolean isAllStar = true;
+				for (int i = pi; i != p.length; i ++)
+					isAllStar &= '*' == p[i];
+				if (isAllStar)
+					return si == s.length;
+				return s.length  - si == 0 && p.length - pi == 0;
+			}
+			if (p[pi] == '?') {
+				return isMatch(s, si + 1, p, pi + 1);
+			} else if (p[pi] == '*') {
+				boolean matchSince = false;
+				for (int i = si; i <= s.length; i ++)
+					matchSince |= isMatch(s, i, p, pi + 1);
+				return matchSince;
+			} else {
+				if (s[si] == p[pi])
+					return isMatch(s,  si + 1, p, pi + 1);
+				else
+					return false;
+			}
+		}
+	}
+	
 }
