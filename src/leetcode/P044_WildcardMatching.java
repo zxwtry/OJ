@@ -1,5 +1,7 @@
 package leetcode;
 
+
+
 /*
  * 	Implement wildcard pattern matching with support for '?' and '*'.
 	'?' Matches any single character.
@@ -28,14 +30,16 @@ public class P044_WildcardMatching {
 		// System.out.println(new Solution3().isMatch("abcba", "ab*ba"));
 		// System.out.println(new Solution3().isMatch("aa", "*"));
 		// System.out.println(new Solution3().isMatch("a", "a*"));
-		System.out
-				.println(new Solution4().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b"));
-		System.out.println(new Solution4().isMatch("abcba", "ab*ba"));
-		System.out.println(new Solution4().isMatch("aa", "*"));
-		System.out.println(new Solution4().isMatch("a", "a*"));
-		System.out
-				.println(new Solution4().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******a"));
-		System.out.println(new Solution4().isMatch("aaabbba", "a***dfdfdfdfdfdf****a"));
+//		System.out.println(new Solution4().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b"));
+//		System.out.println(new Solution4().isMatch("abcba", "ab*ba"));
+//		System.out.println(new Solution4().isMatch("aa", "*"));
+//		System.out.println(new Solution4().isMatch("a", "a*"));
+//		System.out.println(new Solution4().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******a"));
+//		System.out.println(new Solution4().isMatch("aaabbba", "a***dfdfdfdfdfdf****a"));
+//		System.out.println(new Solution5().isMatch("ab", "?*"));
+		String s = "aaaabaaaabbbbaabbbaabbaababbabbaaaababaaabbbbbbaabbbabababbaaabaabaaaaaabbaabbbbaababbababaabbbaababbbba";
+		String p = "*****b*aba***babaa*bbaba***a*aaba*b*aa**a*b**ba***a*a*";
+		System.out.println(new Solution5().isMatch(s, p));
 	}
 
 	/*
@@ -121,7 +125,6 @@ public class P044_WildcardMatching {
 	 */
 	static class Solution3 {
 		private boolean isTwoStar = false;
-
 		public boolean isMatch(String s, String p) {
 			if (s == null || p == null)
 				return false;
@@ -213,7 +216,7 @@ public class P044_WildcardMatching {
 	 */
 	static class Solution4 {
 		public boolean isMatch(String s, String p) {
-			if (p.length() == 0)
+			if (p == null || p.length() == 0)
 				return s.length() == 0;
 			boolean[] res = new boolean[s.length() + 1];
 			res[0] = true;
@@ -233,6 +236,31 @@ public class P044_WildcardMatching {
 				res[0] = res[0] && p.charAt(j) == '*';
 			}
 			return res[s.length()];
+		}
+	}
+	/*
+	 * 	作弊，使用正则表达式
+	 * 	wo cao这个竟然会TLE
+	 */
+	static class Solution5 {
+		public boolean isMatch(String s, String p) {
+			if (s == null)
+				return p == null;
+			if (p == null)
+				return s == null;
+			StringBuilder st = new StringBuilder(p);
+			for (int i = p.length() - 1; i > -1; i--) {
+				if (st.charAt(i) == '*')
+					st.insert(i, '.');
+				else if (st.charAt(i) == '?')
+					st.setCharAt(i, '.');
+			}
+			System.out.println(st.length());
+			p = st.toString();
+			System.out.println(p);
+			java.util.regex.Pattern r = java.util.regex.Pattern.compile(p);
+			java.util.regex.Matcher m = r.matcher(s);
+			return m.matches();
 		}
 	}
 }
