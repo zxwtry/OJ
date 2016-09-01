@@ -32,4 +32,21 @@ public class P053_MaximumSubarray {
 	        return ans;
 	    }
 	}
+	/*
+	 * 	2 ms
+	 * 	17.12%
+	 */
+	static class Solution2 {
+		int ans = 0, pre = 0;
+	    public int maxSubArray(int[] nums) {
+	    	if (nums == null || nums.length == 0)
+	        	return ans;
+	    	ans = pre = nums[0];
+	        for (int i = 1; i != nums.length; i ++) {
+	        	pre = pre > 0 ? pre + nums[i] : nums[i];
+	        	ans = Math.max(pre, ans);
+	        }
+	    	return ans;
+	    }
+	}
 }
