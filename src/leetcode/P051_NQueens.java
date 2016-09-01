@@ -31,7 +31,7 @@ public class P051_NQueens {
 	public static void main(String[] args) {
 //		Queen queen = new Queen();
 //		queen.backtrack(1);
-		System.out.println(new Solution().solveNQueens(4));
+		System.out.println(new Solution2().solveNQueens(8).size());
 	}
 	/*
 	 * 	4 ms
@@ -68,6 +68,46 @@ public class P051_NQueens {
 					row[index] = i;
 					search(index + 1);
 					col[i] = lup[index + i] = rup[col.length - 1 + index - i] = 0;
+				}
+			}
+		}
+	}
+	/*
+	 * 	3 ms
+	 * 	97.29%
+	 */
+	static class Solution2 {
+		List<List<String>> ans = new LinkedList<List<String>>();
+		boolean[] col = null, rup = null, lup = null;
+		int[] row = null;
+		public List<List<String>> solveNQueens(int n) {
+			if (n < 1)
+				return ans;
+			col = new boolean[n];
+			row = new int[n];
+			rup = new boolean[(n << 1) - 1];
+			lup = new boolean[rup.length];
+			search(0);
+			return ans;
+		}
+		private void search(int index) {
+			if (index == col.length) {
+				List<String> answer = new LinkedList<String>();
+				char[] cs = new char[index];
+				for (int i = 0; i != index; i ++) {
+					for (int j = 0; j != index; j ++)
+						cs[j] = j == row[i] ? 'Q' : '.';
+					answer.add(new String(cs));
+				}
+				ans.add(answer);
+				return;
+			}
+			for (int i = 0; i != col.length; i ++) {
+				if (! col[i] && ! lup[index + i] && ! rup[col.length - 1 + index - i]) {
+					col[i] = lup[index + i] = rup[col.length - 1 + index - i] = true;
+					row[index] = i;
+					search(index + 1);
+					col[i] = lup[index + i] = rup[col.length - 1 + index - i] = false;
 				}
 			}
 		}
