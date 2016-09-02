@@ -124,6 +124,48 @@ public class P056_MergeIntervals {
 	        return ans;
 	    }
 	}
+	/*
+	 * 	16 ms
+	 * 	39.87%
+	 */
+	static class Solution3 {
+		List<Interval> ans = new LinkedList<Interval>();
+	    public List<Interval> merge(List<Interval> intervals) {
+	    	if (intervals == null || intervals.size() == 0)
+	    		return ans;
+	    	HashMap<Integer, Interval> map = new HashMap<Integer, Interval>();
+	    	Iterator<Interval> it = intervals.iterator();
+	    	TreeSet<Integer> set = new TreeSet<Integer>();
+	    	while (it.hasNext()) {
+	    		Interval temp = it.next();
+	    		if (! (map.containsKey(temp.start) && map.get(temp.start).end >= temp.end)) {
+	    			map.put(temp.start, temp);
+	    			set.add(temp.start);
+	    		}
+	    	}
+	    	int end_pre = 0;
+	    	Interval last = null;
+	    	for (int start : set) {
+	    		Interval cur = map.get(start);
+	    		if (last == null) {
+ 	    			last = cur;
+ 	    			end_pre = last.end;
+	    		} else {
+	    			if (cur.start <= end_pre) {
+	    				end_pre = Math.max(end_pre, cur.end);
+	    			} else {
+	    				last.end = end_pre;
+	    				ans.add(last);
+	    				last = cur;
+	    				end_pre = Math.max(end_pre, cur.end);
+	    			}
+	    		}
+	    	}
+	    	last.end = end_pre;
+	    	ans.add(last);
+	        return ans;
+	    }
+	}
 	static class Interval {
 		int start;
 		int end;
