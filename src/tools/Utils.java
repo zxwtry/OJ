@@ -1,5 +1,8 @@
 package tools;
 
+import java.util.Iterator;
+import java.util.List;
+
 import tools.Models.Node;
 
 public class Utils {
@@ -128,6 +131,24 @@ public class Utils {
 				System.out.print(arr[i][j] + "\t");
 			}
 			System.out.println();
+		}
+	}
+	public static void B_打印List_String(List<String> list) {
+		Iterator<String> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+	}
+	public static void B_打印List_Integer(List<Integer> list) {
+		Iterator<Integer> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+	}
+	public static void B_打印List_Object(List<Object> list) {
+		Iterator<Object> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next().toString());
 		}
 	}
 	// 打印区结束
