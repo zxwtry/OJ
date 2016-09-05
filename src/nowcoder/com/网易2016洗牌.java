@@ -41,6 +41,9 @@ import java.util.Scanner;
 
 
 public class 网易2016洗牌 {
+	public static void main(String[] args) throws FileNotFoundException {
+		Solution2.main(null);
+	}
 	/*
 	 * 	毫无疑问TLE
 	 */
@@ -72,6 +75,35 @@ public class 网易2016洗牌 {
 				arr[j --] = temp[i2 --];
 				arr[j --] = temp[i1 --];
 			}
+		}
+	}
+	/*
+	 * 	AC了，代码好巧，好短
+	 */
+	static class Solution2 {
+		static int n;
+		static int[] arr = null, temp = null;
+		public static void main(String[] args) throws FileNotFoundException {
+			Scanner scan = new Scanner(new File("C:/data/wy.txt"));
+			int times = scan.nextInt();
+			while (times-- > 0) {
+				n = scan.nextInt();
+				int k = scan.nextInt();
+				arr = new int[n << 1];
+				temp = new int[arr.length];
+				for(int i=0; i < 2*n; i ++){
+	                int tmp = i + 1;
+	                for(int j = 0; j < k; j ++){
+	                    if (tmp <= n) tmp = 2*tmp - 1;
+	                    else tmp = 2 * (tmp - n);
+	                }
+	                arr[tmp - 1]=scan.nextInt();
+	            }
+				for (int i = 0; i < arr.length - 1; i ++)
+					System.out.printf("%d ", arr[i]);
+				System.out.println(arr[arr.length - 1]);
+			}
+			scan.close();
 		}
 	}
 }
