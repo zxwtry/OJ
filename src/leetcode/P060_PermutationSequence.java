@@ -66,5 +66,39 @@ public class P060_PermutationSequence {
 	    		jiecheng[i] = i * jiecheng[i - 1];
 	    }
 	}
-	
+	/*
+	 * 	让代码更加简洁
+	 * 	计算逻辑没有任何改变
+	 * 	少用了一个长度为N的数组
+	 * 	但是更慢了。。。。
+	 * 	3 ms
+	 * 	26.31%
+	 */
+	static class Solution2 {
+		int[] jiecheng = null;
+		char[] cs = null;
+	    public String getPermutation(int n, int k) {
+	    	if (n < 1)
+	    		return "";
+	    	k --;
+	    	generateJiecheng(n);
+	    	cs = new char[n];
+	    	Vector<Integer> v = new Vector<Integer>(n);
+	    	for (int i = 0; i != n; i ++)
+	    		v.add(i);
+	    	for (int i = 0; i != n; i ++) {
+	    		int v_index = k / jiecheng[n - 1- i];
+	    		cs[i] = (char)('1' + v.get(v_index));
+	    		k = k % jiecheng[n - 1- i];
+	    		v.remove(v_index);
+	    	}
+	        return new String(cs);
+	    }
+	    void generateJiecheng(int n) {
+	    	jiecheng = new int[n];
+	    	jiecheng[0] = 1;
+	    	for (int i = 1; i != n; i ++)
+	    		jiecheng[i] = i * jiecheng[i - 1];
+	    }
+	}
 }
