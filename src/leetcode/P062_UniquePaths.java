@@ -43,4 +43,22 @@ public class P062_UniquePaths {
 	        return route[m - 1][n - 1];
 	    }
 	}
+	/*
+	 * 	1 ms
+	 *  5.22% 
+	 */
+	static class Solution2 {
+	    public int uniquePaths(int m, int n) {
+	    	if (m < 1 || n < 1)
+	    		return 0;
+	    	if (m > n)
+	    		return uniquePaths(n, m);
+	        int[] route = new int[m];
+	        Arrays.fill(route, 1);
+	        for (int i = 1; i < n; i ++)
+	        	for (int j = 1; j < m; j ++)
+	        		route[j] += route[j - 1];
+	        return route[m - 1];
+	    }
+	}
 }
