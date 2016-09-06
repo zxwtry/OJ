@@ -1,4 +1,4 @@
-package nowcoder.com;
+package leetcode;
 
 import tools.ListNode辅助.*;
 
