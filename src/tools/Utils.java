@@ -156,6 +156,13 @@ public class Utils {
 			System.out.println(it.next());
 		}
 	}
+	public static void B_打印List_Integer_OneLine(List<Integer> list) {
+		Iterator<Integer> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.print(it.next() + " ");
+		}
+		System.out.println();
+	}
 	public static void B_打印List_Object(List<Object> list) {
 		Iterator<Object> it = list.iterator();
 		while (it.hasNext()) {
