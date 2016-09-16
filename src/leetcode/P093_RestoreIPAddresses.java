@@ -18,12 +18,15 @@ import java.util.List;
 
 public class P093_RestoreIPAddresses {
 	public static void main(String[] args) {
-//		List<String> ans = new Solution().restoreIpAddresses("25525511135");
-//		List<String> ans = new Solution().restoreIpAddresses("255255255255");
-//		List<String> ans = new Solution().restoreIpAddresses("1231231231");
-//		List<String> ans = new Solution().restoreIpAddresses("10004");
-		List<String> ans = new Solution().restoreIpAddresses("010010");
+//		List<String> ans = new Solution2().restoreIpAddresses("25525511135");
+//		List<String> ans = new Solution2().restoreIpAddresses("255255255255");
+//		List<String> ans = new Solution2().restoreIpAddresses("1231231231");
+		List<String> ans = new Solution2().restoreIpAddresses("1234");
+//		List<String> ans = new Solution2().restoreIpAddresses("0000");
+//		List<String> ans = new Solution2().restoreIpAddresses("11234");
+//		List<String> ans = new Solution2().restoreIpAddresses("010010");
 		tools.Utils.B_打印List_String(ans);
+		
 	}
 	static class Solution {
 		List<String> ans = new LinkedList<String>();
@@ -39,9 +42,34 @@ public class P093_RestoreIPAddresses {
 	    		cs[i] = s.charAt(i) - '0';
 	    	}
 	    	Arrays.fill(choice, - 1); 
-	    	choice[0] = cs[0];
-	    	choice[11] = cs[cs.length - 1];
-	    	search(1, 10, 1, 1, cs.length - 2, 1);
+	    	int first_not_zero = 0;
+	    	while (true) {
+	    		if (first_not_zero > 3 || cs[first_not_zero] != 0) {
+	    			break;
+	    		} else {
+	    			first_not_zero ++;
+	    		}
+	    	}
+	    	if (cs.length == 4) {
+		    	if (first_not_zero == 4) {
+	    			ans.add("0.0.0.0");
+	    			return ans;
+		    	} else {
+		    		ans.add(String.format("%d.%d.%d.%d", cs[0], cs[1], cs[2], cs[3]));
+		    		return ans;
+		    	}
+    		} else if (first_not_zero == 0) {
+		    	choice[0] = cs[0];
+		    	choice[11] = cs[cs.length - 1];
+		    	search(1, 10, 1, 1, cs.length - 2, 1);
+	    	} else {
+	    		for (int i = 0; i < first_not_zero * 3; i ++) {
+	    			choice[i] = 0;
+	    		}
+	    		choice[3 * first_not_zero] = cs[first_not_zero];
+	    		choice[11] = cs[cs.length - 1];
+	    		search(3 * first_not_zero + 1, 10, 3 * first_not_zero + 1, first_not_zero + 1, cs.length - 2, first_not_zero + 1);
+	    	}
 	        return ans;
 	    }
 	    // chi,chj : choice的开始和结束index
@@ -68,13 +96,21 @@ public class P093_RestoreIPAddresses {
 	    		parts[i] = 0;
 		    	int index = i * 3;
 		    	boolean isAll_blank = true;
+		    	int this_count = 0;
 		    	for (int j = 0; j < 3; j ++) {
 		    		if (choice[index + j] == -1) {
 		    			continue;
 		    		}
 		    		isAll_blank = false;
+		    		this_count ++;
 		    		count ++;
+		    		if (j != 0 && parts[i] == 0 && choice[index + j] != 0) {
+		    			return false;
+		    		}
 		    		parts[i] = parts[i] * 10 + choice[index + j];
+		    	}
+		    	if (parts[i] == 0 && this_count != 1) {
+		    		count -= (this_count - 1);
 		    	}
 		    	if (isAll_blank) {
 		    		return false;
@@ -90,5 +126,44 @@ public class P093_RestoreIPAddresses {
 	    	}
 	    	return true;
 	    }
+	}
+	static class Solution2 {
+		List<String> ans = new LinkedList<String>();
+		int[] ar = null, ch = null;		// ar是输入的int[]版，ch是选择的12个数字中的一个
+		int count = 0, arJ = 0, this_count = 0, del_count = 0;
+		public List<String> restoreIpAddresses(String s) {
+			if (s == null || s.length() < 4 || s.length() > 12) {
+	    		return ans;
+	    	}
+			ar = new int[s.length()];
+			ch = new int[12];
+			arJ = ar.length - 1;
+			for (int  i = 0; i < ar.length; i ++) {
+				ar[i] = s.charAt(i) - '0';
+			}
+			Arrays.fill(ch, -1);
+			ch[0] = ar[0];
+			ch[ch.length - 1] = ar[ar.length - 1];
+			int ar_min = 1, ar_max = ar.length - 2, ar_i = 1;
+			int ch_min = 1, ch_max = ch.length - 2, ch_i = 1;
+			search(ar_i, ch_min, ch_max);
+			return ans;
+		}
+		// [ar_min, ar_max]  [ch_min, ch_max]
+		void search(int ar_i, int ch_min, int ch_max) {
+			if (this_count >= ar.length - 2) {
+				System.out.printf("第\t%d\t次数据\r\n", del_count ++);
+				tools.Utils.printArray(ar, 20);
+				tools.Utils.printArray(ch, 20);
+				return;
+			}
+			for (int ch_now = ch_min; ch_now <= ch_max; ch_now ++) {
+				ch[ch_now] = ar[ar_i];
+				this_count ++;
+				search(ar_i + 1, ch_now + 1, ch_max);
+				this_count --;
+				ch[ch_now] = -1;
+			}
+		}
 	}
 }
