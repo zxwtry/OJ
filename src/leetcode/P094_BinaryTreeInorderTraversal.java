@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
-import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
-
-import jdk.nashorn.internal.runtime.regexp.joni.constants.StackPopLevel;
 import tools.TreeNode辅助.TreeNode;;
 
 /*
@@ -39,7 +36,7 @@ public class P094_BinaryTreeInorderTraversal {
 		t1.right = t4;
 		t2.left = t5;
 		t2.right = t6;
-		List<Integer> ans = new Solution4().inorderTraversal(t0);
+		List<Integer> ans = new Solution5().inorderTraversal(t0);
 		tools.Utils.B_打印List_Integer(ans);
 	}
 	/*
@@ -136,6 +133,31 @@ public class P094_BinaryTreeInorderTraversal {
 		}
 	}
 	/*
-	 * 	写了一个中序遍历
+	 * 	写了一个后序遍历
 	 */
+	static class Solution5 {
+		List<Integer> ans = new LinkedList<>();
+		public List<Integer> inorderTraversal(TreeNode root) {
+			if (null == root) {
+				return ans;
+			}
+			Stack<TreeNode> stack1 = new Stack<>();
+			Stack<TreeNode> stack2 = new Stack<>();
+			stack1.push(root);
+			while (! stack1.isEmpty()) {
+				TreeNode root_now = stack1.pop();
+				stack2.push(root_now);
+				if (null != root_now.left) {
+					stack1.push(root_now.left);
+				}
+				if (null != root_now.right) {
+					stack1.push(root_now.right);
+				}
+			}
+			while (! stack2.isEmpty()) {
+				ans.add(stack2.pop().val);
+			}
+			return ans;
+		}
+	}
 }
