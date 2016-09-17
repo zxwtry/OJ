@@ -7,6 +7,7 @@ import java.util.Stack;
 
 import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
 
+import jdk.nashorn.internal.runtime.regexp.joni.constants.StackPopLevel;
 import tools.TreeNode辅助.TreeNode;;
 
 /*
@@ -121,16 +122,20 @@ public class P094_BinaryTreeInorderTraversal {
 			Stack<TreeNode> stack = new Stack<>();
 			stack.push(root);
 			while (! stack.isEmpty()) {
-				TreeNode root_now = stack.pop();
-				ans.add(root_now.val);
-				if (root_now.left != null) {
+				TreeNode root_now = stack.peek();
+				if (null != root_now.left && root != root_now.left && root != root_now.right) {
 					stack.push(root_now.left);
-				}
-				if (root_now.right != null) {
+				} else if (null != root_now.right && root != root_now.right) {
 					stack.push(root_now.right);
+				} else {
+					ans.add(stack.pop().val);
+					root = root_now;
 				}
 			}
 			return ans;
 		}
 	}
+	/*
+	 * 	写了一个中序遍历
+	 */
 }
