@@ -19,14 +19,14 @@ import java.util.List;
 public class P093_RestoreIPAddresses {
 	public static void main(String[] args) {
 //		List<String> ans = new Solution2().restoreIpAddresses("25525511135");
+		List<String> ans = new Solution2().restoreIpAddresses("2552552563");
 //		List<String> ans = new Solution2().restoreIpAddresses("255255255255");
 //		List<String> ans = new Solution2().restoreIpAddresses("1231231231");
-		List<String> ans = new Solution2().restoreIpAddresses("1234");
+//		List<String> ans = new Solution2().restoreIpAddresses("1234");
 //		List<String> ans = new Solution2().restoreIpAddresses("0000");
 //		List<String> ans = new Solution2().restoreIpAddresses("11234");
 //		List<String> ans = new Solution2().restoreIpAddresses("010010");
 		tools.Utils.B_打印List_String(ans);
-		
 	}
 	static class Solution {
 		List<String> ans = new LinkedList<String>();
@@ -127,10 +127,16 @@ public class P093_RestoreIPAddresses {
 	    	return true;
 	    }
 	}
+	/*
+	 * 	AC
+	 * 	需要更加简化逻辑，现在的逻辑还是太复杂了.
+	 * 	11 ms
+	 */
 	static class Solution2 {
 		List<String> ans = new LinkedList<String>();
 		int[] ar = null, ch = null;		// ar是输入的int[]版，ch是选择的12个数字中的一个
 		int count = 0, arJ = 0, this_count = 0, del_count = 0;
+		HashSet<String> set = new HashSet<>();
 		public List<String> restoreIpAddresses(String s) {
 			if (s == null || s.length() < 4 || s.length() > 12) {
 	    		return ans;
@@ -144,17 +150,19 @@ public class P093_RestoreIPAddresses {
 			Arrays.fill(ch, -1);
 			ch[0] = ar[0];
 			ch[ch.length - 1] = ar[ar.length - 1];
-			int ar_min = 1, ar_max = ar.length - 2, ar_i = 1;
-			int ch_min = 1, ch_max = ch.length - 2, ch_i = 1;
+			int ar_i = 1;
+			int ch_min = 1, ch_max = ch.length - 2;
 			search(ar_i, ch_min, ch_max);
 			return ans;
 		}
 		// [ar_min, ar_max]  [ch_min, ch_max]
 		void search(int ar_i, int ch_min, int ch_max) {
 			if (this_count >= ar.length - 2) {
-				System.out.printf("第\t%d\t次数据\r\n", del_count ++);
-				tools.Utils.printArray(ar, 20);
-				tools.Utils.printArray(ch, 20);
+				if (judge()) {
+					System.out.printf("第\t%d\t次数据\r\n", del_count ++);
+					tools.Utils.printArray(ar, 20);
+					tools.Utils.printArray(ch, 20);
+				}
 				return;
 			}
 			for (int ch_now = ch_min; ch_now <= ch_max; ch_now ++) {
@@ -164,6 +172,51 @@ public class P093_RestoreIPAddresses {
 				this_count --;
 				ch[ch_now] = -1;
 			}
+		}
+		boolean judge() {
+			boolean isAllFailue = false;
+			StringBuilder st = new StringBuilder(16);
+			for (int i = 0; ! isAllFailue && i < 4; i ++) {
+				int base = i * 3;
+				if (ch[base + 0] == -1 && ch[base + 1] == -1 && ch[base + 2] == -1) {
+					isAllFailue = true;
+					continue;
+				} else if (ch[base + 0] == 0 && (ch[base + 1] != 0 && ch[base + 1] != -1)) {
+					isAllFailue = true;
+					continue;
+				} else if (ch[base + 0] == 0 && ch[base + 1] == 0 && ch[base + 2] != -1) {
+					isAllFailue = true;
+					continue;
+				}
+				int value = 0;
+				boolean isFirstNot_N_1 = false;
+				for (int j = 0; ! isAllFailue && j < 3; j ++) {
+					if (ch[base + j] != -1) {
+						int temp = value * 10 + ch[base + j];
+						if (!isFirstNot_N_1 || (temp != value && value != 0)) {
+							value = temp;
+						} else {
+							isAllFailue = true;
+						}
+						isFirstNot_N_1 = true;
+					}
+				}
+				if (value < 0 || value > 255) {
+					isAllFailue = true;
+				}
+				st.append(i == 0 ? "" : ".");
+				st.append(value);
+			}
+			if (isAllFailue) {
+				return false;
+			}
+			String now = st.toString();
+			if (! set.contains(now)) {
+				ans.add(now);
+				set.add(now);
+				return true;
+			}
+			return false;
 		}
 	}
 }
