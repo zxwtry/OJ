@@ -36,7 +36,7 @@ public class P094_BinaryTreeInorderTraversal {
 		t1.right = t4;
 		t2.left = t5;
 		t2.right = t6;
-		List<Integer> ans = new Solution5().inorderTraversal(t0);
+		List<Integer> ans = new Solution6().inorderTraversal(t0);
 		tools.Utils.B_打印List_Integer(ans);
 	}
 	/*
@@ -156,6 +156,29 @@ public class P094_BinaryTreeInorderTraversal {
 			}
 			while (! stack2.isEmpty()) {
 				ans.add(stack2.pop().val);
+			}
+			return ans;
+		}
+	}
+	/*
+	 * 	写了一个中序遍历
+	 */
+	static class Solution6 {
+		List<Integer> ans = new LinkedList<Integer>();
+		public List<Integer> inorderTraversal(TreeNode root) {
+			if (null == root) {
+				return ans;
+			}
+			Stack<TreeNode> stack = new Stack<TreeNode>();
+			while (! stack.isEmpty() || root != null) {
+				if (null != root) {
+					stack.push(root);
+					root = root.left;
+				} else {
+					root = stack.pop();
+					ans.add(root.val);
+					root = root.right;
+				}
 			}
 			return ans;
 		}
