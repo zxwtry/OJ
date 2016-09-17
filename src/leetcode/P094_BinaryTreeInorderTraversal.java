@@ -2,6 +2,7 @@ package leetcode;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import tools.TreeNode辅助.TreeNode;;
 
@@ -21,7 +22,21 @@ import tools.TreeNode辅助.TreeNode;;
 
 public class P094_BinaryTreeInorderTraversal {
 	public static void main(String[] args) {
-		
+		TreeNode t0 = new TreeNode(0);
+		TreeNode t1 = new TreeNode(1);
+		TreeNode t2 = new TreeNode(2);
+		TreeNode t3 = new TreeNode(3);
+		TreeNode t4 = new TreeNode(4);
+		TreeNode t5 = new TreeNode(5);
+		TreeNode t6 = new TreeNode(6);
+		t0.left = t1;
+		t0.right = t2;
+		t1.left = t3;
+		t1.right = t4;
+		t2.left = t5;
+		t2.right = t6;
+		List<Integer> ans = new Solution2().inorderTraversal(t0);
+		tools.Utils.B_打印List_Integer(ans);
 	}
 	/*
 	 * 	AC
@@ -41,6 +56,30 @@ public class P094_BinaryTreeInorderTraversal {
 	    	in(root.left);
 	    	ans.add(root.val);
 	    	in(root.right);
+	    }
+	}
+	/*
+	 * 	写了一个层序遍历
+	 */
+	static class Solution2 {
+		List<Integer> ans = new LinkedList<Integer>();
+    	Queue<TreeNode> queue = new LinkedList<TreeNode>();
+	    public List<Integer> inorderTraversal(TreeNode root) {
+	    	if (root == null) {
+	    		return ans;
+	    	}
+	    	queue.add(root);
+	    	while (! queue.isEmpty()) {
+	    		TreeNode root_now = queue.poll();
+	    		ans.add(root_now.val);
+	    		if (root_now.left != null) {
+	    			queue.add(root_now.left);
+	    		}
+	    		if (root_now.right != null) {
+		    		queue.add(root_now.right);
+	    		}
+	    	}
+	        return ans;
 	    }
 	}
 }
