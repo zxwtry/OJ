@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class P096_UniqueBinarySearchTrees {
 	public static void main(String[] args) {
 		for (int i = 1; i < 30; i ++) {
-			System.out.println(i + "..." + new Solution().numTrees(i));
+			System.out.println(i + "..." + new Solution2().numTrees(i));
 		}
 	}
 	/*
@@ -53,5 +53,34 @@ public class P096_UniqueBinarySearchTrees {
 	    	}
 	    	return this_count;
 	    }
+	}
+	/*
+	 * 	正确的AC姿势
+	 */
+	static class Solution2 {
+		long[] arr = null;
+		public int numTrees(int n) {
+			arr = new long[n > 20 ? n+1 : 21];
+			Arrays.fill(arr, -1);
+			arr[0] = 1;
+	    	arr[1] = 1;
+	    	arr[2] = 2;
+	    	generateTrees(1, n);
+			return (int)arr[n];
+		}
+		void generateTrees(int sti, int eni) {
+			if (arr[eni - sti + 1] == -1) {
+				long this_arr = 0;
+				for (int i = sti; i <= eni; i ++) {
+					generateTrees(1, i - sti);
+					generateTrees(1, eni - i);
+					this_arr += arr[i - sti] * arr[eni - i];
+				}
+				arr[eni - sti + 1] = this_arr;
+			}
+		}
+		long getArr(int index) {
+			return index <= 0 ? arr[0] : arr[index];
+		}
 	}
 }
