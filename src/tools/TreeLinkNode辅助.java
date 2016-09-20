@@ -1,5 +1,7 @@
 package tools;
 
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class TreeLinkNode辅助 {
 	public static class TreeLinkNode {
@@ -34,5 +36,37 @@ public class TreeLinkNode辅助 {
 			}
 		}
 		return tree_arr[0];
+	}
+	public static void B_按层打印(TreeLinkNode root) {
+		if (root == null) {
+			System.out.println("输入的TreeNode为null");
+			return;
+		}
+		Queue<TreeLinkNode> q = new LinkedList<TreeLinkNode>();
+		Queue<Integer> q_int = new LinkedList<Integer>();
+		q.add(root);
+		q_int.add(1);
+		int pre_int = -1;
+		while (! q.isEmpty()) {
+			TreeLinkNode root_now = q.poll();
+			int q_now = q_int.poll();
+			if (q_now != pre_int) {
+				if (pre_int == -1)
+					System.out.printf("第%02d层\t",q_now);
+				else
+					System.out.printf("\r\n第%02d层\t",q_now);
+				pre_int = q_now;
+			}
+			System.out.print(root_now.val+String.format("(%d)", root_now.next == null ? 0 : root_now.next.val)+"\t");
+			if (root_now.left != null) {
+				q.add(root_now.left);
+				q_int.add(q_now + 1);
+			}
+			if (root_now.right != null) {
+				q.add(root_now.right);
+				q_int.add(q_now + 1);
+			}
+		}
+		System.out.println();
 	}
 }
