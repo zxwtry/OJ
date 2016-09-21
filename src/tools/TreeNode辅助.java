@@ -4,16 +4,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class TreeNode辅助 {
-	public static void main(String[] args) {
-		TreeNode root = A_生成满二叉树(new int[] {0, 1, 2, 3, 4, 5, 6});
-		B_按层打印(root);
-	}
 	/*
 	 * 	使用Integer.MIN_VALUE作为null的标志
 	 */
 	public static TreeNode A_生成满二叉树(int[] arr) {
 		if (arr == null || arr.length == 0) {
 			return null;
+		}
+		if (arr.length == 1) {
+			return new TreeNode(arr[0]);
 		}
 		int judge = arr.length + 1, count_1 = 0;
 		while (judge != 0) {
@@ -50,7 +49,10 @@ public class TreeNode辅助 {
 			TreeNode root_now = q.poll();
 			int q_now = q_int.poll();
 			if (q_now != pre_int) {
-				System.out.printf("\r\n现在开始第%d层\t",q_now);
+				if (pre_int == -1)
+					System.out.printf("现在开始第%d层\t",q_now);
+				else
+					System.out.printf("\r\n现在开始第%d层\t",q_now);
 				pre_int = q_now;
 			}
 			System.out.print(root_now.val+"\t");
@@ -63,6 +65,7 @@ public class TreeNode辅助 {
 				q_int.add(q_now + 1);
 			}
 		}
+		System.out.println();
 	}
 	public static class TreeNode {
 		public int val;

@@ -153,7 +153,7 @@ public class P011_ContainerWithMostWater {
 	        }
 	        return sti;
 		}
-		private int binarySearchDown(int[] vai, int sti, int eni, int v) {
+		int binarySearchDown(int[] vai, int sti, int eni, int v) {
 			int mid = 0;
 			while (sti < eni) {
 				mid = (((sti + eni) & 0x1)  == 0) ? (sti + eni) >>> 1 : ((sti + eni) >>> 1) + 1;
