@@ -1,6 +1,8 @@
 package tools;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import tools.Models.Node;
@@ -169,5 +171,37 @@ public class Utils {
 			System.out.println(it.next().toString());
 		}
 	}
+	public static void B_打印List_List_Integer__(List<List<Integer>> list) {
+		Iterator<List<Integer>> it = list.iterator();
+		while (it.hasNext()) {
+			B_打印List_Integer_OneLine(it.next());
+		}
+	}
 	// 打印区结束
+	// 生成区开始
+	public static List<List<Integer>> C_生成List_List_Integer__从二维数组(int[][] num) {
+		if (num == null) {
+			return new LinkedList<List<Integer>>();
+		}
+		List<List<Integer>> ans = new ArrayList<>(num.length);
+		for (int i = 0; i < num.length; i ++) {
+			List<Integer> this_list = new ArrayList<Integer>(Math.max(num[i].length, 1));
+			for (int j = 0; j < num[i].length; j ++) {
+				this_list.add(num[i][j]);
+			}
+			ans.add(this_list);
+		}
+		return ans;
+	}
+	public static List<Integer> C_生成List_Integer_从一维数组(int[] num) {
+		if (num == null) {
+			return new ArrayList<>();
+		}
+		List<Integer> ans = new ArrayList<>(num.length);
+		for (int i = 0; i < num.length; i ++) {
+			ans.add(num[i]);
+		}
+		return ans;
+	}
+	// 生成区结束
 }
