@@ -16,14 +16,16 @@ import java.util.ArrayList;
 
 public class P123_BestTimetoBuyandSellStockIII {
 	public static void main(String[] args) {
-		Solution s = new Solution();
-//		System.out.println(s.maxProfit(new int[] {7, 1, 5, 3, 6, 4}));
-//		System.out.println(s.maxProfit(new int[] {9, 1, 2, 3, 4, 2, 3, 4, 3, 4}));
-//		System.out.println(s.maxProfit(new int[] {1, 2, 0, 3}));
-//		System.out.println(s.maxProfit(new int[] {1, 2, 3, 2, 7, 0, 100}));
-//		System.out.println(s.maxProfit(new int[] {1, 2, 3, 2, 7, 0, 4, 3, 100}));
-//		System.out.println(s.maxProfit(new int[] {9, 8, 7, 6}));
+		Solution3 s = new Solution3();
+		System.out.println(s.maxProfit(new int[] {}));
+		System.out.println(s.maxProfit(new int[] {7, 1, 5, 3, 6, 4}));
+		System.out.println(s.maxProfit(new int[] {9, 1, 2, 3, 4, 2, 3, 4, 3, 4}));
+		System.out.println(s.maxProfit(new int[] {1, 2, 0, 3}));
+		System.out.println(s.maxProfit(new int[] {1, 2, 3, 2, 7, 0, 100}));
+		System.out.println(s.maxProfit(new int[] {1, 2, 3, 2, 7, 0, 4, 3, 100}));
+		System.out.println(s.maxProfit(new int[] {9, 8, 7, 6}));
 		System.out.println(s.maxProfit(new int[] {1, 2}));
+		System.out.println(s.maxProfit(new int[] {1,9,2,8,3,7,4,6,5}));
 	}
 	/*
 	 * 	一次WA
@@ -83,6 +85,38 @@ public class P123_BestTimetoBuyandSellStockIII {
 	    		}
 	    	}
 	        return ans;
+	    }
+	}
+	/*
+	 * 	7 ms
+	 * 	9.48%
+	 */
+	static class Solution2 {
+	    public int maxProfit(int[] prices) {
+	    	if (prices == null || prices.length == 0) {
+	    		return 0;
+	    	}
+	    	int ans = 0;
+	    	int[] forward = new int[prices.length];
+	    	int forward_min = Integer.MAX_VALUE;
+	    	for (int i = 0; i < prices.length; i ++) {
+	    		forward_min = Math.min(forward_min, prices[i]);
+	    		if (i != 0) {
+	    			forward[i] = Math.max(prices[i] - forward_min, forward[i - 1]);
+	    		}
+	    	}
+		    int[] backward = new int[prices.length];
+		    int backward_max = Integer.MIN_VALUE;
+		    for (int i = prices.length - 1; i > - 1; i --) {
+		    	backward_max = Math.max(backward_max, prices[i]);
+		    	if (i != prices.length - 1) {
+		    		backward[i] = Math.max(backward_max - prices[i], backward[i + 1]);
+		    	}
+		    }
+		    for (int i = 0; i < prices.length; i ++) {
+		    	ans = Math.max(ans, forward[i] + backward[i]);
+		    }
+	    	return ans;
 	    }
 	}
 }
