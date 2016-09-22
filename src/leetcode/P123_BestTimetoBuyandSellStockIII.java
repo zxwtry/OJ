@@ -119,4 +119,35 @@ public class P123_BestTimetoBuyandSellStockIII {
 	    	return ans;
 	    }
 	}
+	/*
+	 * 	可以更快的
+	 * 	7 ms
+	 * 	9.48%
+	 */
+	static class Solution3 {
+	    public int maxProfit(int[] prices) {
+	    	if (prices == null || prices.length == 0) {
+	    		return 0;
+	    	}
+	    	int ans = 0;
+	    	int[] forward = new int[prices.length];
+	    	int forward_min = Integer.MAX_VALUE;
+	    	for (int i = 0; i < prices.length; i ++) {
+	    		forward_min = Math.min(forward_min, prices[i]);
+	    		if (i != 0) {
+	    			forward[i] = Math.max(prices[i] - forward_min, forward[i - 1]);
+	    		}
+	    	}
+		    int backward = 0;
+		    int backward_max = Integer.MIN_VALUE;
+		    for (int i = prices.length - 1; i > - 1; i --) {
+		    	backward_max = Math.max(backward_max, prices[i]);
+		    	if (i != prices.length - 1) {
+		    		backward = Math.max(backward_max - prices[i], backward);
+		    	}
+		    	ans = Math.max(ans, forward[i] + backward);
+		    }
+	    	return ans;
+	    }
+	}
 }
