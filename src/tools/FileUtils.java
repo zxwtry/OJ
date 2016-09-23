@@ -1,6 +1,8 @@
 package tools;
 
 import java.io.File;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class FileUtils {
@@ -30,6 +32,29 @@ public class FileUtils {
 			if (scan != null) {
 				scan.close();
 			}
+		}
+		return ans;
+	}
+	public static String[] A_读取一维数组(String path) {
+		LinkedList<String> list = new LinkedList<>();
+		Scanner scan =   null;
+		try {
+			scan = new Scanner(new File(path));
+			while (scan.hasNext()) {
+				list.add(scan.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (scan != null) {
+				scan.close();
+			}
+		}
+		String[] ans = new String[list.size()];
+		Iterator<String> it = list.iterator();
+		int count = 0;
+		while (it.hasNext()) {
+			ans[count ++] = it.next();
 		}
 		return ans;
 	}
