@@ -146,6 +146,16 @@ public class Utils {
 			System.out.println();
 		}
 	}
+	public static void A_打印二维char数组(char[][] arr) {
+		if (arr == null || arr.length < 1)
+			return;
+		for (int i = 0; i != arr.length; i ++) {
+			for (int j = 0; j != arr[i].length; j ++) {
+				System.out.print(arr[i][j] + "\t");
+			}
+			System.out.println();
+		}
+	}
 	public static void B_打印List_String(List<String> list) {
 		Iterator<String> it = list.iterator();
 		while (it.hasNext()) {
