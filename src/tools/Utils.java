@@ -172,6 +172,13 @@ public class Utils {
 			System.out.println(it.next());
 		}
 	}
+	public static void B_打印List_String_OneLine(List<String> list) {
+		Iterator<String> it = list.iterator();
+		while (it.hasNext()) {
+			System.out.print(it.next() + "\t");
+		}
+		System.out.println();
+	}
 	public static void B_打印List_Integer(List<Integer> list) {
 		Iterator<Integer> it = list.iterator();
 		while (it.hasNext()) {
