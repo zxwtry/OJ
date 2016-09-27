@@ -28,7 +28,7 @@ public class P134_GasStation {
 //				3,4
 				4, 4, 4
 		};
-		Solution s = new Solution();
+		Solution2 s = new Solution2();
 		System.out.println(s.canCompleteCircuit(gas, cost));
 	}
 	/*
@@ -64,6 +64,49 @@ public class P134_GasStation {
 	    		gas_total += gas[i_tralvel] - cost[i_tralvel];
 	    		if (gas_total < 0) {
 	    			return false;
+	    		}
+	    		i_tralvel = next_i(i_tralvel);
+	    	}
+		}
+		int next_i(int i) {
+	    	return (i + 1) % len;
+	    }
+	}
+	/*
+	 * 	必须低于O(N^2)才能AC
+	 * 	1 ms
+	 * 	10.61%
+	 */
+	static class Solution2 {
+		int len = 0;
+	    public int canCompleteCircuit(int[] gas, int[] cost) {
+	    	if (gas == null || cost == null || 
+	    			gas.length != cost.length || gas.length == 0) {
+	    		return -1;
+	    	}
+	    	len = gas.length;
+	    	if (len == 1) {
+	    		return gas[0] >= cost[0] ? 0 : -1;
+	    	}
+	    	for (int i = 0; i < len; i ++) {
+	    		int save_false = search(i, gas, cost);
+	    		if (save_false == -1) {
+	    			return i;
+	    		}
+	    		i = Math.max(i, save_false);
+	    	}
+	        return - 1;
+	    }
+	    private int search(int i, int[] gas, int[] cost) {
+	    	int gas_total = 0;
+	    	int i_tralvel = i;
+	    	while (true) {
+	    		if (next_i(i_tralvel) == i) {
+	    			return gas_total + gas[i_tralvel] - cost[i_tralvel] >= 0 ? -1 : i_tralvel;
+	    		}
+	    		gas_total += gas[i_tralvel] - cost[i_tralvel];
+	    		if (gas_total < 0) {
+	    			return i_tralvel;
 	    		}
 	    		i_tralvel = next_i(i_tralvel);
 	    	}
