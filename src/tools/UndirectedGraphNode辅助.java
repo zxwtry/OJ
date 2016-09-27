@@ -50,4 +50,26 @@ public class UndirectedGraphNode辅助 {
 		}
 		return root;
 	}
+	/*
+	 * 	打印所有
+	 */
+	public static void B_以邻接表的方式打印无向图 (UndirectedGraphNode root) {
+		Queue<UndirectedGraphNode> q = new LinkedList<UndirectedGraphNode>();
+		HashSet<Integer> set = new HashSet<>();
+		q.add(root);
+		while (! q.isEmpty()) {
+			UndirectedGraphNode root_now = q.poll();
+			if (set.contains(root_now.label)) {
+				continue;
+			} else {
+				set.add(root_now.label);
+			}
+			System.out.print(root_now.label + ",");
+			for (UndirectedGraphNode neighbor : root_now.neighbors) {
+				System.out.print(neighbor.label + ",");
+				q.add(neighbor);
+			}
+			System.out.println();
+		}
+	}
 }
