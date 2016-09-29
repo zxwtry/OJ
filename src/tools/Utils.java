@@ -231,4 +231,15 @@ public class Utils {
 		return ans;
 	}
 	// 生成区结束
+	public static String LEETCODE_int_array_序列化_(int[] arr) {
+		StringBuilder st = new StringBuilder(arr.length * 3 + 5);
+		st.append("[");
+		for (int i = 0; i < arr.length; i ++) {
+			st.append(arr[i]);
+			if (i != arr.length - 1)
+				st.append(", ");
+		}
+		st.append("]");
+		return st.toString();
+	}
 }
