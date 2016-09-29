@@ -1,8 +1,5 @@
 package leetcode;
 
-import javax.xml.bind.helpers.AbstractMarshallerImpl;
-
-import tools.TreeLinkNode辅助.TreeLinkNode;
 
 /*
  * 	There are N children standing in a line. Each child is assigned a rating value.
@@ -50,6 +47,39 @@ public class P135_Candy {
 	    		sum += Math.max(forward[i], backward[i]);
 	    	}
 	        return sum;
+	    }
+	}
+	/*
+	 * 	还是可以更快的。
+	 * 	5 ms
+	 * 	24.21% 
+	 */
+	static class Solution2 {
+	    public int candy(int[] ratings) {
+	    	if (ratings == null || ratings.length == 0) {
+	    		return 0;
+	    	}
+	    	int[] forward = new int[ratings.length];
+	    	for (int i = 0; i < forward.length; i ++) {
+	    		if (i == 0 || ratings[i] <= ratings[i - 1]) {
+	    			forward[i] = 1;
+	    		} else {
+	    			forward[i] = forward[i - 1] + 1;
+	    		}
+	    	}
+	    	int backward = 1, backward_pre = 1;
+	    	int ans = 0;
+	    	for (int i = forward.length - 1; i > -1; i --) {
+	    		if (i == forward.length - 1 || ratings[i] <= ratings[i + 1]) {
+	    			ans += forward[i];
+	    			backward_pre = 1;
+	    		} else {
+	    			backward = backward_pre + 1; 
+	    			ans += Math.max(forward[i], backward);
+	    			backward_pre = backward;
+	    		}
+	    	}
+	        return ans;
 	    }
 	}
 }
