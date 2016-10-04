@@ -33,12 +33,34 @@ public class ListNode辅助 {
 		}
 		return head;
 	}
+	public static ListNode A_一维生成器_从0_N_1(int N) {
+		ListNode pre = null, head = null;
+		for (int i = N - 1; i != -1; i --) {
+			head = new ListNode(i);
+			head.next = pre;
+			pre = head;
+		}
+		return head;
+	}
 	public static void B_打印链表(ListNode head) {
 		ListNode cur = head;
 		while (cur != null) {
 			System.out.println(cur.val);
 			cur = cur.next;
 		}
+	}
+	public static void B_打印链表_一行(ListNode head, int sizeOfLine) {
+		ListNode cur = head;
+		int count = 0;
+		while (cur != null) {
+			System.out.print(cur.val + "\t");
+			cur = cur.next;
+			count ++;
+			if (count % sizeOfLine == 0 || cur == null) {
+				System.out.println();
+			}
+		}
+		
 	}
 	public static List<ListNode> C_二维生成器(int[][] nums) {
 		List<ListNode> ans = new LinkedList<ListNode>();
