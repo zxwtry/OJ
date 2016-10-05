@@ -26,11 +26,45 @@ public class P153_FindMinimuminRotatedSortedArray {
 	}
 	static class Solution {
 	    public int findMin(int[] nums) {
-	        return 0;
+	    	if (nums == null || nums.length == 0) {
+	    		return 0;
+	    	}
+	    	if (nums.length == 1) {
+	    		return nums[0];
+	    	}
+	        return getMin(nums, 0, nums.length - 1);
+	    }
+	    int getMin(int[] nums, int sti, int eni) {
+	    	if (sti == eni) {
+	    		return nums[0];
+	    	}
+	    	int mid = (sti + eni) / 2;
+	    	if (nums[mid] > nums[sti]) {
+	    		if (nums[mid- 1] > nums[mid]) {
+	    			return nums[mid];
+	    		}
+	    		if (nums[mid + 1] < nums[mid]) {
+	    			return nums[mid + 1];
+	    		}
+	    		return getMin(nums, mid + 1, eni);
+	    	} else if (nums[mid] < nums[sti]) {
+	    		if (nums[mid- 1] > nums[mid]) {
+	    			return nums[mid];
+	    		}
+	    		if (nums[mid + 1] < nums[mid]) {
+	    			return nums[mid + 1];
+	    		}
+	    		return getMin(nums, sti, mid - 1);
+	    	} else {
+	    		if (nums[sti] > nums[eni]) {
+	    			return nums[eni];
+	    		}
+	    		return nums[0];
+	    	}
 	    }
 	    /*
-	     * 	sti - 1: 大于最大
-	     * 	eni + 1: 小于最小
+	     * 	sti - 1: ´óÓÚ×î´ó
+	     * 	eni + 1: Ð¡ÓÚ×îÐ¡
 	     */
 	    int binaySearch(int[] nums, int sti, int eni, int val) {
 	    	if (val < nums[sti]) {
