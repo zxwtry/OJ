@@ -242,6 +242,18 @@ public class Utils {
 		st.append("]");
 		return st.toString();
 	}
+	public static int[] LEETCODE_int_array_反序列化_(String s) {
+		String sub = s.substring(1, s.length() - 1);
+		String[] parts = sub.split(",");
+		if (parts.length == 1 && parts[0].trim().equals("")) {
+			return new int[0];
+		}
+		int[] ans = new int[parts.length];
+		for (int i = 0; i < parts.length; i ++) {
+			ans[i] = Integer.parseInt(parts[i].trim());
+		}
+		return ans;
+	}
 	public static String LEETCODE_int_二位数组_序列化_(int[][] arr) {
 		StringBuilder st = new StringBuilder();
 		st.append('[');
