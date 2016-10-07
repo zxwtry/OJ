@@ -242,4 +242,16 @@ public class Utils {
 		st.append("]");
 		return st.toString();
 	}
+	public static String LEETCODE_int_二位数组_序列化_(int[][] arr) {
+		StringBuilder st = new StringBuilder();
+		st.append('[');
+		for (int i = 0; i < arr.length; i ++) {
+			st.append(LEETCODE_int_array_序列化_(arr[i]));
+			if (i != arr.length - 1) {
+				st.append(',');
+			}
+		}
+		st.append(']');
+		return st.toString();
+	}
 }
