@@ -50,13 +50,23 @@ public class P174_DungeonGame {
 //		System.out.println(s.calculateMinimumHP(d));
 		
 		
-		int len = 2, max = 100, min = -200;
-		int[][] arr = new int[len][len];
-		for (int i = 0; i < len; i ++) {
-			arr[i] = tools.Random随机生成器.A_生成一个随机数据(len, min, max);
-		}
-		String st = tools.Utils.LEETCODE_int_二位数组_序列化_(arr);
-		System.out.println(st);
+		StandardSolution s1 = new StandardSolution();
+		StandardSolution_CUT_SPACE s2 = new StandardSolution_CUT_SPACE();
+		
+		int max = 100, min = -200;
+		
+		int len = 2000;
+		
+//		for (int len = 1; len < 1000; len ++) {
+			int[][] arr = new int[len][len];
+			for (int i = 0; i < len; i ++) {
+				arr[i] = tools.Random随机生成器.A_生成一个随机数据(len, min, max);
+			}
+			System.out.println(s1.calculateMinimumHP(arr) + "..." + s2.calculateMinimumHP(arr));
+//		}
+		
+		
+		
 		
 		
 		
@@ -150,7 +160,6 @@ public class P174_DungeonGame {
 //			System.out.println("++++++++++++++++++++++++++");
 //			tools.Utils.A_打印二维数组(h);
 //			System.out.println("++++++++++++++++++++++++++");
-//			System.out.println(h[0][0]);
 			return h[0][0];
 		}
 		/*
@@ -169,6 +178,37 @@ public class P174_DungeonGame {
 //				return - d[i][j] - minHP + 1;
 //			}
 //			return d[i][j] < 0 ?  - d[i][j] + minHP : minHP;
+		}
+	}
+	/*
+	 * 	3 ms
+	 * 	62.59%
+	 */
+	static class StandardSolution_CUT_SPACE {
+		public int calculateMinimumHP(int[][] d) {
+			if (d == null || d.length == 0 || d[0].length == 0) {
+				return 0;
+			}
+			int row = d.length, col = d[0].length;
+			int[] h = new int[row];
+			h[row - 1] = d[row - 1][col - 1] < 0 ? - d[row - 1][col - 1] + 1 : 1;
+			for (int i = row - 2; i > -1; i --) {
+				int temp = h[i + 1] - d[i][col - 1];
+				h[i] = temp < 1 ? 1 : temp;
+			}
+//			System.out.println("========================");
+//			tools.Utils.printArray(h, 1000);
+			for (int j = col - 2; j > -1; j --) {
+				h[row - 1] = h[row - 1] - d[row - 1][j] < 1 ? 1 : h[row - 1] - d[row - 1][j];
+				for (int i = row - 2; i > -1; i --) {
+					int valRight = h[i] - d[i][j] < 1 ? 1 : h[i] - d[i][j];
+					int valBlow = h[i + 1] - d[i][j] < 1 ? 1 : h[i + 1] - d[i][j];
+					h[i] = Math.min(valBlow, valRight);
+				}
+//				tools.Utils.printArray(h, 1000);
+			}
+//			System.out.println("========================");
+			return h[0];
 		}
 	}
 }
