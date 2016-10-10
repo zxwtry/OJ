@@ -133,4 +133,50 @@ public class P204_CountPrimes {
 			return sti;
 		}
 	}
+	/*
+	 * 	61 ms
+	 * 	14.04%
+	 */
+	static class Solution2 {
+		int[] arr = null;
+		public int countPrimes(int n) {
+			if (n <= 2) {
+				return 0;
+			}
+			generateArray(n);
+			for (int  i = 2; i * i < n; i ++) {
+				if (! isPrime(i)) {
+					continue;
+				}
+				for (int j = i * i; j < n; j += i) {
+					if (isPrime(j))
+						setNotPrime(j);
+				}
+			}
+			int count = 0;
+			for (int i = 2; i < n; i ++) {
+				if (isPrime(i)) {
+					count ++;
+				}
+			}
+			return count;
+		}
+		void generateArray(int n) {
+			this.arr = new int[(n + 1) / 32 + 1];
+		}
+		boolean isPrime(int index) {
+			int arrIndex = index / 32;
+			int intIndex = index % 32;
+			int val = arr[arrIndex];
+			val = val >>> intIndex;
+			return val % 2 == 0;
+		}
+		void setNotPrime(int index) {
+			int arrIndex = index / 32;
+			int intIndex = index % 32;
+			int val = arr[arrIndex];
+			val += 1 << intIndex;
+			arr[arrIndex] = val;
+		}
+	}
 }
