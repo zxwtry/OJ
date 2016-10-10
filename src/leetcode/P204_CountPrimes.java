@@ -134,6 +134,33 @@ public class P204_CountPrimes {
 		}
 	}
 	/*
+	 * 	35 ms
+	 * 	41.12%
+	 */
+	static class Solution3 {
+		public int countPrimes(int n) {
+			if (n < 3) {
+				return 0;
+			}
+			boolean[] isPrime = new boolean[n];
+			Arrays.fill(isPrime, true);
+			for (int i = 2; i * i < n; i ++) {
+				if (! isPrime[i]) {
+					continue;
+				}
+				for (int j = i * i; j < n; j += i) {
+					isPrime[j] = false;
+				}
+			}
+			int count = 0;
+			for (int i = 2; i < n; i ++) {
+				if (isPrime[i])
+					count ++;
+			}
+			return count;
+		}
+	}
+	/*
 	 * 	61 ms
 	 * 	14.04%
 	 */
