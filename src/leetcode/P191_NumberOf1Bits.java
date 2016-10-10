@@ -13,12 +13,15 @@ package leetcode;
 
 public class P191_NumberOf1Bits {
 	public static void main(String[] args) {
-		Solution1 s = new Solution1();
-		int n = 0xafffffff;
-		int ans1 = s.hammingWeight(n);
+		Solution1 s1 = new Solution1();
+		int n = 0xffffffff;
+		int ans1 = s1.hammingWeight(n);
 		System.out.println(ans1);
+		Solution2 s2 = new Solution2();
+		int ans2 = s2.hammingWeight(n);
+		System.out.println(ans2);
 	}
-	/*
+	/*j
 	 * 	2 ms
 	 * 	16.06%
 	 */
@@ -34,5 +37,19 @@ public class P191_NumberOf1Bits {
 	    	
 	        return count;
 	    }
+	}
+	/*
+	 * 	1 ms
+	 * 	89.42%
+	 */
+	static class Solution2 {
+		public int hammingWeight(int n) {
+			int count = 0;
+			while (n != 0) {
+				count ++;
+				n = n & (n - 1);
+			}
+			return  count;
+		}
 	}
 }
