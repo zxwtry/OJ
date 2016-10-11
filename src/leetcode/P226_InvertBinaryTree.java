@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import tools.TreeNode辅助.TreeNode;
 
 /*
@@ -26,8 +29,30 @@ public class P226_InvertBinaryTree {
 	public static void main(String[] args) {
 		
 	}
+	/*
+	 * 	1 ms
+	 * 	0.74%
+	 */
 	static class Solution {
 	    public TreeNode invertTree(TreeNode root) {
+	    	if (root == null) {
+	    		return null;
+	    	}
+	    	Queue<TreeNode> q = new LinkedList<>();
+	    	q.add(root);
+	    	while (! q.isEmpty()) {
+	    		TreeNode rootNow = q.poll();
+	    		TreeNode left = rootNow.left;
+	    		TreeNode right = rootNow.right;
+	    		if (left != null) {
+	    			q.add(left);
+	    		}
+	    		if (right != null) {
+	    			q.add(right);
+	    		}
+	    		rootNow.left = right;
+	    		rootNow.right = left;
+	    	}
 	        return root;
 	    }
 	}
