@@ -1,5 +1,6 @@
 package leetcode;
 
+
 /*
  * 	Given two non-negative numbers num1 and num2 represented as string, 
  * 	return the sum of num1 and num2.
@@ -15,26 +16,32 @@ package leetcode;
 
 public class P415_AddStrings {
 	public static void main(String[] args) {
-//		int count = 0;
-//		for (int i = 0; i < 1000; i ++) {
-//			long n1 = Math.abs((long) (Math.random() * ( ( (long)Integer.MAX_VALUE ) * 2 )) );
-//			long n2 = Math.abs((long) (Math.random() * ( ( (long)Integer.MAX_VALUE ) * 2 )) );
-//			
-//			String num1 = String.valueOf(n1);
-//			String num2 = String.valueOf(n2);
-//			Solution s = new Solution();
-//			String ans = s.addStrings(num1, num2);
-//			
-//			long n3 = Long.parseLong(ans);
-//			
-//			if (n1 + n2 != n3) {
-//				count ++;
-//			}
-//			
-//		}
-//		System.out.println(count);
+		int count = 0;
+		for (int i = 0; i < 1000; i ++) {
+			long n1 = Math.abs((long) (Math.random() * ( ( (long)Integer.MAX_VALUE ) * 2 )) );
+			long n2 = Math.abs((long) (Math.random() * ( ( (long)Integer.MAX_VALUE ) * 2 )) );
+			
+			String num1 = String.valueOf(n1);
+			String num2 = String.valueOf(n2);
+			Solution2 s = new Solution2();
+			String ans = s.addStrings(num1, num2);
+			
+			long n3 = Long.parseLong(ans);
+			
+			
+			
+			if (n1 + n2 != n3) {
+				count ++;
+				System.out.println(num1 + "....." + num2);
+			}
+			
+		}
+		System.out.println(count);
 		
-		System.out.println(new Solution().addStrings("0", "0"));
+		//525175143.....1545754252
+//		Solution2 s2 = new Solution2();
+//		
+//		System.out.println(s2.addStrings("525175143", "1545754252"));
 	}
 	/*
 	 * 	22 ms
@@ -76,6 +83,54 @@ public class P415_AddStrings {
 	    	}
 	    	
 	    	return st.toString();
+	    }
+	}
+	/*
+	 * 	肯定能省时间
+	 * 	26 ms
+	 * 	翻车了。。。
+	 */
+	static class Solution2 {
+	    public String addStrings(String num1, String num2) {
+	    	int len1 = num1.length(), len2 = num2.length();
+	    	if (len1 < len2) {
+	    		return addStrings(num2, num1);
+	    	}
+	    	int[] n1 = new int[len1];
+	    	for (int i = 0; i < len1; i ++) {
+	    		n1[i] = num1.charAt(i) - '0';
+	    	}
+//	    	tools.Utils.printArray(n1, 100);
+	    	int range = len1 - len2;
+	    	for (int i = len2 - 1; i > -1; i --) {
+	    		n1[i + range] += num2.charAt(i) - '0';
+	    	}
+//	    	for (int i = 0; i < len2; i ++) {
+//	    		n1[i] += num2.charAt(i) - '0';
+//	    	}
+//	    	tools.Utils.printArray(n1, 100);
+	    	int carry = 0;
+	    	for (int i = len1 - 1; i > 0; i --) {
+	    		int sum = n1[i] + carry;
+	    		n1[i] = sum % 10;
+	    		carry = sum / 10;
+	    	}
+	    	n1[0] += carry;
+	    	int lenOf0 = 0, v0 = n1[0];
+	    	while (v0 != 0) {
+	    		lenOf0 ++;
+	    		v0 = v0 / 10;
+	    	}
+	    	char[] ans = new char[lenOf0 + len1 - 1];
+	    	v0 = n1[0];
+	    	for (int i = lenOf0 - 1; i > -1; i --) {
+	    		ans[i] = (char)('0' + (v0 % 10));
+	    		v0 = v0 / 10;
+	    	}
+	    	for (int i = 1; i < len1; i ++) {
+	    		ans[i + lenOf0 - 1]  = (char)('0' + n1[i]);
+	    	}
+	    	return ans.length == 0 ? "0" : new String(ans);
 	    }
 	}
 }
