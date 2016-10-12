@@ -56,4 +56,37 @@ public class P383_RansomNote {
 	        return true;
 	    }
 	}
+	/*	
+	 * 	18 ms
+	 * 	76.97%
+	 */
+	static class Solution2 {
+		public boolean canConstruct(String ransomNote, String magazine) {
+			if (ransomNote == null) {
+				return true;
+			}
+			if (magazine == null) {
+				return false;
+			}
+			int lenr = ransomNote.length();
+			int lenm = magazine.length();
+			if (lenr > lenm) {
+				return false;
+			}
+			int[] mapm = new int[26];
+			for (int i = 0; i < lenm; i ++) {
+				char c = magazine.charAt(i);
+				mapm[(int) (c - 'a')]  ++;
+			}
+			for (int i = 0; i < lenr; i ++) {
+				char c = ransomNote.charAt(i);
+				if (mapm[(int) (c - 'a')] <= 0) {
+					return false;
+				} else {
+					mapm[(int) (c - 'a')] --;
+				}
+			}
+			return true;
+		}
+	}
 }
