@@ -26,7 +26,8 @@ import java.util.Map;
 
 public class P409_LongestPalindrome {
 	public static void main(String[] args) {
-		System.out.println(new Solution().longestPalindrome("ddd"));
+		System.out.println(new Solution2().longestPalindrome("aaaAaaaa"));
+//		System.out.println((int)'A');
 	}
 	/*
 	 * 	24 ms
@@ -57,6 +58,40 @@ public class P409_LongestPalindrome {
 	        	ans ++;
 	        }
 	        return ans;
+	    }
+	}
+	/*
+	 * 	15 ms
+	 * 	AC
+	 */
+	static class Solution2 {
+		int[] map = new int[52];
+	    public int longestPalindrome(String s) {
+	    	for (int i = 0; i < s.length(); i ++) {
+	    		char c = s.charAt(i);
+	    		map[getIndex(c)] ++;
+	    	}
+	    	int ans = 0;
+	    	boolean isSingleExists = false;
+	    	for (int i = 0; i < map.length; i ++) {
+	    		if (map[i] > 0) {
+	    			if (map[i] % 2 == 1) {
+	    				isSingleExists = true;
+	    			}
+	    			ans += (map[i] / 2) * 2;
+	    		}
+	    	}
+	    	if (isSingleExists) {
+	    		ans ++;
+	    	}
+	    	return ans;
+	    }
+	    int getIndex(char c) {
+	    	int index = c - 'A';
+	    	if (index > 25) {
+	    		index = c - 'a' + 26;
+	    	}
+	    	return index;
 	    }
 	}
 }
