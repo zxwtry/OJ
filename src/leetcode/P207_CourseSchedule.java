@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 /*
  * 	There are a total of n courses you have to take, labeled from 0 to n - 1.
@@ -28,16 +29,17 @@ import java.util.HashSet;
 	not adjacency matrices. Read more about how a graph is represented.
  */
 
+
 public class P207_CourseSchedule {
 	public static void main(String[] args) {
 		int n = 4;
 		int[][] p = new int[][] {
 			{0,1},
-			{3,1},
-			{1,3},
-			{3,2},
+//			{3,1},
+//			{1,3},
+//			{3,2},
 		};
-		Solution2 s = new Solution2();
+		Solution3 s = new Solution3();
 		System.out.println(s.canFinish(n, p));
 	}
 	/*
@@ -182,5 +184,54 @@ public class P207_CourseSchedule {
 	    		}
 	    	}
 	    }
+	}
+	/*
+	 * 	就是这个算法, 肯定还能优化，看自己本事
+	 * 	Solution3这里利用一个假设：所有的约束条件是不重复的
+	 * 	如果重复，那么就没什么可谈的了。
+	 * 	31 ms
+	 * 	39.78%
+	 */
+	static class Solution3 {
+		public boolean canFinish(int n, int[][] p) {
+			@SuppressWarnings("unchecked")
+			ArrayList<Integer>[] allPoss = new ArrayList[n];
+			int[] allPres = new int[n];
+			for (int[] pArr : p) {
+				int target = pArr[0];
+				int need = pArr[1];
+				if (allPoss[need] == null) {
+					allPoss[need] = new ArrayList<>();
+				}
+				allPoss[need].add(target);
+				allPres[target] ++;
+			}
+			while (true) {
+				boolean isAllFinished = true;
+				boolean isOneFinished = false;
+				for (int i = 0; i < n; i ++) {
+					if (allPres[i] < 0) {
+						continue;
+					}
+					if (allPres[i] == 0) {
+						if (allPoss[i] != null) {
+							for (int pos : allPoss[i]) {
+								allPres[pos] --;
+							}
+						}
+						isOneFinished = true;
+						allPres[i] = -1;
+					} else {
+						isAllFinished = false;
+					}
+				}
+				if (isAllFinished) {
+					return true;
+				}
+				if (! isOneFinished) {
+					return false;
+				}
+			}
+		}
 	}
 }
