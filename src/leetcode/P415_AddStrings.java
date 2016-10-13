@@ -165,4 +165,36 @@ public class P415_AddStrings {
 	    	}
 	    }
 	}
+	/*
+	 * 	22 ms
+	 * 	这车翻得小了点
+	 */
+	static class Solution4 {
+	    public String addStrings(String num1, String num2) {
+	    	int len1 = num1.length(), len2 = num2.length();
+	    	if (len1 < len2) {
+	    		return addStrings(num2, num1);
+	    	}
+	    	char[] c = new char[len1 + 1];
+	    	for (int i = 0; i < len1; i ++) {
+	    		c[i + 1] = num1.charAt(i);
+	    	}
+	    	int range = len1 - len2 + 1;
+	    	for (int i = 0; i < len2; i ++) {
+	    		c[i + range] += num2.charAt(i) - '0';
+	    	}
+	    	c[0] = '0';
+	    	int carry = 0;
+	    	for (int i = len1; i > - 1; i --) {
+	    		int sum = c[i] - '0' + carry;
+	    		c[i] = (char) (sum % 10 + '0');
+	    		carry = sum / 10;
+	    	}
+	    	if (c[0] == '0') {
+	    		return new String(c, 1, len1);
+	    	} else {
+	    		return new String(c);
+	    	}
+	    }
+	}
 }
