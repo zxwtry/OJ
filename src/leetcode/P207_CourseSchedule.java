@@ -37,7 +37,7 @@ public class P207_CourseSchedule {
 			{1,3},
 			{3,2},
 		};
-		Solution s = new Solution();
+		Solution2 s = new Solution2();
 		System.out.println(s.canFinish(n, p));
 	}
 	/*
@@ -105,6 +105,80 @@ public class P207_CourseSchedule {
 	    			if (set.contains(val)) {
 	    				set.remove(val);
 	    			}
+	    		}
+	    	}
+	    }
+	}
+	
+	/*
+	 * 	先写效率相对高，但是代码非常烦的方法
+	 * 	63 ms
+	 * 	17.18%
+	 * 	又翻车了
+	 */
+	static class Solution2 {
+	    @SuppressWarnings("unchecked")
+		public boolean canFinish(int n, int[][] p) {
+			HashSet<Integer>[] allPres = new HashSet[n];
+			HashSet<Integer>[] allPoss = new HashSet[n];
+	    	for (int[] pArr : p) {
+	    		int wantToLearn = pArr[0];
+	    		int needToLearn = pArr[1];
+	    		if (allPres[wantToLearn] == null) {
+	    			allPres[wantToLearn] = new HashSet<>();
+	    		}
+	    		if (allPoss[needToLearn] == null) {
+	    			allPoss[needToLearn] = new HashSet<>();
+	    		}
+	    		allPres[wantToLearn].add(needToLearn);
+	    		allPoss[needToLearn].add(wantToLearn);
+	    	}
+	    	while (true) {
+	    		boolean isOneFind = false;
+	    		boolean isAllFind = true;
+	    		for (int i = 0; i < n; i ++) {
+	    			boolean isPreNull = allPres[i] == null;
+	    			boolean isPosNull = allPoss[i] == null;
+	    			if (isPreNull && isPosNull) {
+	    				continue;
+	    			}
+	    			if (! isPosNull && isPreNull) {
+	    				clearAllPosIndex(allPoss, i, allPres);
+	    				allPoss[i] = null;
+	    				isOneFind = true;
+	    				continue;
+	    			}
+	    			if (! isPreNull && isPosNull) {
+	    				isAllFind = false;
+	    				continue;
+	    			}
+	    			if (allPres[i].isEmpty()) {
+	    				clearAllPosIndex(allPoss, i, allPres);
+	    				allPres[i] = null;
+	    				allPoss[i] = null;
+ 	    				isOneFind = true;
+	    			} else {
+	    				isAllFind = false;
+	    			}
+	    		}
+	    		if (isAllFind) {
+	    			return true;
+	    		}
+	    		if (! isOneFind) {
+	    			return false;
+	    		}
+			}
+	    }
+	    void clearAllPosIndex(HashSet<Integer>[] allPoss, int index, HashSet<Integer>[] allPres) {
+	    	if (allPoss[index] == null) {
+	    		return;
+	    	}
+	    	for (int pos : allPoss[index]) {
+	    		if (allPres[pos] != null && allPres[pos].contains(index) ) {
+	    			allPres[pos].remove(index);
+	    		}
+	    		if (allPres[pos].isEmpty()) {
+	    			allPres[pos] = null;
 	    		}
 	    	}
 	    }
