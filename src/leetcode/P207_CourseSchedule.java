@@ -30,8 +30,21 @@ import java.util.HashSet;
 
 public class P207_CourseSchedule {
 	public static void main(String[] args) {
-		
+		int n = 4;
+		int[][] p = new int[][] {
+			{0,1},
+			{3,1},
+			{1,3},
+			{3,2},
+		};
+		Solution s = new Solution();
+		System.out.println(s.canFinish(n, p));
 	}
+	/*
+	 * 	一种非常非常差的方法
+	 * 	48 ms
+	 * 	27.43%
+	 */
 	static class Solution {
 	    public boolean canFinish(int n, int[][] p) {
 	    	Node[] ns = new Node[n];
@@ -44,8 +57,31 @@ public class P207_CourseSchedule {
 	    		ns[wantToLearn].addPre(needToLearn);
 	    		ns[needToLearn].addPos(wantToLearn);
 	    	}
-	    	
-	        return false;
+	    	for (int i = 0; i < n; i ++) {
+	    		if (ns[i].allPres.size() == 0) {
+	    			ns[i].release(ns);
+	    			ns[i].isFinished = true;
+	    		}
+	    	}
+	    	while (true) {
+	    		boolean isFind = false;
+	    		boolean isAllFind = true;
+	    		for (int i= 0; i < n; i ++) {
+	    			if (! ns[i].isFinished && ns[i].allPres.size() == 0 ) {
+	    				isFind = true;
+	    				ns[i].release(ns);
+	    				ns[i].isFinished = true;
+	    			} else if (! ns[i].isFinished) {
+	    				isAllFind = false;
+	    			}
+	    		}
+	    		if (isAllFind) {
+	    			return true;
+	    		}
+	    		if (! isFind) {
+	    			return false;
+	    		}
+	    	}
 	    }
 	    static class Node {
 	    	int val;
