@@ -23,7 +23,7 @@ public class P415_AddStrings {
 			
 			String num1 = String.valueOf(n1);
 			String num2 = String.valueOf(n2);
-			Solution2 s = new Solution2();
+			Solution4 s = new Solution4();
 			String ans = s.addStrings(num1, num2);
 			
 			long n3 = Long.parseLong(ans);
@@ -39,9 +39,8 @@ public class P415_AddStrings {
 		System.out.println(count);
 		
 		//525175143.....1545754252
-//		Solution2 s2 = new Solution2();
-//		
-//		System.out.println(s2.addStrings("525175143", "1545754252"));
+//		Solution4 s2 = new Solution4();
+//		System.out.println(s2.addStrings("0", "0"));
 	}
 	/*
 	 * 	22 ms
@@ -131,6 +130,39 @@ public class P415_AddStrings {
 	    		ans[i + lenOf0 - 1]  = (char)('0' + n1[i]);
 	    	}
 	    	return ans.length == 0 ? "0" : new String(ans);
+	    }
+	}
+	/*
+	 * 	23 ms
+	 * 	还是翻车。。。
+	 */
+	static class Solution3 {
+	    public String addStrings(String num1, String num2) {
+	    	int len1 = num1.length(), len2 = num2.length();
+	    	if (len1 < len2) {
+	    		return addStrings(num2, num1);
+	    	}
+	    	char[] c = num1.toCharArray();
+	    	int range = len1 - len2;
+	    	for (int i = 0; i < len2; i ++) {
+	    		c[i + range] += num2.charAt(i) - '0';
+	    	}
+	    	int carry = 0;
+	    	for (int i = len1 - 1; i > 0; i --) {
+	    		int sum = c[i] - '0' + carry;
+	    		c[i] = (char) (sum % 10 + '0');
+	    		carry = sum / 10;
+	    	}
+	    	c[0] = (char) (c[0] + carry);
+	    	if (c[0] > '9') {
+	    		char[] ans = new char[len1 + 1];
+	    		ans[0] = (char) ( ( c[0] - '0' ) / 10 + '0' );
+	    		c[0] = (char) ( ( c[0] - '0' ) % 10 + '0' );
+	    		System.arraycopy(c, 0, ans, 1, len1);
+	    		return new String(ans);
+	    	} else {
+	    		return new String(c);
+	    	}
 	    }
 	}
 }
