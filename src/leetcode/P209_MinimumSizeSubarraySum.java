@@ -120,6 +120,12 @@ public class P209_MinimumSizeSubarraySum {
 			return ans == Integer.MAX_VALUE ? 0 : ans;
 		}
 	}
+	/*
+	 * 	又提交一次，结果AC了。。。
+	 * 	这个复杂度是O(N*logN)
+	 * 	5 ms
+	 * 	1.44%
+	 */
 	static class Solution4 {
 		public int minSubArrayLen(int s, int[] nums) {
 			if (nums == null || nums.length == 0) {
