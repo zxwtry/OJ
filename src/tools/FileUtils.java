@@ -58,4 +58,12 @@ public class FileUtils {
 		}
 		return ans;
 	}
+	public static int[] A_读取一维int数组_空格分割(String path) {
+		String[] strs = A_读取一维数组(path);
+		int[] ans = new int[strs.length];
+		for (int i = 0; i < strs.length; i ++) {
+			ans[i] = Integer.parseInt(strs[i]);
+		}
+		return ans;
+	}
 }
