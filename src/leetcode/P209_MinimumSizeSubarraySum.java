@@ -125,6 +125,10 @@ public class P209_MinimumSizeSubarraySum {
 	 * 	这个复杂度是O(N*logN)
 	 * 	5 ms
 	 * 	1.44%
+	 * 	减少了一次O(logN)的查找
+	 * 	5 ms
+	 * 	1.44%
+	 * 	
 	 */
 	static class Solution4 {
 		public int minSubArrayLen(int s, int[] nums) {
@@ -135,40 +139,44 @@ public class P209_MinimumSizeSubarraySum {
 			int len = nums.length;
 			int[] sum = new int[len];
 			int add = 0;
+			int sti = -1;
 			for (int i = 0; i < len; i ++) {
 				add += nums[i];
 				if (nums[i] > s) {
 					return 1;
+				}
+				if (-1 == sti && add >= s) {
+					sti = i;
 				}
 				sum[i] = add;
 			}
 			if (sum[len - 1] < s) {
 				return 0;
 			}
-			int sti = getIndex1(s, sum);
+//			int sti = getIndex1(s, sum);
 			for (int i = sti; i < sum.length; i ++) {
 				int preI = getIndex2(sum[i] - s, sum);
 				ans = Math.min(ans, i - preI);
 			}
 			return ans;
 		}
-		int getIndex1(int val, int[] sum) {
-			int sti = 0, eni = sum.length - 1;
-			if (sum[eni] < val) {
-				return eni + 1;
-			}
-			while (sti < eni) {
-				int mid = (sti + eni) / 2;
-				if (sum[mid] == val) {
-					return mid;
-				} else if (sum[mid] < val) {
-					sti = mid + 1;
-				} else {
-					eni = mid;
-				}
-			}
-			return sti;
-		}
+//		int getIndex1(int val, int[] sum) {
+//			int sti = 0, eni = sum.length - 1;
+//			if (sum[eni] < val) {
+//				return eni + 1;
+//			}
+//			while (sti < eni) {
+//				int mid = (sti + eni) / 2;
+//				if (sum[mid] == val) {
+//					return mid;
+//				} else if (sum[mid] < val) {
+//					sti = mid + 1;
+//				} else {
+//					eni = mid;
+//				}
+//			}
+//			return sti;
+//		}
 		int getIndex2(int val, int[] sum) {
 			int sti = 0, eni = sum.length - 1;
 			if (val < sum[sti]) {
@@ -185,6 +193,40 @@ public class P209_MinimumSizeSubarraySum {
 				}
 			}
 			return sti;
+		}
+	}
+	/*
+	 * 	想要比较快
+	 * 	必须要有O(N)的解法
+	 * 	
+	 */
+	static class Solution5 {
+		public int minSubArrayLen(int s, int[] nums) {
+			if (nums == null || nums.length == 0) {
+				return 0;
+			}
+			int len = nums.length;
+			int[] sum = new int[len];
+			int add = 0;
+			int eni = -1;
+			for (int i = 0; i < len; i ++) {
+				if (nums[i] > s) {
+					return 1;
+				}
+				add += nums[i];
+				if (-1 == eni && add >= s) {
+					eni = i;
+				}
+				sum[i] = add;
+			}
+			int ans = eni + 1;
+			int sti = 0;
+			for (eni = eni + 1; eni < len; eni ++) {
+				for (int i = sti; i < eni ;  i ++) {
+					
+				}
+			}
+			return ans;
 		}
 	}
 }

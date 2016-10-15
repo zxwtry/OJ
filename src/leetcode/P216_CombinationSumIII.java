@@ -50,7 +50,6 @@ public class P216_CombinationSumIII {
 	    	}
 	    	array = new int[k];
 	    	search(0, 0, k, n);
-	    	
 	        return ans;
 	    }
 		private void search(int index, int sum, int k, int n) {
