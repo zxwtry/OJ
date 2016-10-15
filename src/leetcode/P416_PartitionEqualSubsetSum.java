@@ -35,7 +35,7 @@ import java.util.Arrays;
 public class P416_PartitionEqualSubsetSum {
 	public static void main(String[] args) {
 //		for (int i = 0; i < 10000; i ++) {
-			Solution s = new Solution();
+			Solution2 s = new Solution2();
 			int[] nums = tools.Random随机生成器.A_生成一个随机数据(400, 1, 1000);
 			Arrays.sort(nums);
 			tools.Utils.printArray(nums, 200);
@@ -87,6 +87,46 @@ public class P416_PartitionEqualSubsetSum {
 					isVisited[index] = false;
 				}
 			}
+		}
+	}
+	/*
+	 * 	13 ms
+	 */
+	static class Solution2 {
+		int sum = 0;
+		boolean isFind = false;
+		public boolean canPartition(int[] nums) {
+			for (int val : nums) {
+				sum += val;
+			}
+			if (sum % 2 != 0) {
+				return false;
+			}
+			sum = sum / 2;
+			Arrays.sort(nums);
+			search(nums, nums[nums.length - 1], 0, nums.length - 2, sum * 2 - nums[nums.length - 1]);
+			return isFind;
+	    }
+		void search(int[] nums, int val1, int val2, int index, int remains) {
+			if (isFind) {
+				return;
+			}
+			if (val1 == sum) {
+				isFind = true;
+				return;
+			}
+			if (val2 == sum) {
+				isFind = true;
+				return;
+			}
+			if (Math.abs(val1 - val2) > remains) {
+				return;
+			}
+			if (index < 0) {
+				return;
+			}
+			search(nums, val1 + nums[index], val2, index - 1, remains - nums[index]);
+			search(nums, val1, val2 + nums[index], index - 1, remains - nums[index]);
 		}
 	}
 }
