@@ -81,6 +81,12 @@ public class Utils {
 		}
 		System.out.println();
 	}
+	public static void printArray_先打印下标(int n) {
+		for (int i = 0; i < n; i ++) {
+			System.out.print(i + "\t");
+		}
+		System.out.println();
+	}
 	public static void printArray(char[] arr, int n) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
