@@ -1,6 +1,9 @@
 package tools;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -65,5 +68,20 @@ public class FileUtils {
 			ans[i] = Integer.parseInt(strs[i]);
 		}
 		return ans;
+	}
+	public static void B_纪录String_append(String path, String str) {
+		File file = new File(path);
+		try {
+			if (! file.exists()) {
+				file.createNewFile();
+			}
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
+			bw.write(str + "\r\n");
+			bw.flush();
+			bw.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
