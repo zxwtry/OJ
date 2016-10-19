@@ -23,8 +23,8 @@ public class P227_BasicCalculatorII {
 //		st.delete(3, 4);
 //		System.out.println(st.toString());
 		
-		Solution s = new Solution();
-		System.out.println(s.calculate("2-3+4"));
+		Solution2 s = new Solution2();
+		System.out.println(s.calculate("3+2*2"));
 		
 	}
 	/*
@@ -119,6 +119,70 @@ public class P227_BasicCalculatorII {
 //    			}
 //    			st.insert(indexOfNumber1 + 1, intValue3);
 //	    	}
+	    	return ans;
+	    }
+	    public boolean isNumber(char c) {
+	    	return c >= '0' && c <= '9';
+	    }
+	    public int calc(int val1, int val2, char c) {
+	    	switch (c) {
+			case '+':
+				return val1 + val2;
+			case '-':
+				return val1 - val2;
+			case '*':
+				return val1 * val2;
+			case '/':
+				return val1 / val2;
+			default:
+				return 0;
+			}
+	    }
+	}
+	
+	/*
+	 * 	100 ms
+	 * 	6.70%
+	 */
+	static class Solution2 {
+	    public int calculate(String s) {
+	    	StringBuilder st = new StringBuilder(s);
+	    	for (int i = 0; i < st.length(); i ++) {
+	    		if (st.charAt(i) == ' ') {
+	    			st.deleteCharAt(i);
+	    			i --;
+	    		}
+	    	}
+	    	if (st.length() == 0) {
+	    		return 0;
+	    	}
+	    	String[] parts = st.toString().split("[-+*/]");
+	    	ArrayList<Character> list = new ArrayList<>();
+	    	for (int i = 0; i < st.length(); i ++) {
+	    		char c = st.charAt(i);
+	    		if (c == '+' || c == '-' || c == '*' || c == '/') {
+	    			list.add(c);
+	    		}
+	    	}
+	    	ArrayList<Integer> partsInt = new ArrayList<Integer>(parts.length);
+	    	for (int i = 0; i < parts.length; i ++) {
+	    		partsInt.add(Integer.parseInt(parts[i]));
+	    	}
+	    	for (int i = 0; i < list.size(); i ++) {
+	    		char c = list.get(i);
+	    		if (c == '*' || c == '/') {
+	    			int val = calc(partsInt.get(i), partsInt.get(i + 1), c);
+	    			partsInt.remove(i + 1);
+	    			partsInt.remove(i);
+	    			partsInt.add(i, val);
+	    			list.remove(i);
+	    			i --;
+	    		}
+	    	}
+	    	int ans = partsInt.get(0);
+	    	for (int i = 1; i < partsInt.size(); i ++) {
+	    		ans = calc(ans, partsInt.get(i), list.get(i - 1));
+	    	}
 	    	return ans;
 	    }
 	    public boolean isNumber(char c) {
