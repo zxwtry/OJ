@@ -69,4 +69,75 @@ public class P229_MajorityElementII {
 	    	return ans;
 	    }
 	}
+	
+	/*
+	 * 	5 ms
+	 * 	31.52%
+	 */
+	static class Solution2 {
+		final int K = 3;
+	    public List<Integer> majorityElement(int[] nums) {
+	    	List<Integer> ans = new LinkedList<>();
+	    	if (null == nums || nums.length == 0) {
+	    		return ans;
+	    	}
+	    	if (nums.length < 3) {
+	    		ans.add(nums[0]);
+	    		if (nums.length == 2 && nums[1] != nums[0]) {
+	    			ans.add(nums[1]);
+	    		}
+	    		return ans;
+	    	}
+	    	int[] value = new int[K - 1];
+	    	int[] times = new int[K - 1];
+	    	for (int val : nums) {
+	    		boolean isFound = false;
+	    		for (int i = 0; i < K - 1; i ++) {
+	    			if (val == value[i]) {
+	    				times[i] ++;
+	    				isFound = true;
+	    			}
+	    		}
+	    		if (! isFound) {
+	    			for (int i = 0; i < K - 1; i ++) {
+	    				if (times[i] <= 0) {
+	    					value[i] = val;
+	    					times[i] = 1;
+	    					isFound = true;
+	    					break;
+	    				}
+	    			}
+	    		}
+	    		if (! isFound) {
+	    			for (int i = 0; i < K - 1; i ++) {
+	    				times[i] --;
+	    			}
+	    		}
+	    	}
+	    	for (int i = 0; i < K - 1; i ++) {
+	    		times[i] = 0;
+	    	}
+	    	for (int val : nums) {
+	    		for (int i = 0; i < K - 1; i ++) {
+	    			if (value[i] == val) {
+	    				times[i] ++;
+	    			}
+	    		}
+	    	}
+	    	boolean isHas0 = false;
+	    	for (int i = 0; i < K - 1; i ++) {
+	    		if (times[i] > nums.length / K) {
+	    			if (value[i] == 0) {
+	    				if (! isHas0) {
+	    					isHas0 = true;
+	    				} else {
+	    					continue;
+	    				}
+	    			}
+	    			ans.add(value[i]);
+	    		}
+	    	}
+	    	return ans;
+	    }
+	}
 }
