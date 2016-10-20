@@ -12,8 +12,9 @@ import java.util.List;
 
 public class P228_SummaryRanges {
 	public static void main(String[] args) {
-		Solution s = new Solution();
-		System.out.println(s.summaryRanges(new int[] {0,1,2,4,5,7}));
+		Solution2 s = new Solution2();
+//		System.out.println(s.summaryRanges(new int[] {0,1,2,4,5,7}));
+		System.out.println(s.summaryRanges(new int[] { 1, 3, 5}));
 	}
 	/*
 	 * 	9 ms
@@ -49,6 +50,40 @@ public class P228_SummaryRanges {
 	    		} else {
 	    			ans.add(String.format("%d->%d", nums[front], nums[behind]));
 	    		}
+	    	}
+	        return ans;
+	    }
+	}
+	/*
+	 * 	6 ms
+	 * 	2.65%
+	 */
+	static class Solution2 {
+		List<String> ans = new LinkedList<>();
+	    public List<String> summaryRanges(int[] nums) {
+	    	if (nums == null || nums.length == 0) {
+	    		return ans;
+	    	}
+	    	int len = nums.length;
+	    	int preRange = nums[0];
+	    	int nowRange = 0;
+	    	int frontValue = nums[0]; 
+	    	for (int index = 1; index < len; index ++) {
+	    		nowRange = nums[index] - index;
+	    		if (nowRange != preRange) {
+	    			if (frontValue == nums[index - 1]) {
+	    				ans.add(String.valueOf(frontValue));
+	    			} else {
+	    				ans.add(String.format("%d->%d", frontValue, nums[index - 1]));
+	    			}
+	    			frontValue = nums[index];
+	    			preRange = nowRange;
+	    		}
+	    	}
+	    	if (frontValue == nums[len - 1]) {
+	    		ans.add(String.valueOf(frontValue));
+	    	} else {
+	    		ans.add(String.format("%d->%d", frontValue, nums[len - 1]));
 	    	}
 	        return ans;
 	    }
