@@ -88,4 +88,39 @@ public class P228_SummaryRanges {
 	        return ans;
 	    }
 	}
+	/*
+	 * 	0 ms
+	 * 	54.68%
+	 * 	导致很慢的原因找到了，是String.format
+	 */
+	static class Solution3 {
+	    public List<String> summaryRanges(int[] nums) {
+			List<String> ans = new ArrayList<>();
+	    	if (nums == null || nums.length == 0) {
+	    		return ans;
+	    	}
+	    	int len = nums.length;
+	    	int preRange = nums[0];
+	    	int nowRange = 0;
+	    	int frontValue = nums[0]; 
+	    	for (int index = 1; index < len; index ++) {
+	    		nowRange = nums[index] - index;
+	    		if (nowRange != preRange) {
+	    			if (frontValue == nums[index - 1]) {
+	    				ans.add(frontValue+"");
+	    			} else {
+	    				ans.add(frontValue+"->"+nums[index - 1]);
+	    			}
+	    			frontValue = nums[index];
+	    			preRange = nowRange;
+	    		}
+	    	}
+	    	if (frontValue == nums[len - 1]) {
+	    		ans.add(frontValue+"");
+	    	} else {
+	    		ans.add(frontValue+"->"+nums[len - 1]);
+	    	}
+	        return ans;
+	    }
+	}
 }
