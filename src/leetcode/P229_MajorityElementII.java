@@ -19,8 +19,8 @@ public class P229_MajorityElementII {
 	public static void main(String[] args) {
 //		Solution1 s = new Solution1();
 //		System.out.println(s.majorityElement(new int[] {3,2,3}));
-		test();
-//		debug();
+//		test();
+		debug();
 	}
 	/*
 	 * 	3 ms
@@ -151,6 +151,7 @@ public class P229_MajorityElementII {
 			this.K = K;
 		}
 	    public List<Integer> majorityElement(int[] nums) {
+	    	int LEN = K - 1;
 	    	List<Integer> ans = new LinkedList<>();
 	    	if (null == nums || nums.length == 0) {
 	    		return ans;
@@ -163,20 +164,22 @@ public class P229_MajorityElementII {
 //	    		}
 //	    		return ans;
 //	    	}
-	    	int[] value = new int[K - 1];
-	    	int[] times = new int[K - 1];
+	    	int[] value = new int[LEN];
+	    	int[] times = new int[LEN];
+	    	int failCount = 0;
 	    	for (int index = 0; index < nums.length; index ++) {
 	    		int val = nums[index];
 //	    	for (int val : nums) {
 	    		boolean isFound = false;
-	    		for (int i = 0; i < K - 1; i ++) {
+	    		for (int i = 0; i < LEN; i ++) {
 	    			if (val == value[i]) {
 	    				times[i] ++;
 	    				isFound = true;
+	    				break;
 	    			}
 	    		}
 	    		if (! isFound) {
-	    			for (int i = 0; i < K - 1; i ++) {
+	    			for (int i = 0; i < LEN; i ++) {
 	    				if (times[i] <= 0) {
 	    					value[i] = val;
 	    					times[i] = 1;
@@ -185,24 +188,30 @@ public class P229_MajorityElementII {
 	    				}
 	    			}
 	    		}
-	    		if (! isFound && (K != 1 && index % (K - 1) == K - 2)) {
-	    			for (int i = 0; i < K - 1; i ++) {
-	    				times[i] --;
+	    		if (! isFound) {
+	    			failCount ++;
+	    			if (failCount == LEN) {
+		    			for (int i = 0; i < LEN; i ++) {
+		    				times[i] --;
+		    			}
+		    			failCount = 0;
 	    			}
 	    		}
 	    	}
-	    	for (int i = 0; i < K - 1; i ++) {
+//	    	tools.Utils.printArray(value, 100);
+//	    	tools.Utils.printArray(times, 100);
+	    	for (int i = 0; i < LEN; i ++) {
 	    		times[i] = 0;
 	    	}
 	    	for (int val : nums) {
-	    		for (int i = 0; i < K - 1; i ++) {
+	    		for (int i = 0; i < LEN; i ++) {
 	    			if (value[i] == val) {
 	    				times[i] ++;
 	    			}
 	    		}
 	    	}
 	    	boolean isHas0 = false;
-	    	for (int i = 0; i < K - 1; i ++) {
+	    	for (int i = 0; i < LEN; i ++) {
 	    		if (times[i] > nums.length / K) {
 	    			if (value[i] == 0) {
 	    				if (! isHas0) {
@@ -240,8 +249,8 @@ public class P229_MajorityElementII {
 	//测试，在随机K的情况下，是否正确
 	static void test() {
 		for (int i = 0; i < 10000000; i ++) {
-			int arg0 = (int)(Math.random() * 1000);
-			int arg1 = (int)(Math.random() * 100);
+			int arg0 = (int)(Math.random() * 100);
+			int arg1 = (int)(Math.random() * 10);
 			int[] arr = tools.Random随机生成器.A_生成一个随机数据(arg0, 0, arg1);
 			int K = arg0 / (arg1 + 1) + 1;
 			List<Integer> standard = standard(K, arr);
@@ -279,12 +288,12 @@ public class P229_MajorityElementII {
 		}
 	}
 	static void debug() {
-		int K = 1;
-		int[] arr = new int[] {27, 1};
+		int K = 3;
+		int[] arr = new int[] {3, 2, 3, 0, 2, 2, 0, 0, 2, 0};
 		System.out.println(arr.length);
 		List<Integer> standard = standard(K, arr);
-		tools.Utils.B_打印List_Integer(standard);
-//		Solution3 s = new Solution3(K);
-//		System.out.println(s.majorityElement(arr));
+		System.out.println(standard);
+		Solution3 s = new Solution3(K);
+		System.out.println(s.majorityElement(arr));
 	}
 }
