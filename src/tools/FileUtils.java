@@ -113,4 +113,30 @@ public class FileUtils {
 		}
 		return null;
 	}
+	public static int[][] C_读取int二维数组_LEETCODE(String path, int len) {
+		File file = new File(path);
+		BufferedReader br = null;
+		try {
+			if (! file.exists()) {
+				return null;
+			}
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			while (len > 1) {
+				br.readLine();
+				len --;
+			}
+			String line = br.readLine().trim();
+			return tools.Utils.LEETCODE_int_二位数组_反序列化_(line);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return null;
+	}
 }
