@@ -139,4 +139,39 @@ public class FileUtils {
 		}
 		return null;
 	}
+	public static int[][] C_读取int二维数组_LEETCODE_一行一行(String path) {
+		File file = new File(path);
+		BufferedReader br = null;
+		BufferedReader br2 = null;
+		
+		try {
+			if (! file.exists()) {
+				return null;
+			}
+			int len = 0;
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			String line = "";
+			while (line != null) {
+				line = br.readLine();
+				len ++;
+			}
+			int[][] ans = new int[len][];
+			br2 = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			for (int i = 0; i < len; i ++) {
+				ans[i] = tools.Utils.LEETCODE_int_array_反序列化_(br.readLine().trim());
+			}
+			return ans;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close();
+				br2.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return null;
+	}
 }
