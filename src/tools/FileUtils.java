@@ -1,8 +1,11 @@
 package tools;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -83,5 +86,31 @@ public class FileUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static int[] C_读取int数组_LEETCODE(String path, int len) {
+		File file = new File(path);
+		BufferedReader br = null;
+		try {
+			if (! file.exists()) {
+				return null;
+			}
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			while (len > 1) {
+				br.readLine();
+				len --;
+			}
+			String line = br.readLine().trim();
+			return tools.Utils.LEETCODE_int_array_反序列化_(line);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return null;
 	}
 }
