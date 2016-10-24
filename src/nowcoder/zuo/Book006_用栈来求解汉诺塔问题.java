@@ -8,10 +8,22 @@ public class Book006_用栈来求解汉诺塔问题 {
 		String left = "左";
 		String mid = "中";
 		String right = "右";
-		int num = 3;
+		int num = 8;
 //		debugStandardSolution(num, left, mid, right);
 //		debugSolution(num, left, mid, right);
-		debugSolutionNoneRecur(num, left, mid, right);
+//		debugSolutionNoneRecur(num, left, mid, right);
+		testRecursionAndNoneRecursion(num, left, mid, right);
+	}
+	static void testRecursionAndNoneRecursion(int num, String left, String mid, String right) {
+		Solution s = new Solution();
+		int sAnswer = s.hanoi(num, left, mid, right);
+		String sStringAnswer = s.st.toString();
+		SolutionNoneRecur snr = new SolutionNoneRecur();
+		int snrAnswer = snr.hanoi(num, left, mid, right);
+		String snrStringAnswer = snr.st.toString();
+		System.out.println("两者次数是否相等 : " + (sAnswer == snrAnswer));
+		System.out.println("两者比较是否相等 : " + (sStringAnswer.equals(snrStringAnswer)));
+		
 	}
 	static void debugSolutionNoneRecur(int num, String left, String mid, String right) {
 		SolutionNoneRecur s = new SolutionNoneRecur();
@@ -33,6 +45,7 @@ public class Book006_用栈来求解汉诺塔问题 {
 	 * 			同时，不能从最右边的塔直接移动到最左边的塔
 	 */
 	static class Solution {
+		StringBuilder st = new StringBuilder();
 		public int hanoi(int num, String left, String mid, String right) {
 			if (num < 1) {
 				return 0;
@@ -44,10 +57,13 @@ public class Book006_用栈来求解汉诺塔问题 {
 			if (num == 1) {
 				if (from.equals(mid) || to.equals(mid)) {
 					System.out.printf("Move 1 from %s to %s\r\n", from, to);
+					st.append(String.format("Move 1 from %s to %s\r\n", from, to));
 					return 1;
 				} else {
 					System.out.printf("Move 1 from %s to %s\r\n", from, mid);
+					st.append(String.format("Move 1 from %s to %s\r\n", from, mid));
 					System.out.printf("Move 1 from %s to %s\r\n", mid, to);
+					st.append(String.format("Move 1 from %s to %s\r\n", mid, to));
 					return 2;
 				}
 			} else {
@@ -56,15 +72,18 @@ public class Book006_用栈来求解汉诺塔问题 {
 					int part1 = process(num - 1, left, mid, right, from, another);
 					int part2 = 1;
 					System.out.printf("Move %d from %s to %s\r\n", num, from, to);
+					st.append(String.format("Move %d from %s to %s\r\n", num, from, to));
 					int part3 = process(num - 1, left, mid, right, another, to);
 					return part1 + part2 + part3;
 				} else {
 					int part1 = process(num - 1, left, mid, right, from, to);
 					int part2 = 1;
 					System.out.printf("Move %d from %s to %s\r\n", num, from, mid);
+					st.append(String.format("Move %d from %s to %s\r\n", num, from, mid));
 					int part3 = process(num - 1, left, mid, right, to, from);
 					int part4 = 1;
 					System.out.printf("Move %d from %s to %s\r\n", num, mid, to);
+					st.append(String.format("Move %d from %s to %s\r\n", num, mid, to));
 					int part5 = process(num - 1, left, mid, right, from, to);
 					return part1 + part2 + part3 + part4 + part5;
 				}
@@ -78,6 +97,7 @@ public class Book006_用栈来求解汉诺塔问题 {
 	 * 		同时不能使用递归来做
 	 */
 	static class SolutionNoneRecur {
+		StringBuilder st = new StringBuilder();
 		public enum Action {
 			NO, LToM, MToL, MToR, RToM
 		}
@@ -111,6 +131,7 @@ public class Book006_用栈来求解汉诺塔问题 {
 			if (record[0] != preNoAct && fS.peek() < tS.peek()) {
 				tS.push(fS.pop());
 				System.out.printf("Move %d from %s to %s\r\n", tS.peek(), from , to);
+				st.append(String.format("Move %d from %s to %s\r\n", tS.peek(), from , to));
 				record[0] = nowAct;
 				return 1;
 			}
@@ -126,8 +147,8 @@ public class Book006_用栈来求解汉诺塔问题 {
 		public void move(int num, String left, String mid, String right) {
 			if (num > 0) {
 				move(num - 1, left, right, mid);
-				System.out.printf("Move disk %d from %s to %s\r\n", num, left, mid);
-				move(num - 1, mid, right, left);
+				System.out.printf("Move disk %d from %s to %s\r\n", num, left, right);
+				move(num - 1, mid, left, right);
 			}
 		}
 	}
