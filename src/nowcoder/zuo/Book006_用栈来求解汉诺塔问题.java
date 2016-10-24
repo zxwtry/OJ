@@ -8,7 +8,7 @@ public class Book006_用栈来求解汉诺塔问题 {
 		String left = "左";
 		String mid = "中";
 		String right = "右";
-		int num = 3;
+		int num = 10;
 //		debugSolution(num, left, mid, right);
 //		debugSolutionNoneRecur(num, left, mid, right);
 //		testRecursionAndNoneRecursion(num, left, mid, right);
@@ -35,6 +35,7 @@ public class Book006_用栈来求解汉诺塔问题 {
 	}
 	static void debugStandardSolutionNoneRecursion(int num, String left, String mid, String right) {
 		StandardSolutionNoneRecursion ssnr = new StandardSolutionNoneRecursion();
+		ssnr.hanoi();
 	}
 	static void testRecursionAndNoneRecursion(int num, String left, String mid, String right) {
 		Solution s = new Solution();
@@ -194,6 +195,9 @@ public class Book006_用栈来求解汉诺塔问题 {
 			System.out.printf("%d. Move disk %d from %c to %c\r\n", count ++, n, x, y);
 		}
 //		void push()
+		public void hanoi() {
+			
+		}
 	}
 	//	见网址：　http://blog.csdn.net/u010443572/article/details/39346501
 	static class StandardSolutionNoneRecursionClassBlog {
