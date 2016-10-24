@@ -5,6 +5,26 @@ import tools.ListNode辅助.ListNode;
 
 public class Book012_在单链表和双链表中删除倒数第K个节点 {
 	public static void main(String[] args) {
+		testSingle();
+		testDouble();
+	}
+	static void testDouble() {
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(10, 0, 100);
+		DoubleNode head = tools.DoubleNode辅助.A_双向链表生成器(arr);
+		tools.DoubleNode辅助.B_打印双向链表(head);
+		SolutionDoubleList sdl = new SolutionDoubleList();
+		int lastKth = 2;
+		head = sdl.removeLastKthNode(head, lastKth);
+		tools.DoubleNode辅助.B_打印双向链表(head);
+	}
+	static void testSingle() {
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(10, 0, 100);
+		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
+		tools.ListNode辅助.B_打印链表_一行(head, 100);
+		SolutionSingleList ssl = new SolutionSingleList();
+		int lastKth = 3;
+		head = ssl.removeLastKthNode(head, lastKth);
+		tools.ListNode辅助.B_打印链表_一行(head, 100);
 		
 	}
 	static class SolutionSingleList {
