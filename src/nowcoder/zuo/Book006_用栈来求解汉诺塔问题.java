@@ -8,11 +8,33 @@ public class Book006_用栈来求解汉诺塔问题 {
 		String left = "左";
 		String mid = "中";
 		String right = "右";
-		int num = 8;
-//		debugStandardSolution(num, left, mid, right);
+		int num = 3;
 //		debugSolution(num, left, mid, right);
 //		debugSolutionNoneRecur(num, left, mid, right);
-		testRecursionAndNoneRecursion(num, left, mid, right);
+//		testRecursionAndNoneRecursion(num, left, mid, right);
+//		debugStandardSolutionNoneRecursion(num, left, mid, right);
+//		debugStandardSolution(num, left, mid, right);
+//		debugStandardSolutionNoneRecursionClassBlog(num, left, mid, right);
+		testStandardSolutionAndStandardSolutionNoneRecursionClassBlog(num, left, mid, right);
+	}
+	static void testStandardSolutionAndStandardSolutionNoneRecursionClassBlog(int num, String left, String mid,
+			String right) {
+		StandardSolutionNoneRecursionClassBlog ssnrcb = new StandardSolutionNoneRecursionClassBlog();
+		int ssnrcbCount = ssnrcb.hanoi(num, left, mid, right);
+		String ssnrcbString = ssnrcb.st.toString();
+		StandardSolution ss = new StandardSolution();
+		int ssCount = ss.hanoi(num, left, mid, right);
+		String ssString = ss.st.toString();
+		System.out.println("两者次数是否相等 : " + (ssnrcbCount == ssCount));
+		System.out.println("两者比较是否相等 : " + (ssnrcbString.equals(ssString)));
+		
+	}
+	static void debugStandardSolutionNoneRecursionClassBlog(int num, String left, String mid, String right) {
+		StandardSolutionNoneRecursionClassBlog s = new StandardSolutionNoneRecursionClassBlog();
+		s.hanoi(num, left, mid, right);
+	}
+	static void debugStandardSolutionNoneRecursion(int num, String left, String mid, String right) {
+		StandardSolutionNoneRecursion ssnr = new StandardSolutionNoneRecursion();
 	}
 	static void testRecursionAndNoneRecursion(int num, String left, String mid, String right) {
 		Solution s = new Solution();
@@ -141,15 +163,89 @@ public class Book006_用栈来求解汉诺塔问题 {
 	}
 	//标准Hanoi问题
 	static class StandardSolution {
-		public void hanoi(int num, String left, String mid, String right) {
+		int count = 0;
+		StringBuilder st = new StringBuilder();
+		public int hanoi(int num, String left, String mid, String right) {
 			move(num, left, mid, right);
+			return count;
 		}
 		public void move(int num, String left, String mid, String right) {
 			if (num > 0) {
 				move(num - 1, left, right, mid);
 				System.out.printf("Move disk %d from %s to %s\r\n", num, left, right);
+				st.append(String.format("Move disk %d from %s to %s\r\n", num, left, right));
+				count ++;
 				move(num - 1, mid, left, right);
 			}
+		}
+	}
+	//标准Hanoi问题
+	//非递归版本
+	//同样需要设定规则
+	//先写固定自己栈深度的版本
+	static class StandardSolutionNoneRecursion {
+		final int length = 10;
+		int[] n = new int[length];
+		char[] x = new char[length];
+		char[] y = new char[length];
+		char[] z = new char[length];
+		int count = 1;
+		void move(char x, int n, char y) {
+			System.out.printf("%d. Move disk %d from %c to %c\r\n", count ++, n, x, y);
+		}
+//		void push()
+	}
+	//	见网址：　http://blog.csdn.net/u010443572/article/details/39346501
+	static class StandardSolutionNoneRecursionClassBlog {
+		StringBuilder st = new StringBuilder();
+		static class Hanoi {
+			int n;
+			char x;
+			char y;
+			char z;
+		}
+		final int MAXLENGTH = 1000;
+		int count = 0;
+		void move(char x, int n, char y) {
+			System.out.printf("%d. Move disk %d from %c to %c\r\n", count ++, n, x, y);
+			st.append(String.format("Move disk %d from %c to %c\r\n", n, x, y));
+		}
+		void push(Hanoi[] p, int top, char x, char y, char z, int n ) {
+			p[top + 1].n = n - 1;
+			p[top + 1].x = x;
+			p[top + 1].y = y;
+			p[top + 1].z = z;
+		}
+		void noneRecusionHanoi(Hanoi[] p) {
+			int top = 0;
+			while (top >= 0) {
+				while (p[top].n > 1) {		//向右到尽头
+					push(p, top, p[top].x, p[top].z, p[top].y, p[top].n);
+					top ++;
+				}
+				if (p[top].n == 1) {		//叶子节点
+					move(p[top].x, p[top].n, p[top].z);
+					top --;
+				}
+				if (top >= 0) {				//向左走一步
+					move(p[top].x, p[top].n, p[top].z);
+					top --;
+					push(p, top, p[top + 1].y, p[top + 1].x, p[top + 1].z, p[top + 1].n);
+					top ++;
+				}
+			}
+		}
+		public int hanoi(int num, String left, String mid, String right) {
+			Hanoi[] p = new Hanoi[MAXLENGTH];
+			for (int i = 0; i < MAXLENGTH; i ++) {
+				p[i] = new Hanoi();
+			}
+			p[0].n = num;
+			p[0].x = left.charAt(0);
+			p[0].y = mid.charAt(0);
+			p[0].z = right.charAt(0);
+			noneRecusionHanoi(p);
+			return count;
 		}
 	}
 }
