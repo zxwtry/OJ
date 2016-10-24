@@ -23,4 +23,15 @@ public class DoubleNode辅助 {
 		}
 		return head;
 	}
+	public static void B_打印双向链表(DoubleNode head) {
+		if (head == null) {
+			System.out.println();
+		} else {
+			while (head != null) {
+				System.out.print(head.val + " ");
+				head = head.next;
+			}
+			System.out.println();
+		}
+	}
 }
