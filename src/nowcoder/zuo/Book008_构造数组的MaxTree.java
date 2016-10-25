@@ -1,9 +1,9 @@
 package nowcoder.zuo;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-
-import com.sun.javafx.image.IntPixelAccessor;
+import java.util.Stack;
 
 import tools.TreeNode辅助.TreeNode;
 
@@ -27,8 +27,9 @@ public class Book008_构造数组的MaxTree {
 		int min = 0;
 		int max = n * n;
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+//		arr = new int[] {1, 1, 1, 1, 1, 1, 1};
 		Solution s = new Solution();
-		TreeNode head = s.getMaxTree(arr);
+		TreeNode head = s.constructMaxTree(arr);
 		boolean isAMaxTree = getIsAMaxTree(head);
 		System.out.println(isAMaxTree);
 	}
@@ -70,8 +71,67 @@ public class Book008_构造数组的MaxTree {
 		return isTrue;
 	}
 	static class Solution {
-		public TreeNode getMaxTree(int[] arr) {
-			return null;
+		public TreeNode constructMaxTree(int[] arr) {
+			TreeNode[] nArr = new TreeNode[arr.length];
+			HashSet<Integer> set = new HashSet<Integer>(arr.length * 3 / 2);
+			int nArrLength = 0;
+			for (int i = 0; i != arr.length; i ++) {
+				if (! set.contains(arr[i])) {
+					nArr[nArrLength] = new TreeNode(arr[i]);
+					set.add(arr[i]);
+					nArrLength ++;
+				}
+			}
+			Stack<TreeNode> stack = new Stack<>();
+			HashMap<TreeNode, TreeNode> lBigMap = new HashMap<TreeNode, TreeNode>();
+			HashMap<TreeNode, TreeNode> rBigMap = new HashMap<TreeNode, TreeNode>();
+			for (int i = 0; i != nArrLength; i ++) {
+				TreeNode curNode = nArr[i];
+				while(! stack.isEmpty() && stack.peek().val < curNode.val) {
+					popStackSetMap(stack, lBigMap);
+				}
+				stack.push(curNode);
+			}
+			while(! stack.isEmpty()) {
+				popStackSetMap(stack, lBigMap);
+			}
+			for (int i = nArrLength - 1; i != -1; i --) {
+				TreeNode curNode = nArr[i];
+				while(! stack.isEmpty() && stack.peek().val < curNode.val) {
+					popStackSetMap(stack, rBigMap);
+				}
+				stack.push(curNode);
+			}
+			while(! stack.isEmpty()) {
+				popStackSetMap(stack, rBigMap);
+			}
+			TreeNode head = null;
+			for (int i = 0; i != nArrLength; i ++) {
+				TreeNode curNode = nArr[i];
+				TreeNode left = lBigMap.get(curNode);
+				TreeNode right = rBigMap.get(curNode);
+				if (left == null && right == null) {
+					head = curNode;
+				} else if (left == null) {
+					setChilds(right, curNode);
+				} else if (right == null) {
+					setChilds(left, curNode);
+				} else {
+					setChilds((left.val < right.val) ? left : right, curNode);
+				}
+			}
+			return head;
+		}
+		private void setChilds(TreeNode parent, TreeNode curNode) {
+			if (parent.left == null) {
+				parent.left = curNode;
+			} else {
+				parent.right = curNode;
+			}
+		}
+		private void popStackSetMap(Stack<TreeNode> stack, HashMap<TreeNode, TreeNode> map) {
+			TreeNode popNode = stack.pop();
+			map.put(popNode, stack.isEmpty() ? null : stack.peek());
 		}
 	}
 }
