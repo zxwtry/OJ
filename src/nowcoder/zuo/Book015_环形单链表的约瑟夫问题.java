@@ -9,7 +9,34 @@ import tools.ListNode辅助.ListNode;
 
 public class Book015_环形单链表的约瑟夫问题 {
 	public static void main(String[] args) {
-		testStandardSolution();
+//		testStandardSolution();
+		testFastSolution();
+	}
+	static void testFastSolution() {
+
+		int[] arr = new int[12312];
+		for (int i = 0; i < arr.length; i ++) {
+			arr[i] = i;
+		}
+		ListNode headMy = tools.ListNode辅助.A_一维生成器(arr);
+		ListNode travelMy = headMy;
+		while (travelMy.next != null) {
+			travelMy = travelMy.next;
+		}
+		travelMy.next = headMy;
+		int m = 1;
+		FastSolution s = new FastSolution();
+		ListNode ansMy= s.josephusKill(headMy, m);
+		ListNode headBook = tools.ListNode辅助.A_一维生成器(arr);
+		ListNode travelBook = headBook;
+		while (travelBook.next != null) {
+			travelBook = travelBook.next;
+		}
+		travelBook.next = headBook;
+		StandardSolution ss = new StandardSolution();
+		ListNode ansBook = ss.josephusKillBook(headBook, m);
+		System.out.println(ansMy.val == ansBook.val);
+	
 	}
 	static void testStandardSolution() {
 		int[] arr = new int[12312];
@@ -22,7 +49,7 @@ public class Book015_环形单链表的约瑟夫问题 {
 			travelMy = travelMy.next;
 		}
 		travelMy.next = headMy;
-		int m = 3;
+		int m = 1;
 		StandardSolution s = new StandardSolution();
 		ListNode ansMy= s.josephusKill(headMy, m);
 		ListNode headBook = tools.ListNode辅助.A_一维生成器(arr);
@@ -39,14 +66,22 @@ public class Book015_环形单链表的约瑟夫问题 {
 			if (head == null || m < 1) {
 				return head;
 			}
-			int count = 0;
+			if (m == 1) {
+				ListNode travel = head;
+				while (travel.next != head) {
+					travel = travel.next;
+				}
+				travel.next = travel;
+				return travel;
+			}
+			int count = 1;
 			while (head.next != head) {
-				++ count;
 				if (count == m - 1) {
 					head.next = head.next.next;
 					count = 0;
 				}
 				head = head.next;
+				++ count;
 			}
 			return head;
 		}
@@ -73,7 +108,28 @@ public class Book015_环形单链表的约瑟夫问题 {
 	}
 	static class FastSolution {
 		public ListNode josephusKill(ListNode head, int m) {
+			if (head == null || m < 1 || head.next == head) {
+				return head;
+			}
+			ListNode cur = head.next;
+			int length = 1;
+			while (cur != head) {
+				cur = cur.next;
+				length ++;
+			}
+			int position = getLive(length, m);
+			while (-- position != 0) {
+				head = head.next;
+			}
+			head.next = head;
 			return head;
+		}
+
+		private int getLive(int length, int m) {
+			if (length == 1) {
+				return 1;
+			}
+			return (getLive(length - 1, m) + m - 1) % length + 1;
 		}
 	}
 }
