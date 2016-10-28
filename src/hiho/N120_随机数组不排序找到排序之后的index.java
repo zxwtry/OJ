@@ -29,23 +29,27 @@ public class N120_随机数组不排序找到排序之后的index {
 //		solve(arr, M);
 //		standard(arr);
 //		tools.Utils.printArray(arr, 100);
-		test();
+//		test();
+		testRadixSolution();
+	}
+	static void testRadixSolution() {
+		RadixSolution rs = new RadixSolution();
+		int[] arr = rs.get题目的样式(10, 0);
+//		arr = new int[] {1, 9, 9, 9, 1, 1, 44, 4, 1};
+		tools.Utils.printArray(arr, 100);
+		int newMax = rs.radixSort(arr, 10);
+		tools.Utils.printArray(arr, 100);
+		System.out.println(newMax);
 	}
 	static void test() {
-		int M = 999;
-		int maxMbits = 1000;
-		int[] arr = new int[200];
-		int arrIndex = 0;
-		while (arrIndex < arr.length) {
-			int valBig = (int)(Math.random() * (M + 1));
-			int valSmall = (int)(Math.random() * (M + 1));
-			int val = valBig * maxMbits + valSmall;
-			arr[arrIndex ++] = val;
-		}
+		int max = (int) ( Math.random() * 100 );
+		int len = (int) ( Math.random() * 10000 );
+		RadixSolution rs = new RadixSolution();
+		int[] arr = rs.get题目的样式(len, max);
 		int[] arrSolve = arr.clone();
 		int[] arrStandard = arr.clone();
-		solve(arrSolve, M);
 		standard(arrStandard);
+		rs.radixSort(arrSolve, max);
 		boolean isAllSame = true;
 		for (int i = 0; i < arr.length; i ++) {
 			if (arrSolve[i] == arrStandard[i]) {
@@ -111,6 +115,69 @@ public class N120_随机数组不排序找到排序之后的index {
 		Arrays.sort(arrClone);
 		for (int i = 0; i < arr.length; i ++) {
 			arr[valToIndex.get(arrClone[i])] = i;
+		}
+	}
+	static class RadixSolution {
+		/*
+		 * 	 更改成从0开始，避免逻辑混乱
+		 */
+		public int[] get题目的样式(int len, int max) {
+			int[] arr = new int[len];
+			for (int i = 0; i < len; i ++) {
+				arr[i] = getNumber(max) * (max + 1) + getNumber(max);
+			}
+			return arr;
+		}
+		private int getNumber(int max) {
+			return (int) (Math.random() * (max + 1));
+		}
+		/*
+		 * 	使用基数排序
+		 * 	返回，排序之后的max
+		 */
+		public int radixSort(int[] arr, int max) {
+			int bits = getBits(max);
+			int LEN = 1 << bits;
+			int[][] save = new int[LEN][arr.length];
+			int[] count = new int[LEN];
+			int[] conn = new int[arr.length];
+			for (int connIndex = 0; connIndex != conn.length; connIndex ++) {
+				conn[connIndex] = connIndex;
+			}
+			int arrIndex = 0;
+			for (int radixIndex = 0; radixIndex != 2; radixIndex ++) {
+				int arrValueRightBits = radixIndex * bits;
+				for (arrIndex = 0; arrIndex != arr.length; arrIndex ++) {
+					int saveI = ( arr[conn[arrIndex]] >>> arrValueRightBits ) & (LEN - 1);
+					save[saveI][count[saveI] ++] = conn[arrIndex];
+				}
+				arrIndex = 0;
+				for (int countIndex = 0; countIndex != LEN; countIndex ++) {
+					for (int countValue = 0; countValue != count[countIndex]; countValue ++) {
+						conn[arrIndex++] = save[countIndex][countValue];
+					}
+					count[countIndex] = 0;
+				}
+			}
+			int[] newArr = new int[arr.length];
+			int newArrValue = -1;
+			for (int connIndex = 0; connIndex != conn.length; connIndex ++) {
+				if (connIndex != 0 && arr[conn[connIndex]] == arr[conn[connIndex - 1]]) {
+					newArr[conn[connIndex]] = newArr[conn[connIndex - 1]];
+				} else {
+					newArr[conn[connIndex]] = ++ newArrValue;
+				}
+			}
+			System.arraycopy(newArr, 0, arr, 0, arr.length);
+			return newArrValue;
+		}
+		private int getBits(int max) {
+			int bits = 1;
+			while (max > 1) {
+				max = max >>> 1;
+				bits ++;
+			}
+			return bits;
 		}
 	}
 }
