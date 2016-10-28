@@ -42,6 +42,11 @@ public class ListNode辅助 {
 		}
 		return head;
 	}
+	public static ListNode A_随机生成器_最大长度N_范围min_max(int N, int min, int max) {
+		int len = (int)(Math.random() * (N + 1));
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(len, min, max);
+		return tools.ListNode辅助.A_一维生成器(arr);
+	}
 	public static void B_打印链表(ListNode head) {
 		ListNode cur = head;
 		while (cur != null) {
