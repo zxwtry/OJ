@@ -4,8 +4,139 @@ import tools.ListNode辅助.ListNode;
 
 public class Book020_两个单链表相交的一系列问题 {
 	public static void main(String[] args) {
-		test1没有环_不相交();
+//		test1没有环_不相交();
 //		test2没有环_相交();
+//		test3有环_先相交后成环();
+//		test4有环_不相交();
+//		test5有环_环上相交();
+	}
+	static void test5有环_环上相交() {
+		int n = 3;
+		int min = 0;
+		int max = 1000;
+		boolean isAllTrue = true;
+		for (n = 2; n < 1000; n ++) {
+			ListNode head1 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			ListNode head2 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			ListNode circle = tools.ListNode辅助.A_一维生成器(tools.Random随机生成器.A_生成一个随机数据(n, min, max));
+			ListNode tailCircle = circle;
+			while (tailCircle.next != null) {
+				tailCircle = tailCircle.next;
+			}
+			tailCircle.next = circle;
+			ListNode loop1 = circle, loop2 = tailCircle;
+			ListNode tail1 = head1, tail2 = head2;
+			if (tail1 == null) {
+				head1 = loop1;
+			} else {
+				while (tail1.next != null) {
+					tail1 = tail1.next;
+				}
+				tail1.next = loop1;
+			}
+			if (tail2 == null) {
+				head2 = loop2;
+			} else {
+				while (tail2 != null && tail2.next != null) {
+					tail2 = tail2.next;
+				}
+				tail2.next = loop2;
+			}
+			Solution s = new Solution();
+			ListNode intersectNode = s.getIntersectNode(head1, head2);
+			System.out.println(intersectNode.val == loop1.val || intersectNode.val == loop2.val);
+			isAllTrue &= intersectNode.val == loop1.val || intersectNode.val == loop2.val;
+		}
+		System.out.println(isAllTrue);
+	}
+	static void test4有环_不相交() {
+		int n = 3;
+		int min = 0;
+		int max = 1000;
+		boolean isAllTrue = true;
+		for (n = 1; n < 1000; n ++) {
+			ListNode head1 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			ListNode head2 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			ListNode circle1 = tools.ListNode辅助.A_一维生成器(tools.Random随机生成器.A_生成一个随机数据(n, min, max));
+			ListNode circle2 = tools.ListNode辅助.A_一维生成器(tools.Random随机生成器.A_生成一个随机数据(n, min, max));
+			ListNode tailCircle1 = circle1;
+			while (tailCircle1.next != null) {
+				tailCircle1 = tailCircle1.next;
+			}
+			tailCircle1.next = circle1;
+			ListNode tailCircle2 = circle2;
+			while (tailCircle2.next != null) {
+				tailCircle2 = tailCircle2.next;
+			}
+			tailCircle2.next = circle2;
+			ListNode tail1 = head1, tail2 = head2;
+			if (tail1 == null) {
+				head1 = circle1;
+			} else {
+				while (tail1.next != null) {
+					tail1 = tail1.next;
+				}
+				tail1.next = circle1;
+			}
+			if (tail2 == null) {
+				head2 = circle2;
+			} else {
+				while (tail2.next != null) {
+					tail2 = tail2.next;
+				}
+				tail2.next = circle2;
+			}
+			Solution s = new Solution();
+			ListNode intersectNode = s.getIntersectNode(head1, head2);
+			System.out.println(intersectNode == null);
+			isAllTrue &= intersectNode == null;
+		}
+		System.out.println(isAllTrue);
+	}
+	static void test3有环_先相交后成环() {
+		int n = 3;
+		int min = 0;
+		int max = 1000;
+		boolean isAllTrue = true;
+		for (n = 1; n < 1000; n ++) {
+			ListNode head1 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			ListNode head2 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+			ListNode common = tools.ListNode辅助.A_一维生成器(arr);
+			ListNode tail1 = head1, tail2 = head2;
+			if (tail1 == null) {
+				head1 = common;
+			} else {
+				while (tail1.next != null) {
+					tail1 = tail1.next;
+				}
+				tail1.next = common;
+			}
+			if (tail2 == null) {
+				head2 = common;
+			} else {
+				while (tail2 != null && tail2.next != null) {
+					tail2 = tail2.next;
+				}
+				tail2.next = common;
+			}
+			ListNode circle = tools.ListNode辅助.A_一维生成器(tools.Random随机生成器.A_生成一个随机数据(n, min, max));
+			ListNode tailCircle = circle;
+			while (tailCircle.next != null) {
+				tailCircle = tailCircle.next;
+			}
+			tailCircle.next = circle;
+			ListNode tailCommon = common;
+			while (tailCommon.next != null) {
+				tailCommon = tailCommon.next;
+			}
+			tailCommon.next = circle;
+			Solution s = new Solution();
+			ListNode intersectNode = s.getIntersectNode(head1, head2);
+			System.out.println(intersectNode.val == arr[0]);
+			isAllTrue &= intersectNode.val == arr[0];
+		}
+		System.out.println(isAllTrue);
 	}
 	static void test2没有环_相交() {
 		int n = 100;
@@ -153,9 +284,9 @@ public class Book020_两个单链表相交的一系列问题 {
 					cur2 = cur2.next;
 				}
 				if (len1 > len2) {
-					intersectNode = bothLoop(cur1, len1, cur2, len2);
+					intersectNode = bothLoop(head1, len1, head2, len2);
 				} else {
-					intersectNode = bothLoop(cur2, len2, cur1, len1);
+					intersectNode = bothLoop(head2, len2, head1, len1);
 				}
 			} else {
 				cur1 = loop1.next;
