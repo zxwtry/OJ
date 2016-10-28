@@ -4,7 +4,57 @@ import tools.ListNode辅助.ListNode;
 
 public class Book020_两个单链表相交的一系列问题 {
 	public static void main(String[] args) {
-		
+		test1没有环_不相交();
+//		test2没有环_相交();
+	}
+	static void test2没有环_相交() {
+		int n = 100;
+		boolean isAllTrue = true;
+		for (n = 1; n < 1000; n ++) {
+			int min = 0;
+			int max = 1000;
+			ListNode head1 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			ListNode head2 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+			ListNode common = tools.ListNode辅助.A_一维生成器(arr);
+			ListNode tail1 = head1, tail2 = head2;
+			if (tail1 == null) {
+				head1 = common;
+			} else {
+				while (tail1.next != null) {
+					tail1 = tail1.next;
+				}
+				tail1.next = common;
+			}
+			if (tail2 == null) {
+				head2 = common;
+			} else {
+				while (tail2 != null && tail2.next != null) {
+					tail2 = tail2.next;
+				}
+				tail2.next = common;
+			}
+			Solution s = new Solution();
+			ListNode intersectNode = s.getIntersectNode(head1, head2);
+			System.out.println(intersectNode.val == arr[0]);
+			isAllTrue &= intersectNode.val == arr[0];
+		}
+		System.out.println(isAllTrue);
+	}
+	static void test1没有环_不相交() {
+		int n = 100;
+		int min = 0;
+		int max = 1000;
+		boolean isAllTrue = true;
+		for (n = 1; n < 1000; n ++) {
+			ListNode head1 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			ListNode head2 = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(n, min, max);
+			Solution s = new Solution();
+			ListNode intersectNode = s.getIntersectNode(head1, head2);
+			System.out.println(intersectNode == null);
+			isAllTrue &= intersectNode == null;
+		}
+		System.out.println(isAllTrue);
 	}
 	/*
 	 * 	给定两个单链表的头结点head1和head2，
@@ -80,13 +130,75 @@ public class Book020_两个单链表相交的一系列问题 {
 		}
 		/*
 		 * 	3,	如何判断两个有环链表是否相交，相交则返回第一个相交节点，不相交返回null
+		 * 		假设	链表1的第一个入环节点是loop1
+		 * 			链表2的第一个入环节点是loop2
 		 * 	有环有三种情况：
-		 * 		a,	两个链表先相交，相交之后再共同成环	
-		 * 		b,	两个链表单独成环，就没有相交
-		 * 		c,	两个链表先走进环，再在环上相交。
+		 * 		a,	两个链表先相交，相交之后再共同成环	loop1 == loop2
+		 * 		b,	两个链表单独成环，就没有相交		loop1 != loop2 && loop1走一圈没有遇见loop2
+		 * 		c,	两个链表先走进环，再在环上相交		loop1 != loop2 && loop1走一圈遇见loop2
 		 */
-		public ListNode bothLoop(ListNode head1, ListNode head2) {
-			
+		public ListNode bothLoop(ListNode head1, ListNode loop1, ListNode head2, ListNode loop2) {
+			ListNode cur1 = null, cur2 = null;
+			ListNode intersectNode = null;
+			if (loop1 == loop2) {
+				cur1 = head1;
+				cur2 = head2;
+				int len1 = 0, len2 = 0;
+				while (cur1 != loop1) {
+					len1 ++;
+					cur1 = cur1.next;
+				}
+				while (cur2 != loop2) {
+					len2 ++;
+					cur2 = cur2.next;
+				}
+				if (len1 > len2) {
+					intersectNode = bothLoop(cur1, len1, cur2, len2);
+				} else {
+					intersectNode = bothLoop(cur2, len2, cur1, len1);
+				}
+			} else {
+				cur1 = loop1.next;
+				boolean isOneCircle = false;
+				while (cur1 != loop1 && ! isOneCircle) {
+					if (cur1 == loop2) {
+						isOneCircle = true;
+					} else {
+						cur1 = cur1.next;
+					}
+				}
+				intersectNode = isOneCircle ? loop1 : null;
+			}
+			return intersectNode;
+		}
+		private ListNode bothLoop(ListNode cur1, int len1, ListNode cur2, int len2) {
+			int cut = len1 - len2;
+			while (cut != 0) {
+				cur1 = cur1.next;
+				cut --;
+			}
+			while (cur1 != cur2) {
+				cur1 = cur1.next;
+				cur2 = cur2.next;
+			}
+			return cur1;
+		}
+		/*
+		 * 	实现功能的主方法
+		 */
+		public ListNode getIntersectNode(ListNode head1, ListNode head2) {
+			if (head1 == null || head2 == null) {
+				return null;
+			}
+			ListNode loop1 = getLoopNode(head1);
+			ListNode loop2 = getLoopNode(head2);
+			if (loop1 == null && loop2 == null) {
+				return noLoop(head1, head2);
+			}
+			if (loop1 != null && loop2 != null) {
+				return bothLoop(head1, loop1, head2, loop2);
+			}
+			return null;
 		}
 	}
 }
