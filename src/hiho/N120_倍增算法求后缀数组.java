@@ -5,7 +5,53 @@ import java.util.ArrayList;
 public class N120_倍增算法求后缀数组 {
 	public static void main(String[] args) {
 //		testBeizengSolution();
-		test();
+//		test();
+//		testSpeed();
+	}
+	static void testSpeed() {
+		int len = 2000;
+		String s = tools.StringUtils.A_生成随机数组A_Z(len);
+		long timeBeizeng = 0;
+		long timeStandard = 0;
+		long start = 0;
+		long end = 0;
+		start = System.currentTimeMillis();
+		new BeizengSolution().solve(s); 
+		end = System.currentTimeMillis();
+		timeBeizeng = end - start;
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		start = System.currentTimeMillis();
+		new StandardSolution().solve(s); 
+		end = System.currentTimeMillis();
+		timeStandard = end - start;
+		System.out.println(timeBeizeng + "..." + timeStandard);
+		//len=5000	541...287
+		//len=900	12...16
+		//len=3000	137...117
+		//len=2000	72...57
+		//可以看出倍增还是有一定用处的，只是由于内存消耗太大，慢了。
+		//看看有什么内存节约的方法。
+		//或者转到自己笔记本上再运行试试。
+		/*
+		 * 	在自己的笔记本上运行，采用java -Xms4096m -Xmx8192m方式执行
+		 * 	len=100		3...3
+		 * 	len=300		7...12
+		 * 	len=500		10...21
+		 * 	len=1000	22...37
+		 * 	len=2000	53...93
+		 * 	len=4000	139...372
+		 * 	len=6000	354...1048
+		 * 	len=8000	453...1842
+		 * 	len=10000	1625...2927 (肯定又碰到GC了)
+		 * 	改用java -Xms8192m -Xmx10240m
+		 * 	len=10000	1070...3297
+		 * 	len=12000	1261...4363
+		 */
+		//可以看到，只要不GC，倍增的效率高于标准计算后缀方法
 	}
 	static void testBeizengSolution() {
 		BeizengSolution bs = new BeizengSolution();
@@ -17,7 +63,7 @@ public class N120_倍增算法求后缀数组 {
 			int len = (int)(Math.random() * 50);
 			String s = tools.StringUtils.A_生成随机数组A_Z(len);
 			ArrayList<String> beizengAnswer = new BeizengSolution().solve(s); 
-			ArrayList<String> standardAnswer = standardSolution(s); 
+			ArrayList<String> standardAnswer = new StandardSolution().solve(s); 
 			boolean isAllSame = beizengAnswer.size() == standardAnswer.size();
 			tools.Utils.B_打印List_String_OneLine(beizengAnswer);
 			tools.Utils.B_打印List_String_OneLine(standardAnswer);
@@ -35,25 +81,27 @@ public class N120_倍增算法求后缀数组 {
 	//比较N*logN次，
 	//每次比较是比较N次
 	//那么时间复杂度是O(NNlogN)
-	static ArrayList<String> standardSolution(String s) {
-		String[] strs = new String[s.length()];
-		for(int i = 0; i < s.length(); i ++) {
-			strs[i] = s.substring(i);
-		}
-		for (int i = 0; i < strs.length; i ++) {
-			for (int j = i + 1; j < strs.length; j ++) {
-				if (strs[i].compareTo(strs[j]) > 0) {
-					String temp = strs[i];
-					strs[i] = strs[j];
-					strs[j] = temp;
+	static class StandardSolution {
+		ArrayList<String> solve(String s) {
+			String[] strs = new String[s.length()];
+			for(int i = 0; i < s.length(); i ++) {
+				strs[i] = s.substring(i);
+			}
+			for (int i = 0; i < strs.length; i ++) {
+				for (int j = i + 1; j < strs.length; j ++) {
+					if (strs[i].compareTo(strs[j]) > 0) {
+						String temp = strs[i];
+						strs[i] = strs[j];
+						strs[j] = temp;
+					}
 				}
 			}
+			ArrayList<String> list = new ArrayList<>(strs.length);
+			for (String st : strs) {
+				list.add(st);
+			}
+			return list;
 		}
-		ArrayList<String> list = new ArrayList<>(strs.length);
-		for (String st : strs) {
-			list.add(st);
-		}
-		return list;
 	}
 	//听说能够实现O(N*logN)，真的么?
 	//根据图，非常好理解，但是在代码上怎么写呢？
