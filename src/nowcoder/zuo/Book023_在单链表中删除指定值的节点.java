@@ -29,4 +29,26 @@ public class Book023_在单链表中删除指定值的节点 {
 			return head;
 		}
 	}
+	//时间复杂度O(N)，额外空间复杂度O(1)
+	static class AdjustSolution {
+		public ListNode removeVal(ListNode head, int num) {
+			while (head != null) {
+				if (head.val != num) {
+					break;
+				}
+				head = head.next;
+			}
+			ListNode pre = head;
+			ListNode cur = head;
+			while (cur != null) {
+				if (cur.val == num) {
+					pre.next = cur.next;
+				} else {
+					pre = cur;
+				}
+				cur = cur.next;
+			}
+			return head;
+		}
+	}
 }
