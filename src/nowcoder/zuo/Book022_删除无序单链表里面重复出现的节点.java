@@ -33,4 +33,24 @@ public class Book022_删除无序单链表里面重复出现的节点 {
 			}
 		}
 	}
+	//时间复杂度O(N^2)，额外空间复杂度O(1)
+	static class SortSolution {
+		public void removeRep(ListNode head) {
+			ListNode cur = head;
+			ListNode pre = null;
+			ListNode next = null;
+			while (cur != null) {
+				pre = cur;
+				next = cur.next;
+				while (next != null) {
+					if (cur.val == next.val) {
+						pre.next = next.next;
+					} else {
+						pre = next;
+					}
+					next = next.next;
+				}
+			}
+		}
+	}
 }
