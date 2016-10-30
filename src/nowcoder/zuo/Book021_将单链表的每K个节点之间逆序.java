@@ -44,4 +44,45 @@ public class Book021_将单链表的每K个节点之间逆序 {
 			return cur;
 		}
 	}
+	//时间复杂度O(N)，额外空间复杂度O(1)
+	static class AdjustSolution {
+		public ListNode reverseKNodes(ListNode head, int K) {
+			if (K < 2) {
+				return head;
+			}
+			ListNode cur = head;
+			ListNode pre = null;
+			ListNode next = null;
+			ListNode start = null;
+			int count = 1;
+			while (null != cur) {
+				next = cur.next;
+				if (count == K) {
+					start = pre == null ? head : pre.next;
+					head = pre == null ? cur : head;
+					resign(pre, start, cur, next);
+					pre = start;
+					count = 0;
+				}
+				count ++;
+				cur = next;
+			}
+			return head;
+		}
+		private void resign(ListNode left, ListNode start, ListNode end, ListNode right) {
+			ListNode pre = start;
+			ListNode cur = start.next;
+			ListNode next = null;
+			while (cur != right) {
+				next = cur.next;
+				cur.next = pre;
+				pre = cur;
+				cur = next;
+			}
+			if (left != null) {
+				left.next = end;
+			}
+			start.next = right;
+		}
+	}
 }
