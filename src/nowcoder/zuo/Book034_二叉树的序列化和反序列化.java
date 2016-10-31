@@ -38,4 +38,30 @@ public class Book034_二叉树的序列化和反序列化 {
 			return head;
 		}
 	}
+	static class LevelSolution {
+		public String serial(TreeNode head) {
+			if (head == null) {
+				return "#!";
+			}
+			String res = head.val + "!";
+			Queue<TreeNode> q = new LinkedList<>();
+			q.offer(head);
+			while (! q.isEmpty()) {
+				head = q.poll();
+				if (head.left != null) {
+					res += head.left.val + "!";
+					q.offer(head.left);
+				} else {
+					res += "#!";
+				}
+				if (head.right != null) {
+					res += head.right.val + "!";
+					q.offer(head.right);
+				} else {
+					res += "#!";
+				}
+			}
+			return res;
+		}
+	}
 }
