@@ -63,5 +63,30 @@ public class Book034_二叉树的序列化和反序列化 {
 			}
 			return res;
 		}
+		public TreeNode recon(String level) {
+			String[] vals = level.split("!");
+			int index = 0;
+			TreeNode head = vals[index].equals("#") ? null : new TreeNode(Integer.valueOf(vals[index]));
+			index ++;
+			Queue<TreeNode> q = new LinkedList<>();
+			if (head != null) {
+				q.offer(head);
+			}
+			TreeNode node = null;
+			while (! q.isEmpty()) {
+				node = q.poll();
+				node.left = vals[index].equals("#") ? null : new TreeNode(Integer.valueOf(vals[index]));
+				index ++;
+				node.right = vals[index].equals("#") ? null : new TreeNode(Integer.valueOf(vals[index]));
+				index ++;
+				if (node.left != null) {
+					q.offer(node.left);
+				}
+				if (node.right != null) {
+					q.offer(node.right);
+				}
+			}
+			return head;
+		}
 	}
 }
