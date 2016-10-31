@@ -63,4 +63,46 @@ public class Book031_打印二叉树的边界节点 {
 			return Math.max(getHeight(head.left, i + 1), getHeight(head.right, i + 1));
 		}
 	}
+	/*
+	 * 	标准二：
+	 * 		1,	头结点为边界节点
+	 * 		2,	叶子节点为边界节点
+	 * 		3,	树左边界延伸下去的路径为边界节点
+	 * 		4,	树左边界延伸下去的路径为边界节点
+	 */
+	static class EdgeSoltuion2 {
+		public void printEdge(TreeNode head) {
+			if (head == null) {
+				return;
+			}
+			System.out.print(head.val + " ");
+			if (head.left != null && head.right == null) {
+				printLeftEdge(head.left, true);
+				printRightEdge(head.right, true);
+			} else {
+				printEdge(head.left != null ? head.left : head.right);
+			}
+			System.out.println();
+		}
+		public void printLeftEdge(TreeNode head, boolean print) {
+			if (head == null) {
+				return;
+			}
+			if (print || (head.left == null && head.right == null)) {
+				System.out.print(head.val + " ");
+			}
+			printLeftEdge(head.left, print);
+			printLeftEdge(head.right, print && head.left == null ? true : false);
+		}
+		public void printRightEdge(TreeNode head, boolean print) {
+			if (head  == null) {
+				return;
+			}
+			printRightEdge(head.left, print && head.right == null ? true : false);
+			printRightEdge(head.right, print);
+			if (print || (head.left == null && head.right == null)) {
+				System.out.print(head.val + " ");
+			}
+		}
+	}
 }
