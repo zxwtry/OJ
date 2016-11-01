@@ -22,9 +22,11 @@ public class Book033_遍历二叉树的神一样的方法 {
 			return list;
 		}
 		private void preOrderInternal(TreeNode head) {
-			list.add(head.val);
-			preOrderInternal(head.left);
-			preOrderInternal(head.right);
+			if (head != null) {
+				list.add(head.val);
+				preOrderInternal(head.left);
+				preOrderInternal(head.right);
+			}
 		}
 		public List<Integer> inOrder(TreeNode head) {
 			list = new LinkedList<>();
@@ -32,9 +34,23 @@ public class Book033_遍历二叉树的神一样的方法 {
 			return list;
 		}
 		private void inOrderInternal(TreeNode head) {
-			inOrderInternal(head.left);
-			list.add(head.val);
-			inOrderInternal(head.right);
+			if (head != null) {
+				inOrderInternal(head.left);
+				list.add(head.val);
+				inOrderInternal(head.right);
+			}
+		}
+		public List<Integer> posOrder(TreeNode head) {
+			list = new LinkedList<>();
+			posOrderInternal(head);
+			return list;
+		}
+		private void posOrderInternal(TreeNode head) {
+			if (head != null) {
+				posOrderInternal(head.left);
+				posOrderInternal(head.right);
+				list.add(head.val);
+			}
 		}
 	}
 	/*
@@ -95,6 +111,53 @@ public class Book033_遍历二叉树的神一样的方法 {
 				cur1 = cur1.right;
 			}
 			return list;
+		}
+		public List<Integer> posOrder(TreeNode head) {
+			List<Integer> list = new LinkedList<>();
+			if (head == null) {
+				return list;
+			}
+			TreeNode cur1 = head;
+			TreeNode cur2 = null;
+			while (cur1 != null) {
+				cur2 = cur1.left;
+				if (cur2 != null) {
+					while (cur2.right != null && cur2.right != cur1) {
+						cur2 = cur2.right;
+					}
+					if (cur2.right == null) {
+						cur2.right = cur1;
+						cur1 = cur1.left;
+						continue;
+					} else {
+						cur2.right = null;
+						echoList(cur1.left, list);
+					}
+				}
+				cur1 = cur1.right;
+			}
+			echoList(head, list);
+			return list;
+		}
+		private void echoList(TreeNode head, List<Integer> list) {
+			TreeNode tail = reverse(head);
+			TreeNode cur = tail;
+			while (cur != null) {
+				list.add(cur.val);
+				cur = cur.right;
+			}
+			reverse(tail);
+		}
+		private TreeNode reverse(TreeNode from) {
+			TreeNode pre = null;
+			TreeNode next = null;
+			while (from != null) {
+				next = from.right;
+				from.right = pre;
+				pre = from;
+				from = next;
+			}
+			return pre;
 		}
 	}
 }
