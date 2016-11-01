@@ -21,11 +21,20 @@ public class Book033_遍历二叉树的神一样的方法 {
 			preOrderInternal(head);
 			return list;
 		}
-		private List<Integer> preOrderInternal(TreeNode head) {
+		private void preOrderInternal(TreeNode head) {
 			list.add(head.val);
 			preOrderInternal(head.left);
 			preOrderInternal(head.right);
-			return null;
+		}
+		public List<Integer> inOrder(TreeNode head) {
+			list = new LinkedList<>();
+			inOrderInternal(head);
+			return list;
+		}
+		private void inOrderInternal(TreeNode head) {
+			inOrderInternal(head.left);
+			list.add(head.val);
+			inOrderInternal(head.right);
 		}
 	}
 	/*
@@ -33,9 +42,8 @@ public class Book033_遍历二叉树的神一样的方法 {
 	 * 	空间：O(1)
 	　*/
 	static class CaesarSolution {
-		List<Integer> list = null;
 		public List<Integer> preOrder(TreeNode head) {
-			list = new LinkedList<>();
+			List<Integer> list = new LinkedList<>();
 			if (head == null) {
 				return list;
 			}
@@ -58,6 +66,32 @@ public class Book033_遍历二叉树的神一样的方法 {
 				} else {
 					list.add(cur1.val);
 				}
+				cur1 = cur1.right;
+			}
+			return list;
+		}
+		public List<Integer> inOrder(TreeNode head) {
+			List<Integer> list = new LinkedList<>();
+			if (head == null) {
+				return list;
+			}
+			TreeNode cur1 = head;
+			TreeNode cur2 = null;
+			while (cur1 != null) {
+				cur2 = cur1.left;
+				if (cur2 != null) {
+					while (cur2.right != null && cur2.right != cur1) {
+						cur2 = cur2.right;
+					}
+					if (cur2.right == null) {
+						cur2.right = cur1;
+						cur1 = cur1.left;
+						continue;
+					} else {
+						cur2.right = null;
+					}
+				}
+				list.add(cur1.val);
 				cur1 = cur1.right;
 			}
 			return list;
