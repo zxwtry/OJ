@@ -6,7 +6,20 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book035_在二叉树中找到累加和为指定值的最长路径长度 {
 	public static void main(String[] args) {
-		
+		test();
+	}
+	private static void test() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			1,
+			2, 3,
+			1, 2, 3, 4,
+			N, N, N, N, N, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		int sum = 5;
+		Solution s = new Solution();
+		System.out.println(s.getMaxLength(head, sum));
 	}
 	/*
 	 * 	时间：O(N)
