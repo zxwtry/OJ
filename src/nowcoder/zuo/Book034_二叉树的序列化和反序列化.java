@@ -8,6 +8,22 @@ import tools.TreeNode辅助.TreeNode;
 public class Book034_二叉树的序列化和反序列化 {
 	public static void main(String[] args) {
 		testPre();
+		testLevel();
+	}
+	private static void testLevel() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			1,
+			2, 3,
+			1, 2, 3, 4,
+			N, N, N, N, N, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		LevelSolution s = new LevelSolution();
+		String str = s.serial(head);
+		System.out.println(str);
+		TreeNode newHead = s.recon(str);
+		tools.TreeNode辅助.B_按层打印(newHead);
 	}
 	private static void testPre() {
 		int N = Integer.MIN_VALUE;
