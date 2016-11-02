@@ -10,6 +10,19 @@ import tools.TreeNode辅助.TreeNode;
 public class Book031_打印二叉树的边界节点 {
 	public static void main(String[] args) {
 		testEdgeSolution1();
+		testEdgeSolution2();
+	}
+	private static void testEdgeSolution2() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			1,
+			2, 3,
+			1, 2, 3, 4,
+			N, N, 7, N, 8, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		EdgeSolution2 s = new EdgeSolution2();
+		s.printEdge(head);
 	}
 	private static void testEdgeSolution1() {
 		int N = Integer.MIN_VALUE;
@@ -82,7 +95,7 @@ public class Book031_打印二叉树的边界节点 {
 	 * 		3,	树左边界延伸下去的路径为边界节点
 	 * 		4,	树左边界延伸下去的路径为边界节点
 	 */
-	static class EdgeSoltuion2 {
+	static class EdgeSolution2 {
 		public void printEdge(TreeNode head) {
 			if (head == null) {
 				return;
