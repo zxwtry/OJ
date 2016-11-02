@@ -9,7 +9,19 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book031_打印二叉树的边界节点 {
 	public static void main(String[] args) {
-		
+		testEdgeSolution1();
+	}
+	private static void testEdgeSolution1() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			1,
+			2, 3,
+			1, 2, 3, 4,
+			N, N, 7, N, 8, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		EdgeSolution1 s = new EdgeSolution1();
+		s.printEdge(head);
 	}
 	/*
 	 * 	标准一:
