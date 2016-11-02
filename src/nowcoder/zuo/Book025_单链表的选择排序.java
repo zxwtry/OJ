@@ -1,7 +1,5 @@
 package nowcoder.zuo;
 
-import com.sun.corba.se.impl.orbutil.graph.Node;
-
 import tools.ListNode辅助.ListNode;
 
 /*
@@ -9,6 +7,18 @@ import tools.ListNode辅助.ListNode;
  */
 
 public class Book025_单链表的选择排序 {
+	public static void main(String[] args) {
+		test();
+	}
+	private static void test() {
+		int N = 100;
+		int min = 0;
+		int max = 10000;
+		ListNode list = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(N, min, max);
+		SelectSolution s = new SelectSolution();
+		ListNode ans = s.sort(list);
+		tools.ListNode辅助.B_打印链表(ans);
+	}
 	static class SelectSolution {
 		public ListNode sort(ListNode head) {
 			ListNode tail = null;		//排序部分尾部
