@@ -4,7 +4,19 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book032_如何较为直观地打印二叉树 {
 	public static void main(String[] args) {
-		
+		test();
+	}
+	private static void test() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			1,
+			2, 3,
+			1, 2, 3, 4,
+			N, N, N, N, N, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		PrintSolution s = new PrintSolution();
+		s.printTree(head);
 	}
 	static class PrintSolution {
 		public void printTree(TreeNode head) {
