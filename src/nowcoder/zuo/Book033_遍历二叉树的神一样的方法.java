@@ -10,6 +10,28 @@ import tools.TreeNode辅助.TreeNode;
  */
 
 public class Book033_遍历二叉树的神一样的方法 {
+	public static void main(String[] args) {
+		testPre();
+	}
+	private static void testPre() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			1,
+			2, 3,
+			1, 2, 3, 4,
+			N, N, N, N, N, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		MySolution ms = new MySolution();
+		List<Integer> msList = ms.preOrder(head);
+		CaesarSolution cs = new CaesarSolution();
+		List<Integer> csList = cs.preOrder(head);
+		boolean isAllTrue = msList.size() == csList.size();
+		for (int i = 0; isAllTrue && i < msList.size(); i ++) {
+			isAllTrue &= msList.get(i) == csList.get(i);
+		}
+		System.out.println(isAllTrue);
+	}
 	/*
 	 * 	时间：O(N)
 	 * 	空间：O(h)
