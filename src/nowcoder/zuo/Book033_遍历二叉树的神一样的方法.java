@@ -13,6 +13,26 @@ public class Book033_遍历二叉树的神一样的方法 {
 	public static void main(String[] args) {
 		testPre();
 		testIn();
+		testPos();
+	}
+	private static void testPos() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			1,
+			2, 3,
+			1, 2, 3, 4,
+			N, N, N, N, N, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		MySolution ms = new MySolution();
+		List<Integer> msList = ms.posOrder(head);
+		CaesarSolution cs = new CaesarSolution();
+		List<Integer> csList = cs.posOrder(head);
+		boolean isAllTrue = msList.size() == csList.size();
+		for (int i = 0; isAllTrue && i < msList.size(); i ++) {
+			isAllTrue &= msList.get(i) == csList.get(i);
+		}
+		System.out.println(isAllTrue);
 	}
 	private static void testIn() {
 		int N = Integer.MIN_VALUE;
