@@ -11,7 +11,25 @@ import tools.ListNode辅助.ListNode;
 
 public class Book026_一种怪异的节点删除方式 {
 	public static void main(String[] args) {
-		
+		test();
+	}
+	static void test() {
+		int len = (int)(Math.random() * 100);
+		int[] arr = new int[len];
+		for (int i = 0; i < len; i ++) {
+			arr[i] = i;
+		}
+		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
+		int select = (int)(Math.random() * len);
+		ListNode toBeDeleted = head;
+		while (head.val != select) {
+			toBeDeleted = toBeDeleted.next;
+		}
+		MySolution ms = new MySolution();
+		ms.solve(toBeDeleted);
+		System.out.println("len is " + len);
+		int sizeOfLine = len + 100;
+		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
 	}
 	//无法完成
 	static class MySolution {
