@@ -4,6 +4,18 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class TreeNode辅助 {
+	
+	/*
+	 * 	生成一个随机TreeNode节点，节点的val在[min, max]之间随机
+	 * 	如果min > max，那么返回一个null
+	 */
+	public static TreeNode A_生成一个随机节点(int min, int max) {
+		TreeNode ans = null;
+		if (min <= max) {
+			ans = new TreeNode((int)(Math.random() * (max - min + 1)));
+		}
+		return ans;
+	}
 	/*
 	 * 	使用Integer.MIN_VALUE作为null的标志
 	 */
