@@ -4,7 +4,61 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class TreeNode辅助 {
-	
+	/*
+	 * 	maxLevel : 二叉树的最大层数
+	 * 	1 : 一层
+	 * 	2 : 二层
+	 * 	levelIndex从0开始标号
+	 * 	double nullPercent : 在生成一个节点的时候，出现null的概率
+	 * 	二叉树所有节点的值：[min, max]
+	 * 	和A_生成随机满二叉树的差别在于：就是一个最大层数是maxLevel的随机二叉树
+	 */
+	public static TreeNode A_生成随机二叉树(int maxlevel, int min, int max, double nullPercent) {
+		if (maxlevel < 1) {
+			return null;
+		}
+		/*
+		 * 	level=1	: 只有1个
+		 * 	level=2 : 只有2个
+		 * 	level=3 : 只有4个
+		 */
+		TreeNode[] arr = new TreeNode[1 << (maxlevel - 1)];
+		/*
+		 * 	考虑到需要维持一个相对位置不变的顺序
+		 * 	使用双亲靠左，左孩原位置，右孩右边位置的策略。
+		 */
+		/*
+		 * 	先进行 0 level的初始化
+		 */
+		TreeNode head = A_生成一个随机节点_可以是NULL(min, maxlevel, nullPercent);
+		arr[0] = head;
+		for (int indexOfLevel = 1; indexOfLevel < maxlevel; indexOfLevel ++) {
+			int indexRange = 1 << (maxlevel - indexOfLevel - 1);
+			TreeNode parent = null;
+			for (int index = 0; index < arr.length; index += indexRange) {
+				if (((index / indexRange) & 0x1) == 0) {
+					//需要更新parent
+					parent = arr[index];
+					//设置，如果双亲节点是null，那么就是这颗随机大树的，从这节点开始的子树，就没了。
+					if (parent != null) {
+						//生成arr[index]
+						arr[index] = A_生成一个随机节点_可以是NULL(min, maxlevel, nullPercent);
+						//设置parent.left
+						parent.left = arr[index];
+					}
+				} else {
+					//不需要更新parent
+					//生成arr[index]
+					arr[index] = A_生成一个随机节点_可以是NULL(min, maxlevel, nullPercent);
+					if (parent != null) {
+						//设置parent.right
+						parent.right = arr[index];
+					}
+				}
+			}
+		}
+		return head;
+	}
 	/*
 	 * 	level : 二叉树的层数
 	 * 	1 : 一层
