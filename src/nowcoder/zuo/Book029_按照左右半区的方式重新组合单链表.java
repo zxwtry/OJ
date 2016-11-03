@@ -1,6 +1,5 @@
 package nowcoder.zuo;
 
-import tools.ListNode辅助;
 import tools.ListNode辅助.ListNode;
 
 /*
