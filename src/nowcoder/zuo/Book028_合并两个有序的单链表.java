@@ -1,10 +1,25 @@
 package nowcoder.zuo;
 
+import java.util.Arrays;
+
 import tools.ListNode辅助.ListNode;
 
 public class Book028_合并两个有序的单链表 {
-	public static void main(String[] args) {
-		
+	public static void mai(String[] args) {
+		int n = 100;
+		int min = 0;
+		int max = 10000;
+		int[] arr1 = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+		int[] arr2 = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+		Arrays.sort(arr1);
+		Arrays.sort(arr2);
+		ListNode head1 = tools.ListNode辅助.A_一维生成器(arr1);
+		ListNode head2 = tools.ListNode辅助.A_一维生成器(arr2);
+		tools.Utils.printArray(arr1, n + 2);
+		tools.Utils.printArray(arr2, n + 2);
+		MergeSolution ms = new MergeSolution();
+		ListNode head = ms.merge(head1, head2);
+		tools.ListNode辅助.B_打印链表_一行(head, n * 2 + 100);
 	}
 	static class MergeSolution {
 		public ListNode merge(ListNode head1, ListNode head2) {
