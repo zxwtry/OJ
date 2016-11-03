@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class TreeNode辅助 {
+	
 	/*
 	 * 	level : 二叉树的层数
 	 * 	1 : 一层
@@ -60,6 +61,22 @@ public class TreeNode辅助 {
 		TreeNode ans = null;
 		if (min <= max) {
 			ans = new TreeNode((int)(Math.random() * (max - min + 1)));
+		}
+		return ans;
+	}
+	/*
+	 * 	生成一个随机TreeNode节点，节点的val在[min, max]之间随机
+	 * 	如果min > max，那么返回一个null
+	 * 	nullPercent：表示生成null的概率
+	 */
+	public static TreeNode A_生成一个随机节点_可以是NULL(int min, int max, double nullPercent) {
+		TreeNode ans = null;
+		if (min <= max) {
+			if (Math.random() < nullPercent) {
+				ans = null;
+			} else {
+				ans = new TreeNode((int)(Math.random() * (max - min + 1)));
+			}
 		}
 		return ans;
 	}
