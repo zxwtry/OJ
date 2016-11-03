@@ -6,7 +6,18 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book030_分别用递归和非递归方式实现二叉树先序_中序_后序的遍历 {
 	public static void main(String[] args) {
-		
+		testPre();
+	}
+	static void testPre() {
+		RecursionSoltuion rs = new RecursionSoltuion();
+		NoneRecursionSolution nrs = new NoneRecursionSolution();
+		int maxLevel = 5;
+		int min = 0;
+		int max = 100;
+		double nullPercent = 0.1;
+		TreeNode head = tools.TreeNode辅助.A_生成随机二叉树(maxLevel, min, max, nullPercent);
+		rs.preOrder(head);
+		nrs.preOrder(head);
 	}
 	static class RecursionSoltuion {
 		public void preOrder(TreeNode head) {
