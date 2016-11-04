@@ -4,7 +4,42 @@ import java.util.Arrays;
 
 public class Array_Radix_Sort_基数排序 {
 	public static void main(String[] args) {
-		testSolution_位运算();
+//		testSolution_位运算();
+		debugSolution_非位运算();
+	}
+	static void debugSolution_非位运算() {
+		
+	}
+	static class Solution_非位运算 {
+		final int NUM = 23;		//代表只能分成23组，故意取一个不利于计算的数字
+		final int[][] save = new int[NUM][];
+		final int[] count = new int[NUM];
+		//那么就是每次对23取余
+		public void radixSort_noneNegative(int[] arr) {
+			if (arr == null || arr.length == 0) {
+				return;
+			}
+			int len = arr.length;
+			//先对save的每一行，申请内存空间
+			for (int i = 0; i < NUM; i ++) {
+				save[i] = new int[len];
+			}
+			//确定排序终点
+			//一旦isAllZero是true，那么退出循环
+			boolean isAllZero = false;
+			int baseOfNum = 0;
+			while (! isAllZero) {
+				int base = getBase(baseOfNum);
+				
+			}
+		}
+		private int getBase(int baseOfNum) {
+			if (baseOfNum == 0) {
+				return 1;
+			} else {
+				return baseOfNum * NUM;
+			}
+		}
 	}
 	static void testSolution_位运算() {
 		boolean isAllTrue = true;
