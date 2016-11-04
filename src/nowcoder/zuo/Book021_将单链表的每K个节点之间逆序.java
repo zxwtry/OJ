@@ -6,7 +6,22 @@ import tools.ListNode辅助.ListNode;
 
 public class Book021_将单链表的每K个节点之间逆序 {
 	public static void main(String[] args) {
-		
+		test();
+	}
+	static void test() {
+		int sizeOfLine = 20;
+		int K = 5;
+		int n = 1;
+		for (n = 0; n < sizeOfLine; n ++) {
+			int[] arr = new int[n];
+			for (int i = 0; i < n; i ++) {
+				arr[i] = i;
+			}
+			ListNode head = tools.ListNode辅助.A_一维生成器(arr);
+			StackSolution ss = new StackSolution();
+			ListNode newHead = ss.reverseKNodes(head, K);
+			tools.ListNode辅助.B_打印链表_一行(newHead, sizeOfLine);
+		}
 	}
 	//时间复杂度O(N)，额外空间复杂度O(K)
 	static class StackSolution {
