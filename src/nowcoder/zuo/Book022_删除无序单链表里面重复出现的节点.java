@@ -11,7 +11,33 @@ import tools.ListNode辅助.ListNode;
 public class Book022_删除无序单链表里面重复出现的节点 {
 	public static void main(String[] args) {
 //		testHashMap();
-		testSortSolution();
+//		testSortSolution();
+		test();
+	}
+	static void test() {
+		int min = (int) (Math.random() * 1000);
+		int max = min + (int) (Math.random() * 1000);
+		int n = (int) (Math.random() * 1000);
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+		ListNode head1 = tools.ListNode辅助.A_一维生成器(arr);
+		ListNode head2 = tools.ListNode辅助.A_一维生成器(arr);
+		HashSetSolution hs = new HashSetSolution();
+		hs.removeRep(head1);
+		SortSolution ss = new SortSolution();
+		ss.removeRep(head2);
+		boolean isTrue = true;
+		while (isTrue && (head1 != null || head2 != null)) {
+			if (head1 == null || head2 == null) {
+				if (head1 == null && head2 == null) {
+					break;
+				} else {
+					isTrue = false;
+				}
+			} else {
+				isTrue &= head1.val == head2.val;
+			}
+		}
+		System.out.println(isTrue);
 	}
 	static void testSortSolution() {
 		int min = 0;
