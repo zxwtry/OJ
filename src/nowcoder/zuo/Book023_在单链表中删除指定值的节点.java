@@ -11,7 +11,25 @@ import tools.ListNode辅助.ListNode;
 public class Book023_在单链表中删除指定值的节点 {
 	public static void main(String[] args) {
 //		testStackSolution();
-		testAdjustSolution();
+//		testAdjustSolution();
+		test();
+	}
+	static void test() {
+		int n = 10;
+		int min = 0;
+		int max = 1000;
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+		int num = arr[(int)(Math.random() * (n + 1))];
+		ListNode head1 = tools.ListNode辅助.A_一维生成器(arr);
+		ListNode head2 = tools.ListNode辅助.A_一维生成器(arr);
+		StackSolution ss = new StackSolution();
+		ss.removeVal(head1, num);
+		AdjustSolution as = new AdjustSolution();
+		as.removeVal(head2, num);
+		tools.Utils.printArray(arr, n + 1);
+		System.out.println(num);
+		tools.ListNode辅助.B_打印链表_一行(head1, n + 100);
+		tools.ListNode辅助.B_打印链表_一行(head2, n + 100);
 	}
 	static void testAdjustSolution() {
 		int n = 10;
