@@ -1,6 +1,40 @@
 package stl;
 
+import java.util.Arrays;
+
 public class Array_Radix_Sort_基数排序 {
+	public static void main(String[] args) {
+		testSolution_位运算();
+	}
+	static void testSolution_位运算() {
+		boolean isAllTrue = true;
+		for (int i = 0; i < 1000; i ++) {
+			int n = (int)(Math.random() * (i + 100));
+			int min = (int)(Math.random() * (i + 100));
+			int max = min + (int)(Math.random() * (i + 100));
+			int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+			int[] arrStandard = arr.clone();
+			int[] arrSolution_位运算 = arr.clone();
+			Arrays.sort(arrStandard);
+			Solution_位运算 sw = new Solution_位运算();
+			sw.radixSort_noneNegative(arrSolution_位运算);
+			boolean isTrue = true;
+			for (int index = 0; isTrue && index < arr.length; index ++) {
+				isTrue &= arrSolution_位运算[index] == arrStandard[index];
+			}
+			if (! isTrue) {
+				System.out.println("原来的数组是：");
+				tools.Utils.printArray(arr, n + 100);
+				System.out.println("标准排序后的数组是：");
+				tools.Utils.printArray(arrStandard, n + 100);
+				System.out.println("位运算基数排序后的数组是：");
+				tools.Utils.printArray(arrSolution_位运算, n + 100);
+				isAllTrue &= isTrue;
+				break;
+			}
+		}
+		System.out.println(isAllTrue);
+	}
 	static class Solution_位运算 {
 		final int LEN_BITS = 4;
 		final int LEN = 1 << LEN_BITS;		//设定基数排序总共设置多少个组，为了避免过多乘除，使用2^4=16
