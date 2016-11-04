@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.ArrayList;
+
 import tools.TreeNode辅助.TreeNode;
 
 /*
@@ -14,7 +15,66 @@ import tools.TreeNode辅助.TreeNode;
 
 public class P222_CountCompleteTreeNodes {
 	public static void main(String[] args) {
-		
+		testSolutio1();
+	}
+	static void testSolutio1() {
+		int N = Integer.MIN_VALUE;
+		TreeNode root = tools.TreeNode辅助.A_生成满二叉树(new int[] {
+			0, 
+			1, 2,
+			3, 4, 5, 6,
+//			7, 8, 9, 10, 11, 12, 13, 14
+			7, 8, 9, 10, 11, 12, 13, N
+		});
+		Solution1 s = new Solution1();
+		System.out.println(s.countNodes(root));
+	}
+	/*
+	 *  是一个完全二叉树，可能是满二叉树
+	 *  看意思，就是从二叉树斜着下去，进行二分
+	 */
+	static class Solution1 {
+		public int countNodes(TreeNode root) {
+			int ans = 0;
+			ArrayList<TreeNode> leftEdge = new ArrayList<>();
+			int lenOfLeft = 0;
+			TreeNode left = root;
+			while (left != null) {
+				leftEdge.add(left);
+				left = left.left;
+				lenOfLeft ++;
+			}
+			int lenOfRight = calcRight(leftEdge, 0);
+			if (lenOfLeft == lenOfRight) {
+				return (1 << lenOfLeft) - 1;
+			}
+			int min = 0;
+			int max = leftEdge.size() - 1;
+			int sti = max;
+			int eni = min;
+			while (sti > eni && sti >= min && eni <= max) {
+				int mid = (sti + eni) / 2;
+				int lenOfMid = calcRight(leftEdge, mid);
+				System.out.printf("sti : %d \t eni : %d \t mid : %d \r\n", sti, eni, mid);
+				System.out.printf("lenOfLeft : %d \t lenOfRight : %d \t lenOfMid : %d \r\n", lenOfLeft, lenOfRight, lenOfMid);
+				if (lenOfLeft == lenOfMid) {
+					eni = mid - 1;
+				} else {
+					sti = mid;
+				}
+			}
+			System.out.printf("sti : %d \t eni : %d \r\n", sti, eni);
+			return ans;
+		}
+		private int calcRight(ArrayList<TreeNode> leftEdge, int i) {
+			TreeNode right = leftEdge.get(i);
+			int lenOfRight = i;
+			while (right != null) {
+				right = right.right;
+				lenOfRight ++;
+			}
+			return lenOfRight;
+		}
 	}
 	static class Solution {
 		int answer = 0;
