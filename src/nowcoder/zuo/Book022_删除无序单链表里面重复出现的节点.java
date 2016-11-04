@@ -10,7 +10,22 @@ import tools.ListNode辅助.ListNode;
 
 public class Book022_删除无序单链表里面重复出现的节点 {
 	public static void main(String[] args) {
-		testHashMap();
+//		testHashMap();
+		testSortSolution();
+	}
+	static void testSortSolution() {
+		int min = 0;
+		int max = 2;
+		int n = 10;
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
+		HashSetSolution hs = new HashSetSolution();
+		System.out.println("原来的链表是：");
+		int sizeOfLine = n + 100;
+		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
+		hs.removeRep(head);
+		System.out.println("修正之后的链表是：");
+		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
 	}
 	static void testHashMap() {
 		int min = 0;
