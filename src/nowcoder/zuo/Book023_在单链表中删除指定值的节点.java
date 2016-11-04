@@ -10,7 +10,20 @@ import tools.ListNode辅助.ListNode;
 
 public class Book023_在单链表中删除指定值的节点 {
 	public static void main(String[] args) {
-		
+		testStackSolution();
+	}
+	static void testStackSolution() {
+		int n = 10;
+		int min = 0;
+		int max = 1000;
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+		int num = arr[(int)(Math.random() * (n + 1))];
+		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
+		StackSolution ss = new StackSolution();
+		tools.Utils.printArray(arr, n + 1);
+		System.out.println(num);
+		ss.removeVal(head, num);
+		tools.Utils.printArray(arr, n + 1);
 	}
 	//时间复杂度O(N)，额外空间复杂度O(N)
 	static class StackSolution {
