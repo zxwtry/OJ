@@ -118,9 +118,24 @@ public long maxMemory()
  *			这能说明：JVM启动之后，会对保留一定的内存空间用于快速使用．
  *			当分配的空间，小于目标预设，那么会出现新建内存空间之后，再gc，free会增加．
  *			考虑1<<21这种情况，对应int内存8*1024KB，也就是说，没有使用保留空间．
+ *		07,	
+ */
+
+/*
+ * 	gc
+	public void gc()
+	运行垃圾回收器。
+	调用此方法意味着 Java 虚拟机做了一些努力来回收未用对象，
+	以便能够快速地重用这些对象当前占用的内存。
+	当控制从方法调用中返回时，虚拟机已经尽最大努力回收了所有丢弃的对象。 
+	名称 gc 代表“垃圾回收器”。
+	虚拟机根据需要在单独的线程中自动执行回收过程，甚至不用显式调用 gc 方法。 
+
+
  */
 public class CSDN003_Runtime的三个Memory {
 	public static void main(String[] args) {
+		System.gc();
 		runTestIntArray();
 		runTestIntArrayReuse();
 	}
