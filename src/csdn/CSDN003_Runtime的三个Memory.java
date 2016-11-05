@@ -85,15 +85,82 @@ public long maxMemory()
  *		04,	对这个过程唯一的解释就是：
  *			对象存储在缓存中．
  *		05,	马上会有另外一个问题
- *			这份缓存能够复用吗？
- *			程序在runTestIntArrayReuse()
+ *			这份缓存能够复用吗？程序在runTestIntArrayReuse()
+ *			初始情况是：
+ *			max: 1864192	 free: 989327	 total: 1005056
+ *			新建1<<20长度的数组之后是：		
+ *			max: 1864192	 free: 989327	 total: 1005056
+ *			新建1<<20长度的数组之后是：(连续的过程，并没有退出JVM)
+ *			max: 1864192	 free: 984084	 total: 1005056
+ *			在这两个过程中间，添加
+ *			arr = null;
+ *			System.gc();
+ *			初始情况是：
+ *			max: 1864192	 free: 989327	 total: 1005056
+ *			新建1<<20长度的数组之后是：		
+ *			max: 1864192	 free: 989327	 total: 1005056
+ *			新建1<<20长度的数组之后是：(连续的过程，并没有退出JVM)
+ *			max: 1864192	 free: 999083	 total: 1005056
+ *			貌似也在意料之中．
+ *		06,	突然想到一个问题：
+ *			在我的代码中，都没有在得到这三个Memory之前，
+ *			进行全局System.gc()，这样貌似很不对．．．
+ *			回到runTestIntArray，在每次获得Memory之前都进行gc
+ *			初始情况是：
+ *			max: 1864192	 free: 1004345	 total: 1005056
+ *			新建1<<20长度的数组之后是：
+ *			max: 1864192	 free: 1004359	 total: 1005056
+ *			另外一个测试：
+ *			初始情况是：
+ *			max: 1864192	 free: 1004345	 total: 1005056
+ *			新建1<<21长度的数组之后是：
+ *			max: 1864192	 free: 996167	 total: 1005056
+ *			这能说明：JVM启动之后，会对保留一定的内存空间用于快速使用．
+ *			当分配的空间，小于目标预设，那么会出现新建内存空间之后，再gc，free会增加．
+ *			考虑1<<21这种情况，对应int内存8*1024KB，也就是说，没有使用保留空间．
  */
 public class CSDN003_Runtime的三个Memory {
 	public static void main(String[] args) {
 		runTestIntArray();
 		runTestIntArrayReuse();
 	}
-	
+	static void runTestIntArrayReuse() {
+		Runtime rt = Runtime.getRuntime();
+		Scanner sc = new Scanner(System.in);
+		long max = 0;
+		long free = 0;
+		long total = 0;
+		max = rt.maxMemory() >> 10;			//转换为kB
+		free = rt.freeMemory() >> 10;
+		total = rt.totalMemory() >> 10;
+		System.out.println("初始情况是：");
+		System.out.printf("max: %d\t free: %d\t total: %d\r\n", max, free, total);
+		int leftMoveBits = sc.nextInt();
+		int len = 1 << leftMoveBits;
+		int[] arr = new int[len];
+		for (int k = 0; k < len; k ++) {
+			arr[k] = k;
+			//添加了这个过程，消耗的内存是一样的．
+		}
+		max = rt.maxMemory() >> 10;			//转换为kB
+		free = rt.freeMemory() >> 10;
+		total = rt.totalMemory() >> 10;
+		System.out.printf("新建1<<%d长度的数组之后是：\r\n", leftMoveBits);
+		System.out.printf("max: %d\t free: %d\t total: %d\r\n", max, free, total);
+		leftMoveBits = sc.nextInt();
+		len = 1 << leftMoveBits;
+		arr = new int[len];
+		for (int k = 0; k < len; k ++) {
+			arr[k] = k;
+			//添加了这个过程，消耗的内存是一样的．
+		}
+		max = rt.maxMemory() >> 10;			//转换为kB
+		free = rt.freeMemory() >> 10;
+		total = rt.totalMemory() >> 10;
+		System.out.printf("新建1<<%d长度的数组之后是：\r\n", leftMoveBits);
+		System.out.printf("max: %d\t free: %d\t total: %d\r\n", max, free, total);
+		sc.close();
+	}
 	static void runTestIntArray() {
 		Runtime rt = Runtime.getRuntime();
 		Scanner sc = new Scanner(System.in);
