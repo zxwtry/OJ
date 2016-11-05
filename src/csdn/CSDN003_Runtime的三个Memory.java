@@ -1,4 +1,7 @@
 package csdn;
+
+import java.util.Scanner;
+
 /*
  * 	在JVM的java.lang.Runtime对象中，
  * 		有三个非常有意思的方法：
@@ -45,6 +48,75 @@ public long maxMemory()
 从以下版本开始： 
 1.4 
  */
+
+/*
+ * 	在Eclipse中的JVM配置相对复杂，
+ * 	这里采用简单版的JVM配置。
+ * 		java -Xmx2048m -Xms1024m Main的方式运行
+ * 	在运行的过程中，采用新建复杂对象，
+ * 		然后丢失引用的方式，创建可被GC的对象
+ */
+
+/*
+ * 	note1:
+ * 		01,	对应的方法是：runTestIntArray()
+ * 		02,	int[] arr = new int[len];	会消耗多大内存？
+ * 			下面都是根据代码在运行，每一次测试都是独立的。
+ * 			初始情况是：
+ * 			max: 1864192	 free: 989327	 total: 1005056
+ * 			新建1<<10长度的数组之后是：	对应int内存4KB 			--- 没有分配内存
+ * 			max: 1864192	 free: 989327	 total: 1005056
+ * 			新建1<<20长度的数组之后是：	对应int内存4*1024KB		---	没有分配内存		
+ * 			max: 1864192	 free: 989327	 total: 1005056
+ *			新建1<<21长度的数组之后是：	对应int内存8*1024KB		---	正确分配内存
+ *			max: 1864192	 free: 981135	 total: 1005056		
+ *			新建1<<24长度的数组之后是：	对应int内存64*1024KB		---	正确分配内存
+ *			max: 1864192	 free: 923791	 total: 1005056		
+ *			新建1<<27长度的数组之后是：	对应int内存512*1024KB	---	正确分配内存
+ *			max: 1864192	 free: 465039	 total: 1005056
+ *			新建1<<28长度的数组之后是：	对应int内存1024*1024KB	---	正确分配内存
+ *			max: 1864192	 free: 639631	 total: 1703936
+ *			(看27~28的过程，total进行了扩展，在这里可以认为是：从-Xms扩展到-Xmx)
+ *			(也解释清楚了avail = free + (max - total))
+ *			(free：是已经分配的余量		max-total：是可能扩展的余量)
+ *		03,	在02中，为什么10和20，free没有变化呢？
+ *			新建对象之后，再对对象进行赋值看看．
+ *			没有变化，还是一样的结果．
+ *		04,	对这个过程唯一的解释就是：
+ *			对象存储在缓存中．
+ *		05,	马上会有另外一个问题
+ *			这份缓存能够复用吗？
+ *			程序在runTestIntArrayReuse()
+ */
 public class CSDN003_Runtime的三个Memory {
+	public static void main(String[] args) {
+		runTestIntArray();
+		runTestIntArrayReuse();
+	}
 	
+	static void runTestIntArray() {
+		Runtime rt = Runtime.getRuntime();
+		Scanner sc = new Scanner(System.in);
+		long max = 0;
+		long free = 0;
+		long total = 0;
+		max = rt.maxMemory() >> 10;			//转换为kB
+		free = rt.freeMemory() >> 10;
+		total = rt.totalMemory() >> 10;
+		System.out.println("初始情况是：");
+		System.out.printf("max: %d\t free: %d\t total: %d\r\n", max, free, total);
+		int leftMoveBits = sc.nextInt();
+		sc.close();
+		int len = 1 << leftMoveBits;
+		int[] arr = new int[len];
+		for (int k = 0; k < len; k ++) {
+			arr[k] = k;
+			//添加了这个过程，消耗的内存是一样的．
+		}
+		max = rt.maxMemory() >> 10;			//转换为kB
+		free = rt.freeMemory() >> 10;
+		total = rt.totalMemory() >> 10;
+		System.out.printf("新建1<<%d长度的数组之后是：\r\n", leftMoveBits);
+		System.out.printf("max: %d\t free: %d\t total: %d\r\n", max, free, total);
+	}
 }
