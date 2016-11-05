@@ -35,4 +35,7 @@ public class Book037_找到二叉树中符合二叉树条件的最大拓扑结�
 			return isBSTNode(h.val > val ? h.left : h.right, n, val);
 		}
 	}
+	static class Solution2 {
+		
+	}
 }
