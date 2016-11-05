@@ -6,6 +6,21 @@ import java.util.Iterator;
 import java.util.Queue;
 
 public class Tree_AC自动机 {
+	public static void main(String[] args) {
+		TrieTree trie = new TrieTree();
+		trie.addTrieNode("say", 1);
+		trie.addTrieNode("she", 2);
+		trie.addTrieNode("shr", 3);
+		trie.addTrieNode("her", 4);
+		trie.addTrieNode("he", 5);
+		trie.buildFailNodeBFS();
+		String s = "yasherhs";
+		HashSet<Integer> hs = trie.searchAC(s);
+		Iterator<Integer> it = hs.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+	}
 	static class TrieTree {
 		public TrieNode trieNode = new TrieNode ();
 		public Queue<TrieNode> queue = new ArrayDeque<TrieNode> ();
