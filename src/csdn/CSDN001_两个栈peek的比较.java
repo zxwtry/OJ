@@ -9,7 +9,7 @@ public class CSDN001_两个栈peek的比较 {
 //			test(val);
 //		}
 //		newInteger1();
-		newInteger2();
+//		newInteger2();
 	}
 	static void newInteger1() {
 		Integer i1 = Integer.valueOf(12);
@@ -22,10 +22,10 @@ public class CSDN001_两个栈peek的比较 {
 	static void newInteger2() {
 		Integer i1 = new Integer(12);
 		Integer i2 = new Integer(12);
-		System.out.println(i1 + "\tInteger.valueOf两个对象，直接使用==判断两个对象在内存中是不是一个对象：" + (i1 == i2));
+		System.out.println(i1 + "\tnew Integer两个对象，直接使用==判断两个对象在内存中是不是一个对象：" + (i1 == i2));
 		i1 = new Integer(128);
 		i2 = new Integer(128);
-		System.out.println(i1 + "\tInteger.valueOf两个对象，直接使用==判断两个对象在内存中是不是一个对象：" + (i1 == i2));
+		System.out.println(i1 + "\tnew Integer两个对象，直接使用==判断两个对象在内存中是不是一个对象：" + (i1 == i2));
 	}
 	static void test(int pushVal) {
 		Stack<Integer> stk1 = new Stack<>();
