@@ -15,7 +15,19 @@ public class Book039_调整搜索二叉树中两个错误的节点 {
 	public static void main(String[] args) {
 //		testBookSolutionRoot();
 //		testBookSolutionMiddle();
-		testBookSolutionTwoLeaves();
+//		testBookSolutionTwoLeaves();
+		testBookSolutionTwoNodes();
+	}
+	static void testBookSolutionTwoNodes() {
+		int[] arr = new int[] {
+				6,
+				10, Integer.MIN_VALUE
+			};
+			TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+			BookSolution bs = new BookSolution();
+			TreeNode[] tns = bs.getTwoErrNodes(head);
+			System.out.println(tns[0] == null ? "null" : tns[0].val);
+			System.out.println(tns[1] == null ? "null" : tns[1].val);
 	}
 	static void testBookSolutionTwoLeaves() {
 		int[] arr = new int[] {
