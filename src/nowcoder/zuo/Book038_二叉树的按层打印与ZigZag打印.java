@@ -4,10 +4,6 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.w3c.dom.ls.LSException;
-
-import com.sun.istack.internal.localization.NullLocalizable;
-
 import tools.TreeNode辅助.TreeNode;
 
 /*
@@ -18,7 +14,7 @@ import tools.TreeNode辅助.TreeNode;
 public class Book038_二叉树的按层打印与ZigZag打印 {
 	public static void main(String[] args) {
 		testBookSolutionLevel();
-		
+		testBookSolutionZigZag();
 	}
 	static void testBookSolutionLevel() {
 		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(new int[] {
@@ -59,6 +55,16 @@ public class Book038_二叉树的按层打印与ZigZag打印 {
 			}
 			System.out.println();
 		}
+	}
+	static void testBookSolutionZigZag() {
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(new int[] {
+			1,
+			2, 3,
+			4, 5, 6, 7,
+			8, 9, 10, 11, 12, 13, 14, 15
+		});
+		BookSolutionZigZag bszz = new BookSolutionZigZag();
+		bszz.printByZigZag(head);
 	}
 	static class BookSolutionZigZag {
 		public void printByZigZag(TreeNode head) {
