@@ -38,4 +38,39 @@ public class BST辅助 {
 		}
 		return halfConstruct(arr, 0, arr.length - 1);
 	}
+	public static TreeNode A_随机生成一个搜索二叉树(int level, int min, int max, double nullPercent) {
+		if (level < 1) {
+			return null;
+		}
+		int len = (1 << level) - 1;
+		int N = Integer.MIN_VALUE;
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(len, min, max);
+		Arrays.sort(arr);
+		for (int i = 0; i != len; i ++) {
+			if (Math.random() < nullPercent) {
+				arr[i] = N;
+			}
+		}
+		arr = new int[] {0, N, 2, 3, 4, N, 6};
+		return halfConstructNotFull(arr, 0, len - 1, N);
+	}
+	private static TreeNode halfConstructNotFull(int[] arr, int sti, int eni, int N) {
+		if (sti == eni) {
+			if (arr[sti] == N) {
+				return null;
+			} else {
+				return new TreeNode(arr[sti]);
+			}
+		} else {
+			int mid = (sti + eni) / 2;
+			if (arr[mid] == N) {
+				return null;
+			} else {
+				TreeNode root = new TreeNode(arr[mid]);
+				root.left = halfConstructNotFull(arr, sti, mid - 1, N);
+				root.right = halfConstructNotFull(arr, mid + 1, eni, N);
+				return root;
+			}
+		}
+	}
 }
