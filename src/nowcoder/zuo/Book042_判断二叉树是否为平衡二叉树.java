@@ -11,13 +11,32 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book042_判断二叉树是否为平衡二叉树 {
 	public static void main(String[] args) {
-		
+		testBookSolution();
+	}
+	static void testBookSolution() {
+		int N = Integer.MIN_VALUE;
+		int[] arr = new int[] {
+			//情况一
+			//情况二
+//			1,
+			//情况三
+//			1,
+//			2, 3
+			//情况三
+			1,
+			2, 3,
+			4, N, N, N,
+			5, N, N, N, N, N, N, N
+		};
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(arr);
+		BookSolution s = new BookSolution();
+		System.out.println(s.isBalance(head));
 	}
 	static class BookSolution {
 		public boolean isBalance(TreeNode head) {
 			boolean[] res = new boolean[1];
 			res[0] = true;
-			getHeight(head, level, res)
+			getHeight(head, 1, res);
 			return res[0];
 		}
 		public int getHeight(TreeNode head, int level, boolean[] res) {
