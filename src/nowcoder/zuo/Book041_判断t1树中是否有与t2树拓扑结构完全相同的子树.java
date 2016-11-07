@@ -4,7 +4,23 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book041_判断t1树中是否有与t2树拓扑结构完全相同的子树 {
 	public static void main(String[] args) {
-		
+		testBookSolution();
+	}
+	static void testBookSolution() {
+		int N = Integer.MIN_VALUE;
+		TreeNode t1 = tools.TreeNode辅助.A_生成满二叉树(new int[] {
+			1,
+			2, 3,
+			4, 5, 6, 7,
+			N, 8, 9, N, N, N, N, N
+		});
+		TreeNode t2 = tools.TreeNode辅助.A_生成满二叉树(new int[] {
+			2,
+			4, 5,
+			N, 8, N, N
+		});
+		BookSolution s = new BookSolution();
+		System.out.println(s.isSubtree(t1, t2));
 	}
 	static class BookSolution {
 		public boolean isSubtree(TreeNode t1, TreeNode t2) {
