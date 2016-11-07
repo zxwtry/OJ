@@ -9,6 +9,9 @@ public class BST辅助 {
 		return tools.TreeNode辅助.A_生成满二叉树(arr);
 	}
 	public static TreeNode A_随机生成一个满搜索二叉树(int level, int min, int max) {
+		if (level < 1) {
+			return null;
+		}
 		int len = (1 << level) - 1;
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(len, min, max);
 		Arrays.sort(arr);
@@ -24,5 +27,15 @@ public class BST辅助 {
 			root.right = halfConstruct(arr, mid + 1, eni);
 			return root;
 		}
+	}
+	public static TreeNode A_生成一个满搜索二叉树_0(int level) {
+		if (level < 1) {
+			return null;
+		}
+		int[] arr = new int[(1 << level) - 1];
+		for (int i = 0; i != arr.length; i ++) {
+			arr[i] = i;
+		}
+		return halfConstruct(arr, 0, arr.length - 1);
 	}
 }
