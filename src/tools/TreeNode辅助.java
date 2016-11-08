@@ -258,14 +258,7 @@ public class TreeNode辅助 {
 		C_后序数组_Internal(head.right, list);
 		list.add(head.val);
 	}
-	public static class TreeNode {
-		public int val;
-		public TreeNode left, right;
-		public TreeNode(int val) {
-			this.val = val;
-		}
-	}
-	public static boolean isSameTree(TreeNode head1, TreeNode head2) {
+	public static boolean D_head1和head2是不是值拓扑相同的树(TreeNode head1, TreeNode head2) {
 		boolean[] isSame = new boolean[1];
 		isSame[0] = true;
 		isSameTreeInternal(head1, head2, isSame);
@@ -283,6 +276,13 @@ public class TreeNode辅助 {
 			if (head1.val != head2.val) {
 				isSame[0] = false;
 			}
+		}
+	}
+	public static class TreeNode {
+		public int val;
+		public TreeNode left, right;
+		public TreeNode(int val) {
+			this.val = val;
 		}
 	}
 }
