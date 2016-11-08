@@ -265,4 +265,24 @@ public class TreeNode辅助 {
 			this.val = val;
 		}
 	}
+	public static boolean isSameTree(TreeNode head1, TreeNode head2) {
+		boolean[] isSame = new boolean[1];
+		isSame[0] = true;
+		isSameTreeInternal(head1, head2, isSame);
+		return isSame[0];
+	}
+	private static void isSameTreeInternal(TreeNode head1, TreeNode head2, boolean[] isSame) {
+		if (! isSame[0]) {
+			return;
+		}
+		if (head1 == null || head2 == null) {
+			if (head1 != null || head2 != null) {
+				isSame[0] = false;
+			}
+		} else {
+			if (head1.val != head2.val) {
+				isSame[0] = false;
+			}
+		}
+	}
 }
