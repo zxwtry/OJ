@@ -1,12 +1,19 @@
 package nowcoder.zuo;
 
-import javax.xml.stream.events.EndDocument;
-
 import tools.TreeNode辅助.TreeNode;
 
 public class Book043_根据后序数组重建搜索二叉树 {
 	public static void main(String[] args) {
 		testBookSolution();
+		testConstructSolution();
+	}
+	static void testConstructSolution() {
+		int level = 3;
+		TreeNode head = tools.BST辅助.A_生成一个满搜索二叉树_0(level);
+		int[] pos = tools.TreeNode辅助.C_后序数组(head);
+		ConstructSolution s = new ConstructSolution();
+		TreeNode newHead = s.posArrayToBST(pos);
+		System.out.println(tools.TreeNode辅助.D_head1和head2是不是值拓扑相同的树(head, newHead));
 	}
 	static void testBookSolution() {
 		//生成搜索二叉树
