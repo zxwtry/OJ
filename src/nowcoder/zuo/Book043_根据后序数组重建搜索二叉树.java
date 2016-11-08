@@ -1,5 +1,7 @@
 package nowcoder.zuo;
 
+import javax.xml.stream.events.EndDocument;
+
 import tools.TreeNode辅助.TreeNode;
 
 public class Book043_根据后序数组重建搜索二叉树 {
@@ -45,6 +47,32 @@ public class Book043_根据后序数组重建搜索二叉树 {
 				return false;
 			}
 			return isBSTPos(arr, sti, less) && isBSTPos(arr, more, eni - 1);
+		}
+	}
+	static class ConstructSolution {
+		public TreeNode posArrayToBST(int[] pos) {
+			if (pos == null) {
+				return null;
+			}
+			return posArrayToBST(pos, 0, pos.length - 1);
+		}
+		private TreeNode posArrayToBST(int[] pos, int sti, int eni) {
+			if (sti > eni) {
+				return null;
+			}
+			TreeNode head = new TreeNode(pos[eni]);
+			int less = -1;
+			int more = eni;
+			for (int i = sti; i < eni; i ++) {
+				if (pos[eni] < pos[i]) {
+					less = i;
+				} else {
+					more = more == eni ? i : more;
+				}
+			}
+			head.left = posArrayToBST(pos, sti, less);
+			head.right = posArrayToBST(pos, more, eni - 1);
+			return head;
 		}
 	}
 }
