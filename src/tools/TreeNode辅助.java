@@ -1,7 +1,10 @@
 package tools;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import com.sun.xml.internal.ws.handler.HandlerProcessor.RequestOrResponse;
 
 public class TreeNode辅助 {
 	/*
@@ -196,6 +199,26 @@ public class TreeNode辅助 {
 			}
 		}
 		System.out.println();
+	}
+	public static int[] C_前序数组(TreeNode head) {
+		ArrayList<Integer> list = new ArrayList<>();
+		C_前序数组_Internal(head, list);
+		if (list == null || list.size() == 0) {
+			return new int[]{};
+		}
+		int[] arr = new int[list.size()];
+		for (int i = 0; i < arr.length; i ++) {
+			arr[i] = list.get(i);
+		}
+		return arr;
+	}
+	private static void C_前序数组_Internal(TreeNode head, ArrayList<Integer> list) {
+		if (head == null) {
+			return;
+		}
+		list.add(head.val);
+		C_前序数组_Internal(head.left, list);
+		C_前序数组_Internal(head.right, list);
 	}
 	public static class TreeNode {
 		public int val;
