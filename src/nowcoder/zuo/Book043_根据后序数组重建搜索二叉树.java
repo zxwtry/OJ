@@ -1,10 +1,18 @@
 package nowcoder.zuo;
 
-import javax.print.attribute.standard.RequestingUserName;
+import tools.TreeNode辅助.TreeNode;
 
 public class Book043_根据后序数组重建搜索二叉树 {
 	public static void main(String[] args) {
-		
+		testBookSolution();
+	}
+	static void testBookSolution() {
+		//生成搜索二叉树
+		int level = 3;
+		TreeNode head = tools.BST辅助.A_生成一个满搜索二叉树_0(level);
+		int[] pos = tools.TreeNode辅助.C_后序数组(head);
+		BookSolution s = new BookSolution();
+		System.out.println(s.isBSTPos(pos));
 	}
 	/*
 	 * 	给定一个整型数组arr，已知其中没有重复值，
