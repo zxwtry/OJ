@@ -8,6 +8,16 @@ import tools.TreeNode辅助.TreeNode;
 public class Book044_判断一棵二叉树是否为搜索二叉树和完全二叉树 {
 	public static void main(String[] args) {
 		testBSTSolution();
+		testCSTSolution();
+	}
+	static void testCSTSolution() {
+		TreeNode head = tools.TreeNode辅助.A_生成满二叉树(new int[] {
+			1,
+			2, 3,
+			4, 5, 6, 7,
+		});
+		CSTSolution s = new CSTSolution();
+		System.out.println(s.isCBT(head));
 	}
 	static void testBSTSolution() {
 		int level = 9;
