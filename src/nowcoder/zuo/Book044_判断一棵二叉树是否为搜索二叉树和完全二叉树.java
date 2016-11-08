@@ -4,7 +4,16 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book044_判断一棵二叉树是否为搜索二叉树和完全二叉树 {
 	public static void main(String[] args) {
-		
+		testBSTSolution();
+	}
+	static void testBSTSolution() {
+		int level = 9;
+		int min = 0;
+		int max = 1 << 30;
+		double nullPercent = 0.1;
+		TreeNode head = tools.BST辅助.A_随机生成一个搜索二叉树(level, min, max, nullPercent);
+		BSTSolution s = new BSTSolution();
+		System.out.println(s.isBST(head));
 	}
 	static class BSTSolution {
 		public boolean isBST(TreeNode head) {
@@ -28,12 +37,12 @@ public class Book044_判断一棵二叉树是否为搜索二叉树和完全二�
 					} else {
 						cur2.right = null;
 					}
-					if (pre != null && pre.val < cur1.val) {
+					if (pre != null && pre.val > cur1.val) {
 						res = false;
 					}
-					pre = cur1;
-					cur1 = cur1.right;
 				}
+				pre = cur1;
+				cur1 = cur1.right;
 			}
 			return res;
 		}
