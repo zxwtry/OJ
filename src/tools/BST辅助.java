@@ -51,7 +51,6 @@ public class BST辅助 {
 				arr[i] = N;
 			}
 		}
-		arr = new int[] {0, N, 2, 3, 4, N, 6};
 		return halfConstructNotFull(arr, 0, len - 1, N);
 	}
 	private static TreeNode halfConstructNotFull(int[] arr, int sti, int eni, int N) {
