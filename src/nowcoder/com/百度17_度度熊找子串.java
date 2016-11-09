@@ -8,6 +8,8 @@ package nowcoder.com;
 	例如在串”aaabbaa”中，度度熊想找的子串有”a”,”aa”,”aaa”,”b”,”bb”五种。
 	
 	（本题只考虑子串的种数，相同的子串在多个位置出现只算一次）
+	
+	url: http://exercise.acmcoder.com/online/online_judge_ques?ques_id=3364&konwledgeId=40
  */
 
 import java.util.Scanner;
