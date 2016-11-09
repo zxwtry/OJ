@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.util.Scanner;
+
 /*
  * 	题目描述
 									
@@ -33,5 +35,25 @@ C/C++语言：65536KB其它语言：589824KB
  */
 
 public class 百度17_爬行的蚂蚁 {
-
+	public static void main(String[] args) {
+		solve1();
+	}
+	static void solve1() {
+		Scanner sc = new Scanner(System.in);
+		int timesOfTest = sc.nextInt();
+		while (timesOfTest -- > 0) {
+			int len = sc.nextInt();
+			int num = sc.nextInt();
+			int[] arr = new int[num];
+			int min = Integer.MAX_VALUE;
+			int max = Integer.MIN_VALUE;
+			for (int numi = 0; numi < num; numi ++) {
+				arr[numi] = sc.nextInt();
+				min = Math.min(arr[numi], min);
+				max = Math.max(arr[numi], max);
+			}
+			
+		}
+		sc.close();
+	}
 }
