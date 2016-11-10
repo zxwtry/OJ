@@ -26,8 +26,13 @@ package nowcoder.com;
 C/C++语言：1000MS其它语言：3000MS	
 内存限制
 C/C++语言：65536KB其它语言：589824KB
- */
+*/
 
 public class 乐视17_跳跃的蚂蚱 {
-	
+	public static void main(String[] args) {
+		solve1();
+	}
+	static void solve1() {
+		
+	}
 }
