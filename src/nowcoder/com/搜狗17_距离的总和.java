@@ -80,7 +80,9 @@ public class 搜狗17_距离的总和 {
 //		tools.Utils.printArray(zs, 100);
 		
 		for (int i = 1; i < len; i ++) {
-			ans += (arrIndex[i] - arrIndex[i - 1]) * (len - i);
+			ans += (arrIndex[i] - arrIndex[i - 1]) * (len - i) * i;
+			//一开始以为这里是杨辉三角
+			//不是，这里一般通过写几个找规律就能发现
 		}
 //		for (int i = 0; i < len; i ++) {
 //			for (int j = 0; j < i; j ++) {
