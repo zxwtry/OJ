@@ -120,6 +120,17 @@ public class Utils {
 				System.out.printf("%d\t", arr[i]);
 		}
 	}
+	public static void printArray(float[] arr, int n) {
+		int arrEnd = 0;
+		if (arr == null || (arrEnd = arr.length-1) < 0)
+			return;
+		for (int i = 0; i <= arrEnd; i ++) {
+			if (i % n == n - 1 || i == arrEnd)
+				System.out.println(arr[i]);
+			else
+				System.out.printf("%f\t", arr[i]);
+		}
+	}
 	public static void printNoBlank(char[] arr, int n) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
