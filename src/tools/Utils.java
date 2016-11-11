@@ -126,7 +126,18 @@ public class Utils {
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
 			if (i % n == n - 1 || i == arrEnd)
-				System.out.println(arr[i]);
+				System.out.printf("%f\t", arr[i]);
+			else
+				System.out.printf("%f\t", arr[i]);
+		}
+	}
+	public static void printArray(double[] arr, int n) {
+		int arrEnd = 0;
+		if (arr == null || (arrEnd = arr.length-1) < 0)
+			return;
+		for (int i = 0; i <= arrEnd; i ++) {
+			if (i % n == n - 1 || i == arrEnd)
+				System.out.printf("%f\t", arr[i]);
 			else
 				System.out.printf("%f\t", arr[i]);
 		}
