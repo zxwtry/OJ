@@ -36,4 +36,15 @@ public class Complex辅助 {
 		return multiply(new Complex(1/(c2.real * c2.real + c2.imag * c2.imag), 0), 
 				multiply(c1, new Complex(c2.real, - c2.imag)));
 	}
+	public static double[] A_从Complex数组到FFT输入数据(Complex[] cs) {
+		if (cs == null || cs.length == 0) {
+			return new double[0];
+		}
+		double[] ans = new double[cs.length * 2];
+		for (int i = 0; i < cs.length; i ++) {
+			ans[2 * i] = cs[i].real;
+			ans[2 * i + 1] = cs[i].imag;
+		}
+		return ans;
+	}
 }
