@@ -47,4 +47,15 @@ public class Complex辅助 {
 		}
 		return ans;
 	}
+	public static Complex[] A_从FFT输出数据到Complex数组(double[] arr) {
+		if (arr == null || arr.length == 0) {
+			return new Complex[0];
+		}
+		Complex[] cs = new Complex[arr.length / 2];
+		for (int i = 0; i < cs.length; i ++) {
+			Complex c = new Complex(arr[i * 2], arr[i * 2 + 1]);
+			cs[i] = c;
+		}
+		return cs;
+	}
 }
