@@ -126,7 +126,7 @@ public class Utils {
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
 			if (i % n == n - 1 || i == arrEnd)
-				System.out.printf("%f\t", arr[i]);
+				System.out.printf("%f\r\n", arr[i]);
 			else
 				System.out.printf("%f\t", arr[i]);
 		}
@@ -137,7 +137,7 @@ public class Utils {
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
 			if (i % n == n - 1 || i == arrEnd)
-				System.out.printf("%f\t", arr[i]);
+				System.out.printf("%f\r\n", arr[i]);
 			else
 				System.out.printf("%f\t", arr[i]);
 		}
