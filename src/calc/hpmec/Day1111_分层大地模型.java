@@ -1,5 +1,6 @@
 package calc.hpmec;
 
+import org.jtransforms.fft.DoubleFFT_1D;
 import org.jtransforms.fft.FloatFFT_1D;
 
 /*
@@ -8,7 +9,6 @@ import org.jtransforms.fft.FloatFFT_1D;
 
 public class Day1111_分层大地模型 {
 	public static void main(String[] args) {
-		step161111_1613测试FFT();
 	}
 	static void step161111_1613测试FFT() {
 		/*
@@ -24,8 +24,21 @@ public class Day1111_分层大地模型 {
 		fft.complexInverse(calc, true);
 		tools.Utils.printArray(calc, 100);
 	}
-	static void step161111_1613测试FFT_w() {
-		
+	static void step161111_1613测试FFT_sin() {
+		//这里得到的结果和Matlab计算的结果一致
+		int N = 4;
+		DoubleFFT_1D fft = new DoubleFFT_1D(N);
+		double[] arr = new double[8];
+		arr[0] = 1;
+		arr[1] = 2;
+		arr[2] = 2;
+		arr[3] = 3;
+		arr[4] = 3;
+		arr[5] = 4;
+		arr[6] = 5;
+		arr[7] = 6;
+		fft.complexForward(arr);
+		tools.Utils.printArray(arr, 100);
 	}
 	static void step161111_1700测试FFT_使用均匀大地GIC() {
 		/*
