@@ -23,7 +23,6 @@ public class CSDN002_高级数据结构的内存占用 {
 		testMain();
 	}
 	static void testMain() {
-		Runtime rt = Runtime.getRuntime();
 		
 	}
 }
