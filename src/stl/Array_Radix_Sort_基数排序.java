@@ -29,7 +29,7 @@ public class Array_Radix_Sort_基数排序 {
 			boolean isAllZero = false;
 			int baseOfNum = 0;
 			while (! isAllZero) {
-				int base = getBase(baseOfNum);
+				getBase(baseOfNum);
 				
 			}
 		}
