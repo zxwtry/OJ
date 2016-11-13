@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /*
@@ -28,13 +29,21 @@ import java.util.HashMap;
 
 public class P454_4SumII {
 	public static void main(String[] args) {
-		debugSolution();
+		int n = 100;
+		int min = -n;
+		int max = n;
+		int[] A = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+		int[] B = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+		int[] C = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+		int[] D = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+		debugSortSolution(A, B, C, D);
+		debugSolution(A, B, C, D);
 	}
-	static void debugSolution() {
-		int[] A = new int[] {1, 2};
-		int[] B = new int[] {-2,-1};
-		int[] C = new int[] {-1, 2};
-		int[] D = new int[] {0, 2};
+	static void debugSortSolution(int[] A, int[] B, int[] C, int[] D) {
+		SortSolution s = new SortSolution();
+		System.out.println(s.fourSumCount(A, B, C, D));
+	}
+	static void debugSolution(int[] A, int[] B, int[] C, int[] D) {
 		Solution s = new Solution();
 		System.out.println(s.fourSumCount(A, B, C, D));
 	}
@@ -69,6 +78,49 @@ public class P454_4SumII {
 					}
 				}
 			}
+		}
+	}
+	/*
+	 * 	WA
+	 * 	提交上去发现，
+	 * 	数组中是有重复数据的。
+	 * 	修改之后，光荣TLE了。
+	 */
+	static class SortSolution {
+		public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+			int ans = 0, len = A.length;
+			Arrays.sort(D);
+			for (int ai = 0; ai < len; ai ++) {
+				for (int bi = 0; bi < len; bi ++) {
+					for (int ci = 0; ci < len; ci ++) {
+						int target = - A[ai] - B[bi] - C[ci];
+						int sti = 0, eni = len - 1, mid = 0;
+						boolean isFound = false;
+						while (sti <= eni && ! isFound) {
+							mid = (sti + eni) / 2;
+							if (D[mid] == target) {
+								isFound = true;
+							} else if (D[mid] < target) {
+								sti = mid + 1;
+							} else {
+								eni = mid - 1;
+							}
+						}
+						if (isFound) {
+							sti = mid;
+							eni = mid;
+							while (sti > 0 && D[sti - 1] == target) {
+								sti --;
+							}
+							while (eni < len - 1 && D[eni + 1] == target) {
+								eni ++;
+							}
+							ans += eni - sti + 1;
+						}
+					}
+				}
+			}
+			return ans;
 		}
 	}
 }
