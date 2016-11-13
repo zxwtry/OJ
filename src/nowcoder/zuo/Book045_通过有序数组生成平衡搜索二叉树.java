@@ -16,7 +16,7 @@ public class Book045_通过有序数组生成平衡搜索二叉树 {
 	}
 	
 	static void debugMySolution() {
-		int n = 10;
+		int n = (int) ( Math.random() * 10000 );
 		int min = 0;
 		int max = n * 3;
 		int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
@@ -29,6 +29,7 @@ public class Book045_通过有序数组生成平衡搜索二叉树 {
 			isTrue &= arr[i] == arr2[i];
 		}
 		System.out.println(isTrue);
+		System.out.println(s.isBST(head));
 	}
 
 	static class MySolution {
@@ -71,9 +72,33 @@ public class Book045_通过有序数组生成平衡搜索二叉树 {
 				inOrderInternal(head.right, inOrder);
 			}
 		}
+		public boolean isBST(TreeNode head) {
+			if (head == null) {
+				return true;
+			}
+			boolean[] isBalance = new boolean[]{true};
+			int lenLeft = treeNodeLength(head.left, isBalance);
+			int lenRight = 0;
+			if (isBalance[0]) {
+				lenRight = treeNodeLength(head.right, isBalance);
+			}
+			return isBalance[0] ? Math.abs(lenLeft - lenRight) < 2 : false;
+		}
+		private int treeNodeLength(TreeNode head, boolean[] isBalance) {
+			if (! isBalance[0] || head == null) {
+				return 0;
+			}
+			int lenLeft = treeNodeLength(head.left, isBalance);
+			int lenRight = 0;
+			if (isBalance[0]) {
+				lenRight = treeNodeLength(head.right, isBalance);
+			}
+			isBalance[0] = Math.abs(lenLeft - lenRight) < 2;
+			return Math.max(lenLeft, lenRight) + 1;
+		}
 	}
 	
 	static class BookSolution {
-	
+		
 	}
 }
