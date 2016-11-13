@@ -12,9 +12,23 @@ import tools.TreeNode辅助.TreeNode;
 
 public class Book045_通过有序数组生成平衡搜索二叉树 {
 	public static void main(String[] args) {
-		debugMySolution();
+		compareMyAndBook();
 	}
 	
+	static void compareMyAndBook() {
+		int n = (int) ( Math.random() * 10000 );
+		int min = 0;
+		int max = n * 3;
+		int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+		Arrays.sort(arr);
+		MySolution ms = new MySolution();
+		BookSolution bs = new BookSolution();
+		TreeNode headMs = ms.generate(arr);
+		TreeNode headBs = bs.generate(arr);
+		boolean isSame = tools.TreeNode辅助.D_head1和head2是不是值拓扑相同的树(headMs, headBs);
+		System.out.println(isSame);
+	}
+
 	static void debugMySolution() {
 		int n = (int) ( Math.random() * 10000 );
 		int min = 0;
@@ -99,6 +113,21 @@ public class Book045_通过有序数组生成平衡搜索二叉树 {
 	}
 	
 	static class BookSolution {
-		
+		public TreeNode generate(int[] sortArr) {
+			if (sortArr == null || sortArr.length == 0) {
+				return null;
+			}
+			return generate(sortArr, 0, sortArr.length - 1);
+		}
+		private TreeNode generate(int[] sortArr, int sti, int eni) {
+			if (sti > eni) {
+				return null;
+			}
+			int mid = (sti + eni) / 2;
+			TreeNode head = new TreeNode(sortArr[mid]);
+			head.left = generate(sortArr, sti, mid - 1);
+			head.right = generate(sortArr, mid + 1, eni);
+			return head;
+		}
 	}
 }
