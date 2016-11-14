@@ -30,11 +30,25 @@ package leetcode;
 
 public class P456_132Pattern {
 	public static void main(String[] args) {
-		
+		debugSolution();
+	}
+	static void debugSolution() {
+		int[] nums = new int[] {1, 1, 2};
+		Solution s = new Solution();
+		System.out.println(s.find132pattern(nums));
 	}
 	static class Solution {
 	    public boolean find132pattern(int[] nums) {
-	        
+	        if (nums == null || nums.length < 3) {
+	        	return false;
+	        }
+	        boolean isFound = false;
+	        for (int i = 0; ! isFound && i < nums.length - 2; i ++) {
+	        	if (nums[i] < nums[i + 2] && nums[i + 2] < nums[i + 1]) {
+	        		isFound = true;
+	        	}
+	        }
+	        return isFound;
 	    }
 	}
 }
