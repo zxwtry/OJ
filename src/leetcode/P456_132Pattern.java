@@ -32,15 +32,10 @@ import java.util.Arrays;
 
 public class P456_132Pattern {
 	public static void main(String[] args) {
-		int n = 10;
-		int min = 0;
-		int max = 20;
-		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
-		tools.Utils.printArray(arr, 100);
-//		debugSolution();
+		debugSolution();
 	}
 	static void debugSolution() {
-		int[] nums = new int[] {1, 1, 2};
+		int[] nums = new int[] {3,5,0,3,4};
 		Solution s = new Solution();
 		System.out.println(s.find132pattern(nums));
 	}
@@ -49,10 +44,13 @@ public class P456_132Pattern {
 	        if (nums == null || nums.length < 3) {
 	        	return false;
 	        }
+	        int[] small = getSmallArray(nums);
 	        boolean isFound = false;
-	        for (int i = 0; ! isFound && i < nums.length - 2; i ++) {
-	        	if (nums[i] < nums[i + 2] && nums[i + 2] < nums[i + 1]) {
-	        		isFound = true;
+	        for (int i = 1; ! isFound && i < nums.length; i ++) {
+	        	for (int j = i + 1; ! isFound && j < nums.length; j ++) {
+	        		if (nums[i] > nums[j] && small[j] < i) {
+	        			isFound = true;
+	        		}
 	        	}
 	        }
 	        return isFound;
@@ -62,14 +60,13 @@ public class P456_132Pattern {
 				return new int[0];
 			}
 			int[] small = new int[arr.length];
-			Arrays.fill(small, -1);
 			long min = Long.MAX_VALUE;
 			for (int index = 0; index < arr.length; index ++) {
 				if (min > arr[index]) {
 					min = arr[index];
 					small[index] = index;
 				} else {
-					arr[index] = arr[index - 1];
+					small[index] = small[index - 1];
 				}
 			}
 			return small;
