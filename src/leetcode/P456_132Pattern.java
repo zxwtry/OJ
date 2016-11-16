@@ -32,7 +32,17 @@ import java.util.Arrays;
 
 public class P456_132Pattern {
 	public static void main(String[] args) {
-		debugNewSmallSolution();
+		debugSolution();
+	}
+	static void debugNewBigSolution() {
+		int n = 10;
+		int min = 0;
+		int max = n * 3;
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+		NewBigSolution s = new NewBigSolution();
+		int[] big = s.getBig(arr);
+		tools.Utils.printArray(arr, 100);
+		tools.Utils.printArray(big, 100);
 	}
 	static void debugNewSmallSolution() {
 		int n = 10;
@@ -49,26 +59,19 @@ public class P456_132Pattern {
 		Solution s = new Solution();
 		System.out.println(s.find132pattern(nums));
 	}
+	
+	/*
+	 * 	AC
+	 * 	413 ms
+	 */
 	static class Solution {
 	    public boolean find132pattern(int[] nums) {
 	        if (nums == null || nums.length < 3) {
 	        	return false;
 	        }
 	        boolean isFound = false;
-	        int[] preMin = new int[nums.length];
-	        int[] posMax = new int[nums.length];
-	        preMin[0] = Integer.MAX_VALUE;
-	        posMax[nums.length - 1] = Integer.MIN_VALUE;
-	        for (int i = 1; i < nums.length; i ++) {
-	        	int preMinNow = Math.min(preMin[i - 1], nums[i - 1]);
-	        	preMin[i] = preMinNow < nums[i] ? preMinNow : Integer.MAX_VALUE;
-	        }
-	        for (int i = nums.length - 2; i > -1; i --) {
-	        	int posMaxNow = Math.max(posMax[i + 1], nums[i + 1]);
-	        	posMax[i] = posMaxNow < nums[i] ? posMaxNow : Integer.MIN_VALUE;
-	        }
-	        tools.Utils.printArray(preMin, 100);
-	        tools.Utils.printArray(posMax, 100);
+	        int[] preMin = getSmall(nums);
+	        int[] posMax = getBig(nums);
 	        for (int i = 1; ! isFound && i < nums.length; i ++) {
 	        	if (posMax[i] > preMin[i] && nums[i] > posMax[i]) {
 	        		isFound = true;
@@ -76,6 +79,30 @@ public class P456_132Pattern {
 	        }
 	        return isFound;
 	    }
+		public int[] getBig(int[] arr) {
+			int[] big = new int[arr.length];
+			big[arr.length - 1] = Integer.MIN_VALUE;
+			for (int i = arr.length - 2; i > -1; i --) {
+				int bigNow = Integer.MIN_VALUE;
+				for (int j = i + 1; j < arr.length; j ++) {
+					if (arr[j] < arr[i]) {
+						bigNow = Math.max(bigNow, arr[j]);
+					}
+				}
+				big[i] = bigNow;
+			}
+			return big;
+		}
+		public int[] getSmall(int[] arr) {
+			int[] small = new int[arr.length];
+			small[0] = Integer.MAX_VALUE;
+			int minNow = arr[0]; 
+			for (int index = 1; index < arr.length; index ++) {
+				small[index] = arr[index] <=minNow ? Integer.MAX_VALUE : minNow;
+				minNow = Math.min(minNow, arr[index]);
+			}
+			return small;
+		}
 	}
 	
 	/*
@@ -139,6 +166,32 @@ public class P456_132Pattern {
 				minNow = Math.min(minNow, arr[index]);
 			}
 			return small;
+		}
+	}
+	/*
+	 *	不小的小问题：
+	 *		O(N)的时间下，完成如下功能：
+	 *		1,	返回val数组，不是index数组
+	 *		2,	返回的数组名称是big数组
+	 *		3,	big[i]的意思是：从i+1到arr.length-1的arr中，小于当前arr[i]的数中，最大值。
+	 */
+	static class NewBigSolution {
+		/*
+		 * 	未能实现O(N)的算法
+		 */
+		public int[] getBig(int[] arr) {
+			int[] big = new int[arr.length];
+			big[arr.length - 1] = Integer.MIN_VALUE;
+			for (int i = arr.length - 2; i > -1; i --) {
+				int bigNow = Integer.MIN_VALUE;
+				for (int j = i + 1; j < arr.length; j ++) {
+					if (arr[j] < arr[i]) {
+						bigNow = Math.max(bigNow, arr[j]);
+					}
+				}
+				big[i] = bigNow;
+			}
+			return big;
 		}
 	}
 }
