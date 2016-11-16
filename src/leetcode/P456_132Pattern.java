@@ -74,6 +74,25 @@ public class P456_132Pattern {
 	}
 	
 	/*
+	 * 	提交之后，TLE
+	 */
+	static class SlowSolution {
+		public boolean find132pattern(int[] nums) {
+			boolean isFind = false;
+			for (int i = 0; ! isFind && i < nums.length; i ++) {
+				for (int j = i + 1; ! isFind && j < nums.length; j ++) {
+					for (int k = j + 1; ! isFind && k < nums.length; k ++) {
+						if (nums[i] < nums[k] && nums[k] < nums[j]) {
+							isFind = true;
+						}
+					}
+				}
+			}
+			return isFind;
+		}
+	}
+	
+	/*
 	 * 	先将问题进行简化为：
 	 * 	一个数组：arr	，不是有序的。
 	 * 	返回一个数组：small，表示第一个比当前val小的下标
