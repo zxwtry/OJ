@@ -32,7 +32,17 @@ import java.util.Arrays;
 
 public class P456_132Pattern {
 	public static void main(String[] args) {
-		debugSolution();
+		debugNewSmallSolution();
+	}
+	static void debugNewSmallSolution() {
+		int n = 10;
+		int min = 0;
+		int max = n * 3;
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+		NewSmallSolution s = new NewSmallSolution();
+		int[] small = s.getSmall(arr);
+		tools.Utils.printArray(arr, 100);
+		tools.Utils.printArray(small, 100);
 	}
 	static void debugSolution() {
 		int[] nums = new int[] {3,5,0,3,4};
@@ -44,33 +54,28 @@ public class P456_132Pattern {
 	        if (nums == null || nums.length < 3) {
 	        	return false;
 	        }
-	        int[] small = getSmallArray(nums);
 	        boolean isFound = false;
+	        int[] preMin = new int[nums.length];
+	        int[] posMax = new int[nums.length];
+	        preMin[0] = Integer.MAX_VALUE;
+	        posMax[nums.length - 1] = Integer.MIN_VALUE;
+	        for (int i = 1; i < nums.length; i ++) {
+	        	int preMinNow = Math.min(preMin[i - 1], nums[i - 1]);
+	        	preMin[i] = preMinNow < nums[i] ? preMinNow : Integer.MAX_VALUE;
+	        }
+	        for (int i = nums.length - 2; i > -1; i --) {
+	        	int posMaxNow = Math.max(posMax[i + 1], nums[i + 1]);
+	        	posMax[i] = posMaxNow < nums[i] ? posMaxNow : Integer.MIN_VALUE;
+	        }
+	        tools.Utils.printArray(preMin, 100);
+	        tools.Utils.printArray(posMax, 100);
 	        for (int i = 1; ! isFound && i < nums.length; i ++) {
-	        	for (int j = i + 1; ! isFound && j < nums.length; j ++) {
-	        		if (nums[i] > nums[j] && small[j] < i) {
-	        			isFound = true;
-	        		}
+	        	if (posMax[i] > preMin[i] && nums[i] > posMax[i]) {
+	        		isFound = true;
 	        	}
 	        }
 	        return isFound;
 	    }
-		public int[] getSmallArray(int[] arr) {
-			if (arr == null || arr.length == 0) {
-				return new int[0];
-			}
-			int[] small = new int[arr.length];
-			long min = Long.MAX_VALUE;
-			for (int index = 0; index < arr.length; index ++) {
-				if (min > arr[index]) {
-					min = arr[index];
-					small[index] = index;
-				} else {
-					small[index] = small[index - 1];
-				}
-			}
-			return small;
-		}
 	}
 	
 	/*
@@ -112,6 +117,26 @@ public class P456_132Pattern {
 				} else {
 					arr[index] = arr[index - 1];
 				}
+			}
+			return small;
+		}
+	}
+	
+	/*
+	 * 	小问题：
+	 * 		O(N)的时间下，完成如下功能：
+	 * 		输入一个数组arr：
+	 * 		1,	对每一位，找下标前面的，小于当前val，最小值
+	 * 		2,	返回的small是数值数组，不是index数组
+	 */
+	static class NewSmallSolution {
+		public int[] getSmall(int[] arr) {
+			int[] small = new int[arr.length];
+			small[0] = Integer.MAX_VALUE;
+			int minNow = arr[0]; 
+			for (int index = 1; index < arr.length; index ++) {
+				small[index] = arr[index] <=minNow ? Integer.MAX_VALUE : minNow;
+				minNow = Math.min(minNow, arr[index]);
 			}
 			return small;
 		}
