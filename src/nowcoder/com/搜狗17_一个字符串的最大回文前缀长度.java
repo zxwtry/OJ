@@ -2,6 +2,7 @@ package nowcoder.com;
 
 
 
+
 /*
  * 	题目描述
 									
@@ -24,10 +25,77 @@ package nowcoder.com;
 
 
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class 搜狗17_一个字符串的最大回文前缀长度 {
 	public static void main(String[] args) {
-		solve1();
+		solve2();
+	}
+	/*
+	 * 	还是TLE，比solve1还慢
+	 */
+	static void solve2() {
+		InputStreamReader isr = new InputStreamReader(System.in);
+		char[] manacher = new char[2000000];
+		int manacherLength = 0;
+		try {
+			manacherLength = (isr.read(manacher) - 2) * 2 + 1;
+			isr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for (int index = manacherLength - 1; index > -1; index --) {
+			if (index % 2 == 0) {
+				manacher[index] = '#';
+			} else {
+				manacher[index] = manacher[index / 2];
+			}
+		}
+		//这里要找的是最大回文前缀
+		int[] radius = new int[manacherLength];
+		radius[0] = 0;
+		int maxTouchedIndex = 0;
+		int lastCircleIndex = 0;
+		int ans = 0;
+		for (int index = 0; index < manacherLength; index ++) {
+			if (maxTouchedIndex >= manacherLength - 1) {
+				break;
+			}
+			if (index >= maxTouchedIndex) {
+				int leftIndex = index, rightIndex = index;
+				while (leftIndex-1 > -1 && rightIndex+1 < manacherLength &&
+						manacher[leftIndex-1] == manacher[rightIndex+1]) {
+					leftIndex --;
+					rightIndex ++;
+				}
+				radius[index] = (rightIndex - leftIndex) / 2;
+				maxTouchedIndex = rightIndex;
+				lastCircleIndex = index;
+			} else {
+				int mirrorIndex = lastCircleIndex*2 - index;
+				int mirrorRadius = radius[mirrorIndex];
+				if (mirrorRadius+index == maxTouchedIndex) {
+					int leftIndex = index, rightIndex = index;
+					while (leftIndex - 1 > -1 && rightIndex + 1 < manacherLength &&
+							manacher[leftIndex - 1] == manacher[rightIndex + 1]) {
+						leftIndex --;
+						rightIndex ++;
+					}
+					radius[index] = (rightIndex - leftIndex) / 2;
+					lastCircleIndex = index;
+					maxTouchedIndex = rightIndex;
+				} else if (mirrorRadius + index < maxTouchedIndex) {
+					radius[index] = mirrorRadius;
+				} else {
+					radius[index] = maxTouchedIndex - index;
+				}
+			}
+			if (radius[index] == index) {
+				ans = Math.max(ans, index);
+			}
+		}
+		System.out.println(ans);
 	}
 	/*
 	 * 	TLE
