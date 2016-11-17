@@ -33,11 +33,23 @@ package leetcode;
 
 public class P441_ArrangingCoins {
 	public static void main(String[] args) {
-		
+		debugSolution();
 	}
+	static void debugSolution() {
+		Solution s = new Solution();
+		System.out.println(s.arrangeCoins(1804289383));
+	}
+	/*
+	 * 	会不会有点太简单了。
+	 * 	46 ms
+	 * 	73.34%
+	 */
 	static class Solution {
 	    public int arrangeCoins(int n) {
-	        return 0;
+	    	if (n < 1) {
+	    		return 0;
+	    	}
+	    	return (int) (0.5 * (-1 + Math.sqrt(1 + 8 * (long)n)));
 	    }
 	}
 }
