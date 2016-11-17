@@ -30,7 +30,35 @@ import java.io.InputStreamReader;
 
 public class 搜狗17_一个字符串的最大回文前缀长度 {
 	public static void main(String[] args) {
-		solve2();
+		solve3();
+	}
+	/*
+	 * 	如何保证不TLE呢？
+	 * 	Manacher是O(N)的时间复杂度，求的最长回文长度。
+	 * 	现在需要进行的求以0开始的回文，可能的最大长度。
+	 * 	wocao，真是不能多想，先实现再说。
+	 * 	AC了
+	 */
+	static void solve3() {
+		Scanner sc = new Scanner(System.in);
+		String line = sc.nextLine();
+		for (int i = line.length() - 1; i > -1; i --) {
+			int sti = 0, eni = i;
+			boolean isPalindrome = true;
+			while (sti < eni && isPalindrome) {
+				if (line.charAt(sti) == line.charAt(eni)) {
+					sti ++;
+					eni --;
+				} else {
+					isPalindrome = false;
+				}
+			}
+			if (isPalindrome) {
+				System.out.println(i + 1);
+				break;
+			}
+		}
+		sc.close();
 	}
 	/*
 	 * 	还是TLE，比solve1还慢
