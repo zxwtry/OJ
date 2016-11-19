@@ -1,5 +1,6 @@
 package nowcoder.com;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -86,61 +87,86 @@ import java.util.Scanner;
 public class 乐视17_数正方形 {
 	public static void main(String[] args) {
 		solve1();
+//		solve2();
 	}
-
+	static boolean[][] traveled = null;
+	static int count = 0;
 	static void solve1() {
 		Scanner sc = new Scanner(System.in);
 		int times = Integer.parseInt(sc.nextLine().trim());
 		while (times -- > 0) {
+			count = 0;
 			String[] parts = sc.nextLine().trim().split(" ");
 			int row = Integer.parseInt(parts[0]);
 			int col = Integer.parseInt(parts[parts.length - 1]);
 			char[][] cs = new char[row][col];
+			traveled = new boolean[row][col];
 			for (int i = 0; i < row; i ++) {
 				cs[i] = sc.nextLine().trim().toCharArray();
 			}
-			for (int i = 1; i < (row - 1) * 2; i += 2) {
-				for (int j = 1; j < (col - 1) * 2; j += 2) {
-					int i1 = (i + 1) / 2, i2 = (i - 1) / 2;
-					int j1 = (j + 1) / 2, j2 = (j - 1) / 2;
-					if (cs[i1][j1] == '1' && cs[i2][j1] == '1' && cs[i1][j2] == '1' && cs[i2][j2] == '1') {
-						cs[i1][j1] = '0';
-						cs[i2][j1] = '0';
-						cs[i1][j2] = '0';
-						cs[i2][j2] = '0';
+			for (int i = 1; i < (row - 1) * 2; i ++) {
+				for (int j = 1; j < (col - 1) * 2; j ++) {
+					int i1 = (i - 1) / 2, i2 = i1 + 1;
+					int j1 = (j - 1) / 2, j2 = j1 + 1;
+					if (cs[i1][j1] == '1' && cs[i1][j2] == '1' && cs[i2][j1] == '1' && cs[i2][j2] == '1') {
+						int[] surI = new int[] {(i-3)/2, (i-3)/2, (i-3)/2, (i-3)/2,
+												(i+3)/2, (i+3)/2, (i+3)/2, (i+3)/2,
+												i1, i1, i2, i2};
+						int[] surJ = new int[] {(j-3)/2, (j-1)/2, (j+1)/2, (j+3)/2,
+												(j-3)/2, (j-1)/2, (j+1)/2, (j+3)/2,
+												j1 - 1, j2 + 1, j1 - 1, j2 + 1};
+						boolean findOne = true;
+						for (int suri = 0; findOne && suri < surI.length; suri ++) {
+							for (int surj = 0; findOne && surj < surJ.length; surj ++) {
+								if (surI[suri] > -1 && surI[suri] < row && surJ[surj] > -1 && surJ[surj] < col) {
+									if (cs[surI[suri]][surJ[surj]] == '1') {
+										findOne = false;
+									}
+								}
+							}
+						}
+						count += findOne ? 1 : 0;
+						traveled[i1][j1] = true;
+						traveled[i1][j2] = true;
+						traveled[i2][j1] = true;
+						traveled[i2][j2] = true;
 					}
 				}
 			}
-			int i = 0, j = 0;
-			boolean findOne = false;
-			do {
-				findOne = false;
-				for (; i < row; i ++) {
-					for (; j < col; j ++) {
-						if (cs[i][j] != '0') {
-							findOne = true;
-							solve1searchLean(cs, i, j, i + 1, j + 1, i, j);
-							solve1searchLean(cs, i, j, i - 1, j + 1, i, j);
-							solve1searchLean(cs, i, j, i - 1, j - 1, i, j);
-							solve1searchLean(cs, i, j, i + 1, j - 1, i, j);
-							solve1searchLine(cs, i, j, i + 1, j, i, j, 1, 0);
-							solve1searchLine(cs, i, j, i, j + 1, i, j, 0, 1);
-							solve1searchLine(cs, i, j, i - 1, j, i, j, 1, 0);
-							solve1searchLine(cs, i, j, i, j - 1, i, j, 0, 1);
-						}
+			for (int i = 0; i < row; i ++) {
+				for (int j = 0; j < col; j ++) {
+					if (cs[i][j] != '0' && ! traveled[i][j]) {
+						boolean find = false;
+						if (! find)
+							find |= solve1searchLean(cs, i, j, i + 1, j + 1, i, j, 1, 0);
+						if (! find)
+							find |= solve1searchLean(cs, i, j, i - 1, j + 1, i, j, 0, 1);
+						if (! find)
+							find |= solve1searchLean(cs, i, j, i - 1, j - 1, i, j, 1, 0);
+						if (! find)
+							find |= solve1searchLean(cs, i, j, i + 1, j - 1, i, j, 0, 1);
+						if (! find)
+							find |= solve1searchLine(cs, i, j, i + 1, j, i, j, 1, 0);
+						if (! find)
+							find |= solve1searchLine(cs, i, j, i, j + 1, i, j, 0, 1);
+						if (! find)
+							find |= solve1searchLine(cs, i, j, i - 1, j, i, j, 1, 0);
+						if (! find)
+							find |= solve1searchLine(cs, i, j, i, j - 1, i, j, 0, 1);
+						count += find ? 1 : 0;
 					}
 				}
-			} while (findOne);
+			}
+			System.out.println(count);
 		}
 		sc.close();
 	}
 	
 	private static boolean solve1searchLine(char[][] cs, int preI, int preJ, int nowI, int nowJ, int stI, int stJ, int coI, int coJ) {
 		if (nowI == stI && nowJ == stJ) {
-			System.out.println(coI + "..." + coJ);
 			return true;
 		}
-		if (nowI < 0 || nowI >= cs.length || nowJ < 0 || nowJ >= cs[0].length || cs[nowI][nowJ] != '1') {
+		if (nowI < 0 || nowI >= cs.length || nowJ < 0 || nowJ >= cs[0].length || cs[nowI][nowJ] != '1' || traveled[nowI][nowJ]) {
 			return false;
 		}
 		int[] is = new int[] {nowI + 1, nowI - 1, nowI, nowI};
@@ -154,6 +180,15 @@ public class 乐视17_数正方形 {
 				selectIndex = index;
 			}
 		}
+		int[] is2 = new int[] {nowI + 1, nowI + 1, nowI - 1, nowI - 1};
+		int[] js2 = new int[] {nowJ - 1, nowJ + 1, nowJ - 1, nowJ + 1};
+		for (int i = 0; i < is2.length; i ++) {
+			for (int j = 0; j < js2.length; j ++) {
+				if (is2[i] > -1 && is2[i] < cs.length && js2[j] > -1 && js2[j] < cs[0].length && cs[is2[i]][js2[j]] == '1') {
+					return false;
+				}
+			}
+		}
 		if (count == 1) {
 			int newI = is[selectIndex], newJ = js[selectIndex];
 			if (selectIndex == 0 || selectIndex == 1) {
@@ -161,27 +196,132 @@ public class 乐视17_数正方形 {
 			} else {
 				coJ ++;
 			}
-			boolean ans = false;
-			if (! ans && (newI + 1 != nowI || newJ != nowJ)) {
-				solve1searchLine(cs, newI, newJ, newI + 1, newJ, stI, stJ, coI, coJ);
-			}
-			if (! ans && (newI - 1 != nowI || newJ != nowJ)) {
-				solve1searchLine(cs, newI, newJ, newI - 1, newJ, stI, stJ, coI, coJ);
-			}
-			if (! ans && (newI != nowI || newJ + 1 != nowJ)) {
-				solve1searchLine(cs, newI, newJ, newI, newJ + 1, stI, stJ, coI, coJ);
-			}
-			if (! ans && (newI != nowI || newJ - 1 != nowJ)) {
-				solve1searchLine(cs, newI, newJ, newI, newJ - 1, stI, stJ, coI, coJ);
-			}
-			return ans;
+			return solve1searchLine(cs, nowI, nowJ, newI, newJ, stI, stJ, coI, coJ);
 		} else {
 			return false;
 		}
 	}
 
-	private static void solve1searchLean(char[][] cs, int i1, int j1, int i2, int j2, int sti, int stj) {
-		
+	private static boolean solve1searchLean(char[][] cs, int preI, int preJ, int nowI, int nowJ, int stI, int stJ, int coI, int coJ) {
+		if (nowI == stI && nowJ == stJ) {
+			return true;
+		}
+		if (nowI < 0 || nowI >= cs.length || nowJ < 0 || nowJ >= cs[0].length || cs[nowI][nowJ] != '1' || traveled[nowI][nowJ]) {
+			return false;
+		}
+		int[] is = new int[] {nowI + 1, nowI + 1, nowI - 1, nowI - 1};
+		int[] js = new int[] {nowJ - 1, nowJ + 1, nowJ - 1, nowJ + 1};
+		int count = 0;
+		int selectIndex = -1;
+		for (int index = 0; index < is.length; index ++) {
+			if (is[index] > -1 && is[index] < cs.length && js[index] > -1 && js[index] < cs[0].length
+					&& (is[index] != preI || js[index] != preJ) && cs[is[index]][js[index]] == '1') {
+				count ++;
+				selectIndex = index;
+			}
+		}
+		int[] is2 = new int[] {nowI + 1, nowI - 1, nowI, nowI};
+		int[] js2 = new int[] {nowJ, nowJ, nowJ + 1, nowJ - 1};
+		for (int i = 0; i < is2.length; i ++) {
+			for (int j = 0; j < js2.length; j ++) {
+				if (is2[i] > -1 && is2[i] < cs.length && js2[j] > -1 && js2[j] < cs[0].length && cs[is2[i]][js2[j]] == '1') {
+					return false;
+				}
+			}
+		}
+		if (count == 1) {
+			int newI = is[selectIndex], newJ = js[selectIndex];
+			if (selectIndex == 2 || selectIndex == 1) {
+				coI ++;
+			} else {
+				coJ ++;
+			}
+			return solve1searchLean(cs, nowI, nowJ, newI, newJ, stI, stJ, coI, coJ);
+		} else {
+			return false;
+		}
 	}
 	
+	
+	/**
+	 * @method		solve2 
+	 * @parameter	void
+	 * @return 		void
+	 * @details 	第二个Solution
+	 */
+	static void solve2() {
+		char[] lu = new char[] { '0', '0', '0', '0', '1', '1', '0', '1', 0 };
+		char[] ld = new char[] { '0', '1', 0, '0', '1', '1', '0', '0', '0' };
+		char[] ru = new char[] { '0', '0', '0', '1', '1', '0', 0, '1', '0' };
+		char[] rd = new char[] { 0, '1', '0', '1', '1', '0', '0', '0', '0' };
+		char[] ude = new char[] { 0, '0', 0, '1', '1', '1', 0, '0', 0 };
+		char[] lre = new char[] { 0, '1', 0, '0', '1', '0', 0, '1', 0 };
+		char[] u = new char[] { '0', '0', '0', '0', '1', '0', '1', '0', '1' };
+		char[] d = new char[] { '1', '0', '1', '0', '1', '0', '0', '0', '0' };
+		char[] l = new char[] { '0', '0', '1', '0', '1', '0', '0', '0', '1' };
+		char[] r = new char[] { '1', '0', '0', '0', '1', '0', '1', '0', '0' };
+		char[] rdde = new char[] { '1', '0', '0', '0', '1', '0', '0', '0', '1' };
+		char[] ldde = new char[] { '0', '0', '1', '0', '1', '0', '1', '0', '0' };
+		Scanner scanner = new Scanner(System.in);
+		for (int t = scanner.nextInt(); t > 0; t--) {
+			int n = scanner.nextInt();
+			int m = scanner.nextInt();
+			char[][] a = new char[n + 2][m + 2];
+			scanner.nextLine();
+			Arrays.fill(a[0], '0');
+			for (int i = 0; i < n; i++) {
+				Arrays.fill(a[i + 1], '0');
+				char[] cs = scanner.nextLine().toCharArray();
+				for (int j = 0; j < m; j++) {
+					a[i + 1][j + 1] = cs[j];
+				}
+			}
+			Arrays.fill(a[n + 1], '0');
+			int count = 0;
+			for (int i = 1; i <= n; i++) {
+				for (int j = 1; j <= m; j++) {
+					if (solve2ch(a, i, j, lu)) {
+						int x, y;
+						for (x = 1; solve2ch(a, i, j + x, ude)
+								&& solve2ch(a, i + x, j, lre); x++)
+							;
+						for (y = 1; solve2ch(a, i + y, j + x, lre)
+								&& solve2ch(a, i + x, j + y, ude); y++)
+							;
+						if (x == y && solve2ch(a, i + y, j, ld)
+								&& solve2ch(a, i, j + x, ru)
+								&& solve2ch(a, i + y, j + x, rd)) {
+							count++;
+						}
+					}
+					if (solve2ch(a, i, j, u)) {
+						int x, y;
+						for (x = 1; solve2ch(a, i + x, j + x, rdde)
+								&& solve2ch(a, i + x, j - x, ldde); x++)
+							;
+						for (y = 1; solve2ch(a, i + x + y, j + x - y, ldde)
+								&& solve2ch(a, i + x + y, j - x + y, rdde); y++)
+							;
+						if (x == y && solve2ch(a, i + x, j + x, r)
+								&& solve2ch(a, i + x, j - x, l)
+								&& solve2ch(a, i + x + y, j, d)) {
+							count++;
+						}
+					}
+				}
+			}
+			System.out.println(count);
+			scanner.close();
+		}
+	}
+	private static boolean solve2ch(char[][] a, int i, int j, char[] c) {
+		return (a[i - 1][j - 1] == c[0] || c[0] == 0)
+				&& (a[i - 1][j] == c[1] || c[1] == 0)
+				&& (a[i - 1][j + 1] == c[2] || c[2] == 0)
+				&& (a[i][j - 1] == c[3] || c[3] == 0) && a[i][j] == c[4]
+				&& (a[i][j + 1] == c[5] || c[5] == 0)
+				&& (a[i + 1][j - 1] == c[6] || c[6] == 0)
+				&& (a[i + 1][j] == c[7] || c[7] == 0)
+				&& (a[i + 1][j + 1] == c[8] || c[8] == 0);
+	}
 }
