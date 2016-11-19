@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.util.Scanner;
+
 /*
  * 	题目描述
 									
@@ -42,6 +44,37 @@ public class 百度17_分数序列和 {
 	 * @details 	
 	 */
 	private static void solve1() {
+		Scanner cin = new Scanner(System.in);
+		while(cin.hasNext()){
+			int k = cin.nextInt();
+			int n = 0;
+			for(int i=0;i<k;i++){
+				n = cin.nextInt();
+				solve1solution(n);
+			}
+			
+		}
+		cin.close();
+	}
+	private static void solve1solution(int n) {
+		if(n==0){
+			return;
+		}
+		double ans = 0;
+		double[][] temp = new double[n][2];
+		temp[0][0] = 2;
+		temp[0][1] = 1;
+		ans = 2;
+		if(n==1){
+			System.out.println("2.0000");
+			return;
+		}
+		for(int i=1;i<n;i++){
+			temp[i][0] = temp[i-1][0] + temp[i-1][1];
+			temp[i][1] = temp[i-1][0];
+			ans = ans + temp[i][0]/temp[i][1];
+		}
+		System.out.printf("%.4f\n",ans);
 		
 	}
 }
