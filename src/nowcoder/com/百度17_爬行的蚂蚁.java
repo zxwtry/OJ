@@ -42,8 +42,17 @@ import java.util.Scanner;
 
 public class 百度17_爬行的蚂蚁 {
 	public static void main(String[] args) {
-		solve1();
+//		solve1();
+		solve2();
 	}
+	
+	/**
+	 * @method		solve1 
+	 * @parameter	void
+	 * @return 		void
+	 * @details 	WA
+	 * @details 	没有想清楚逻辑
+	 */
 	static void solve1() {
 		Scanner sc = new Scanner(System.in);
 		int timesOfTest = sc.nextInt();
@@ -62,6 +71,27 @@ public class 百度17_爬行的蚂蚁 {
 				max = Math.max(arr[numi], max);
 			}
 			
+		}
+		sc.close();
+	}
+	
+	/**
+	 * @method		solve2 
+	 * @parameter	void
+	 * @return 		void
+	 * @details 	AC
+	 */
+	private static void solve2() {
+		Scanner sc = new Scanner(System.in);
+		for (int i = sc.nextInt() - 1; i > -1; i --) {
+			int min = 0, max = 0;
+			int len = sc.nextInt();
+			for (int j = sc.nextInt() - 1; j > -1; j --) {
+				int tem = sc.nextInt();
+				min = Math.max(min, Math.min(tem, len - tem));
+				max = Math.max(max, Math.max(tem, len - tem));
+			}
+			System.out.println(min + " " + max);
 		}
 		sc.close();
 	}
