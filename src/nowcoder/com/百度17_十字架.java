@@ -47,13 +47,13 @@ import java.util.Scanner;
  */
 
 /**
- * @author zxwtry
- * @email zxwtry@qq.com
- * @project OJ
- * @package nowcoder.com
- * @file 百度17_十字架.java
- * @date 2016年11月19日 下午10:20:46
- * @details
+ * @author 		zxwtry
+ * @email 		zxwtry@qq.com
+ * @project 	OJ
+ * @package 	nowcoder.com
+ * @file 		百度17_十字架.java
+ * @date 		2016年11月19日 下午10:20:46
+ * @details		
  */
 public class 百度17_十字架 {
 	public static void main(String[] args) {
@@ -61,9 +61,9 @@ public class 百度17_十字架 {
 	}
 
 	/**
-	 * @method solve1
-	 * @parameter
-	 * @return void
+	 * @method 		solve1
+	 * @parameter	
+	 * @return 		void
 	 * @details
 	 */
 	private static void solve1() {
