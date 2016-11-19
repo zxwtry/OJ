@@ -22,13 +22,13 @@ public class 百度17_比赛组队 {
 	 * @return 		void
 	 * @details 	
 	 */
-    static int maxScore;
-    static int maxNum;
-    static int n, k;
-    static int[] val;
-    static int[][] a;
-    static boolean[] choose;
 	private static void solve1() {
+		int maxScore = 0;
+		int n = 0, k = 0;
+		int[] val = null;
+		int[][] a = null;
+		int maxNum = 0;
+		boolean[] choose = null;
 		Scanner in = new Scanner(System.in);
         int ss = in.nextInt();
         for(int loop=0; loop<ss; loop++) {
@@ -59,7 +59,7 @@ public class 百度17_比赛组队 {
                         choose[j] = true;
                         selectNum++;
                         score = score + val[j];
-                        for(int k=0; k<j; k++) {
+                        for(k=0; k<j; k++) {
                             if(choose[k]) score = score + a[j][k];
                         }
                     } else {
