@@ -86,8 +86,8 @@ import java.util.Scanner;
 
 public class 乐视17_数正方形 {
 	public static void main(String[] args) {
-		solve1();
-//		solve2();
+//		solve1();
+		solve2();
 	}
 	static boolean[][] traveled = null;
 	static int count = 0;
@@ -248,6 +248,7 @@ public class 乐视17_数正方形 {
 	 * @parameter	void
 	 * @return 		void
 	 * @details 	第二个Solution
+	 * @details 	AC
 	 */
 	static void solve2() {
 		char[] lu = new char[] { '0', '0', '0', '0', '1', '1', '0', '1', 0 };
@@ -262,22 +263,20 @@ public class 乐视17_数正方形 {
 		char[] r = new char[] { '1', '0', '0', '0', '1', '0', '1', '0', '0' };
 		char[] rdde = new char[] { '1', '0', '0', '0', '1', '0', '0', '0', '1' };
 		char[] ldde = new char[] { '0', '0', '1', '0', '1', '0', '1', '0', '0' };
-		Scanner scanner = new Scanner(System.in);
-		for (int t = scanner.nextInt(); t > 0; t--) {
-			int n = scanner.nextInt();
-			int m = scanner.nextInt();
+		Scanner sc = new Scanner(System.in);
+		for (int t = Integer.parseInt(sc.nextLine().trim()) - 1; t > -1; t--) {
+			String[] p = sc.nextLine().trim().split(" ");
+			int n = Integer.parseInt(p[0]), m = Integer.parseInt(p[p.length - 1]);
 			char[][] a = new char[n + 2][m + 2];
-			scanner.nextLine();
 			Arrays.fill(a[0], '0');
-			for (int i = 0; i < n; i++) {
-				Arrays.fill(a[i + 1], '0');
-				char[] cs = scanner.nextLine().toCharArray();
-				for (int j = 0; j < m; j++) {
-					a[i + 1][j + 1] = cs[j];
-				}
+			for (int i = 1; i <= n; i++) {
+				a[i][0] = '0';
+				a[i][m + 1] = '0';
+				char[] cs = sc.nextLine().trim().toCharArray();
+				System.arraycopy(cs, 0, a[i], 1, cs.length);
 			}
 			Arrays.fill(a[n + 1], '0');
-			int count = 0;
+			count = 0;
 			for (int i = 1; i <= n; i++) {
 				for (int j = 1; j <= m; j++) {
 					if (solve2ch(a, i, j, lu)) {
@@ -311,8 +310,8 @@ public class 乐视17_数正方形 {
 				}
 			}
 			System.out.println(count);
-			scanner.close();
 		}
+		sc.close();
 	}
 	private static boolean solve2ch(char[][] a, int i, int j, char[] c) {
 		return (a[i - 1][j - 1] == c[0] || c[0] == 0)
