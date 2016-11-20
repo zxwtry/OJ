@@ -44,9 +44,22 @@ package leetcode;
  */
 public class P464_CanIWin {
 	public static void main(String[] args) {
-		
+		debugSolution1();
 	}
 	
+	/**
+	 * @method      debugSolution1
+	 * @parameter   
+	 * @return      void
+	 * @details     
+	 */
+	private static void debugSolution1() {
+		Solution1 s = new Solution1();
+		int m = 20;
+		int d = 111;
+		System.out.println(s.canIWin(m, d));
+	}
+
 	/**
 	 * @auther      zxwtry
 	 * @email       zxwtry@qq.com
@@ -58,9 +71,93 @@ public class P464_CanIWin {
 	 * @details     Solution1
 	 */
 	static class Solution1 {
-	    public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
+	    public boolean canIWin(int m, int d) {
+	    	if (d <= m) {
+	    		return true;
+	    	} else if (d > (m + 1) * m / 2) {
+	    		return false;
+	    	}
+	    	boolean[] used = new boolean[m + 1];
+	    	boolean[] status = new boolean[]{false, false};
+	    	for (int i = used.length - 1; i > 0 ; i --) {
+	    		status[0] = false;
+	    		status[1] = false;
+	    		used[i] = true;
+	    		seach1(used, d - i, status);
+	    		if (! status[1]) {
+	    			return true;
+	    		}
+	    	}
 	        return false;
-	    }		
-	}
+	    }
 
+		/**
+		 * @method      seach0
+		 * @parameter   
+		 * @return      void
+		 * @details     
+		 */
+		private void seach0(boolean[] used, int d, boolean[] status) {
+			if (status[1]) {
+				return;
+			}
+			int add = 0;
+			for (int i = used.length - 1; i > 0 ; i --) {
+				if (! used[i] && d - i <= 0) {
+					add += i;
+					status[0] = true;
+					return;
+				}
+			}
+			if (add < d) {
+				return;
+			}
+			for (int i = used.length - 1; i > 0 ; i --) {
+				if (! used[i]) {
+					used[i] = true;
+					seach1(used, d, status);
+					if (! status[1]) {
+						break;
+					}
+					used[i] = false;
+				}
+			}
+			
+		}
+
+		/**
+		 * @method      seach1
+		 * @parameter   used		---	纪录是否已经被使用
+		 * @parameter   d			---	还剩下多少
+		 * @return      void
+		 * @details     这里是第1个人的选择
+		 */
+		private void seach1(boolean[] used, int d, boolean[] status) {
+			if (status[1]) {
+				return;
+			}
+			int add = 0;
+			for (int i = used.length - 1; i > 0 ; i --) {
+				if (! used[i] && d - i <= 0) {
+					add += i;
+					status[1] = true;
+					return;
+				}
+			}
+			if (add < d) {
+				return;
+			}
+			for (int i = used.length - 1; i > 0 ; i --) {
+				if (! used[i]) {
+					used[i] = true;
+					seach0(used, d, status);
+					if (status[1]) {
+						return;
+					}
+					used[i] = false;
+				}
+			}
+		}		
+	}
+	
 }
