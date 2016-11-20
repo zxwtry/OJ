@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.io.File;
+
 /*
  * 	为活跃公司文化，公司计划组织一场比赛，让员工一展才艺。现有n个员工，
  * 	欲选出不少于k人组成一支队伍，1＜=n＜ =12,1＜=k＜=n。
@@ -40,72 +42,65 @@ import java.util.Scanner;
  */
 public class 百度17_比赛组队 {
 	public static void main(String[] args) {
-		solve1();
+		try {
+			solve2();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
-	 * @method		solve1 
-	 * @parameter	
-	 * @return 		void
-	 * @details 	
+	 * @method      solve2
+	 * @parameter   
+	 * @return      void
+	 * @details     
 	 */
-	private static void solve1() {
-		int maxScore = 0;
-		int n = 0, k = 0;
-		int[] val = null;
-		int[][] a = null;
-		int maxNum = 0;
-		boolean[] choose = null;
-		Scanner in = new Scanner(System.in);
-        int ss = in.nextInt();
-        for(int loop=0; loop<ss; loop++) {
-            n = in.nextInt();
-            k = in.nextInt();
-            val = new int[n];
-            for(int i=0; i<n; i++) {
-                val[i] = in.nextInt();
-            }
-            a = new int[n][n];
-            for(int i=0; i<n; i++) {
-                for(int j=0; j<n; j++) {
-                    a[i][j] = in.nextInt();
-                }
-            }
-            maxScore = Integer.MIN_VALUE;
-            maxNum = 0;
-            choose = new boolean[n];
-            int score;
-            //select num people
-            int selectNum;
-
-            for(int i=0; i < 1<<n; i++) {
-                score = 0;
-                selectNum = 0;
-                for(int j=0; j<n; j++) {
-                    if((i>>j)%2==1) {
-                        choose[j] = true;
-                        selectNum++;
-                        score = score + val[j];
-                        for(k=0; k<j; k++) {
-                            if(choose[k]) score = score + a[j][k];
-                        }
-                    } else {
-                        choose[j] = false;
-                    }
-                }
-                //System.out.println(i+" "+score+" "+selectNum);
-                if(selectNum<k) continue;
-                if(score>maxScore) {
-                    maxScore = score;
-                    maxNum = 1;
-                } else if(score==maxScore) {
-                    maxNum++;
-                }
-            }
-
-            System.out.println(maxScore + " " + maxNum);
-
-        }
-        in.close();
+	private static void solve2() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_比赛组队.txt"));
+		for (int times = sc.nextInt() - 1; times > -1; times --) {
+			int n = sc.nextInt();
+			int k = sc.nextInt();
+			int[] val = new int[n];
+			int[][] A = new int[n][n];
+ 			for (int ni = 0; ni < n; ni ++) {
+				val[ni] = sc.nextInt();
+			}
+ 			for (int ni = 0; ni < n; ni ++) {
+ 				for (int nj = 0; nj < n; nj ++) {
+ 					A[ni][nj] = sc.nextInt();
+ 				}
+ 			}
+ 			int maxv = Integer.MIN_VALUE, maxn = 0;
+ 			for (int s = (1 << n) - 1; s > 0; s --) {
+ 				int kv = 0;
+ 				for (int ni = 0; ni < n; ni ++) {
+ 					if ((s >> ni) % 2 == 1) {
+ 						kv ++;
+ 					}
+ 				}
+ 				if (kv < k) {
+ 					continue;
+ 				}
+ 				int sv = 0;
+ 				for (int ni = 0; ni < n; ni ++) {
+ 					if ((s >> ni) % 2 == 1) {
+ 						sv += val[ni];
+	 					for (int nj = ni + 1; nj < n; nj ++) {
+	 						if ((s >> nj) % 2 == 1) {
+	 							sv += A[ni][nj];
+	 						}
+	 					}
+ 					}
+ 				}
+ 				if (sv > maxv) {
+ 					maxv = sv;
+ 					maxn = 1;
+ 				} else if (sv == maxv) {
+ 					maxn ++;
+ 				}
+ 			}
+ 			System.out.println(maxv + " " + maxn);
+		}
+		sc.close();
 	}
 }
