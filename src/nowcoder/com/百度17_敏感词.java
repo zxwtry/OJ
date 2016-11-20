@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -48,18 +50,23 @@ import java.util.Scanner;
  */
 
 public class 百度17_敏感词 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		solve1();
+		solve2();
 	}
 	
 	/**
 	 * @method		solve1 
 	 * @parameter	void
 	 * @return 		void
+	 * @throws 		FileNotFoundException 
 	 * @details 	第一个Solution
+	 * @details 	代码是正确的，只是测试数据有坑
+	 * @details 	去度娘，慎用Java
+	 * @details 	这题数据中，有一个坑，使用Java无法得到正确的结果。
 	 */
-	private static void solve1() {
-		Scanner sc = new Scanner(System.in);
+	private static void solve1() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_敏感词.txt"));
 		TrieNode root = new TrieNode();
 		for (int times = Integer.parseInt(sc.nextLine().trim()) - 1; times > -1; times --) {
 			solve1insert(sc.nextLine().trim(), root);
@@ -78,7 +85,7 @@ public class 百度17_敏感词 {
 		while (! trieNodeQueue.isEmpty()) {
 			rootNow = trieNodeQueue.poll();
 			for (int i = 0; i < 26; i ++) {
-				if (null == root.nexts[i]) {
+				if (null == rootNow.nexts[i]) {
 					rootNow.nexts[i] = rootNow.suffix.nexts[i];
 				} else {
 					rootNow.nexts[i].suffix = rootNow.suffix.nexts[i];
@@ -88,20 +95,31 @@ public class 百度17_敏感词 {
 		}
 		String str = sc.nextLine().trim();
 		rootNow = root;
-		StringBuilder st = new StringBuilder(str);
+		char[] st = str.toCharArray();
 		str = str.toLowerCase();
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedList<Integer> sti = new LinkedList<Integer>();
+		LinkedList<Integer> len = new LinkedList<Integer>();
+		System.out.println(str);
 		for (int i= 0; i < str.length(); i ++) {
-			rootNow = rootNow.nexts[str.charAt(i) - 'a'];
-			if (rootNow.isEndOfAWord) {
-				list.add(i);
-				System.out.println(i);
+			char c = str.charAt(i);
+			if (c >= 'a' && c <= 'z') {
+				rootNow = rootNow.nexts[c - 'a'];
+				if (rootNow.isEndOfAWord) {
+					sti.add(i-rootNow.len+1);
+					len.add(rootNow.len);
+				}
 			}
 		}
-		Iterator<Integer> it = list.iterator();
-		while (it.hasNext()) {
-			
+		Iterator<Integer> stiit = sti.iterator();
+		Iterator<Integer> lenit = len.iterator();
+		while (stiit.hasNext()) {
+			int i = stiit.next();
+			int l = lenit.next();
+			for (int k = 0; k < l; k ++) {
+				st[i + k]='*';
+			}
 		}
+		System.out.println(new String(st));
 		sc.close();
 	}
 
@@ -125,6 +143,7 @@ public class 百度17_敏感词 {
 			}
 		}
 		rootNow.isEndOfAWord = true;
+		rootNow.len = s.length();
 	}
 
 	/**
@@ -142,5 +161,35 @@ public class 百度17_敏感词 {
 		boolean isEndOfAWord = false;
 		TrieNode[] nexts = new TrieNode[26];
 		TrieNode suffix = null;
+		int len = 0;
+	}
+	
+	/**
+	 * @method		solve2 
+	 * @parameter	void
+	 * @return 		void
+	 * @details 	标准答案，慢
+	 */
+	private static void solve2() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_敏感词.txt"));
+		int num = Integer.parseInt(sc.nextLine().trim());
+		String[] arr = new String[num];
+		for (int i = num - 1; i > -1; i --) {
+			arr[i] = sc.nextLine().trim();
+		}
+		String s = sc.nextLine().trim();
+		StringBuilder st = new StringBuilder(s);
+		s = s.toLowerCase();
+		for (int i = num - 1; i > -1; i --) {
+			int index = s.indexOf(arr[i]);
+			while (index != -1) {
+				for (int k = 0; k < arr[i].length(); k ++) {
+					st.setCharAt(index + k, '*');
+				}
+				index = s.indexOf(arr[i], index+1);
+			}
+		}
+		System.out.println(st.toString());
+		sc.close();
 	}
 }
