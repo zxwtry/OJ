@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -19,8 +21,8 @@ import java.util.Scanner;
 	3.5000
 	时间限制
 	C/C++语言：1000MS其它语言：3000MS	
-		内存限制
-		C/C++语言：65536KB其它语言：589824KB
+	内存限制
+	C/C++语言：65536KB其它语言：589824KB
  */
 
 /**
@@ -34,47 +36,45 @@ import java.util.Scanner;
  */
 public class 百度17_分数序列和 {
 	public static void main(String[] args) {
-		solve1();
+		try {
+			solve2();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
-	 * @method		solve1 
-	 * @parameter	
-	 * @return 		void
-	 * @details 	
+	 * @method      solve2
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 * @details     这种题目要的就是速度
 	 */
-	private static void solve1() {
-		Scanner cin = new Scanner(System.in);
-		while(cin.hasNext()){
-			int k = cin.nextInt();
-			int n = 0;
-			for(int i=0;i<k;i++){
-				n = cin.nextInt();
-				solve1solution(n);
+	private static void solve2() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_分数序列和.txt"));
+		ArrayList<Double> list = new ArrayList<Double>();
+		list.add(0.0);
+		list.add(2.0);
+		list.add(1.5+list.get(1));
+		list.add(5.0/3.0+list.get(2));
+		list.add(8.0/5.0+list.get(3));
+		list.add(13.0/8.0+list.get(4));
+		double a = 13, b = 8, tmp = 0;
+		for (int times = sc.nextInt() - 1; times > -1; times --) {
+			int v = sc.nextInt();
+			if (list.size() > v) {
+				System.out.printf("%.4f\n", list.get(v));
+			} else {
+				for (int k = v - list.size(); k > -1; k --) {
+					tmp = a;
+					a = a + b;
+					b = tmp;
+					list.add(list.get(list.size() - 1) + a/b);
+				}
+				System.out.printf("%.4f\n", list.get(v));
 			}
-			
 		}
-		cin.close();
+		sc.close();
 	}
-	private static void solve1solution(int n) {
-		if(n==0){
-			return;
-		}
-		double ans = 0;
-		double[][] temp = new double[n][2];
-		temp[0][0] = 2;
-		temp[0][1] = 1;
-		ans = 2;
-		if(n==1){
-			System.out.println("2.0000");
-			return;
-		}
-		for(int i=1;i<n;i++){
-			temp[i][0] = temp[i-1][0] + temp[i-1][1];
-			temp[i][1] = temp[i-1][0];
-			ans = ans + temp[i][0]/temp[i][1];
-		}
-		System.out.printf("%.4f\n",ans);
-		
-	}
+
 }
