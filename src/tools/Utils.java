@@ -98,6 +98,17 @@ public class Utils {
 				System.out.printf("%c\t", arr[i]);
 		}
 	}
+	public static void printArray(boolean[] arr, int n) {
+		int arrEnd = 0;
+		if (arr == null || (arrEnd = arr.length-1) < 0)
+			return;
+		for (int i = 0; i <= arrEnd; i ++) {
+			if (i % n == n - 1 || i == arrEnd)
+				System.out.println(arr[i]);
+			else
+				System.out.printf("%b\t", arr[i]);
+		}
+	}
 	public static void printArray(int[] arr, int n) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
