@@ -60,13 +60,72 @@ import java.util.Scanner;
 public class 百度17_特征距离 {
 	public static void main(String[] args) {
 		try {
-			solve1();
+//			solve1();
 //			solve2();
+			solve3();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * @method      solve3
+	 * @parameter   
+	 * @return      void
+	 * @details     对于solve1的改进，不用HashMap之后AC
+	 */
+	private static void solve3() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_特征距离.txt"));
+		int TIME = sc.nextInt();
+		for (int times = 1; times <= TIME; times ++) {
+			int n = sc.nextInt(), m = sc.nextInt(), s = sc.nextInt(), t = sc.nextInt();
+			int[][] map = new int[n + 1][n + 1];
+			for (int mi = 0; mi < m; mi ++) {
+				int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
+				map[u][v] = w;
+				map[v][u] = w;
+			}
+			int[] val = new int[] {Integer.MAX_VALUE, 0};
+			boolean[] isTravled = new boolean[n+1];
+			solve3search(n, s, t, 0, 0, val, map, isTravled);
+			System.out.print("Case #"+times+": ");
+			if (val[0] == Integer.MAX_VALUE && val[1] == 0) {
+				System.out.println("No answer");
+			} else {
+				System.out.println(val[1]);
+			}
+		}
+		sc.close();
+	}
+
+	/**
+	 * @method      solve3search
+	 * @parameter   
+	 * @return      void
+	 * @details     
+	 */
+	private static void solve3search(int n, int now, int target, int count, int max, int[] val, int[][] map, boolean[] isTravled) {
+		if (count > val[0])	return;
+		for (int next = 1; next <= n; next ++) {
+			if (map[now][next] != 0 && ! isTravled[next]) {
+				int w = map[now][next];
+				int thismax = Math.max(max, w);
+				if (next == target) {
+					if (count + w < val[0]) {
+						val[0] = count + w;
+						val[1] = thismax;
+					} else if (count + w == val[0] && thismax > val[1]) {
+						val[1] = thismax;
+					}
+				} else {
+					isTravled[next] = true;
+					solve3search(n, next, target, count + w, thismax, val, map, isTravled);
+					isTravled[next] = false;
+				}
+			}
+		}
+	}
+
 	/**
 	 * @method      solve2
 	 * @parameter   
