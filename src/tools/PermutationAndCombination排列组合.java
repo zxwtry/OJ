@@ -90,6 +90,41 @@ public class PermutationAndCombination排列组合 {
 	}
 
 	/**
+	 * @method      prePermutation
+	 * @parameter   
+	 * @return      boolean
+	 * @details     
+	 */
+	public static boolean prePermutation(int[] arr) {
+		if (arr == null || arr.length < 2) 	return false;
+		int i2 = arr.length - 2;
+		for (; i2 > -1 && arr[i2] <= arr[i2 + 1]; i2 --) {}
+		if (i2 == -1)	return false;
+		swap(arr, i2, prePermutation_getLittleSmaller(arr, i2));
+		reverse(arr, i2 + 1, arr.length - 1);
+		return true;
+	}
+	
+	/**
+	 * @method      prePermutation_getLittleSmaller
+	 * @parameter   
+	 * @return      int
+	 * @details     附属于prePermutation
+	 */
+	private static int prePermutation_getLittleSmaller(int[] arr, int i2) {
+		int sti = i2 + 1, eni = arr.length - 1, mid = 0;
+		while (sti < eni) {
+			mid = (sti + eni + 1) / 2;
+			if (arr[mid] >= arr[i2]) {
+				eni = mid - 1;
+			} else {
+				sti = mid;
+			}
+		}
+		return sti;
+	}
+
+	/**
 	 * @method      swap
 	 * @parameter   
 	 * @return      void
