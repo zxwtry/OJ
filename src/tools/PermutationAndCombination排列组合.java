@@ -1,5 +1,9 @@
 package tools;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @auther      zxwtry
  * @email       zxwtry@qq.com
@@ -44,6 +48,55 @@ public class PermutationAndCombination排列组合 {
 				swap(arr, index, arrIndex);
 			}
 		}
+	}
+	
+	/**
+	 * @method      allPermutation_arrHasDulication_returnSorted
+	 * @parameter   
+	 * @return      List<int[]>
+	 * @details     输入arr未排序
+	 * @details     arr可以含有重复
+	 */
+	public static List<int[]> allPermutation_arrHasDulication_returnSorted(int[] arr) {
+		List<int[]> ans = new LinkedList<int[]>();
+		if (arr == null || arr.length < 1)	return ans;
+		Arrays.sort(arr);
+		allPermutation_internal2(arr, ans, 0);
+		return ans;
+	}
+
+	/**
+	 * @method      allPermutation_internal2
+	 * @parameter   
+	 * @return      void
+	 * @details     只被allPermutation_arrHasDulication_returnSorted调用
+	 */
+	private static void allPermutation_internal2(int[] arr, List<int[]> ans, int arrIndex) {
+		if (arrIndex == arr.length) {
+			ans.add(arr.clone());
+		} else {
+			for (int index = arrIndex; index < arr.length; index ++) {
+				if (! allPermutation_internal2_isDuplicated(arr, arrIndex, index)) {
+					swap(arr, arrIndex, index);
+					allPermutation_internal2(arr, ans, arrIndex + 1);
+					swap(arr, arrIndex, index);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @method      allPermutation_internal2_isDuplicated
+	 * @parameter   
+	 * @return      boolean
+	 * @details     只被allPermutation_internal2调用
+	 */
+	private static boolean allPermutation_internal2_isDuplicated(int[] arr, int arrIndex, int index) {
+		for (int i = arrIndex; i < index; i ++) {
+			if (arr[i] == arr[index])
+				return true;
+		}
+		return false;
 	}
 
 	/**
