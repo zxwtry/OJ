@@ -24,7 +24,7 @@ public class PermutationAndCombination排列组合 {
 		int ansLen = 1;
 		for (int i = arr.length; i > 1; i --)	ansLen *= i;
 		int [][] ans = new int[ansLen][arr.length];
-		allPermutation_internal(arr, arr.length, ans, new int[] {0});
+		allPermutation_internal(arr, 0, ans, new int[] {0});
 		return ans;
 	}
 	
@@ -34,14 +34,14 @@ public class PermutationAndCombination排列组合 {
 	 * @return      void
 	 * @details     附属于allPermutation_arrNoDulication_returnNotSorted(int[] arr)
 	 */
-	private static void allPermutation_internal(int[] arr, int n, int[][] ans, int[] ansIndex) {
-		if (n == 1) {
+	private static void allPermutation_internal(int[] arr, int arrIndex, int[][] ans, int[] ansIndex) {
+		if (arrIndex == arr.length) {
 			ans[ansIndex[0] ++] = arr.clone();
 		} else {
-			for (int i = 0; i < n; i ++) {
-				swap(arr, i, n - 1);
-				allPermutation_internal(arr, n - 1, ans, ansIndex);
-				swap(arr, i, n - 1);
+			for (int index = arrIndex; index < arr.length; index ++) {
+				swap(arr, index, arrIndex);
+				allPermutation_internal(arr, arrIndex + 1, ans, ansIndex);
+				swap(arr, index, arrIndex);
 			}
 		}
 	}
