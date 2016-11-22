@@ -46,27 +46,72 @@ public class PermutationAndCombination排列组合 {
 		}
 	}
 
-	public static void next_permutation(int[] arr) {
-		int nixu = -1;
-		for (int i = 0; nixu == -1 && i < arr.length - 1; i ++)
-			if (arr[i] > arr[i + 1]) nixu = i;
-		if (nixu == -1) {
-			swap(arr, arr.length - 1, arr.length - 2);
-			return;
-		}
-		
+	/**
+	 * @method     nextPermutation
+	 * @parameter   
+	 * @return     	boolean
+	 * @details    对于arr中相同数字的处理方式和 allPermutation_arrNoDulication_returnNotSorted不同
+	 * @details    以3, 3, 4为例，nextPermutation迭代所有会是：3,4,3和4,3,3
+	 * @details    以3, 3, 4为例，allPermutation_arrNoDulication_returnNotSorted迭代所有会是：
+	 * @details    		3	4	3
+	 * @details    		4	3	3
+	 * @details    		4	3	3
+	 * @details    		3	4	3
+	 * @details    		3	3	4
+	 * @details    		3	3	4
+	 */
+	public static boolean nextPermutation(int[] arr) {
+		if (arr == null || arr.length < 2)	return false;
+		int i2 = arr.length - 2;
+		for (; i2 > -1 && arr[i2] >= arr[i2 + 1]; i2 --) {}
+		if (i2 == -1)	return false;
+		swap(arr, i2, nextPermutation_getLittleBigger(arr, i2));
+		reverse(arr, i2 + 1, arr.length - 1);
+		return true;
 	}
-	
+
+	/**
+	 * @method      nextPermutation_getLittleBigger
+	 * @parameter   
+	 * @return      int
+	 * @details     附属于nextPermutation
+	 */
+	private static int nextPermutation_getLittleBigger(int[] arr, int i2) {
+		int sti = i2 + 1, eni = arr.length - 1, mid = 0;
+		while (sti < eni) {
+			mid = (sti + eni + 1) / 2;
+			if (arr[mid] > arr[i2]) {
+				sti = mid;
+			} else {
+				eni = mid - 1; 
+			}
+		}
+		return sti;
+	}
+
 	/**
 	 * @method      swap
 	 * @parameter   
 	 * @return      void
 	 * @details     外部保证不会发生数组越界，空指针
+	 * @details     通用
 	 */
 	private static void swap(int[] arr, int i, int j) {
 		int temp = arr[i];
 		arr[i] = arr[j];
 		arr[j] = temp;
+	}
+	
+	/**
+	 * @method      reverse
+	 * @parameter   
+	 * @return      void
+	 * @details     [i, j] 反转
+	 * @details     外部保证不会发生数组越界，空指针
+	 * @details     通用
+	 */
+	private static void reverse(int[] arr, int i, int j) {
+		while (i < j)	swap(arr, i ++, j --);
 	}
 	
 }
