@@ -29,10 +29,22 @@ import tools.TreeNode辅助.TreeNode;
  */
 public class Book049_二叉树节点间的最大距离 {
 	public static void main(String[] args) {
-		debugMySolution();
+//		debugMySolution();
+		compareMySolutionAndBookSolution();
 	}
 	
-	private static void debugMySolution() {
+	static void compareMySolutionAndBookSolution() {
+		int maxLevel = 20;
+		int min = 0;
+		int max = Integer.MAX_VALUE;
+		double nullPercent = 0.5;
+		TreeNode head = tools.TreeNode辅助.A_生成随机二叉树(maxLevel, min, max, nullPercent);
+		MySolution s1 = new MySolution();
+		BookSolution s2 = new BookSolution();
+		System.out.println(s1.getMaxDist(head) == s2.getMaxDist(head));
+	}
+
+	static void debugMySolution() {
 		int maxLevel = 5;
 		int min = 0;
 		int max = Integer.MAX_VALUE;
@@ -86,6 +98,37 @@ public class Book049_二叉树节点间的最大距离 {
 			}
 			return layNow;
 		}
+	}
+	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book049_二叉树节点间的最大距离.java
+	 * @type        BookSolution
+	 * @date        2016年11月23日 下午3:44:26
+	 * @details     
+	 */
+	static class BookSolution {
+		public int getMaxDist(TreeNode head) {
+			int[] record = new int[1];
+			return posOrder(head, record);
+		}
+		private int posOrder(TreeNode head, int[] record) {
+			if (head == null) {
+				record[0] = 0;
+				return 0;
+			}
+			int lMax = posOrder(head.left, record);
+			int maxFromLeft = record[0];
+			int rMax = posOrder(head.right, record);
+			int maxFromRight = record[0];
+			int curNodeMax = maxFromLeft + maxFromRight + 1;
+			record[0] = Math.max(maxFromLeft, maxFromRight) + 1;
+			return Math.max(Math.max(lMax, rMax), curNodeMax);
+		}
+		
 	}
 	
 }
