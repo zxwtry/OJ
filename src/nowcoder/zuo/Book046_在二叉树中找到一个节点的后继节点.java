@@ -191,7 +191,7 @@ public class Book046_在二叉树中找到一个节点的后继节点 {
 		 * @details     
 		 */
 		private PosNode getLeftMost(PosNode node) {
-			if (node == null)	return node;
+ 			if (node == null)	return node;
 			while (node.left != null)	node = node.left;
 			return node;
 		}
