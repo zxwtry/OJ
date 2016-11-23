@@ -24,6 +24,7 @@ package nowcoder.com;
  */
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -34,21 +35,87 @@ import java.util.Scanner;
  * @file        百度17_域名选择.java
  * @type        百度17_域名选择
  * @date        2016年11月21日 下午6:32:38
- * @details     
+ * @details     这题太难，暂时放弃
  */
 
 public class 百度17_域名选择 {
 	public static void main(String[] args) {
-		
+		try {
+//			solve1();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	static void solve1() throws Exception {
+		final char INNER = '#', OUTER = '$';
 		Scanner sc = new Scanner(new File("D:/file/data/百度17_域名选择.txt"));
 		int n = Integer.parseInt(sc.nextLine().trim());
 		char[][] cs = new char[n][];
 		for (int i = 0; i < n; i ++) {
 			cs[i] = sc.nextLine().trim().toCharArray();
 		}
+		int blockLen = 0;
+		boolean[] isBlock = new boolean[n];
+		for (int i = 0; i < n; i ++) {
+			if (isBlock[i])	continue;
+			for (int j = 0; j < n; j ++) {
+				if (i == j || cs[i].length < cs[j].length || isBlock[j]) {
+					continue;
+				}
+				for (int k = 0; k <= cs[i].length - cs[j].length; k ++) {
+					int t = 0;
+					for (; t < cs[j].length; t ++) {
+						if (cs[i][k + t] != cs[j][t])
+							break;
+					}
+					if (t == cs[j].length) {
+						isBlock[j] = true;
+						blockLen ++;
+					}
+				}
+			}
+		}
+		int[][] L = new int[n][n];
+		for (int i = 0; i < n; i ++) {
+			if (isBlock[i])	continue;
+			for (int j = 0; j < n; j ++) {
+				if (i == j || isBlock[j])	continue;
+				int l = 0;
+				while (l < cs[i].length && l < cs[j].length) {
+					if (cs[i][cs[i].length - 1 - l] == cs[j][l]) {
+						l ++;
+					} else {
+						break;
+					}
+				}
+				L[i][j] = l;
+			}
+		}
+		//拼了，就用HashMap做一次
+		StringBuilder st = new StringBuilder();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		for (int len = 1; len <= n - blockLen; len ++) {
+			//len是集合的长度
+			int lenCount = 0;
+			for (int i = 0; i < n; i ++) {
+				if (isBlock[i])	continue;
+				st.append(INNER);
+				st.append(OUTER);
+				map.put(st.toString(), lenCount);
+			}
+		}
+		for (int i = 0; i < n; i ++) {
+			st.delete(0, st.length());
+			
+//			map.put(i + OUTER + i , cs[i].length);
+		}
 		
+		int ans = Integer.MAX_VALUE;
+		for (int i = 0; i < n; i ++) {
+			if (isBlock[i])	continue;
+			
+		}
+		System.out.println(ans);
 		sc.close();
 	}
 }
