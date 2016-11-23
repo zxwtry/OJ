@@ -108,6 +108,29 @@ public class TreeNode辅助 {
 		}
 		return head;
 	}
+
+	/**
+	 * @method      A_生成随机二叉树_不包含值相同的节点
+	 * @parameter   
+	 * @return      TreeNode
+	 * @details    	 所有节点的值都不相同，对于从前序中序后序中重构二叉树
+	 */
+	public static TreeNode A_生成随机二叉树_不包含值相同的节点(int maxLevel, int min, int max, double nullPercent) {
+		int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据((1 << maxLevel) - 1, min, max);
+		TreeNode[] ns = new TreeNode[arr.length];
+		for (int index = arr.length - 1; index > -1; index --) {
+			if (Math.random() < nullPercent) {
+				ns[index] = null;
+			} else {
+				ns[index] = new TreeNode(arr[index]);
+				if (index < (arr.length+1) / 2 - 1) {
+					ns[index].left = ns[index * 2 + 1];
+					ns[index].right = ns[index * 2 + 2];
+				}
+			}
+		}
+		return ns[0];
+	}
 	/*
 	 * 	生成一个随机TreeNode节点，节点的val在[min, max]之间随机
 	 * 	如果min > max，那么返回一个null
