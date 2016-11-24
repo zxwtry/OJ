@@ -87,6 +87,24 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 	}
+	public static void B_纪录String_newFile(String path, String str) {
+		File file = new File(path);
+		try {
+			if (! file.exists()) {
+				file.createNewFile();
+			} else {
+				file.delete();
+				file.createNewFile();
+			}
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true)));
+			bw.write(str + "\r\n");
+			bw.flush();
+			bw.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static int[] C_读取int数组_LEETCODE(String path, int len) {
 		File file = new File(path);
 		BufferedReader br = null;
