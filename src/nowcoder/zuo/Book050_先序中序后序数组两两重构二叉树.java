@@ -294,4 +294,23 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 			return head;
 		}
 	}
+	
+	static class PreAndPosBook {
+		public TreeNode construct(int[] pre, int[] pos) {
+			if (pre == null || pos == null) 	return null; 
+			HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+			for (int i = 0; i < pos.length; i ++)	map.put(pos[i], i);
+			return construct_internal(pre, 0, pre.length - 1, pos, 0, pos.length - 1, map);
+		}
+		private TreeNode construct_internal(int[] pre, int pi, int pj, int[] pos, int oi, int oj,
+				HashMap<Integer, Integer> map) {
+			TreeNode head = new TreeNode(pos[pos[oj --]]);
+			if (pi == pj)	return head;
+			int i = map.get(pre[++ pi]);
+			head.left = construct_internal(pre, pi, pi + i - oi, pos, oi, i, map);
+			head.right = construct_internal(pre, pi + i - oi + 1, pj, pos, i + 1, oj, map);
+			return head;
+		}
+	}
+	
 }
