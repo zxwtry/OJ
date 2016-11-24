@@ -262,8 +262,36 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 			int i = map.get(pre[pi]);
 			head.left = construct_internal(pre, pi + 1, pi + i - ini, in, ini, i - 1, map);
 			head.right = construct_internal(pre, pi + i - ini + 1, pj, in, i + 1, inj, map);
-			return null;
+			return head;
 		}
 	}
 	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book050_先序中序后序数组两两重构二叉树.java
+	 * @type        InAndPosBook
+	 * @date        2016年11月24日 下午7:16:31
+	 * @details     书上的方法
+	 */
+	static class InAndPosBook {
+		public TreeNode construct(int[] in, int[] pos) {
+			if (in == null || pos == null) 	return null; 
+			HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+			for (int i = 0; i < in.length; i ++)	map.put(in[i], i);
+			return construct_internal(in, 0, in.length - 1, pos, 0, pos.length - 1, map);
+		}
+
+		private TreeNode construct_internal(int[] in, int ii, int ij, int[] pos, int pi, int pj,
+				HashMap<Integer, Integer> map) {
+			if (ii > ij)	return null;
+			TreeNode head = new TreeNode(pos[pj]);
+			int i = map.get(pos[pj]);
+			head.left = construct_internal(in, ii, i - 1, pos, pi, pj + i - ii - 1, map);
+			head.right = construct_internal(in, i + 1, ij, pos, pj + i - ii, pj - 1, map);
+			return head;
+		}
+	}
 }
