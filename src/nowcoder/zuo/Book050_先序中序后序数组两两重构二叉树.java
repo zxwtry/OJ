@@ -21,10 +21,80 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 //		debugPreAndIn();
 //		debugInAndPos();
 //		debugPreAndPos();
-		testAll();
+//		testAll();
+		testBook();
 	}
 	
+	static void testBook() {
+		boolean allTrue = true;
+		for (int times = 0; times < 10000; times ++) {
+			int maxLevel = 7, min = 0, max = (16 << maxLevel);
+			double nullPercent = 0.1;
+			TreeNode head = tools.TreeNode辅助.A_生成随机二叉树_不包含值相同的节点(maxLevel, min, max, nullPercent);
+			Queue<TreeNode> q = new LinkedList<TreeNode>();
+			if (head != null)	q.add(head);
+			TreeNode rootNow = null;
+			while (! q.isEmpty()) {
+				rootNow = q.poll();
+				if (rootNow.left == null || rootNow.right == null) {
+					rootNow.left = null;
+					rootNow.right = null;
+				} else {
+					q.add(rootNow.left);
+					q.add(rootNow.right);
+				}
+			}
+			int[] pre = tools.TreeNode辅助.C_前序数组(head);
+			int[] in = tools.TreeNode辅助.C_中序数组(head);
+			int[] pos = tools.TreeNode辅助.C_后序数组(head);
+			try {
+				TreeNode piT = new PreAndInBook().construct(pre, in);
+				TreeNode ipT = new InAndPosBook().construct(in, pos);
+				TreeNode ppT = new PreAndPosBook().construct(in, pos);
+				
+				boolean isAllSame = true;
+				isAllSame &= tools.TreeNode辅助.D_head1和head2是不是值拓扑相同的树(head, piT);
+				isAllSame &= tools.TreeNode辅助.D_head1和head2是不是值拓扑相同的树(head, ipT);
+				isAllSame &= tools.TreeNode辅助.D_head1和head2是不是值拓扑相同的树(head, ppT);
+				if (! isAllSame) {
+					tools.FileUtils.B_纪录String_append("D:/file/temp/pre.txt", "又翻车了" + times);
+					StringBuilder st = new StringBuilder();
+					for (int val : pre) 	st.append(val + " ");
+					tools.FileUtils.B_纪录String_append("D:/file/temp/pre.txt", st.toString());
+					
+					st.delete(0, st.length());
+					tools.FileUtils.B_纪录String_append("D:/file/temp/in.txt", "又翻车了" + times);
+					for (int val : in) 	st.append(val + " ");
+					tools.FileUtils.B_纪录String_append("D:/file/temp/in.txt", st.toString());
+					
+					st.delete(0, st.length());
+					tools.FileUtils.B_纪录String_append("D:/file/temp/pos.txt", "又翻车了" + times);
+					for (int val : pos) 	st.append(val + " ");
+					tools.FileUtils.B_纪录String_append("D:/file/temp/pos.txt", st.toString());
+				}
+				allTrue &= isAllSame;
+			} catch (Exception e) {
+				tools.FileUtils.B_纪录String_append("D:/file/temp/pre.txt", "又翻车了" + times);
+				StringBuilder st = new StringBuilder();
+				for (int val : pre) 	st.append(val + " ");
+				tools.FileUtils.B_纪录String_append("D:/file/temp/pre.txt", st.toString());
+				
+				st.delete(0, st.length());
+				tools.FileUtils.B_纪录String_append("D:/file/temp/in.txt", "又翻车了" + times);
+				for (int val : in) 	st.append(val + " ");
+				tools.FileUtils.B_纪录String_append("D:/file/temp/in.txt", st.toString());
+				
+				st.delete(0, st.length());
+				tools.FileUtils.B_纪录String_append("D:/file/temp/pos.txt", "又翻车了" + times);
+				for (int val : pos) 	st.append(val + " ");
+				tools.FileUtils.B_纪录String_append("D:/file/temp/pos.txt", st.toString());
+			}
+		}
+		System.out.println(allTrue);
+	}
+
 	static void testAll() {
+		boolean allSame = true;
 		for (int times = 0; times < 10000; times ++) {
 			int maxLevel = 20, min = 0, max = (16 << maxLevel);
 			double nullPercent = 0.1;
@@ -70,6 +140,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 					for (int val : pos) 	st.append(val + " ");
 					tools.FileUtils.B_纪录String_append("D:/file/temp/pos.txt", st.toString());
 				}
+				allSame &= isAllSame;
 			} catch (Exception e) {
 				tools.FileUtils.B_纪录String_append("D:/file/temp/pre.txt", "又翻车了" + times);
 				StringBuilder st = new StringBuilder();
@@ -87,6 +158,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 				tools.FileUtils.B_纪录String_append("D:/file/temp/pos.txt", st.toString());
 			}
 		}
+		System.out.println(allSame);
 	}
 
 	static void debugPreAndPos() {
@@ -289,7 +361,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 			if (ii > ij)	return null;
 			TreeNode head = new TreeNode(pos[pj]);
 			int i = map.get(pos[pj]);
-			head.left = construct_internal(in, ii, i - 1, pos, pi, pj + i - ii - 1, map);
+			head.left = construct_internal(in, ii, i - 1, pos, pi, pi + i - ii - 1, map);
 			head.right = construct_internal(in, i + 1, ij, pos, pj + i - ii, pj - 1, map);
 			return head;
 		}
