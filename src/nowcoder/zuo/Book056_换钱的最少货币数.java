@@ -11,12 +11,46 @@ import java.util.Arrays;
  * @file        Book056_换钱的最少货币数.java
  * @type        Book056_换钱的最少货币数
  * @date        2016年11月25日 上午11:28:57
+ * @date        11 30 13 12 33 17 #29
  */
 public class Book056_换钱的最少货币数 {
 	public static void main(String[] args) {
-		debugSolution1补充问题();
+		testSolution2补充问题和Solution3补充问题();
 	}
 	
+	static void testSolution2补充问题和Solution3补充问题() {
+		for (int times = 1; times < 99; times ++) {
+			int n = (int) ( Math.random() * times * times );
+			int min = 1;
+			int max = n * n;
+			int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+			int aim = (int) ( Math.random() * max );
+//			arr = new int[] {196,244,436,320,94,461,15,61,449,175,324,270,375,105,304,114,74,87,277,32,117,36};
+//			
+//			aim = 147;
+//			for (int i = 0; i < arr.length; i ++) {
+//				for (int j = 0; j < arr.length; j ++) {
+//					for (int k = 0; k < arr.length; k ++) {
+//						if (arr[i] + arr[j] + arr[k] == aim) {
+//							System.out.printf("#####%d..%d..%d\r\n", i, j, k);
+//						}
+//					}
+//				}
+//			}
+			Solution2补充问题 s2 = new Solution2补充问题();
+			Solution4补充问题 s3 = new Solution4补充问题();
+			int n2 = s2.getMinNum(arr, aim);
+			int n3 = s3.getMinNum(arr, aim);
+			System.out.println(n2 + "..." + n3);
+			if (n2 != n3) {
+				StringBuilder st = new StringBuilder();
+				for (int val : arr)
+					st.append(val + " ");
+				tools.FileUtils.B_纪录String_append("D:/file/temp/补充问题.txt", st.toString() + "#" + aim);
+			}
+		}
+	}
+
 	/**
 	 * @method      debugSolution1补充问题
 	 * @parameter   
@@ -289,6 +323,63 @@ public class Book056_换钱的最少货币数 {
 				}
 			}
 			return dp[arr.length - 1][aim] == Integer.MAX_VALUE ? -1 : dp[arr.length - 1][aim];
+		}
+	}
+	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book056_换钱的最少货币数.java
+	 * @type        Solution3补充问题
+	 * @date        2016年11月25日 下午8:52:57
+	 * @details     书中代码是这样的，但是好像代码有问题。
+	 * @details     在这个情形中，空间好像不能压缩
+	 */
+	static class Solution3补充问题 {
+		public int getMinNum (int[] arr, int aim) {
+			if (arr == null || arr.length < 1 || aim < 1)	return 0;
+			int[] dp = new int[aim + 1];
+			Arrays.fill(dp, Integer.MAX_VALUE);
+			if (arr[0] <= aim)
+				dp[arr[0]] = 1;
+			int leftUp = 0;
+			for (int i = 1; i < arr.length; i ++) {
+//				if (arr[i] <= aim)
+//					dp[arr[i]] = 1;
+				for (int j = 1; j <= aim; j ++) {
+					leftUp = Integer.MAX_VALUE;
+					if (j - arr[i] >= 0 && dp[j - arr[i]] != Integer.MAX_VALUE)
+						leftUp = dp[j - arr[i]] + 1;
+					dp[j] = Math.min(leftUp, dp[j]);
+				}
+			}
+			return dp[aim] == Integer.MAX_VALUE ? -1 : dp[aim];
+		}
+	}
+	
+	static class Solution4补充问题 {
+		public int getMinNum (int[] arr, int aim) {
+			if (arr == null || arr.length < 1 || aim < 1)	return 0;
+			int[] dp = new int[aim + 1];
+			int[] dp_save = new int[aim + 1];
+			Arrays.fill(dp, Integer.MAX_VALUE);
+			if (arr[0] <= aim)
+				dp[arr[0]] = 1;
+			int leftUp = 0;
+			for (int i = 1; i < arr.length; i ++) {
+//				if (arr[i] <= aim)
+//					dp[arr[i]] = 1;
+				System.arraycopy(dp, 0, dp_save, 0, dp.length);
+				for (int j = 1; j <= aim; j ++) {
+					leftUp = Integer.MAX_VALUE;
+					if (j - arr[i] >= 0 && dp_save[j - arr[i]] != Integer.MAX_VALUE)
+						leftUp = dp_save[j - arr[i]] + 1;
+					dp[j] = Math.min(leftUp, dp[j]);
+				}
+			}
+			return dp[aim] == Integer.MAX_VALUE ? -1 : dp[aim];
 		}
 	}
 	
