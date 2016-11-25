@@ -1,6 +1,7 @@
 package nowcoder.zuo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @auther      zxwtry
@@ -13,9 +14,42 @@ import java.util.ArrayList;
  */
 public class Book056_换钱的最少货币数 {
 	public static void main(String[] args) {
-		debugStandardJudgeRepeated();
+		debugSolution1补充问题();
 	}
 	
+	/**
+	 * @method      debugSolution1补充问题
+	 * @parameter   
+	 * @return      void
+	 * @details     还是有问题
+	 */
+	static void debugSolution1补充问题() {
+		for (int times = 1; times < 99; times ++) {
+			int n = 10;
+			int min = 1;
+			int max = n * n;
+			int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
+			int aim = (int) ( Math.random() * max );
+			StandardJudge s1 = new StandardJudge();
+			Solution1补充问题 s2 = new Solution1补充问题();
+			Solution2补充问题 s3 = new Solution2补充问题();
+			System.out.println(s1.minNum(arr, aim) + "..." + s2.getMinNum(arr, aim) + "..." + s3.getMinNum(arr, aim));
+		}
+	}
+
+	static void testSolution1AndSolution2() {
+		for (int times = 1; times < 99; times ++) {
+			int n = 100;
+			int min = 1;
+			int max = n * n * n;
+			int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+			int aim = (int) ( Math.random() * max );
+			Solution1 s1 = new Solution1();
+			Solution2 s2 = new Solution2();
+			System.out.println(s1.minNum(arr, aim) == s2.getMinNum(arr, aim));
+		}
+	}
+
 	static void debugStandardJudgeRepeated() {
 		StandardJudgeRepeated s = new StandardJudgeRepeated();
 		int[] arr = new int[] {5, 4, 3};
@@ -31,7 +65,7 @@ public class Book056_换钱的最少货币数 {
 	}
 
 	static void debugSolution() {
-		Solution s = new Solution();
+		Solution1 s = new Solution1();
 		int[] arr = new int[] {5, 2, 3};
 		int aim = 20;
 		System.out.println(s.minNum(arr, aim));
@@ -54,7 +88,7 @@ public class Book056_换钱的最少货币数 {
 	 * @details     arr=[5,2,3]  aim=0		---  0
 	 * @details     arr=[5,3]    aim=20		--- -1
 	 */
-	static class Solution {
+	static class Solution1 {
 		public int minNum(int[] arr, int aim) {
 			if (arr == null || arr.length < 1 || aim < 0)	return -1;
 			int[][] dp = new int[arr.length][aim + 1];
@@ -159,6 +193,102 @@ public class Book056_换钱的最少货币数 {
 			int tmp = arr[index];
 			arr[index] = arr[newIndex];
 			arr[newIndex] = tmp;
+		}
+	}
+	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book056_换钱的最少货币数.java
+	 * @type        Solution2
+	 * @date        2016年11月25日 下午8:03:38
+	 * @details     和Solution一样，只是空间少了点
+	 */
+	static class Solution2 {
+		public int getMinNum(int[] arr, int aim) {
+			if (arr == null || arr.length < 1 || aim < 1)	return 0;
+			int[] dp = new int[aim + 1];
+			for (int j = 1; j <= aim; j ++) {
+				dp[j] = Integer.MAX_VALUE;
+				if (j - arr[0] >= 0 && dp[j - arr[0]] != Integer.MAX_VALUE)
+					dp[j] = dp[j - arr[0]] + 1;
+			}
+			for (int i = 1; i < arr.length; i ++) {
+				for (int j = 1; j <= aim; j ++) {
+					int left = Integer.MAX_VALUE;
+					if (j - arr[i] >= 0 && dp[j - arr[i]] != Integer.MAX_VALUE)
+						left = dp[j - arr[i]] + 1;
+					dp[j] = Math.min(left, dp[j]);
+				}
+			}
+			return dp[aim] == Integer.MAX_VALUE ? -1 : dp[aim];
+		}
+	}
+	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book056_换钱的最少货币数.java
+	 * @type        Solution1补充问题
+	 * @date        2016年11月25日 下午8:13:06
+	 * @details     给定数组arr，arr中所有的值都为正数。
+	 * @details     每一个值仅代表一张钱的面值，再给定一个整数aim
+	 * @details     代表要找的钱数，求组成aim的最少货币数
+	 */
+	static class Solution1补充问题 {
+		public int getMinNum (int[] arr, int aim) {
+			if (arr == null || arr.length < 1 || aim < 1)	return 0;
+			int[][] dp = new int[arr.length][aim + 1];
+			Arrays.fill(dp[0], Integer.MAX_VALUE);
+			if (arr[0] <= aim)
+				dp[0][arr[0]] = 1;
+			for (int i = 1; i < arr.length; i ++) {
+				if (arr[i] <= aim)
+					dp[i][arr[i]] = 1;
+				for (int j = 1; j <= aim; j ++) {
+					if (arr[i] != aim && j + arr[i] <= aim && dp[i][j] != Integer.MAX_VALUE)
+						dp[i][j + arr[i]] = Math.min(dp[i][j + arr[i]], dp[i][j] + 1);
+					else if (arr[i] != aim && j + arr[i] <= aim)
+						dp[i][j + arr[i]] = Math.min(dp[i][j + arr[i]], Integer.MAX_VALUE);
+				}
+			}
+			return dp[arr.length - 1][aim] == Integer.MAX_VALUE ? -1 : dp[arr.length - 1][aim];
+		}
+	}
+	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book056_换钱的最少货币数.java
+	 * @type        Solution2补充问题
+	 * @date        2016年11月25日 下午8:42:13
+	 * @details     见：Solution1补充问题
+	 */
+	static class Solution2补充问题 {
+		public int getMinNum (int[] arr, int aim) {
+			if (arr == null || arr.length < 1 || aim < 1)	return 0;
+			int[][] dp = new int[arr.length][aim + 1];
+			Arrays.fill(dp[0], Integer.MAX_VALUE);
+			if (arr[0] <= aim)
+				dp[0][arr[0]] = 1;
+			int leftUp = 0;
+			for (int i = 1; i < arr.length; i ++) {
+				if (arr[i] <= aim)
+					dp[i][arr[i]] = 1;
+				for (int j = 1; j <= aim; j ++) {
+					leftUp = Integer.MAX_VALUE;
+					if (j - arr[i] >= 0 && dp[i - 1][j - arr[i]] != Integer.MAX_VALUE)
+						leftUp = dp[i - 1][j - arr[i]] + 1;
+					dp[i][j] = Math.min(leftUp, dp[i - 1][j]);
+				}
+			}
+			return dp[arr.length - 1][aim] == Integer.MAX_VALUE ? -1 : dp[arr.length - 1][aim];
 		}
 	}
 	
