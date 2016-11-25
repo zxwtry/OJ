@@ -93,5 +93,90 @@ public class Book054_斐波那契系列问题的递归和动态规划 {
 		}
 	}
 	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book054_斐波那契系列问题的递归和动态规划.java
+	 * @type        S1进阶问题
+	 * @date        2016年11月25日 上午9:35:33
+	 * @details     跳台阶问题
+	 * @details     一次可以跳1级，或者跳2级
+	 */
+	static class S1进阶问题 {
+		public int f1(int n) {
+			if (n < 1) {
+				return 0;
+			}
+			if (n == 1 || n == 2) {
+				return n;
+			}
+			return f1(n - 1) + f1(n - 2);
+		}
+		
+		public int f2(int n) {
+			if (n < 1) {
+				return 0;
+			}
+			if (n == 1 || n == 2) {
+				return n;
+			}
+			int res = 2;
+			int pre = 1;
+			int tmp = 0;
+			for (int i = 3; i <= n; i ++) {
+				tmp = res;
+				res = res + pre;
+				pre = tmp;
+			}
+			return res;
+		}
+		
+		/**
+		 * @method      f3
+		 * @parameter   
+		 * @return      int
+		 * @details     [S(n), S(n-1)] = [S(2), S(1)] *	|1 1|^(n-2) = (2, 1) * |1 1| ^ (n-2)
+		 * @details     								|1 0|				   |1 0|
+		 */
+		public int f3(int n) {
+			if (n < 1) {
+				return 0;
+			}
+			if (n == 1 || n == 2) {
+				return n;
+			}
+			int[][] base = {{1,1},{1,0}};
+			int[][] res = f3_maxtrixPower(base, n - 2);
+			return 2 * res[0][0] + res[1][0];
+		}
+		private int[][] f3_maxtrixPower(int[][] m, int p) {
+			int[][ ] res = new int[m.length][m[0].length];
+			//先把res设为单位矩阵，相当于整数中的1
+			for (int i = 0; i < res.length; i++)
+				res[i][i] = 1;
+			int[][] tmp = m;
+			for (; p!=0; p >>=1) {
+				if ((p &1) != 0)
+					res = f3_multiMatrix(res, tmp);
+				tmp = f3_multiMatrix(tmp, tmp);
+			}
+			
+			return res;
+		}
+
+		private int[][] f3_multiMatrix(int[][] m1, int[][] m2) {
+			int[][] res = new int[m1.length][m2[0].length];
+			for (int i = 0; i < m1.length; i ++) {
+				for (int j = 0; j < m2[0].length; j ++) {
+					for (int k = 0; k < m2.length; k ++) {
+						res[i][j] += m1[i][k] * m2[k][j];
+					}
+				}
+			}
+			return res;
+		}
+	}
 	
 }
