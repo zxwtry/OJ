@@ -17,9 +17,24 @@ import java.util.Arrays;
  */
 public class Book057_换钱的方法数 {
 	public static void main(String[] args) {
-		testSolution123();
+		debugSolution4动态规划();
 	}
 	
+	static void debugSolution4动态规划() {
+		for (int times = 0; times < 100; times ++) {
+			int n = times;
+			int min = 1;
+			int max = n * n + 12;
+			int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
+			int aim = (int) (Math.random() * max);
+			Solution3 s3 = new Solution3();
+			Solution4动态规划 s4 = new Solution4动态规划();
+			int a3 = s3.numOfWays(arr, aim);
+			int a4 = s4.numOfWays(arr, aim);
+			System.out.printf("%d...%d\r\n", a3, a4);
+		}
+	}
+
 	static void testSolution123() {
 		for (int times = 0; times < 100; times ++) {
 			int n = times;
@@ -84,7 +99,7 @@ public class Book057_换钱的方法数 {
 	 * @file        Book057_换钱的方法数.java
 	 * @type        Solution2
 	 * @date        2016年11月26日 上午11:47:05
-	 * @details     
+	 * @details     是对Solution1的纪录优化
 	 */
 	static class Solution2 {
 		public int numOfWays(int[] arr, int aim) {
@@ -113,6 +128,16 @@ public class Book057_换钱的方法数 {
 		}
 	}
 	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book057_换钱的方法数.java
+	 * @type        Solution3
+	 * @date        2016年11月26日 下午8:23:21
+	 * @details     对Solution2的逻辑简化
+	 */
 	static class Solution3 {
 		public int numOfWays(int[] arr, int aim) {
 			if (arr == null || arr.length < 1 || aim < 0)	return 0;
@@ -137,6 +162,25 @@ public class Book057_换钱的方法数 {
 			}
 			map[index][aim] = res;
 			return res;
+		}
+	}
+	
+	static class Solution4动态规划 {
+		public int numOfWays(int[] arr, int aim) {
+			if (arr == null || arr.length < 1 || aim < 0)	return 0;
+			int[][] dp = new int[arr.length][aim + 1];
+			for (int i = 0; i < arr.length; i ++)	dp[i][0] = 1;
+			for (int j = 0; j * arr[0] <= aim; j ++)	dp[0][j * arr[0]] = 1;
+			int num = 0;
+			for (int i = 1; i < arr.length; i ++) {
+				for (int j = 1; j <= aim; j ++) {
+					num = 0;
+					for (int k = 0; j - arr[i] * k >= 0; k ++)
+						num += dp[i - 1][j - arr[i] * k];
+					dp[i][j] = num;
+				}
+			}
+			return dp[arr.length - 1][aim];
 		}
 	}
 	
