@@ -12,7 +12,6 @@ package nowcoder.zuo;
  */
 public class Book057_最长递增子序列 {
 	public static void main(String[] args) {
-		testMyAndBook1();
 	}
 	
 	static void testMyAndBook1() {
@@ -22,17 +21,16 @@ public class Book057_最长递增子序列 {
 			int min = 1;
 			int max = n * n  + 12;
 			int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据(n, min, max);
-			arr = new int[] {1};
 			MySolution s1 = new MySolution();
 			BookSolution1 s2 = new BookSolution1();
 			int a1 = s1.maxSequence(arr);
-			int a2 = s2.maxSequence(arr);
+			int a2 = s2.maxSequence2(arr).length;
 			isAllTrue &= a1 == a2;
 			if (a1 != a2) {
 				StringBuilder st = new StringBuilder();
 				for (int v : arr)
 					st.append(v + " ");
-				tools.FileUtils.B_纪录String_append("D:/file/temp/20161126_Book057_最长递增子序列.txt", st.toString());
+				tools.FileUtils.B_纪录String_append("D:/file/temp/20161126_Book057_最长递增子序列.txt", st.toString() + "MySolution: " + a1 + "   BookSolution: " + a2);
 			}
 			System.out.printf("%d...%d\r\n", a1, a2);
 		}
@@ -43,7 +41,10 @@ public class Book057_最长递增子序列 {
 		int[] arr = new int[] {2, 1, 5, 3, 6, 4, 8, 9, 7};
 //		arr = new int[] {1, 2, 3, 4};
 //		arr = new int[] {4, 3, 2, 1};
-		System.out.println(new MySolution().maxSequence(arr));
+		arr = new int[] {60,53,3,27,5,2,8,75};
+		MySolution s = new MySolution();
+		int ans = s.maxSequence(arr);
+		System.out.println(ans);
 	}
 
 	/**
@@ -61,13 +62,16 @@ public class Book057_最长递增子序列 {
 			if (arr == null || arr.length < 1)	return 0;
 			int[] dp = new int[arr.length];
 			dp[0] = 1;
-			int max = 0;
+			int max = 1;
 			for (int index = 1; index < arr.length; index ++) {
-				int preIndex = index;
-				while (preIndex > 0 && arr[preIndex - 1] > arr[index]) {
-					preIndex --;
+				int preMax = 0;
+				for (int preIndex = 0; preIndex < index; preIndex ++) {
+					if (arr[preIndex] < arr[index]) {
+						preMax = Math.max(preMax, dp[preIndex]);
+					}
 				}
-				dp[index] = preIndex == 0 ? 1 : dp[preIndex - 1] + 1;
+					
+				dp[index] = preMax + 1;
 				max = Math.max(max, dp[index]);
 			}
 			return max;
@@ -97,6 +101,46 @@ public class Book057_最长递增子序列 {
 				max = Math.max(max, dp[i]);
 			}
 			return max;
+		}
+		/**
+		 * @method      getDP
+		 * @parameter   record[0]：保存dp数组的最大值
+		 * @parameter   record[1]：dp数组最大值的对应dpIndex
+		 * @return      int[]
+		 * @details     
+		 */
+		private int[] getDP(int[] arr, int[] record) {
+			int[] dp = new int[arr.length];
+			for (int i = 0; i < arr.length; i ++) {
+				dp[i] = 1;
+				for (int j = 0; j < i; j ++)
+					if (arr[i] > arr[j])
+						dp[i] = Math.max(dp[i] , dp[j] + 1);
+				if (dp[i] > record[0]) {
+					record[0] = dp[i];
+					record[1] = i;
+				}
+			}
+			return dp;
+		}
+		private int[] generateLIS(int[] arr, int[] dp, int[] record) {
+			int lisIndex = record[0];
+			int dpMaxIndex = record[1];
+			int[] lis = new int[lisIndex];
+			lis[-- lisIndex] = arr[record[1]];
+			for (int i = record[1]; i > -1; i --) {
+				if (arr[i] < arr[dpMaxIndex] && dp[i] == dp[dpMaxIndex] - 1) {
+					lis[-- lisIndex] = arr[i];
+					dpMaxIndex = i;
+				}
+			}
+			return lis;
+		}
+		public int[] maxSequence2(int[] arr) {
+			if (arr == null || arr.length == 0)		return new int[0];
+			int[] record = new int[2];
+			int[] dp = getDP(arr, record);
+			return generateLIS(arr, dp, record);
 		}
 	}
 	
