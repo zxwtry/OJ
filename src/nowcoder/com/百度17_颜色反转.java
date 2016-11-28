@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.util.Scanner;
+
 /**
  * 在 Web 开发中，通常使用 16 进制 RGB 表示一个颜色。
 	    
@@ -37,6 +39,51 @@ package nowcoder.com;
  */
 public class 百度17_颜色反转 {
 	public static void main(String[] args) {
-		
+		solve1();
+	}
+
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 */
+	static void solve1() {
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNext()) {
+			char[] cs = sc.nextLine().trim().toCharArray();
+			for (int index = 1; index < cs.length; index ++) {
+				cs[index] = solve1_char_minus(cs[index]);
+			}
+			System.out.println(new String(cs));
+		}
+		sc.close();
+	}
+	
+	static char solve1_char_minus(char small) {
+		int small_val = char_to_int(small);
+		return int_to_char(15 - small_val);
+	}
+	
+	static int char_to_int(char c) {
+		if (c >= 'A' && c <= 'Z') {
+			return 10 + c - 'A';
+		} else if (c >= 'a' && c <= 'a') {
+			return 10 + c - 'a';
+		} else if (c >= '0' && c <= '9') {
+			return c - '0';
+		} else {
+			return 0;
+		}
+	}
+	
+	static char int_to_char(int v) {
+		if (v >= 10 && v <= 15) {
+			return (char)(v - 10 + 'A');
+		} else if (v >= 0 && v <= 9) {
+			return (char)(v + '0');
+		} else {
+			return '0';
+		}
 	}
 }
