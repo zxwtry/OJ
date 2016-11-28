@@ -2,6 +2,7 @@ package nowcoder.com;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -68,7 +69,50 @@ import java.util.Scanner;
  */
 public class 百度17_格子距离 {
 	public static void main(String[] args) {
-		solve1();
+		solve2();
+	}
+
+	static void solve2() {
+		Scanner sc = new Scanner(System.in);
+		int[] suri = new int[] {-1, 1, 0, 0};
+		int[] surj = new int[] {0, 0, -1, 1};
+		int caseNum = sc.nextInt();
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex ++) {
+			int n = sc.nextInt(), m = sc.nextInt(), ns = sc.nextInt() - 1, ms = sc.nextInt() - 1;
+			int[][] w = new int[n][m];
+			for (int ni = 0; ni < n; ni ++)
+				for (int mi = 0; mi < m; mi ++)
+					w[ni][mi] = sc.nextInt();
+			int[][] min = new int[n][m];
+			for (int ni = 0; ni < n; ni ++)
+				Arrays.fill(min[ni], -1);
+			min[ns][ms] = 0;
+			LinkedList<Integer> nl = new LinkedList<Integer>();
+			LinkedList<Integer> ml = new LinkedList<Integer>();
+			nl.add(ns); ml.add(ms);
+			while (! nl.isEmpty()) {
+				int ni = nl.poll();
+				int mi = ml.poll();
+				for (int i = 0; i < suri.length; i ++) {
+					int newni = ni + suri[i];
+					int newmi = mi + surj[i];
+					if (((w[ni][mi] >> i) & 0x1) == 0 && newni > -1 && newmi > -1 && 
+							newni < n && newmi < m && min[newni][newmi] == -1) {
+						min[newni][newmi] = min[ni][mi] + 1;
+						nl.add(newni);
+						ml.add(newmi);
+					}
+				}
+			}
+			System.out.println("Case "+caseIndex+":");
+			for (int[] v : min) {
+				for (int index = 0; index < v.length - 1; index ++)
+					System.out.print(v[index] + " ");
+				System.out.println(v[v.length - 1]);
+			}
+		}
+		sc.close();
+		
 	}
 
 	/**
