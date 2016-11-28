@@ -50,7 +50,7 @@ public class 百度17_内存检查 {
 	public static void main(String[] args) {
 		try {
 			solve1();
-			solve2();
+//			solve2();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,7 +108,8 @@ public class 百度17_内存检查 {
 	 * @method      solve1
 	 * @parameter   
 	 * @return      void
-	 * @details     
+	 * @details     AC，通过全部代码
+	 * @details     之前的错误在lenEni的初始化
 	 */
 	static void solve1() throws Exception {
 		Scanner sc = new Scanner(new File("D:/file/data/百度17_内存检查.txt"));
@@ -137,7 +138,7 @@ public class 百度17_内存检查 {
 				System.out.println(1);
 			} else {
 				int stm = (numOf1 - 1) / num + 1;
-				int enm = (lenEni - lenSti + 1) / num;
+				int enm = (lenEni - lenSti + 1) / num + 1;
 				while (stm < enm) {
 					int mim = (stm + enm) / 2;
 					boolean isCaped = solve1_isCaped(arr, mim, lenSti, lenEni, num);
