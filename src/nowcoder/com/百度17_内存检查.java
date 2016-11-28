@@ -1,5 +1,6 @@
 package nowcoder.com;
 
+import java.io.File;
 import java.util.Scanner;
 
 /**
@@ -47,7 +48,60 @@ import java.util.Scanner;
  */
 public class 百度17_内存检查 {
 	public static void main(String[] args) {
-		solve1();
+		try {
+			solve1();
+			solve2();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @method      solve2
+	 * @parameter   
+	 * @return      void
+	 * @details     从0开始的标准用例
+	 */
+	static void solve2() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_内存检查.txt"));
+		int times = sc.nextInt();
+		for (int timesIndex = 1; timesIndex <= times; timesIndex ++) {
+			int len = sc.nextInt(), num = sc.nextInt();
+			String s = sc.next();
+			int[] arr = new int[len];
+			int numOf1 = 0;
+			int lenSti = -1;
+			int lenEni = 0;
+			for (int index = 0; index < arr.length; index ++) {
+				if (s.charAt(index) == '1') {
+					arr[index] = 1;
+					numOf1 ++;
+					if (lenSti == -1) lenSti = index;
+					lenEni = index;
+				} else {
+					arr[index] = 0;
+				}
+			}
+			System.out.print("Case " + timesIndex + ": "); 
+			if (numOf1 == 0) {
+				System.out.println(0);
+			} else {
+				for (int index = 1; index < arr.length; index ++) {
+					int numCopy = num;
+					int arrIndex = lenSti;
+					while (numCopy >= 0) {
+						arrIndex += index;
+						while (arrIndex <= lenEni && arr[arrIndex] == 0)	arrIndex ++;
+						numCopy --;
+					}
+					if (arrIndex >= lenEni) {
+						System.out.println(index);
+						break;
+					}
+				}
+			}
+		}
+		sc.close();
 	}
 
 	/**
@@ -56,8 +110,8 @@ public class 百度17_内存检查 {
 	 * @return      void
 	 * @details     
 	 */
-	static void solve1() {
-		Scanner sc = new Scanner(System.in);
+	static void solve1() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_内存检查.txt"));
 		int times = sc.nextInt();
 		for (int timesIndex = 1; timesIndex <= times; timesIndex ++) {
 			int len = sc.nextInt(), num = sc.nextInt();
