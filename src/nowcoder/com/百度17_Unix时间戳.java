@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.util.Scanner;
+
 /**
  * Unix 时间戳（百度2017秋招真题）
 	 题目描述
@@ -45,6 +47,50 @@ package nowcoder.com;
  */
 public class 百度17_Unix时间戳 {
 	public static void main(String[] args) {
-		
+		solve1();
+	}
+
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 */
+	static void solve1() {
+		int[] ms = new int[] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		int day_seconds = 24 * 60 * 60;
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNext()) {
+			long seconds = sc.nextLong();
+			int day = (int)(seconds / day_seconds);
+			int year = 1970;
+			int year_days = 0;
+			int year_days_pre = 0;
+			while (year_days <= day) {
+				year_days_pre = year_days;
+				if (year % 100 == 0) {
+					year_days += (year % 400 == 0) ? 366 : 365;
+				} else {
+					year_days += (year % 4 == 0) ? 366 : 365;
+				}
+				year ++;
+			}
+			year --;
+			int day_in_year = day - year_days_pre;
+			if (year % 100 == 0) {
+				ms[1] = (year % 400 == 0) ? 29 : 28;
+			} else {
+				ms[1] = (year % 4 == 0) ? 29 : 28;
+			}
+			int day_in_year_cut = day_in_year;
+			int day_in_year_pre = day_in_year;
+			int msIndex = -1;
+			while (day_in_year_cut >= 0) {
+				day_in_year_pre = day_in_year_cut;
+				day_in_year_cut -= ms[++ msIndex];
+			}
+			System.out.printf("%d %02d %02d\r\n", year, (msIndex + 1) , (day_in_year_pre + 1));
+		}
+		sc.close();
 	}
 }
