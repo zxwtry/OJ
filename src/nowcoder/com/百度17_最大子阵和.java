@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.util.Scanner;
+
 /**
  * 最大子阵和（百度2017秋招真题）
 	 题目描述
@@ -10,8 +12,6 @@ package nowcoder.com;
 	
 	若(p,q,r,s)有多个解，输出最大子阵和即可。
 	
-	
-									
 	输入
 	第一行表示测试样例的组数Te（Te＜=10）。
 	对于每组测试样例，其第一行包含两个数n和m，其中1＜=n＜=100,1＜=m＜=100，
@@ -43,6 +43,48 @@ package nowcoder.com;
  */
 public class 百度17_最大子阵和 {
 	public static void main(String[] args) {
-		
+		try {
+			solve1();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 */
+	static void solve1() throws Exception {
+		Scanner sc = new Scanner(System.in);
+		int times = sc.nextInt();
+		for (int timesIndex = 1; timesIndex <= times; timesIndex ++) {
+			int n = sc.nextInt(), m = sc.nextInt();
+			int[][] arr = new int[n][m];
+			for (int i = 0; i < n; i ++) {
+				for (int j = 0; j < m; j ++) {
+					arr[i][j] = sc.nextInt();
+				}
+			}
+			int[][] sum = new int[n + 1][m + 1];
+			for (int i = 1; i <= n; i ++) {
+				for (int j = 1; j <= m; j ++) {
+					sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + arr[i - 1][j - 1];
+				}
+			}
+			int ans = Integer.MIN_VALUE;
+			for (int i1 = 0; i1 <= n; i1 ++) {
+				for (int j1 = 0; j1 <= m; j1 ++) {
+					for (int i2 = i1 + 1; i2 <= n; i2 ++) {
+						for (int j2 = j1 + 1; j2 <= m; j2 ++) {
+							ans = Math.max(ans, sum[i1][j1] + sum[i2][j2] - sum[i1][j2] - sum[i2][j1]);
+						}
+					}
+				}
+			}
+			System.out.println(ans);
+		}
+		sc.close();
 	}
 }
