@@ -1,5 +1,10 @@
 package nowcoder.com;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * 格子距离（百度2017秋招真题）
 	 题目描述
@@ -63,6 +68,65 @@ package nowcoder.com;
  */
 public class 百度17_格子距离 {
 	public static void main(String[] args) {
-		
+		solve1();
 	}
+
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 */
+	static void solve1() {
+		Scanner sc = new Scanner(System.in);
+		int[] suri = new int[] {-1, 1, 0, 0};
+		int[] surj = new int[] {0, 0, -1, 1};
+		int caseNum = sc.nextInt();
+		for (int caseIndex = 1; caseIndex <= caseNum; caseIndex ++) {
+			int n = sc.nextInt(), m = sc.nextInt(), ns = sc.nextInt() - 1, ms = sc.nextInt() - 1;
+			int[][] w = new int[n][m];
+			for (int ni = 0; ni < n; ni ++)
+				for (int mi = 0; mi < m; mi ++)
+					w[ni][mi] = sc.nextInt();
+			int[][] min = new int[n][m];
+			for (int ni = 0; ni < n; ni ++)
+				Arrays.fill(min[ni], -1);
+			min[ns][ms] = 0;
+			@SuppressWarnings("unchecked")
+			List<Integer>[] lists = new List[] {new ArrayList<Integer>(), new ArrayList<Integer>()};
+			lists[0].add(ns * 10000 + ms);
+			solve1_search(w, min, lists, 0, suri, surj);
+			System.out.println("Case "+caseIndex+":");
+			for (int[] v : min) {
+				for (int index = 0; index < v.length - 1; index ++)
+					System.out.print(v[index] + " ");
+				System.out.println(v[v.length - 1]);
+			}
+					
+		}
+		sc.close();
+	}
+
+	static void solve1_search(int[][] w, int[][] min, List<Integer>[] lists, int layer, int[] suri, int[] surj) {
+		for (int v : lists[0]) {
+			int ni = v / 10000, mi = v % 10000;
+			int wv = w[ni][mi];
+			for (int i = 0; i < 4; i ++) {
+				int newni = ni + suri[i], newmi = mi + surj[i];
+				if ((wv & (1 << i)) == 0 && newni > -1 && newni < w.length && newmi > -1 
+						&& newmi < w[0].length && min[newni][newmi] == -1) {
+					min[newni][newmi] = min[ni][mi] + 1;
+					lists[1].add(newni * 10000 + newmi);
+				}
+			}
+		}
+		if (lists[1].size() != 0) {
+			List<Integer> temp = lists[0];
+			lists[0] = lists[1];
+			lists[1] = temp;
+			lists[1].clear();
+			solve1_search(w, min, lists, layer, suri, surj);
+		}
+	}
+	
 }
