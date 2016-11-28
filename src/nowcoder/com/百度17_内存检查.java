@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.util.Scanner;
+
 /**
  * 内存检查（百度2017秋招真题）
 	 题目描述
@@ -45,6 +47,65 @@ package nowcoder.com;
  */
 public class 百度17_内存检查 {
 	public static void main(String[] args) {
-		
+		solve1();
+	}
+
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     
+	 */
+	static void solve1() {
+		Scanner sc = new Scanner(System.in);
+		int times = sc.nextInt();
+		for (int timesIndex = 1; timesIndex <= times; timesIndex ++) {
+			int len = sc.nextInt(), num = sc.nextInt();
+			String s = sc.next();
+			int[] arr = new int[len];
+			int numOf1 = 0;
+			int lenSti = -1;
+			int lenEni = 0;
+			for (int index = 0; index < arr.length; index ++) {
+				if (s.charAt(index) == '1') {
+					arr[index] = 1;
+					numOf1 ++;
+					if (lenSti == -1) lenSti = index;
+					lenEni = index;
+				} else {
+					arr[index] = 0;
+				}
+			}
+			System.out.print("Case " + timesIndex + ": "); 
+			if (numOf1 == 0) {
+				System.out.println(0);
+			} else if (numOf1 <= num) {
+				System.out.println(1);
+			} else {
+				int stm = (numOf1 - 1) / num + 1;
+				int enm = (lenEni - lenSti + 1) / num;
+				while (stm < enm) {
+					int mim = (stm + enm) / 2;
+					boolean isCaped = solve1_isCaped(arr, mim, lenSti, lenEni, num);
+					if (isCaped) {
+						enm = mim;
+					} else {
+						stm = mim + 1;
+					}
+				}
+				System.out.println(stm);
+			}
+						
+		}
+		sc.close();
+	}
+	private static boolean solve1_isCaped(int[] arr, int partLen, int sti, int eni, int num) {
+		int i = sti;
+		while (i <= eni) {
+			i += partLen;
+			while (i <= eni && arr[i] == 0) i ++;
+			num --;
+		}
+		return num >= 0;
 	}
 }
