@@ -1,5 +1,8 @@
 package nowcoder.com;
 
+import java.util.HashMap;
+import java.util.Scanner;
+
 /**
  * 相传在遥远的古代，有一个很出名的作坊，专门从事给别人出程序设计的题目的出题作坊。
  * 在无人记载的消逝的500年中，这个作坊由于一些不可名状的原因而长期没有生意，没落了下来。
@@ -42,9 +45,45 @@ package nowcoder.com;
  */
 public class 百度17_小凛的冒险 {
 	public static void main(String[] args) {
-		solve1();
+		try {
+			solve1();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	static void solve1() {
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 */
+	static void solve1() throws Exception {
+		Scanner sc = new Scanner(System.in);
+		int n = Integer.parseInt(sc.nextLine().trim());
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		long ans = 0;
+		for (int index = 0; index < n; index ++) {
+			String s = sc.nextLine().trim();
+			char[] c = s.toCharArray();
+			int sti = 0, eni = c.length - 1;
+			while (sti < eni) {
+				char tmp = c[sti];
+				c[sti] = c[eni];
+				c[eni] = tmp;
+				sti ++;
+				eni --;
+			}
+			String re = new String(c);
+			if (map.containsKey(re))
+				ans += map.get(re);
+			if (map.containsKey(s)) {
+				map.put(s, map.get(s) + 1);
+			} else {
+				map.put(s, 1);
+			}
+  		}
+		System.out.println(ans);
+		sc.close();
 	}
 }
