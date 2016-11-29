@@ -1,5 +1,9 @@
 package nowcoder.com;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Scanner;
+
 /**
  * 提姆以为公主在跑向他身边，但公主却是在逃离。
 	提姆终于来到了公主的身边，但是公主却消失了。
@@ -49,6 +53,44 @@ public class 百度17_时空跳跃 {
 	}
 
 	static void solve1() {
-		
+		final int cut = 10 * 9 - 10 - 9 + 1;
+		Scanner sc = new Scanner(System.in);
+		int L = sc.nextInt();
+		int a = sc.nextInt(), b = sc.nextInt(), n = sc.nextInt();
+		int[] arr = new int[n];
+		for (int i = 0; i < n; i ++)
+			arr[i] = sc.nextInt();
+		Arrays.sort(arr);
+		int thisCut = 0;
+		HashSet<Integer> set = new HashSet<Integer>();
+		set.add(arr[0]);
+		for (int index = 1; index < n; index ++) {
+			if (arr[index] - arr[index - 1] > cut) {
+				thisCut += arr[index] - arr[index - 1] - cut;
+			}
+			set.add(arr[index] - thisCut);
+		}
+		L -= thisCut;
+		int[] rec = new int[L + b];
+		Arrays.fill(rec, -1);
+		rec[0] = 0;
+		for (int base = 0; base < L + b; base ++) {
+			if (rec[base] != -1) {
+				for (int add = a; add <= b; add ++) {
+					int baseAdd = base + add;
+					if (baseAdd >= L+b)	continue;
+					if (rec[baseAdd] == -1) {
+						rec[baseAdd] = set.contains(baseAdd) ? 1 : 0;
+						rec[baseAdd] += rec[base];
+					} else {
+						rec[baseAdd] = Math.min(rec[baseAdd], rec[base] + (set.contains(baseAdd) ? 1 : 0));
+					}
+				}
+			}
+		}
+		int ans = Integer.MAX_VALUE;
+		for (int i = L; i < L+b; i ++)	ans = Math.min(ans, rec[i] == -1 ? ans : rec[i]);
+		System.out.println(ans);
+		sc.close();
 	}
 }
