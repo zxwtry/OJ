@@ -1,5 +1,6 @@
 package nowcoder.com;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -49,17 +50,74 @@ import java.util.Scanner;
  */
 public class 百度17_时空跳跃 {
 	public static void main(String[] args) {
-		solve1();
+		try {
+			solve1();
+			solve2();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	static void solve1() {
+	/**
+	 * @method      solve2
+	 * @parameter   
+	 * @return      void
+	 * @details     标准的DP
+	 * @details     TLE
+	 */
+	static void solve2() throws Exception {
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_时空跳跃.txt"));
+		int L = sc.nextInt();
+		int a = sc.nextInt(), b = sc.nextInt(), n = sc.nextInt();
+		HashSet<Integer> set = new HashSet<Integer>();
+		for (int i = 0; i < n; i ++)
+			set.add(sc.nextInt());
+		int[] rec = new int[L + b];
+		Arrays.fill(rec, -1);
+		rec[0] = 0;
+		for (int base = 0; base < L + b; base ++) {
+			if (rec[base] != -1) {
+				for (int add = a; add <= b; add ++) {
+					int baseAdd = base + add;
+					if (baseAdd >= L+b)	continue;
+					if (rec[baseAdd] == -1) {
+						rec[baseAdd] = set.contains(baseAdd) ? 1 : 0;
+						rec[baseAdd] += rec[base];
+					} else {
+						rec[baseAdd] = Math.min(rec[baseAdd], rec[base] + (set.contains(baseAdd) ? 1 : 0));
+					}
+				}
+			}
+		}
+		int ans = Integer.MAX_VALUE;
+		for (int i = L; i < L+b; i ++)	ans = Math.min(ans, rec[i] == -1 ? ans : rec[i]);
+		System.out.println(ans);
+		sc.close();
+	}
+
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 */
+	static void solve1() throws Exception {
 		final int cut = 10 * 9 - 10 - 9 + 1;
-		Scanner sc = new Scanner(System.in);
+//		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(new File("D:/file/data/百度17_时空跳跃.txt"));
 		int L = sc.nextInt();
 		int a = sc.nextInt(), b = sc.nextInt(), n = sc.nextInt();
 		int[] arr = new int[n];
 		for (int i = 0; i < n; i ++)
 			arr[i] = sc.nextInt();
+		if (a == b) {
+			int ans = 0;
+			for (int val : arr)
+				if (val % a == 0)	ans ++;
+			System.out.println(ans);
+			sc.close();
+			return;
+		}
 		Arrays.sort(arr);
 		int thisCut = 0;
 		HashSet<Integer> set = new HashSet<Integer>();
