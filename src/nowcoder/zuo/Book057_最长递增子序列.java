@@ -12,6 +12,7 @@ package nowcoder.zuo;
  */
 public class Book057_最长递增子序列 {
 	public static void main(String[] args) {
+		
 	}
 	
 	static void testMyAndBook1() {
@@ -24,7 +25,7 @@ public class Book057_最长递增子序列 {
 			MySolution s1 = new MySolution();
 			BookSolution1 s2 = new BookSolution1();
 			int a1 = s1.maxSequence(arr);
-			int a2 = s2.maxSequence2(arr).length;
+			int a2 = s2.maxSequence(arr).length;
 			isAllTrue &= a1 == a2;
 			if (a1 != a2) {
 				StringBuilder st = new StringBuilder();
@@ -70,7 +71,6 @@ public class Book057_最长递增子序列 {
 						preMax = Math.max(preMax, dp[preIndex]);
 					}
 				}
-					
 				dp[index] = preMax + 1;
 				max = Math.max(max, dp[index]);
 			}
@@ -89,19 +89,6 @@ public class Book057_最长递增子序列 {
 	 * @details     书上的第一种O(N^2)方法
 	 */
 	static class BookSolution1 {
-		public int maxSequence(int[] arr) {
-			int[] dp = new int[arr.length];
-			int max = 0;
-			for (int i = 0; i < arr.length; i ++) {
-				dp[i] = 1;
-				for (int j = 0; j < i; j ++) {
-					if (arr[i] > arr[j])
-						dp[i] = Math.max(dp[i] , dp[j] + 1);
-				}
-				max = Math.max(max, dp[i]);
-			}
-			return max;
-		}
 		/**
 		 * @method      getDP
 		 * @parameter   record[0]：保存dp数组的最大值
@@ -136,12 +123,11 @@ public class Book057_最长递增子序列 {
 			}
 			return lis;
 		}
-		public int[] maxSequence2(int[] arr) {
+		public int[] maxSequence(int[] arr) {
 			if (arr == null || arr.length == 0)		return new int[0];
 			int[] record = new int[2];
 			int[] dp = getDP(arr, record);
 			return generateLIS(arr, dp, record);
 		}
 	}
-	
 }
