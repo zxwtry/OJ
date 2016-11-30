@@ -12,13 +12,19 @@ package nowcoder.zuo;
  */
 public class Book058_汉诺塔问题 {
 	public static void main(String[] args) {
-		debugBookSolution进阶_递归版本();
+		int[] arr = new int[] {3, 3, 3};
+		debugBookSolution进阶_递归版本(arr);
+		debugBookSolution进阶_非递归版本(arr);
 		
 	}
 	
-	static void debugBookSolution进阶_递归版本() {
+	static void debugBookSolution进阶_非递归版本(int[] arr) {
+		BookSolution进阶_非递归版本 s = new BookSolution进阶_非递归版本();
+		System.out.println(s.getStep(arr));
+	}
+
+	static void debugBookSolution进阶_递归版本(int[] arr) {
 		BookSolution进阶_递归版本 s = new BookSolution进阶_递归版本();
-		int[] arr = new int[] {1, 3, 1};
 		int index = arr.length - 1;
 		int from = 1;
 		int mid = 2;
@@ -85,6 +91,39 @@ public class Book058_汉诺塔问题 {
 			} else {
 				return -1;
 			}
+		}
+	}
+	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book058_汉诺塔问题.java
+	 * @type        BookSolution进阶_非递归版本
+	 * @date        2016年11月30日 下午7:25:29
+	 * @details     BookSolution进阶_递归版本  的  非递归版本
+	 */
+	static class BookSolution进阶_非递归版本 {
+		public int getStep(int[] arr) {
+			int from = 1, mid = 2, to = 3;
+			int res = 0, tmp = 0, index = arr.length - 1;
+			while (index >= 0) {
+				if (arr[index] == to) {
+					res += (1 << index);
+					tmp = mid;
+					mid = from;
+					from = tmp;
+				} else if (arr[index] == from) {
+					tmp = mid;
+					mid = to;
+					to = tmp;
+				} else {
+					return -1;
+				}
+				index --;
+			}
+			return res;
 		}
 	}
 	
