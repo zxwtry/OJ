@@ -2,8 +2,20 @@ package nowcoder.zuo;
 
 public class Book059_最长公共子序列 {
 	public static void main(String[] args) {
-		debugMySolution_DP();
-		debugMySolution_递归版本();
+	}
+
+	static void testMySolution_递归版本和MySolution_DP() {
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(10, 0, 25);
+		char[] c1 = new char[arr.length];
+		for (int index = 0; index < arr.length; index ++)
+			c1[index] = (char) ('A' + arr[index]);
+		arr = tools.Random随机生成器.A_生成一个随机数据(10, 0, 25);
+		char[] c2 = new char[arr.length];
+		for (int index = 0; index < arr.length; index ++)
+			c2[index] = (char) ('A' + arr[index]);
+		MySolution_DP s1 = new MySolution_DP();
+		MySolution_递归版本 s2 = new MySolution_递归版本();
+		System.out.println(s1.maxCommonSequence(c1, c2) == s2.maxCommonSequence(c1, c2));
 	}
 
 	static void debugMySolution_DP() {
