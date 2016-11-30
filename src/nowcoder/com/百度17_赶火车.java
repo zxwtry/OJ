@@ -1,5 +1,15 @@
 package nowcoder.com;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+import com.sun.xml.internal.ws.policy.sourcemodel.attach.ExternalAttachmentsUnmarshaller;
+
+import sun.util.resources.cldr.sl.TimeZoneNames_sl;
+
 /**
  * 小A到达了一个陌生的城市，经过几天的功课，他已经知道了整个城市的公共交通情况。
  * 所有的公交设计都是完全对称的，公共汽车都是对向开行，且线路相同，
@@ -7,8 +17,6 @@ package nowcoder.com;
 	小A想知道从宾馆选定附近某个公交车站出发到火车站附近某一公交车站的最近的路程是多少。
 	你能帮他吗？
 	
-	
-									
 	输入
 	输入数据有多组，第一行为一个正整数T(T＜=20)，表示测试数据组数，接下来包含T组测试数据。
 	每组测试数据第一行包含四个整数n(1＜=n＜=1000)，m(0＜=m< =n*(n-1)/2)，a(1＜=a＜=n),
@@ -64,6 +72,35 @@ public class 百度17_赶火车 {
 	}
 
 	static void solve1() {
-		
+		Scanner sc = new Scanner(System.in);
+		int times = sc.nextInt();
+		HashSet<Integer> dest = new HashSet<Integer>();
+		Queue<Integer> nl = new LinkedList<Integer>();
+		Queue<Integer> cl = new LinkedList<Integer>();
+		for (int timeIndex = 1; timeIndex <= times; timeIndex ++) {
+			int n = sc.nextInt(), m = sc.nextInt(), a = sc.nextInt(), b = sc.nextInt();
+			int[] as = new int[a];
+			int[][] len = new int[n + 1][n + 1];
+			boolean[] isTraced = new boolean[n + 1];
+			dest.clear();
+			for (int ai = 0; ai < a; ai ++)		as[ai] = sc.nextInt();
+			for (int bi = 0; bi < b; bi ++)		dest.add(sc.nextInt());
+			for (int mi = 0; mi < m; mi ++) {
+				int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
+				len[u][v] = w;
+				len[v][u] = w;
+			}
+			for (int s : as) {
+				Arrays.fill(isTraced, false);
+				nl.add(s);
+				cl.add(0);
+				while (! nl.isEmpty()) {
+					int nNow = nl.poll();
+					int cNow = cl.poll();
+					
+				}
+			}
+		}
+		sc.close();
 	}
 }
