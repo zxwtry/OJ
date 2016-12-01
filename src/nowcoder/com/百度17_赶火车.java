@@ -6,10 +6,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import com.sun.xml.internal.ws.policy.sourcemodel.attach.ExternalAttachmentsUnmarshaller;
-
-import sun.util.resources.cldr.sl.TimeZoneNames_sl;
-
 /**
  * 小A到达了一个陌生的城市，经过几天的功课，他已经知道了整个城市的公共交通情况。
  * 所有的公交设计都是完全对称的，公共汽车都是对向开行，且线路相同，
