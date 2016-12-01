@@ -17,9 +17,7 @@ import java.util.Map;
  * @details     
  */
 public class Graph_Dijkstra {
-	
 	public static void main(String[] args) {
-		testWeightedGraph();
 	}
 	
 	static void testWeightedGraph() {
@@ -28,7 +26,7 @@ public class Graph_Dijkstra {
 		st.append(String.format("%d,%s,%s,%d\n", 1, "顶点2", "顶点6", 4));
 		st.append(String.format("%d,%s,%s,%d\n", 1, "顶点3", "顶点5", 4));
 		st.append(String.format("%d,%s,%s,%d\n", 1, "顶点4", "顶点6", 1));
-		st.append(String.format("%d,%s,%s,%d\n", 1, "顶点5", "顶点6", 2));
+		st.append(String.format("%d,%s,%s,%d\n", 1, "顶点5", "顶点6", 2)); 
 		WeightedGraph g = new WeightedGraph(st.toString());
 		g.dijkstra();
 		g.showDistance();
@@ -46,8 +44,22 @@ public class Graph_Dijkstra {
 		public void dijkstra() {
 			BinaryHeap<Vertex> heap = new BinaryHeap<Vertex>();
 			init(heap);
-			while (! heap.isEmpty()) {
-				Vertex v = heap.poll();
+//			while (! heap.isEmpty()) {
+//				Vertex v = heap.poll();
+//				//获取v的所有邻接点
+//				List<Edge> adjEdges = v.adjEdges;
+//				for (Edge e : adjEdges) {
+//					Vertex adjNode = e.endVertex;
+//					if (adjNode.dist > e.weight + v.dist) {
+//						adjNode.dist = e.weight + v.dist;
+//						adjNode.preNode = v;
+//					}
+//				}
+////				if (v == startVertex)
+////					heap.buildHeap();
+//			}
+			Vertex v = startVertex;
+			while (true) {
 				//获取v的所有邻接点
 				List<Edge> adjEdges = v.adjEdges;
 				for (Edge e : adjEdges) {
@@ -57,8 +69,9 @@ public class Graph_Dijkstra {
 						adjNode.preNode = v;
 					}
 				}
-//				if (v == startVertex)
-//					heap.buildHeap();
+				if (heap.isEmpty())	break;
+				heap.buildHeap();
+				v = heap.poll();
 			}
 			startVertex.preNode = null;
 		}
@@ -82,7 +95,9 @@ public class Graph_Dijkstra {
 			//源点到其自身的距离为0
 			startVertex.dist = 0;
 			for (Vertex v : weightedGraph.values())
-				heap.insert(v);
+				if (startVertex != v)
+					heap.insert(v);
+			heap.buildHeap();
 		}
 
 		private void buildGraph(String graphContent) {
