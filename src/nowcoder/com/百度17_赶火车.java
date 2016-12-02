@@ -1,9 +1,14 @@
 package nowcoder.com;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /**
@@ -63,40 +68,245 @@ import java.util.Scanner;
  * @details     
  */
 public class 百度17_赶火车 {
+	static final int M = Integer.MAX_VALUE;
 	public static void main(String[] args) {
-		solve1();
+		try {
+//			solve1();
+			solve2();
+			solve3();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	static void solve1() {
-		Scanner sc = new Scanner(System.in);
-		int times = sc.nextInt();
-		HashSet<Integer> dest = new HashSet<Integer>();
-		Queue<Integer> nl = new LinkedList<Integer>();
-		Queue<Integer> cl = new LinkedList<Integer>();
-		for (int timeIndex = 1; timeIndex <= times; timeIndex ++) {
-			int n = sc.nextInt(), m = sc.nextInt(), a = sc.nextInt(), b = sc.nextInt();
-			int[] as = new int[a];
-			int[][] len = new int[n + 1][n + 1];
-			boolean[] isTraced = new boolean[n + 1];
-			dest.clear();
-			for (int ai = 0; ai < a; ai ++)		as[ai] = sc.nextInt();
-			for (int bi = 0; bi < b; bi ++)		dest.add(sc.nextInt());
-			for (int mi = 0; mi < m; mi ++) {
-				int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
-				len[u][v] = w;
-				len[v][u] = w;
-			}
-			for (int s : as) {
-				Arrays.fill(isTraced, false);
-				nl.add(s);
-				cl.add(0);
-				while (! nl.isEmpty()) {
-					int nNow = nl.poll();
-					int cNow = cl.poll();
-					
+	
+	static class Edge {
+		int to, next, cost;
+		public Edge(int to, int next, int cost) 
+		{this.to = to; this.next = next; this.cost = cost;}
+	}
+	static class State {
+		int cost, id;
+		public State(int id, int cost) {this.cost = cost; this.id = id;}
+	}
+	static class Cmp implements Comparator<State> {
+		public int compare(State o1, State o2) {
+			return o1.cost - o2.cost;
+		}
+	}
+	static final int MAXN = 1020, MAXM = MAXN*(MAXN-1)/2;
+	static int N, L;
+	static int[] head = new int[MAXN];
+	static int[] dist = new int[MAXN];
+	static Edge[] edges = new Edge[MAXM];
+	static void init(int n) {
+		N = n;
+		L = 0;
+		for (int i = 0; i < n; i ++) head[i] = -1;
+	}
+	static void addEdge(int x, int y, int cost) {
+		if (edges[L] == null) edges[L] = new Edge(y, head[x], cost);
+		head[x] = L ++;
+	}
+	static int dijkstra(int s, HashSet<Integer> t) {
+		Arrays.fill(dist, M);
+		State u = new State(s, 0);
+		dist[s] = 0;
+		PriorityQueue<State> q = new PriorityQueue<State>(N, new Cmp());
+		q.add(u);
+		while (! q.isEmpty()) {
+			u = q.poll();
+			if (t.contains(u.id)) return dist[u.id];
+			if (u.cost != dist[u.id]) continue;
+			for (int i = head[u.id]; i != -1; i=edges[i].next) {
+				if (dist[edges[i].to] > dist[u.id] + edges[i].cost) {
+					dist[edges[i].to] = dist[u.id] + edges[i].cost;
+					q.add(new State(edges[i].to, dist[edges[i].to]));
 				}
 			}
 		}
+		return M;
+	}
+	static void solve3() throws Exception {
+		Scanner sc = new Scanner(new File("D:/code/data/百度17_赶火车.txt"));
+		int times = sc.nextInt();
+		HashSet<Integer> set = new HashSet<Integer>();
+		for (int timeIndex = 1; timeIndex <= times; timeIndex ++) {
+			int n = sc.nextInt(), m = sc.nextInt(), a = sc.nextInt(), b = sc.nextInt();
+			init(n);
+			set.clear();
+			int[] as = new int[a];
+			for (int ai = 0; ai < a; ai ++) as[ai] = sc.nextInt();
+			for (int bi = 0; bi < b; bi ++) set.add(sc.nextInt());
+			for (int mi = 0; mi < m; mi ++) {
+				int x = sc.nextInt(), y = sc.nextInt(), z = sc.nextInt();
+				addEdge(x, y, z);
+				addEdge(y, x, z);
+			}
+			int ans = M;
+			for (int ai : as)
+				ans = Math.min(ans, dijkstra(ai, set));
+			System.out.println("Case #"+timeIndex+": "+(ans==M?"No answer":ans));
+		}
 		sc.close();
+	}
+
+	static void solve2() throws Exception {
+		Scanner scanner = new Scanner(new File("D:/code/data/百度17_赶火车.txt"));
+
+        int t = scanner.nextInt();
+
+        for (int i = 1; i <= t; i++) {
+            int n = scanner.nextInt();
+            int m = scanner.nextInt();
+            int a = scanner.nextInt();
+            int b = scanner.nextInt();
+
+            int[] start = new int[a];
+            int[] end = new int[b];
+
+            for (int j = 0; j < a; j++) {
+                start[j] = scanner.nextInt();
+            }
+            for (int j = 0; j < b; j++) {
+                end[j] = scanner.nextInt();
+            }
+
+            int[][] edges = new int[n][n];
+
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    edges[j][k] = Integer.MAX_VALUE;
+                }
+            }
+
+            for (int j = 0; j < m; j++) {
+                int s = scanner.nextInt() - 1;
+                int e = scanner.nextInt() - 1;
+                int length = scanner.nextInt();
+                edges[s][e] = length;
+                edges[e][s] = length;
+            }
+
+            int min = Integer.MAX_VALUE;
+            for (int each : start) {
+                int eachMin = solve2_dijkstra(n, each - 1, end, new int[n], new int[n], edges);
+                min = Math.min(min, eachMin);
+            }
+            if (min == Integer.MAX_VALUE) {
+                System.out.println(String.format("Case #%d: No answer", i));
+            } else {
+                System.out.println(String.format("Case #%d: %d", i, min));
+            }
+        }
+        scanner.close();
+	}
+	private static int solve2_dijkstra(int vexCount, int start, int[] target, int[] prev, int[] dist, int[][] edges) {
+        boolean[] visited = new boolean[vexCount];
+
+        for (int i = 0; i < vexCount; i++) {
+            visited[i] = false;
+            prev[i] = 0;
+            dist[i] = edges[start][i];
+        }
+
+        visited[start] = true;
+        dist[start] = 0;
+
+        int k = 0;
+        for (int i = 1; i < vexCount; i++) {
+            int min = Integer.MAX_VALUE;
+            for (int j = 0; j < vexCount; j++) {
+                if (!visited[j] && dist[j] < min) {
+                    min = dist[j];
+                    k = j;
+                }
+            }
+            visited[k] = true;
+
+            for (int j = 0; j < vexCount; j++) {
+                int newDis = (edges[k][j] == Integer.MAX_VALUE ? Integer.MAX_VALUE : (min + edges[k][j]));
+                if (!visited[j] && (newDis < dist[j])) {
+                    dist[j] = newDis;
+                    prev[j] = k;
+                }
+            }
+        }
+
+        int res = Integer.MAX_VALUE;
+        for (int each : target) {
+            res = Math.min(res, dist[each - 1]);
+        }
+        return res;
+    }
+	
+
+	static void solve1() throws Exception {
+		Scanner sc = new Scanner(new File("D:/code/data/百度17_赶火车.txt"));
+		int times = sc.nextInt();
+		for (int timeIndex = 1; timeIndex <= times; timeIndex ++) {
+			int n = sc.nextInt(), m = sc.nextInt(), a = sc.nextInt(), b = sc.nextInt();
+			ArrayList<V> h = new ArrayList<V>(n);
+			HashMap<Integer, V> ma = new HashMap<Integer, V>(2 * m);
+			int[] as = new int[a], bs = new int[b];
+			for (int ai = 0; ai < a; ai ++)		as[ai] = sc.nextInt();
+			for (int bi = 0; bi < b; bi ++)		bs[bi] = sc.nextInt();
+			for (int mi = 0; mi < m; mi ++) {
+				int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
+				V s = ma.get(u), e = ma.get(v); 
+				if (s == null) {s = new V(); ma.put(u, s);}
+				if (e == null) {e = new V(); ma.put(v, e);}
+				s.ns.add(e); s.ws.add(w);
+				e.ns.add(s); e.ws.add(w);
+			}
+			int min = M;
+			for (int ai : as) {
+				V sv = ma.get(ai);
+				for (V v : ma.values()) if (v != sv) {v.ih = h.size(); v.d = M; h.add(v);};
+				sv.d = 0;
+				while (true) {
+					if (sv.d == M) break;
+					Iterator<V> iV = sv.ns.iterator();
+					Iterator<Integer> iW = sv.ws.iterator();
+					while(iV.hasNext()) {
+						V nv = iV.next();
+						int nw = iW.next();
+						if (nv.d > sv.d + nw) {
+							nv.d = sv.d + nw;
+							int i = nv.ih;
+							int p = (i - 1) / 2;
+							System.out.println("#####" + h.size());
+							while (i != 0) {
+								System.out.println(i+"..."+p);
+								if (h.get(p).d > h.get(i).d) swap(h, i, p); else break;
+								i = p; p = (i - 1)/ 2;
+							}
+						}
+					}
+					if (h.size() == 0) break;
+					sv = h.get(0); h.set(0, h.get(h.size() - 1));
+					h.get(0).ih = 0; h.remove(h.size() - 1);
+					int i = 0, c = 1;
+					while (c < h.size()) {
+						if (c+1 < h.size() && h.get(c+1).d < h.get(c).d) c ++;
+						if (h.get(i).d > h.get(c).d) swap(h, i, c);
+						i = c; c = 2*i+1;
+					}
+				}
+				for (int bi : bs) min = Math.min(min, ma.get(bi) == null ? M : ma.get(bi).d);
+			}
+			System.out.println("Case #"+timeIndex+": "+(min==M?"No answer":min));
+		}
+		sc.close();
+	}
+	static void swap(ArrayList<V> h, int i, int j) {
+		int is = h.get(j).ih; h.get(j).ih = h.get(i).ih;
+		h.get(i).ih = is;
+		V vs = h.get(j); h.set(j, h.get(i)); h.set(i, vs);
+	}
+	static class V {
+		int d = M, ih = -1;
+		LinkedList<V> ns = new LinkedList<V>();
+		LinkedList<Integer> ws = new LinkedList<Integer>();
 	}
 }
