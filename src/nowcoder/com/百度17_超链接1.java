@@ -1,5 +1,7 @@
 package nowcoder.com;
 
+import java.util.Scanner;
+
 /**
  * 在 Blog 写作的过程中，经常一言不合就添加一些超链接。
 	例如：
@@ -39,6 +41,51 @@ package nowcoder.com;
  */
 public class 百度17_超链接1 {
 	public static void main(String[] args) {
-		
+		solve1();
 	}
+
+	final static char[][] c = {"http://".toCharArray(), "https://".toCharArray()};
+	final static String format = "<a href=\"%s\">%s</a>";
+	
+	/**
+	 * @method      solve1
+	 * @parameter   
+	 * @return      void
+	 * @details     AC
+	 */
+	static void solve1() {
+		Scanner sc = new Scanner(System.in);
+		int len = Integer.MAX_VALUE;
+		for (char[] ci : c) len = Math.min(ci.length, len);
+		while (sc.hasNext()) {
+			StringBuilder st = new StringBuilder(sc.nextLine());
+			int i = 0;
+			for (; i < st.length() - len; i ++) {
+				int s = solve1Judge(st, i);
+				if (s == -1) continue;
+				int j = i + 1;
+				while (j < st.length())
+					if (st.charAt(j) == ' ') break; 
+					else j ++;
+				String args = st.substring(i, j);
+				st.replace(i, j, String.format(format, args, args));
+				i += 2 * (j - i) + 15;
+			}
+			System.out.println(st.toString());
+		}
+		sc.close();
+	}
+	
+	static int solve1Judge(StringBuilder st, int index) {
+		for (int i = 0; i < c.length; i ++) {
+			boolean f = true;
+			for (int j = 0; f && j < c[i].length; j ++) {
+				if (index+j >= st.length()) f = false;
+				else f &= st.charAt(index + j) == c[i][j];
+			}
+			if (f) return i;
+		}
+		return -1;
+	}
+	
 }
