@@ -20,9 +20,16 @@ import java.util.Map;
  */
 public class Graph_Dijkstra {
 	public static void main(String[] args) {
-		debugWeightedGraph4();
+		debugweightedGraph5();
 	}
 	
+	static void debugweightedGraph5() {
+		String[] start = new String[] {"1", "2", "3", "4", "5", "1", "2", "2", "4"};
+		String[] end = new String[] {"5", "6", "5", "6", "6", "3", "3", "4", "5"};
+		int[] weight = new int[] {1, 4, 4, 1, 2, 2, 2, 2, 1};
+		weightedGraph5(start, end, weight, "1");
+	}
+
 	static void debugWeightedGraph4() {
 		String[] start = new String[] {"1", "2", "3", "4", "5", "1", "2", "2", "4"};
 		String[] end = new String[] {"5", "6", "5", "6", "6", "3", "3", "4", "5"};
@@ -521,5 +528,65 @@ public class Graph_Dijkstra {
 			public Vertex(String label) {this.label = label;}
 			public int compareTo(Vertex o) {return this.dist - o.dist;}
 		}
+	}
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     stl
+	 * @file        Graph_Dijkstra.java
+	 * @type        WeightedGraph5
+	 * @date        2016年12月2日 上午10:56:40
+	 * @details     实现一个方法,做完全部工作
+	 * @details     weightedGraph5是一个静态方法
+	 * @details     Vertex是一个是一个类
+	 */
+	static void weightedGraph5(String[] s, String[] e, int[] w, String sl) {
+		HashMap<String, Vertex> m = new HashMap<String, Vertex>();
+		ArrayList<Vertex> h = new ArrayList<Vertex>();
+		for (int i = 0; i < s.length; i ++) {
+			Vertex st = m.get(s[i]);
+			if (st == null) { st = new Vertex(s[i]); m.put(s[i], st); }
+			Vertex en = m.get(e[i]);
+			if (en == null) { en = new Vertex(e[i]); m.put(e[i], en); }
+			st.ns.add(en); st.ws.add(w[i]);
+			en.ns.add(st); en.ws.add(w[i]);
+		}
+		Vertex sv = m.get(sl); sv.dist = 0;
+		for (Vertex v : m.values()) if (v != sv) { v.ih=h.size(); h.add(v);}
+		Vertex v = sv;
+		while(true) {
+			Iterator<Vertex> itV = v.ns.iterator();
+			Iterator<Integer> itW = v.ws.iterator();
+			while (itV.hasNext()) {
+				Vertex nv = itV.next(); int nw = itW.next();
+				if (nv.dist > v.dist + nw) {
+					nv.dist = v.dist + nw;
+					int i = nv.ih;
+					int p = (i - 1) / 2;
+					while (i !=0 ) {
+						if (h.get(p).dist - h.get(i).dist > 0) {
+							int tmp = h.get(p).ih;
+							h.get(p).ih = h.get(i).ih;
+							h.get(i).ih = tmp;
+							Vertex t = h.get(p); h.set(p, h.get(i)); h.set(i, t);
+						} else break;
+						i = p; p = (i - 1)/ 2;
+					}
+				}
+			}
+			if (h.size() == 0) break;
+			v = h.get(0); h.set(0, h.get(h.size() - 1));
+			h.get(0).ih = 0; h.remove(h.size() - 1);
+		}
+		for (Vertex tmp : m.values()) 
+			{System.out.println("从 " + sl + " 到 " + tmp.label +" 的距离是: " + tmp.dist);}
+	}
+	static class Vertex{
+		String label = null;
+		int dist = Integer.MAX_VALUE, ih = -1;
+		LinkedList<Vertex> ns = new LinkedList<Vertex>();
+		LinkedList<Integer> ws = new LinkedList<Integer>();
+		public Vertex(String label) { this.label = label; }
 	}
 }
