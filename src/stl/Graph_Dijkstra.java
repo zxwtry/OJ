@@ -16,7 +16,7 @@ import java.util.Map;
  * @file        Graph_Dijkstra.java
  * @type        Graph_Dijkstra
  * @date        2016年11月30日 上午11:59:18
- * @details     
+ * @details     根据一个网贴更改,他的代码由明显问题
  */
 public class Graph_Dijkstra {
 	public static void main(String[] args) {
@@ -24,10 +24,13 @@ public class Graph_Dijkstra {
 	}
 	
 	static void debugweightedGraph5() {
-		String[] start = new String[] {"1", "2", "3", "4", "5", "1", "2", "2", "4"};
-		String[] end = new String[] {"5", "6", "5", "6", "6", "3", "3", "4", "5"};
-		int[] weight = new int[] {1, 4, 4, 1, 2, 2, 2, 2, 1};
-		weightedGraph5(start, end, weight, "1");
+//		String[] start = new String[] {"1", "2", "3", "4", "5", "1", "2", "2", "4"};
+//		String[] end = new String[] {"5", "6", "5", "6", "6", "3", "3", "4", "5"};
+//		int[] weight = new int[] {1, 4, 4, 1, 2, 2, 2, 2, 1};
+		String[] start = new String[] {"1", "2", "3", "4", "5"};
+		String[] end = new String[] {"5", "6", "5", "6", "6"};
+		int[] weight = new int[] {1, 4, 4, 1, 2};
+		weightedGraph5(start, end, weight, "2");
 	}
 
 	static void debugWeightedGraph4() {
@@ -43,7 +46,7 @@ public class Graph_Dijkstra {
 		String[] start = new String[] {"1", "2", "3", "4", "5"};
 		String[] end = new String[] {"5", "6", "5", "6", "6"};
 		int[] weight = new int[] {1, 4, 4, 1, 2};
-		WeightedGraph3 w = new WeightedGraph3(start, end, weight, "4");
+		WeightedGraph3 w = new WeightedGraph3(start, end, weight, "2");
 		w.dijkstra();
 		w.print();
 	}
@@ -578,6 +581,20 @@ public class Graph_Dijkstra {
 			if (h.size() == 0) break;
 			v = h.get(0); h.set(0, h.get(h.size() - 1));
 			h.get(0).ih = 0; h.remove(h.size() - 1);
+			int i = 0, c = 1;
+			while (true) {
+				c = 2*i+1;
+				if (c >= h.size()) break;
+				if (c+1 < h.size() && h.get(c+1).dist < h.get(c).dist) c ++;
+				if (h.get(i).dist > h.get(c).dist) {
+					int tmp = h.get(c).ih;
+					h.get(c).ih = h.get(i).ih;
+					h.get(i).ih = tmp;
+					Vertex t = h.get(c); h.set(c, h.get(i)); h.set(i, t);
+				} else break;
+				i = c;
+			}
+			
 		}
 		for (Vertex tmp : m.values()) 
 			{System.out.println("从 " + sl + " 到 " + tmp.label +" 的距离是: " + tmp.dist);}
