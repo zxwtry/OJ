@@ -1,5 +1,14 @@
 package nowcoder.com;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * 	可扩展标记语言（英语：Extensible Markup Language，简称：XML），是一种标记语言。
 	XML 设计用来传送及携带数据信息，不用来表现或展示数据，HTML语言则用来表现数据，
@@ -78,6 +87,94 @@ package nowcoder.com;
  */
 public class 百度17_SearchInXML {
 	public static void main(String[] args) {
-		
+		try {
+			solve1();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
+	static void solve1() throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		char[] cs = new char[10020];
+		int LEN = br.read(cs);
+		HashMap<String, Integer> m = new HashMap<String, Integer>();
+		int mi = 1;
+		int[] L = new int[200] , R = new int[200];
+		for (int j = 0; j < 200; j ++) {
+			L[j] = -1;
+			R[j] = -1;
+		}
+		int J = 0;
+		for (int i = 0; i < LEN; i ++) {
+			if (L[J] == -1 && cs[i] == '<') L[J] = i; 
+			if (R[J] == -1 && cs[i] == '>') {
+				R[J] = i;
+				J ++;
+			}
+		}
+		for (int j = 0; j < J; j ++) {
+			if (cs[L[j] + 1] != '/') {
+				String s = new String(cs, L[j] + 1, R[j] - L[j] - 1);
+				Integer val = m.get(s);
+				if (val == null) m.put(s, mi ++);
+			}
+		}
+		V h = null, p = null;
+		Stack<V> stk = new Stack<V>();
+		for (int j = 0; j < J; j ++) {
+			if (cs[L[j] + 1] != '/') {
+				String s = new String(cs, L[j] + 1, R[j] - L[j] - 1);
+				V v = new V(m.get(s), j + 1);
+				if (null == h) h = v;
+				else if (stk.isEmpty()) {
+					p = v;
+				}
+				if (! stk.isEmpty())
+					stk.peek().l.add(v);
+				stk.push(v);
+			} else {
+				stk.pop();;
+			}
+		}
+		
+		Queue<V> q = new LinkedList<V>();
+		q.add(h);
+		LinkedList<Integer> ans = new LinkedList<Integer>();
+		while (! q.isEmpty()) {
+			h = q.poll();
+			for (V v : h.l) q.add(v);
+			if (h.id == p.id) {
+				if (contain(h, p)) {
+					ans.add(h.number);
+				}
+			}
+		}
+		
+		System.out.println(ans.size());
+		Iterator<Integer> it = ans.iterator();
+		while (it.hasNext()) {
+			System.out.print(it.next());
+			if (it.hasNext())
+				System.out.print(" ");
+		}
+		System.out.println();
+		br.close();
+	}
+	
+	static boolean contain(V h, V q) {
+		if (q == null)	return true;
+		if (h == null)	return false;
+		if (q.l.size() == 0) return true; 
+		if (q.l.size() > h.l.size()) return false;
+		
+		return false;
+	}
+
+	static class V {
+		int id, number;
+		ArrayList<V> l = new ArrayList<V>();
+		public V(int id, int number) {this.id = id; this.number = number;}
+	}
+	
 }
