@@ -71,10 +71,13 @@ public class 百度17_赶火车 {
 	static final int M = Integer.MAX_VALUE;
 	public static void main(String[] args) {
 		try {
-//			solve1();
-//			solve2();
-//			solve3();
-//			solve4();
+//			long t1 = System.currentTimeMillis();
+			solve1();
+			solve2();
+			solve3();
+			solve4();
+//			long t2 = System.currentTimeMillis();
+//			System.out.println(t2 - t1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
