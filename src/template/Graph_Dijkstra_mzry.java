@@ -14,9 +14,9 @@ import java.util.Scanner;
  * @file        Graph_Dijkstra.java
  * @type        Graph_Dijkstra
  * @date        2016年12月2日 下午4:53:35
- * @details     
+ * @details     根据李昀代码修改而来
  */
-public class Graph_Dijkstra {
+public class Graph_Dijkstra_mzry {
 	static class Edge {
 		int to, next, cost;
 		public Edge(int to, int next, int cost) 
