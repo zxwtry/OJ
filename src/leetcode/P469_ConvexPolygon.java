@@ -2,7 +2,6 @@ package leetcode;
 
 import java.util.List;
 
-
 /**
  * 	Given a list of points that form a polygon when joined sequentially, 
  * 	find if this polygon is convex (Convex polygon definition).
@@ -45,48 +44,106 @@ public class P469_ConvexPolygon {
 	public static void main(String[] args) {
 	}
 	
+	/**
+	 * @auther      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     leetcode
+	 * @file        P469_ConvexPolygon.java
+	 * @type        Solution
+	 * @date        2016年12月5日 下午3:52:21
+	 * @details     艰难AC
+	 * @details     323 ms
+	 */
 	static class Solution {
+		int[] xs = null, ys = null;
+		int cut = 0;		//区分输入和凸包 
+		int n = 0;			//输入长度
+		int top = 0;		//凸包栈顶
+		int line = 0;		//共线有多少
 	    public boolean isConvex(List<List<Integer>> p) {
-	    	int[][] arr = new int [p.size()][2];
-	    	int min0 = Integer.MAX_VALUE, min1 = Integer.MAX_VALUE;
+	    	cut = p.size()+5;
+	    	n = p.size();
+	    	xs = new int[cut*2+1];
+	    	ys = new int[cut*2+1];
+	    	int ymin = 0;
 	    	for (int i = 0; i < p.size(); i ++) {
-	    		arr[i][0] = p.get(i).get(0);
-	    		arr[i][1] = p.get(i).get(1);
-	    		min0 = Math.min(min0, arr[i][0]);
-	    		min1 = Math.min(min1, arr[i][1]);
+	    		xs[i] = p.get(i).get(0);
+	    		ys[i] = p.get(i).get(1);
+	    		if (ys[i] < ys[ymin] || (ys[i] == ys[ymin] && xs[i] < xs[ymin])) ymin = i;
 	    	}
-	    	for (int i = 0; i < arr.length; i ++) {
-	    		arr[i][0] -= min0;
-	    		arr[i][1] -= min1;
+	    	swap(xs , 0, ymin);
+	    	swap(ys , 0, ymin);
+	    	qsort(1, n-1);
+	    	xs[n] = xs[0];
+	    	ys[n] = ys[0];
+	    	convexHull();
+	    	System.out.println(top + "..." + line + "..." + n);
+	    	return top + line == n;
+	    }
+	    private void convexHull() {
+	    	int i = 0;
+	    	for (; i < 3; i ++) {
+	    		xs[cut+i] = xs[i];
+	    		ys[cut+i] = ys[i];
 	    	}
-	    	
-	        for (int i = 0; i < p.size(); i ++) {
-	        	for (int j = 0; j < i; j ++) {
-	        		int sign = 0;
-	        		for (int k = 0; k < p.size(); k ++) {
-	        			if (k == i || k == j) continue;
-	        			int c = cal(p.get(i).get(0), p.get(i).get(1), p.get(j).get(0),
-	        					p.get(j).get(1), p.get(k).get(0), p.get(k).get(1));
-	        			if (sign == 0) {
-	        				if (c > 0) sign = 1;
-	        				if (c < 0) sign = -1;
-	        			} else {
-	        				if (sign > 0 && c < 0) {
-	        					return false;
-	        				}
-	        				if (sign < 0 && c > 0) {
-	        					return false;
-	        				}
-	        			}
-	        		}
-	        	}
-	        }
-	        return true;
+	    	if (n >= 3 && multiply(cut, cut+1, cut+2) == 0) line++;
+	    	top = 2;
+	    	for (; i <= n; i ++) {
+	    		int m = 0;
+	    		while (true) {
+	    			m = multiply(cut+top-1, cut+top, i);
+	    			if (m > 0) break;
+	    			if (m == 0 && i != n) line ++;
+	    			top --;
+	    		}
+	    		top ++;
+	    		xs[top+cut] = xs[i];
+	    		ys[top+cut] = ys[i];
+	    	}
+		}
+		void swap(int[] arr, int i, int j) {
+	    	int t = arr[i];
+	    	arr[i] = arr[j];
+	    	arr[j] = t;
 	    }
 	    
-	    public int cal(int x1, int y1, int x2, int y2, int x, int y) {
-	    	return (x2 - x1) * (y - y1) - (y2 - y1) * (x - x1);
+	    int distSquare(int i, int j) {
+	    	return (xs[i] - xs[j]) * (xs[i] - xs[j]) + (ys[i] - ys[j]) * (ys[i] - ys[j]);
 	    }
+	    
+	    int multiply(int i, int j, int k) {
+	    	return (xs[j] - xs[i]) * (ys[k] - ys[i]) - (ys[j] - ys[i]) * (xs[k] - xs[i]);
+	    }
+	    
+	    int cmp(int i, int j) {
+	    	int m = multiply(0, i, j);
+	    	if (m < 0) return 1;
+	    	else if (m == 0 && distSquare(0, i) < distSquare(0, j)) return 1;
+	    	else return -1;
+	    }
+	    
+	    void qsort(int i, int j) {
+	    	if (i < j) {
+	    		int p = pa(i, j);
+	    		qsort(i, p - 1);
+	    		qsort(p + 1, j);
+	    	}
+	    }
+	    
+	    private int pa(int i, int j) {
+	    	xs[2*cut] = xs[i];
+	    	ys[2*cut] = ys[i];
+	    	while (i < j) {
+	    		while (i < j && cmp(2*cut, j) <= 0) j--;
+	    		xs[i] = xs[j]; ys[i] = ys[j];
+	    		while (i < j && cmp(i, 2*cut) <= 0) i ++;
+	    		xs[j] = xs[i]; ys[j] = ys[i];
+	    	}
+	    	xs[i] = xs[2*cut];
+	    	ys[i] = ys[2*cut];
+			return i;
+		}
 	}
 	
 }
