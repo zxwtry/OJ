@@ -21,7 +21,6 @@ public class RECITE_String_KMP {
 	static int pl, sl;
 	
 	static int kmp() {
-		getNext();
 		int ans = 0;
 		int pi = 0;
 		for (int si = 0; si <= sl-pl; si ++) {
@@ -35,6 +34,15 @@ public class RECITE_String_KMP {
 		return ans;
 	}
 	
+	private static void init(String ss, String ps) {
+		pl = ps.length();
+		sl = ss.length();
+		for (int pi = 0; pi < pl; pi ++)
+			p[pi] = ps.charAt(pi);
+		for (int si = 0; si < sl; si ++)
+			s[si] = ss.charAt(si);
+	}
+
 	static void getNext() {
 		next[0] = -1;
 		int bi = -1, fi = 0;
@@ -55,12 +63,8 @@ public class RECITE_String_KMP {
 		int times = sc.nextInt();
 		for (int timesIndex = 1; timesIndex <= times; timesIndex ++) {
 			String ps = sc.next(), ss = sc.next();
-			pl = ps.length();
-			sl = ss.length();
-			for (int pi = 0; pi < pl; pi ++)
-				p[pi] = ps.charAt(pi);
-			for (int si = 0; si < sl; si ++)
-				s[si] = ss.charAt(si);
+			init(ss, ps);
+			getNext();
 			System.out.println(kmp());
 		}
 		sc.close();
