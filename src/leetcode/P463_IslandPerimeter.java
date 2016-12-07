@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     leetcode
@@ -64,7 +64,7 @@ public class P463_IslandPerimeter {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     leetcode
@@ -126,7 +126,7 @@ public class P463_IslandPerimeter {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     leetcode

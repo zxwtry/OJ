@@ -33,7 +33,7 @@ package leetcode;
  */
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     leetcode
@@ -61,7 +61,7 @@ public class P464_CanIWin {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     leetcode

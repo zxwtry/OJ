@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     leetcode
@@ -45,7 +45,7 @@ public class P469_ConvexPolygon {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     leetcode

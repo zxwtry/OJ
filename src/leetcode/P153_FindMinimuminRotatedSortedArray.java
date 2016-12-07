@@ -62,10 +62,6 @@ public class P153_FindMinimuminRotatedSortedArray {
 	    		return nums[0];
 	    	}
 	    }
-	    /*
-	     * 	sti - 1: ´óÓÚ×î´ó
-	     * 	eni + 1: Ð¡ÓÚ×îÐ¡
-	     */
 	    int binaySearch(int[] nums, int sti, int eni, int val) {
 	    	if (val < nums[sti]) {
 	    		return sti - 1;

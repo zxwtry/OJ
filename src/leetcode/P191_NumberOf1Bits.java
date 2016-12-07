@@ -21,7 +21,7 @@ public class P191_NumberOf1Bits {
 		int ans2 = s2.hammingWeight(n);
 		System.out.println(ans2);
 	}
-	/*j
+	/*
 	 * 	2 ms
 	 * 	16.06%
 	 */
