@@ -53,7 +53,6 @@ public class P446_ArithmeticSlicesII_Subsequence {
 	}
 	static class Solution {
 	    public int numberOfArithmeticSlices(int[] A) {
-	        return 0;
 	    }
 	}
 }

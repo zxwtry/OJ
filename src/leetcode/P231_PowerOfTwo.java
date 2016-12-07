@@ -8,5 +8,7 @@ package leetcode;
  */
 
 public class P231_PowerOfTwo {
-
+	public static void main(String[] args) {
+		syso
+	}
 }

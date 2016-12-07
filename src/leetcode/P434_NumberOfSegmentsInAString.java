@@ -39,7 +39,6 @@ public class P434_NumberOfSegmentsInAString {
 	        	}
 	        }
 	        if (s.length() != 0 && pre == s.length() - 1) count ++;
-	        return count;
 	    }
 	}
 }

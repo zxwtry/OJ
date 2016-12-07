@@ -79,7 +79,6 @@ public class P126_WordLadderII {
 					}
 				}
 			}
-			return ans;
 		}
 	}
 }

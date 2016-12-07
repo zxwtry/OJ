@@ -45,7 +45,6 @@ public class P436_FindRightInterval {
 	}
 	static class Solution {
 	    public int[] findRightInterval(Interval[] intervals) {
-	        return null;
 	    }
 	}
 	static class Interval {

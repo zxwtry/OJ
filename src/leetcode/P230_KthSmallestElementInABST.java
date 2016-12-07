@@ -19,5 +19,7 @@ package leetcode;
  */
 
 public class P230_KthSmallestElementInABST {
-	
+	public static void main(String[] args) {
+		syso
+	}
 }

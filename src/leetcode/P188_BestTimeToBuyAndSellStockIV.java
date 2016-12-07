@@ -13,5 +13,7 @@ package leetcode;
  */
 
 public class P188_BestTimeToBuyAndSellStockIV {
-
+	public static void main(String[] args) {
+		syso
+	}
 }

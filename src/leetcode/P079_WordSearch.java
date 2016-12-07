@@ -85,7 +85,6 @@ public class P079_WordSearch {
 				for (int j = 0; j != board[0].length; j ++)
 					if (map.containsKey(board[i][j]) && ! isVisited[i][j])
 						search(i, j, 0);
-			return isFound;
 		}
 		private void search(int i, int j, int c) {
 			

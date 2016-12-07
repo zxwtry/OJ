@@ -43,7 +43,6 @@ public class P432_AllO_oneDataStructure {
 	    
 	    /** Returns one of the keys with maximal value. */
 	    public String getMaxKey() {
-	        return "";
 	    }
 	    
 	    /** Returns one of the keys with Minimal value. */

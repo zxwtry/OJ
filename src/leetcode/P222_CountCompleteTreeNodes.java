@@ -28,6 +28,7 @@ public class P222_CountCompleteTreeNodes {
 		});
 		Solution1 s = new Solution1();
 		System.out.println(s.countNodes(root));
+		syso
 	}
 	/*
 	 *  是一个完全二叉树，可能是满二叉树

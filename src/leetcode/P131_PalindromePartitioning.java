@@ -55,7 +55,6 @@ public class P131_PalindromePartitioning {
 			}
 			
 			
-	        return ans_final;
 	    }
 		void add_to_ans_final(int[] arr) {
 			char[] cs_set = new char[arr.length - 2 + cs.length];

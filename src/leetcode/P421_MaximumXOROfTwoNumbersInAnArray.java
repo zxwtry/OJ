@@ -18,6 +18,7 @@ package leetcode;
 
 public class P421_MaximumXOROfTwoNumbersInAnArray {
 	public static void main(String[] args) {
+		syso
 	}
 //	static class Solution {
 //	    public int findMaximumXOR(int[] nums) {

@@ -35,7 +35,6 @@ public class P435_Non_OverlappingIntervals {
 	}
 	static class Solution {
 	    public int eraseOverlapIntervals(Interval[] intervals) {
-	        return 0;
 	    }
 	}
 	static class Interval {

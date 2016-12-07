@@ -2,7 +2,7 @@ package leetcode;
 
 public class P220_ContainsDuplicateIII {
 	public static void main(String[] args) {
-		
+		syso
 	}
 	static class Solution {
 		int[] maxK = null;

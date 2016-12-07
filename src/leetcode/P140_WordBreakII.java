@@ -26,7 +26,6 @@ public class P140_WordBreakII {
 		List<String> ans = new ArrayList<String>();
 	    public List<String> wordBreak(String s, Set<String> wordDict) {
 	    	
-	        return ans;
 	    }
 	}
 }

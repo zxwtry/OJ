@@ -165,5 +165,12 @@ public class P011_ContainerWithMostWater {
 			return sti;
 		}
 	}
+	
+	static class Solution3 {
+		public int maxArea(int[] height) {
+			
+		}
+	}
+	
 }
 
