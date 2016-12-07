@@ -14,6 +14,7 @@ import java.util.Scanner;
  * @date        2016年11月30日 上午11:59:18
  * @details     来源是一个网贴，对nowcoder.com.百度17_赶火车测试。
  * @details     自己认为比较好的一份代码。
+ * @details     http://exercise.acmcoder.com/online/online_judge_ques?ques_id=3363&konwledgeId=40
  */
 public class RECITE_Graph_Dijkstra0 {
 	public static void main(String[] args) {
