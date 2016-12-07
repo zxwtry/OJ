@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     stl

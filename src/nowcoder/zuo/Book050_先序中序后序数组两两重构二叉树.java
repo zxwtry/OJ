@@ -7,7 +7,7 @@ import java.util.Queue;
 import tools.TreeNode辅助.TreeNode;
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     nowcoder.zuo
@@ -222,7 +222,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -250,7 +250,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -277,7 +277,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -310,7 +310,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -339,7 +339,7 @@ public class Book050_先序中序后序数组两两重构二叉树 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo

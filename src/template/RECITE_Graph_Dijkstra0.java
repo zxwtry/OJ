@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     stl

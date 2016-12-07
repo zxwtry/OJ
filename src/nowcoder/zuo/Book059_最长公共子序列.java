@@ -38,7 +38,7 @@ public class Book059_最长公共子序列 {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -63,7 +63,7 @@ public class Book059_最长公共子序列 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -90,7 +90,7 @@ public class Book059_最长公共子序列 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo

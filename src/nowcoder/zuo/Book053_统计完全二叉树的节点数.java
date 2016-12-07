@@ -6,7 +6,7 @@ import java.util.Queue;
 import tools.TreeNode辅助.TreeNode;
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     nowcoder.zuo

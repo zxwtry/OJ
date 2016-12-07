@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     template

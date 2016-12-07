@@ -30,7 +30,7 @@ public class Book048_Tarjan算法与并查集解决二叉树节点间最近公�
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -110,7 +110,7 @@ public class Book048_Tarjan算法与并查集解决二叉树节点间最近公�
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo

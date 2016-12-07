@@ -2,7 +2,7 @@ package nowcoder.zuo;
 
 import java.util.ArrayList;
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     nowcoder.zuo
@@ -119,7 +119,7 @@ public class Book056_换钱的最少货币数 {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -244,7 +244,7 @@ public class Book056_换钱的最少货币数 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -275,7 +275,7 @@ public class Book056_换钱的最少货币数 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -308,7 +308,7 @@ public class Book056_换钱的最少货币数 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -342,7 +342,7 @@ public class Book056_换钱的最少货币数 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo

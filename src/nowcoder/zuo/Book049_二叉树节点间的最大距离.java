@@ -18,7 +18,7 @@ import tools.TreeNode辅助.TreeNode;
  */
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     nowcoder.zuo
@@ -56,7 +56,7 @@ public class Book049_二叉树节点间的最大距离 {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -101,7 +101,7 @@ public class Book049_二叉树节点间的最大距离 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo

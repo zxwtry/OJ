@@ -6,7 +6,7 @@ import java.util.HashSet;
 import tools.TreeNode辅助.TreeNode;
 
 /**
- * @auther      zxwtry
+ * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
  * @package     nowcoder.zuo
@@ -74,7 +74,7 @@ public class Book047_在二叉树中找到两个节点的最近公共祖先 {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
@@ -98,7 +98,7 @@ public class Book047_在二叉树中找到两个节点的最近公共祖先 {
 	}
 	
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo

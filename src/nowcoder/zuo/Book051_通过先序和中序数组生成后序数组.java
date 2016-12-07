@@ -37,7 +37,7 @@ public class Book051_通过先序和中序数组生成后序数组 {
 	}
 
 	/**
-	 * @auther      zxwtry
+	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
 	 * @project     OJ
 	 * @package     nowcoder.zuo
