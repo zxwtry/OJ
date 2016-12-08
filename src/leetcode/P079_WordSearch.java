@@ -1,6 +1,8 @@
 package leetcode;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 
 /*
@@ -27,12 +29,12 @@ public class P079_WordSearch {
 	public static void main(String[] args) {
 		char[][] board = null;
 		board = new char[][] {
-			{'A','B','C','E'},
-			{'S','F','C','S'},
-			{'A','D','E','E'}
+			"ABCE".toCharArray(),
+			"SFES".toCharArray(), 
+			"ADEE".toCharArray(),
 		};
-		String word = "ABCB";
-		System.out.println(new Solution2().exist(board, word));
+		String word = "ABCESEEEFS";
+		System.out.println(new Solution3().exist(board, word));
 	}
 	/*
 	 * 	没有正确理解题意。
@@ -85,9 +87,75 @@ public class P079_WordSearch {
 				for (int j = 0; j != board[0].length; j ++)
 					if (map.containsKey(board[i][j]) && ! isVisited[i][j])
 						search(i, j, 0);
+			return false;
 		}
 		private void search(int i, int j, int c) {
 			
+		}
+	}
+	
+	/**
+	 * @author      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     leetcode
+	 * @file        P079_WordSearch.java
+	 * @type        Solution3
+	 * @date        2016年12月8日 下午3:57:13
+	 * @details     31ms 16.54% AC
+	 */
+	static class Solution3 {
+		//不就是一个图遍历嘛
+		char[] c = null;
+		boolean[][] iv = null;
+		boolean[] su = new boolean[] {false};
+		int[] x = new int[] {-1, 1, 0, 0};
+		int[] y = new int[] {0, 0, -1, 1};
+		LinkedList<Integer> xs = new LinkedList<Integer>(); 
+		LinkedList<Integer> ys = new LinkedList<Integer>(); 
+		public boolean exist(char[][] b, String w) {
+			if (b == null || b.length == 0)
+	    		return w == null || w.length() == 0;
+			c = w.toCharArray();
+			iv = new boolean[b.length][b[0].length];
+			for (int i = 0; i < b.length; i ++) {
+				for (int j = 0; j < b[0].length; j ++) {
+					if (b[i][j] == c[0] && ! su[0]) {
+						se(b, i, j, 0);
+						Iterator<Integer> itx = xs.iterator();
+						Iterator<Integer> ity = ys.iterator();
+						while (itx.hasNext()) {
+							int ix = itx.next();
+							int iy = ity.next();
+							iv[ix][iy] = false;
+						}
+						xs.clear();
+						ys.clear();
+					}
+				}
+			}
+			return su[0];
+		}
+		private void se(char[][] b, int i, int j, int ci) {
+			xs.add(i);
+			ys.add(j);
+			iv[i][j] = true;
+			if (ci == c.length-1 || su[0]) {
+				su[0] = true;
+				return;
+			}
+			for (int k = 0; k < x.length; k ++) {
+				int nx = i + x[k], ny = j + y[k];
+				if (nx > -1 && nx < b.length && ny > -1 && ny < b[0].length && 
+						b[nx][ny] == c[ci + 1] && !iv[nx][ny]) {
+					se(b, nx, ny, ci + 1);
+					while(xs.size() > ci + 1) {
+						int px = xs.pollLast();
+						int py = ys.pollLast();
+						iv[px][py] = false;
+					}
+				}
+			}
 		}
 	}
 }
