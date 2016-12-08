@@ -17,13 +17,13 @@ public class P011_ContainerWithMostWater {
 //		System.out.println(new Solution2().maxArea(new int[]{1, 3}));						//1
 //		System.out.println(new Solution2().maxArea(new int[]{3, 1, 3}));					//6
 //		System.out.println(new Solution2().maxArea(new int[]{3, 1, 1, 3}));					//9
-		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 1, 3}));				//12
-		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 9, 1, 3}));			//15
-		System.out.println(new Solution2().maxArea(new int[]{3, 1, 4, 0, 1, 3}));			//15
-//		System.out.println(new Solution2().maxArea(new int[]{1, 1}));						//1
-//		System.out.println(new Solution2().maxArea(new int[]{3, 3}));						//3
-		System.out.println(new Solution2().maxArea(new int[]{8, 9, 8, 7, 7, 7, 7, 7}));		//49
-		System.out.println(new Solution2().maxArea(new int[]{8, 7, 7, 7, 7, 7, 8, 9, 8}));	//64
+//		System.out.println(new Solution3().maxArea(new int[]{3, 1, 4, 1, 3}));				//12
+//		System.out.println(new Solution3().maxArea(new int[]{3, 1, 4, 9, 1, 3}));			//15
+//		System.out.println(new Solution3().maxArea(new int[]{3, 1, 4, 0, 1, 3}));			//15
+//		System.out.println(new Solution5().maxArea(new int[]{1, 2}));						//1
+		System.out.println(new Solution5().maxArea(new int[]{3, 3}));						//3
+		System.out.println(new Solution5().maxArea(new int[]{8, 9, 8, 7, 7, 7, 7, 7}));		//49
+		System.out.println(new Solution5().maxArea(new int[]{8, 7, 7, 7, 7, 7, 8, 9, 8}));	//64
 //		System.out.println(new Solution2().binarySearchUp(new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17}, 0, 4, -100));
 //		System.out.println(new Solution2().binarySearchUp(new int[]{5, 5, 5, 5, 5, 5, 5, 5, 5},  0, 8, 5));
 //		System.out.println(new Solution2().binarySearchUp(new int[]{0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5},  0, 8, 5));
@@ -166,11 +166,87 @@ public class P011_ContainerWithMostWater {
 		}
 	}
 	
+	/**
+	 * @author      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     leetcode
+	 * @file        P011_ContainerWithMostWater.java
+	 * @type        Solution3
+	 * @date        2016年12月8日 下午3:13:32
+	 * @details     TLE
+	 */
 	static class Solution3 {
-		public int maxArea(int[] height) {
-			
+		public int maxArea(int[] h) {
+			if (h == null || h.length < 2) return 0;
+			int max = 0;
+			for (int i = 0; i < h.length; i ++) {
+				for (int j = 0; j < i; j ++) {
+					if (h[i] <= h[j]) {
+						max = Math.max(max, h[i] * (i - j));
+						break;
+					} else {
+						max = Math.max(max, h[j] * (i - j));
+					}
+				}
+			}
+			return max;
 		}
 	}
+	
+	static class Solution4 {
+		public int maxArea(int[] h) {
+			if (h == null || h.length < 2) return 0;
+			int max = 0;
+			for (int i = 0; i < h.length; i ++) {
+				for (int j = 0; j < i; j ++) {
+					if (h[i] <= h[j]) {
+						max = Math.max(max, h[i] * (i - j));
+						break;
+					}
+				}
+				for (int j = h.length - 1; j > i; j --) {
+					if (h[i] <= h[j]) {
+						max = Math.max(max, h[i] * (j - i));
+						break;
+					}
+				}
+			}
+			return max;
+		}
+	}
+	
+	
+	/**
+	 * @author      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     leetcode
+	 * @file        P011_ContainerWithMostWater.java
+	 * @type        Solution5
+	 * @date        2016年12月8日 下午3:29:46
+	 * @details     86.76% 8ms AC
+	 */
+	static class Solution5 {
+		public int maxArea(int[] h) {
+			if (h == null || h.length < 2) return 0;
+			int l = 0, r = h.length - 1, ans = 0, k = 0;
+			while (l < r) {
+				ans = Math.max(Math.min(h[l], h[r]) * (r - l), ans);
+				if (h[l] < h[r]) {
+					k = l;
+					while (k < r && h[k] <= h[l]) k ++;
+					l = k;
+				} else {
+					k = r;
+					while (k > l && h[k] <= h[r]) k --;
+					r = k;
+				}
+			}
+			return ans;
+		}
+	}
+	
 	
 }
 
