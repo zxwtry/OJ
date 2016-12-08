@@ -1,6 +1,5 @@
 package template;
 
-import java.util.Scanner;
 
 /**
  * @author      zxwtry
@@ -10,64 +9,43 @@ import java.util.Scanner;
  * @file        RECITE_String_KMP.java
  * @type        RECITE_String_KMP
  * @date        2016年12月6日 下午4:12:12
- * @details     http://hihocoder.com/problemset/problem/1015
+ * @details     https://leetcode.com/problems/implement-strstr/
  */
 public class RECITE_String_KMP {
 	
-	final static int maxp = 10020, maxs = 1000020;
-	final static char[] p = new char[maxp];
-	final static char[] s = new char[maxs];
-	final static int[] next = new int[maxp];
-	static int pl, sl;
-	
-	static int kmp() {
-		int ans = 0;
-		int pi = 0;
-		for (int si = 0; si <= sl-pl; si ++) {
-			for (; pi < pl; pi ++) {
-				if (s[si + pi] != p[pi]) break;
-			}
-			if (pi == pl) ans ++;
-			pi = next[pi];
+	static class Solution {
+		public int strStr(String s, String p) {
+			int[] next = getNext(p);
+			return kmp(next, s, p);
 		}
-		
-		return ans;
-	}
-	
-	private static void init(String ss, String ps) {
-		pl = ps.length();
-		sl = ss.length();
-		for (int pi = 0; pi < pl; pi ++)
-			p[pi] = ps.charAt(pi);
-		for (int si = 0; si < sl; si ++)
-			s[si] = ss.charAt(si);
-	}
 
-	static void getNext() {
-		next[0] = -1;
-		int bi = -1, fi = 0;
-		while (fi < pl) {
-			if (-1 == bi || p[bi] == p[fi]) {
-				bi ++;
-				fi ++;
-				next[fi] = bi; 
-			} else {
-				bi = next[bi];
+		private int kmp(int[] next, String s, String p) {
+			int pi = 0;
+			for (int si = 0; si <= s.length() - p.length(); si ++) {
+				while (pi < p.length() && s.charAt(si + pi) == p.charAt(pi)) pi ++;
+				if (pi == p.length()) return si;
+				pi = next[pi];
 			}
+			return -1;
 		}
-		next[0] = 0;
+
+		private int[] getNext(String p) {
+			int[] next = new int[p.length() + 1];
+			next[0] = -1;
+			int bi = -1, fi = 0;
+			for (; fi < p.length(); fi ++) {
+				if (bi == -1 || p.charAt(bi) == p.charAt(fi)) {
+					bi ++;
+					fi ++;
+					next[fi] = bi;
+				} else {
+					bi = next[bi];
+				}
+			}
+			next[0] = 0;
+			return next;
+		}
 	}
 	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int times = sc.nextInt();
-		for (int timesIndex = 1; timesIndex <= times; timesIndex ++) {
-			String ps = sc.next(), ss = sc.next();
-			init(ss, ps);
-			getNext();
-			System.out.println(kmp());
-		}
-		sc.close();
-	}
 	
 }
