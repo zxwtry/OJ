@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /*
@@ -12,7 +13,7 @@ import java.util.HashSet;
 	
 	Given:
 	beginWord = "hit"
-	endWord = "cog"
+	endWord = "cog" 
 	wordList = ["hot","dot","dog","lot","log"]
 	Return
 	  [
@@ -31,7 +32,6 @@ import java.util.Set;
 
 public class P126_WordLadderII {
 	public static void main(String[] args) {
-		
 	}
 	static class Solution {
 		List<List<String>> ans = new LinkedList<>();
@@ -78,6 +78,85 @@ public class P126_WordLadderII {
 						cs[j] = c_j;
 					}
 				}
+			}
+			return null;
+		}
+	}
+	
+	
+	static class Solution2 {
+		List<List<String>> ans = new LinkedList<List<String>>();
+		List<String> now = new LinkedList<String>();
+		char[] s = null;
+		char[] p = null;
+		char[] t = null;
+		char[][] m = null;
+		int[][] ne = null;
+		int[] ns = null;
+	    public List<List<String>> findLadders(String beginWord, String endWord, Set<String> w) {
+	    	s = beginWord.toCharArray();
+	    	t = endWord.toCharArray();
+	    	p = new char[s.length];
+	    	m = new char[w.size()][];
+	    	ne = new int[m.length][m.length];
+	    	ns = new int[m.length];
+	    	int mi = 0;
+	    	for (String v : w)
+	    		m[mi ++] = v.toCharArray();
+	    	for (int i = 0; i < s.length; i ++) {
+	    		for (int j = 0; j < i; j ++) {
+	    			int count = 0;
+	    			char[] a = m[i], b = m[j];
+	    			for (int k = 0; k < a.length; k ++) {
+	    				if (a[k] != a[k]) {
+	    					count ++;
+	    				}
+	    				if (count > 2)
+	    					break;
+	    			}
+	    			if (count == 1) {
+	    				ne[i][j] = 1;
+	    				ne[j][i] = 1;
+	    			}
+	    		}
+	    	}
+	    	for (int i = 0; i < s.length; i ++) {
+	    		int pj = -1;
+	    		ns[i] = -1;
+	    		for (int j = 0; j < i; j ++) {
+	    			if (ne[i][j] != 0) {
+	    				if (pj == -1) {
+	    					ns[i] = j;
+	    					ne[i][j] = -1;
+	    					pj = j;
+	    				} else {
+	    					ne[i][pj] = j;
+	    					ne[i][j] = -1;
+	    					pj = j;
+	    				}
+	    			}
+	    		}
+	    	}
+	    	for (int si = 0; si < s.length; si ++) {
+	    		for (char cc = 'a'; cc <= 'z'; cc ++) {
+	    			if (s[si] != cc) {
+	    				for (int i = 0; i < s.length; i ++) {
+	    					p[i] = s[i];
+	    				}
+	    				now.add(beginWord);
+	    				search(w, endWord);
+	    			}
+	    		}
+	    	}
+	    }
+		private void search(Set<String> w, String e) {
+			String tmp = new String(s);
+			if (tmp.equals(e)) {
+				ans.add(e);
+				
+			}
+			if (w.contains(tmp)) {
+				
 			}
 		}
 	}
