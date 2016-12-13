@@ -1,11 +1,11 @@
 package leetcode;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /*
  * 	Given two words (beginWord and endWord), and a dictionary's word list, 
- * find all shortest transformation sequence(s) from beginWord to endWord, such that:
+ * 	find all shortest transformation sequence(s) from beginWord to endWord, such that:
 
 	Only one letter can be changed at a time
 	Each intermediate word must exist in the word list
@@ -27,137 +27,94 @@ import java.util.HashSet;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P126_WordLadderII.java
+ * @type        P126_WordLadderII
+ * @date        2016年12月13日 下午5:16:11
+ * @details     
+ */
 public class P126_WordLadderII {
 	public static void main(String[] args) {
 	}
-	static class Solution {
-		List<List<String>> ans = new LinkedList<>();
-	    public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
-			if (beginWord.equals(endWord)) {
-				return ans;
-			}
-			if (wordList == null) {
-				return ans;
-			}
-			wordList.add(beginWord);
-			wordList.add(endWord);
-			Queue<String> q_str = new LinkedList<>();
-			HashSet<String> set = new HashSet<String>();
-			set.add(beginWord);
-			q_str.add(beginWord);
-			int len = 1;
-			char[] cs = new char[beginWord.length()];
-			while(! q_str.isEmpty()) {
-				len ++;
-				int size = q_str.size();
-				System.out.println(len);
-				for (int i = 0; i < size; i ++) {
-					cs = q_str.poll().toCharArray();
-					for (int j = 0; j < cs.length; j ++) {
-						char c_j = cs[j];
-						for (char c = 'a'; c <= 'z'; c ++) {
-							if (c == c_j) {
-								continue;
-							}
-							cs[j] = c;
-							String now_temp = new String(cs);
-							if (now_temp.equals(endWord)) {
-								return ans;
-							}
-							if (set.contains(now_temp)) {
-								continue;
-							}
-							if (wordList.contains(now_temp)) {
-								q_str.add(now_temp);
-								set.add(now_temp);
-							}
+	
+	/**
+	 * @author      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     leetcode
+	 * @file        P126_WordLadderII.java
+	 * @type        Solution1
+	 * @date        2016年12月13日 下午5:16:17
+	 * @details     AC 132ms 84.85%
+	 */
+	static class Solution1 {
+		List<List<String>> ans;
+		LinkedList<String> l;
+		Map<String, List<String>> m;
+		public List<List<String>> findLadders(String s, String t, Set<String> wl) {
+			ans = new LinkedList<List<String>>();
+			if (wl.size() == 0) return ans;
+			l = new LinkedList<String>();
+			m = new HashMap<String, List<String>>();
+			int cur = 1, next = 0;
+			boolean isFind = false;
+			Set<String> nv = new HashSet<String>(wl);		//not  visited
+			Set<String> hv = new HashSet<String>();			//have visited
+			Queue<String> q = new LinkedList<String>();
+			nv.add(t);
+			nv.remove(s);
+			q.add(s);
+			char[] cs = new char[s.length()];
+			while (! q.isEmpty()) {
+				String w = q.poll();
+				cur --;
+				for (int i = 0; i < w.length(); i ++) cs[i] = w.charAt(i);
+				for (int i = 0; i < w.length(); i ++) {
+					for (char c = 'a'; c <= 'z'; c ++) {
+						cs[i] = c;
+						String nw = new String(cs);
+						if (! nv.contains(nw)) {continue;}
+						if (hv.add(nw)) {
+							next ++;
+							q.add(nw);
 						}
-						cs[j] = c_j;
+						if (! m.containsKey(nw))
+							m.put(nw, new LinkedList<String>());
+						m.get(nw).add(w);
+						if (nw.equals(t)) isFind = true;
 					}
+					cs[i] = w.charAt(i);
+				}
+				if (cur == 0) {
+					if (isFind) break;
+					cur = next;
+					next = 0;
+					nv.removeAll(hv);
+					hv.clear();
 				}
 			}
-			return null;
+			backtrace(t, s);
+			return ans;
 		}
-	}
-	
-	
-	static class Solution2 {
-		List<List<String>> ans = new LinkedList<List<String>>();
-		List<String> now = new LinkedList<String>();
-		char[] s = null;
-		char[] p = null;
-		char[] t = null;
-		char[][] m = null;
-		int[][] ne = null;
-		int[] ns = null;
-	    public List<List<String>> findLadders(String beginWord, String endWord, Set<String> w) {
-	    	s = beginWord.toCharArray();
-	    	t = endWord.toCharArray();
-	    	p = new char[s.length];
-	    	m = new char[w.size()][];
-	    	ne = new int[m.length][m.length];
-	    	ns = new int[m.length];
-	    	int mi = 0;
-	    	for (String v : w)
-	    		m[mi ++] = v.toCharArray();
-	    	for (int i = 0; i < s.length; i ++) {
-	    		for (int j = 0; j < i; j ++) {
-	    			int count = 0;
-	    			char[] a = m[i], b = m[j];
-	    			for (int k = 0; k < a.length; k ++) {
-	    				if (a[k] != a[k]) {
-	    					count ++;
-	    				}
-	    				if (count > 2)
-	    					break;
-	    			}
-	    			if (count == 1) {
-	    				ne[i][j] = 1;
-	    				ne[j][i] = 1;
-	    			}
-	    		}
-	    	}
-	    	for (int i = 0; i < s.length; i ++) {
-	    		int pj = -1;
-	    		ns[i] = -1;
-	    		for (int j = 0; j < i; j ++) {
-	    			if (ne[i][j] != 0) {
-	    				if (pj == -1) {
-	    					ns[i] = j;
-	    					ne[i][j] = -1;
-	    					pj = j;
-	    				} else {
-	    					ne[i][pj] = j;
-	    					ne[i][j] = -1;
-	    					pj = j;
-	    				}
-	    			}
-	    		}
-	    	}
-	    	for (int si = 0; si < s.length; si ++) {
-	    		for (char cc = 'a'; cc <= 'z'; cc ++) {
-	    			if (s[si] != cc) {
-	    				for (int i = 0; i < s.length; i ++) {
-	    					p[i] = s[i];
-	    				}
-	    				now.add(beginWord);
-	    				search(w, endWord);
-	    			}
-	    		}
-	    	}
-	    }
-		private void search(Set<String> w, String e) {
-			String tmp = new String(s);
-			if (tmp.equals(e)) {
-				ans.add(e);
-				
+		private void backtrace(String t, String s) {
+			l.addFirst(t);
+			if (t.equals(s)) {
+				ans.add(new LinkedList<>(l));
+				l.removeFirst();
+				return;
 			}
-			if (w.contains(tmp)) {
-				
-			}
+			if (m.containsKey(t))
+				for (String nt : m.get(t))
+					backtrace(nt, s);
+			l.removeFirst();
 		}
 	}
 }
