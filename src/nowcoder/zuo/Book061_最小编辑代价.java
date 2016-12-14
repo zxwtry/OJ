@@ -1,5 +1,7 @@
 package nowcoder.zuo;
 
+import sun.util.logging.resources.logging;
+
 /**
  * 	
  * 
@@ -17,15 +19,16 @@ package nowcoder.zuo;
  */
 public class Book061_最小编辑代价 {
 	public static void main(String[] args) {
-//		Solution1 sol1 = new Solution1();
-//		Solution2 sol2 = new Solution2();
-//		String s1 = tools.StringUtils.A_生成随机数组A_Z(200);
-//		String s2 = tools.StringUtils.A_生成随机数组A_Z(300);
-		int ic = 5;
+		Solution1 sol1 = new Solution1();
+		Solution2 sol2 = new Solution2();
+		Solution3 sol3 = new Solution3();
+		String s1 = tools.StringUtils.A_生成随机数组A_Z(200);
+		String s2 = tools.StringUtils.A_生成随机数组A_Z(300);
+		int ic = 53;
 		int dc = 3;
-		int rc = 200;
-//		System.out.println(sol1.minEditCost(s1, s2, ic, dc, rc) +"..."+ sol2.minEditCost(s1, s2, ic, dc, rc));
-		System.out.println(new Solution1().minEditCost("abc", "abc", ic, dc, rc));
+		int rc = 400;
+		System.out.println(sol1.minEditCost(s1, s2, ic, dc, rc) + "..."+ sol2.minEditCost(s1, s2, ic, dc, rc)+"..."+ sol3.minEditCost(s1, s2, ic, dc, rc));
+//		System.out.println(new Solution1().minEditCost("abc", "abc", ic, dc, rc));
 		
 	}
 	
@@ -81,5 +84,39 @@ public class Book061_最小编辑代价 {
  		}
 	}
 	
+	static class Solution3 {
+		public int minEditCost(String s1, String s2, int ic, int dc, int rc) {
+			if (s1 == null || s2 == null) return 0;
+			char[] c1 = s1.toCharArray();
+			char[] c2 = s2.toCharArray();
+			char[] longs = c1.length >= c2.length ? c1 : c2;
+			char[] shorts = c1.length < c2.length ? c1 : c2;
+			if (c1.length < c2.length) {
+				int tmp = ic;
+				ic = dc;
+				dc = tmp;
+			}
+			int[] dp = new int[shorts.length + 1];
+			for (int i = 1; i <= shorts.length; i ++)
+				dp[i] = ic * i;
+			for (int i = 1; i <= longs.length; i ++) {
+				int pre = dp[0];
+				dp[0] = dc * i;
+				for (int j = 1; j <= shorts.length; j ++) {
+					int tmp = dp[j];
+					if (longs[i - 1] == shorts[j - 1]) {
+						dp[j] = pre;
+					} else {
+						dp[j] = pre + rc;
+					}
+					dp[j] = Math.min(dp[j], dp[j - 1] + ic);
+					dp[j] = Math.min(dp[j], tmp + ic);
+					pre = tmp;
+				}
+			}
+			return dp[shorts.length];
+			re
+		}
+	}
 	
 }
