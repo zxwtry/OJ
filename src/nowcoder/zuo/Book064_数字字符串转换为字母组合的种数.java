@@ -22,5 +22,20 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book064_数字字符串转换为字母组合的种数 {
-
+	public static void main(String[] args) {
+	}
+	static class Solution1 {
+		public int num(String s) {
+			if (s == null || s.length() == 0) return 0;
+			return process(s, 0);
+		}
+		private int process(String s, int i) {
+			if (i == s.length()) return 1;
+			if (s.charAt(i) == '0') return 0;
+			int res = process(s, i + 1);
+			if (i + 1 < s.length() && (s.charAt(i) - '0') * 10 + s.charAt(i + 1) - '0' < 27)
+				res += process(s, i + 2);
+			return res;
+		}
+	}
 }
