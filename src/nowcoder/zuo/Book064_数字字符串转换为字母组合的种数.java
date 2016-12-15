@@ -38,4 +38,25 @@ public class Book064_数字字符串转换为字母组合的种数 {
 			return res;
 		}
 	}
+	static class Solution2 {
+		public int num(String s) {
+			if (s == null || s.length() == 0) return 0;
+			int l = s.length();
+			int cur = s.charAt(l - 1) == '0' ? 0 : 1;
+			int next = 1;
+			int tmp = 0;
+			for (int i = l - 2; i >= 0; i --) {
+				if (s.charAt(i) == '0') {
+					next = cur;
+					cur = 0;
+				} else {
+					tmp = cur;
+					if ((s.charAt(i)-'0') * 10 + s.charAt(i+1) - '0' < 27)
+						cur += next;
+					next = tmp;
+				}
+			}
+			return cur;
+		}
+	}
 }
