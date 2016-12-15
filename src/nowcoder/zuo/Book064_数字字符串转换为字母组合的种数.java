@@ -23,7 +23,18 @@ package nowcoder.zuo;
  */
 public class Book064_数字字符串转换为字母组合的种数 {
 	public static void main(String[] args) {
+		debug();
 	}
+	private static void debug() {
+		int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据(6, 1, 9);
+		char[] c = new char[arr.length];
+		for (int i = 0; i < c.length; i ++)
+			c[i] = (char)('0' + arr[i]);
+		String s = new String(c);
+		Solution1 s1 = new Solution1();
+		Solution2 s2 = new Solution2();
+		System.out.println(s1.num(s) == s2.num(s));
+ 	}
 	static class Solution1 {
 		public int num(String s) {
 			if (s == null || s.length() == 0) return 0;
