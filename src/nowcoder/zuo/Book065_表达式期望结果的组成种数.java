@@ -83,4 +83,41 @@ public class Book065_表达式期望结果的组成种数 {
 			return res;
 		}
 	}
+	static class Solution2 {
+		public boolean isValid(String e) {
+			if ((e.length() & 0x1) == 0) return false;
+			for (int i = 0; i < e.length(); i += 2)
+				if (e.charAt(i) != '1' && e.charAt(i) != '0') return false;
+			for (int i = 1; i < e.length(); i += 2)
+				if (e.charAt(i) != '&' && e.charAt(i) != '|' && e.charAt(i) != '^') return false;
+			return true;
+		}
+		public int num(String e, boolean d) {
+			if (e == null || e.length() == 0) return 0;
+			if (! isValid(e)) return 0;
+			int[][] t = new int[e.length()][e.length()];
+			int[][] f = new int[e.length()][e.length()];
+			t[0][0] = e.charAt(0) == '0' ? 0 : 1;
+			f[0][0] = e.charAt(0) == '1' ? 0 : 1;
+			for (int i = 2; i < e.length(); i += 2) {
+				t[i][i] = e.charAt(i) == '0' ? 0 : 1;
+				f[i][i] = e.charAt(i) == '1' ? 0 : 1;
+				for (int j = i - 2; j >= 0; j -= 2) {
+					for (int k = j; k < i; k += 2) {
+						if (e.charAt(k+1) == '&') {
+							t[j][i] += t[j][k] * t[k+2][i];
+							f[j][i] += (f[j][k] + t[j][k]) * f[k+2][i] + f[j][k] * t[k+2][i];
+						} else if (e.charAt(k+1) == '|') {
+							t[j][i] += (f[j][k] + t[j][k]) * t[k+2][i] + t[j][k] * f[k+2][i];
+							f[j][i] += f[j][k] * f[k+2][i];
+						} else {
+							t[j][i] += t[j][k] * t[k+2][i] + f[j][k] * f[k+2][i];
+							f[j][i] += t[j][k] * f[k+2][i] + f[j][k] * t[k+2][i];
+						}
+					}
+				}
+			}
+			return d ? t[0][t.length-1] : f[0][f.length-1];
+		}
+	}
 }
