@@ -23,11 +23,15 @@ package nowcoder.zuo;
  */
 public class Book063_龙与地下城_最小初始血量 {
 	public static void main(String[] args) {
-		int[][] m = new int[][] {
-			{-2,-3,3},
-			{-5,-10,1},
-			{0,30,-5},
-		};
+		debug();
+	}
+	private static void debug() {
+		int row = (int)(Math.random() * 100);
+		int col = (int)(Math.random() * 100);
+		int[][] m = new int[row][];
+		for (int i = 0; i < row; i ++) {
+			m[i] = tools.Random随机生成器.A_生成一个随机数据(col, -col*5, col);
+		}
 		Solution2 s2 = new Solution2();
 		System.out.println(s2.minHP(m));
 		Solution1 s1 = new Solution1();
