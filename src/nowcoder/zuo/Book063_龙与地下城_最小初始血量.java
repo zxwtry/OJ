@@ -22,21 +22,6 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book063_龙与地下城_最小初始血量 {
-	public static void main(String[] args) {
-		debug();
-	}
-	private static void debug() {
-		int row = (int)(Math.random() * 100);
-		int col = (int)(Math.random() * 100);
-		int[][] m = new int[row][];
-		for (int i = 0; i < row; i ++) {
-			m[i] = tools.Random随机生成器.A_生成一个随机数据(col, -col*5, col);
-		}
-		Solution2 s2 = new Solution2();
-		System.out.println(s2.minHP(m));
-		Solution1 s1 = new Solution1();
-		System.out.println(s1.minHP(m));
-	}
 	static class Solution1 {
 		public int minHP(int[][] m) {
 			if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) return 1;
