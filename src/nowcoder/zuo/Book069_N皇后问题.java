@@ -1,5 +1,7 @@
 package nowcoder.zuo;
 
+import com.sun.java.swing.plaf.motif.resources.motif_ko;
+
 /**
  * 	N皇后问题是指在N*N的棋盘上要摆N个皇后
  * 	要求任何两个皇后不同行、不同列、不在同一条斜线上。
@@ -44,6 +46,28 @@ public class Book069_N皇后问题 {
 				if (j == record[k] || Math.abs(record[k] - j) == Math.abs(i - k))
 					return false;
 			return true;
+		}
+	}
+	static class Solution2 {
+		public int num(int n) {
+			if (n < 1 || n > 32) return 0;
+			int upperLim = n == 32 ? -1 : (1 << n) - 1;
+			return process(upperLim, 0, 0, 0);
+		}
+		private int process(int upperLim, int colLim, int leftDiaLim, int rightDiaLim) {
+			if (colLim == upperLim) return 1;
+			int pos = 0;
+			int mostRightone = 0;
+			pos = upperLim & (~(colLim | leftDiaLim | rightDiaLim));
+			int res = 0;
+			while (res != 0) {
+				mostRightone = pos & (~ pos + 1);
+				pos = pos - mostRightone;
+				res += process(upperLim, colLim | mostRightone, 
+						(leftDiaLim | mostRightone) << 1, 
+						(rightDiaLim | mostRightone) >>> 1);
+			}
+			return res;
 		}
 	}
 }
