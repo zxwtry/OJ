@@ -1,5 +1,7 @@
 package nowcoder.zuo;
 
+import sun.print.resources.serviceui;
+
 /**
  * 	给定一个整型数组arr，代表数值不同的纸牌排成一条线。
  * 	玩家A和玩家B一次拿走每张纸牌，规定玩家A先拿。
@@ -35,6 +37,21 @@ public class Book066_排成一条线的纸牌博弈问题 {
 		private int s(int[] arr, int i, int j) {
 			if (i == j) return 0;
 			return Math.min(f(arr, i+1, j), f(arr, i, j-1));
+		}
+	}
+	static class Solution2 {
+		public int win(int[] arr) {
+			if (arr == null || arr.length == 0) return 0;
+			int[][] f = new int[arr.length][arr.length];
+			int[][] s = new int[arr.length][arr.length];
+			for (int i = 0; i < arr.length; i ++) {
+				f[i][i] = arr[i];
+				for (int j = i - 1; j >= 0; j --) {
+					f[j][i] = Math.max(arr[j] + s[j+1][i], arr[i] + s[j][i-1]);
+					s[j][i] = Math.min(f[j+1][i], f[j][i-1]);
+				}
+			}
+			return Math.max(f[0][arr.length - 1], s[0][arr.length - 1]);
 		}
 	}
 }
