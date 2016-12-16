@@ -21,5 +21,18 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book067_跳跃游戏 {
-	
+	static class Solution {
+		public int jump(int[] arr) {
+			if (arr == null || arr.length == 0) return 0;
+			int j = 0, c = 0, n = 0;
+			for (int i = 0; i < arr.length; i ++) {
+				if (c < i) {
+					j ++;
+					c = n;
+				}
+				n = Math.max(n, i + arr[i]);
+			}
+			return j;
+		}
+	}
 }
