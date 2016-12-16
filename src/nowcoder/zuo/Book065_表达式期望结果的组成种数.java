@@ -21,33 +21,6 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book065_表达式期望结果的组成种数 {
-	public static void main(String[] args) {
-		debug();
-	}
-	private static void debug() {
-		int n = 21;
-		char[] cs = new char[n];
-		for (int ni = 0; ni < n; ni ++) {
-			if (ni % 2 == 0) {
-				cs[ni] = Math.random() > 0.5 ? '1' : '0';
-			} else {
-				double a = Math.random();
-				if (a < 0.33) {
-					cs[ni] = '&';
-				} else if (a < 0.67) {
-					cs[ni] = '|';
-				} else {
-					cs[ni] = '^';
-				}
-			}
-		}
-		String e = String.valueOf(cs);
-		boolean d = false;
-		Solution1 s1 = new Solution1();
-		Solution2 s2 = new Solution2();
-		System.out.println(e);
-		System.out.println(s1.num(e, d) +"..."+ s2.num(e, d));
-	}
 	static class Solution1 {
 		public boolean isValid(String e) {
 			if ((e.length() & 0x1) == 0) return false;
