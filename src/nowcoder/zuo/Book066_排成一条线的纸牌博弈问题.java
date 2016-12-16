@@ -22,5 +22,19 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book066_排成一条线的纸牌博弈问题 {
-
+	
+	static class Solution1 {
+		public int win(int[] arr) {
+			if (arr == null || arr.length == 0) return 0;
+			return Math.max(f(arr, 0, arr.length - 1), s(arr, 0, arr.length - 1));
+		}
+		private int f(int[] arr, int i, int j) {
+			if (i == j) return arr[i];
+			return Math.max(arr[i] + s(arr, i+1, j), arr[j] + s(arr, i, j-1));
+		}
+		private int s(int[] arr, int i, int j) {
+			if (i == j) return 0;
+			return Math.min(f(arr, i+1, j), f(arr, i, j-1));
+		}
+	}
 }
