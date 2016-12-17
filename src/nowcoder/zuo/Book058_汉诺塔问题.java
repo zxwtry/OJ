@@ -11,31 +11,6 @@ package nowcoder.zuo;
  * @details     汉诺塔问题
  */
 public class Book058_汉诺塔问题 {
-	public static void main(String[] args) {
-		int[] arr = new int[] {3, 3, 3};
-		debugBookSolution进阶_递归版本(arr);
-		debugBookSolution进阶_非递归版本(arr);
-		
-	}
-	
-	static void debugBookSolution进阶_非递归版本(int[] arr) {
-		BookSolution进阶_非递归版本 s = new BookSolution进阶_非递归版本();
-		System.out.println(s.getStep(arr));
-	}
-
-	static void debugBookSolution进阶_递归版本(int[] arr) {
-		BookSolution进阶_递归版本 s = new BookSolution进阶_递归版本();
-		int index = arr.length - 1;
-		int from = 1;
-		int mid = 2;
-		int to = 3;
-		System.out.println(s.getStep(arr, index, from, mid, to));
-	}
-
-	static void debugBookSolution() {
-		BookSolution s = new BookSolution();
-		s.hanoi(3, "左", "中", "右");
-	}
 
 	/**
 	 * @auther      zxwtry
