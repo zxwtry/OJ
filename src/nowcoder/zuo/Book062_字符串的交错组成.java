@@ -17,32 +17,6 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book062_字符串的交错组成 {
-	public static void main(String[] args) {
-		String[] s = new String[] {null, null, null};
-		debugRight(s);
-		System.out.println(new Solution1().isCross(s[0], s[1], s[2]));
-		System.out.println(new Solution2().isCross(s[0], s[1], s[2]));
-	}
-	private static void debugRight(String[] s) {
-		String s1 = tools.StringUtils.A_生成随机数组A_Z(300);
-		String s2 = tools.StringUtils.A_生成随机数组A_Z(200);
-		char[] ans = new char[s1.length() + s2.length()];
-		int a1 = 0, a2 = 0;
-		for (int ai = 0; ai < ans.length; ai ++) {
-			if (a1 < s1.length()) {
-				if (Math.random() > 0.5)
-					ans[ai] = s1.charAt(a1 ++);
-				else
-					ai --;
-			} else {
-				ans[ai] = s2.charAt(a2 ++);
-			}
-		}
-		s[0] = s1;
-		s[1] = s2;
-		s[2] = new String(ans);
-	}
-	
 	static class Solution1 {
 		public boolean isCross(String s1, String s2, String aim) {
 			if (s1 == null || s2 == null || aim == null) return false;
@@ -68,7 +42,6 @@ public class Book062_字符串的交错组成 {
 			return dp[c1.length][c2.length];
 		}
 	}
-	
 	static class Solution2 {
 		public boolean isCross(String s1, String s2, String aim) {
 			if (s1 == null || s2 == null || aim == null) return false;
@@ -97,5 +70,4 @@ public class Book062_字符串的交错组成 {
 			return dp[shorts.length];
 		}
 	}
-	
 }

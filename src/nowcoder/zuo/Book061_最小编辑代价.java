@@ -1,10 +1,15 @@
 package nowcoder.zuo;
 
-import sun.util.logging.resources.logging;
-
 /**
- * 	
- * 
+ * 	给定两个字符串s1和s2，
+ * 	给定int ic代表插入的代价
+ * 	给定int dc代表删除的代价
+ * 	给定int rc代表替换的代价
+ * 	将s1编辑成s2的最小代价
+ * 	举例：
+ * 		s1="abc" s2="adc", ic=5, dc=3, rc=2  返回2
+ * 		s1="abc" s2="adc", ic=5, dc=3, rc=200  返回8
+ * 		s1="abc" s2="abc", ic=5, dc=3, rc=200  返回0
  */
 
 /**
@@ -18,20 +23,6 @@ import sun.util.logging.resources.logging;
  * @details     
  */
 public class Book061_最小编辑代价 {
-	public static void main(String[] args) {
-		Solution1 sol1 = new Solution1();
-		Solution2 sol2 = new Solution2();
-		Solution3 sol3 = new Solution3();
-		String s1 = tools.StringUtils.A_生成随机数组A_Z(200);
-		String s2 = tools.StringUtils.A_生成随机数组A_Z(300);
-		int ic = 53;
-		int dc = 3;
-		int rc = 400;
-		System.out.println(sol1.minEditCost(s1, s2, ic, dc, rc) + "..."+ sol2.minEditCost(s1, s2, ic, dc, rc)+"..."+ sol3.minEditCost(s1, s2, ic, dc, rc));
-//		System.out.println(new Solution1().minEditCost("abc", "abc", ic, dc, rc));
-		
-	}
-	
 	static class Solution1 {
 		public int minEditCost(String s1, String s2, int ic, int dc, int rc) {
 			int row = s1.length() + 1, col = s2.length() + 1;
@@ -64,7 +55,7 @@ public class Book061_最小编辑代价 {
 			int col = s2.length() + 1;
 			if (row < col) return minEditCost(s2, s1, dc, ic, rc);
 			int[] dp = new int[col];
-			for (int i = 1; i < col; i ++) dp[i] = ic * 1;
+			for (int i = 1; i < col; i ++) dp[i] = ic * i;
 			for (int i = 1; i < row; i ++) {
 				int pre = dp[0];
 				dp[0] = dc * i;
@@ -110,12 +101,11 @@ public class Book061_最小编辑代价 {
 						dp[j] = pre + rc;
 					}
 					dp[j] = Math.min(dp[j], dp[j - 1] + ic);
-					dp[j] = Math.min(dp[j], tmp + ic);
+					dp[j] = Math.min(dp[j], tmp + dc);
 					pre = tmp;
 				}
 			}
 			return dp[shorts.length];
-			re
 		}
 	}
 	
