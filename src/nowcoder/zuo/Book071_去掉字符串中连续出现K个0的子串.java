@@ -21,5 +21,34 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book071_去掉字符串中连续出现K个0的子串 {
-	
+	/**
+	 * @author      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book071_去掉字符串中连续出现K个0的子串.java
+	 * @type        Solution1
+	 * @date        2016年12月17日 下午4:38:12
+	 * @details     这是书上提供的解答，有问题。
+	 */
+	static class Solution1 {
+		public String removeKZeros(String s, int k) {
+			if (s == null || s.length() == 0 || k < 1) return s;
+			char[] c = s.toCharArray();
+			int cou = 0, sta = -1;	
+			for (int i = 0; i <= c.length; i ++) {
+				if (i != c.length && c[i] == '0') {
+					cou ++;
+					sta = sta == -1 ? i : sta;
+				} else {
+					if (cou == k)
+						while (cou -- != 0)
+							c[sta ++] = 0;
+					cou = 0;
+					sta = -1;
+				}
+			}
+			return String.valueOf(c);
+		}
+	}
 }
