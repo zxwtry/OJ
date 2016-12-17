@@ -25,5 +25,36 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book072_判断两个字符串是否互为旋转词 {
-
+	static class Solution {
+		public boolean isRotation(String a, String b) {
+			if (a == null || b == null || a.length() != b.length()) return false;
+			return kmp(a, b+b) != -1;
+		}
+		private int kmp(String p, String s) {
+			int[] next = getNext(p);
+			int pi = 0;
+			for (int si = 0; si <= s.length() -  p.length(); si ++) {
+				while (pi < p.length() && p.charAt(pi) == s.charAt(si + pi)) pi ++;
+				if (pi == p.length()) return si;
+				pi = next[pi];
+			}
+			return -1;
+		}
+		private int[] getNext(String p) {
+			int[] next = new int[p.length() + 1];
+			next[0] = -1;
+			int bi = -1, fi = 0;
+			for (; fi < p.length(); fi ++) {
+				if (bi == -1 || p.charAt(bi) == p.charAt(fi)) {
+					bi ++;
+					fi ++;
+					next[fi] = bi;
+				} else {
+					bi = next[bi];
+				}
+			}
+			next[0] = 0;
+			return next;
+		}
+	}
 }
