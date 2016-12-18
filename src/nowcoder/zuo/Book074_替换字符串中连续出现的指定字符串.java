@@ -22,5 +22,64 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book074_替换字符串中连续出现的指定字符串 {
-	
+	static class MySolution {
+		public String replace(String s, String f, String t) {
+			int[] next = getNext(f);
+			int[] ir = new int[s.length()];
+			int fi = 0;
+			for (int i = 0; i <= s.length() - f.length(); i ++) {
+				while (fi < f.length() && s.charAt(fi + i) == f.charAt(fi)) fi ++;
+				if (fi == f.length()) ir[i] = 1;
+				fi = next[fi];
+			}
+			int count = 0;
+			tools.Utils.printArray(ir, 1000);
+			for (int i = 0; i <= s.length() - f.length(); i ++) {
+				if (ir[i] == 0) continue;
+				int j = i;
+				while (j+f.length() <= s.length() - f.length() && ir[j+f.length()] != 0)
+					j += f.length();
+				if (i != j) {
+					for (int k = i + f.length(); k <= j; k += f.length()) {
+						ir[k] = 0;
+					}
+					ir[i] = (j - i) / f.length() + 1;
+				}
+				if (ir[i] != 0)
+				count ++;
+			}
+			if (count == 0) return s;
+			tools.Utils.printArray(ir, 1000);
+			char[] c = new char[s.length() + (t.length() - f.length()) * count];
+			int ci = 0;
+			for (int i = 0; i < s.length(); i ++) {
+				if (ir[i] != 0) {
+					for (int k = 0; k < t.length(); k ++)
+						c[ci++] = t.charAt(k);
+					i += f.length() * ir[i];;
+					i --;
+				} else {
+					c[ci ++] = s.charAt(i);
+				}
+			}
+			return new String(c);
+		}
+
+		private int[] getNext(String f) {
+			int[] next = new int[f.length() + 1];
+			next[0] = -1;
+			int bi = -1, fi = 0;
+			for (; fi < f.length(); fi ++) {
+				if (-1 == bi || f.charAt(bi) == f.charAt(fi)) {
+					bi ++;
+					fi ++;
+					next[fi] = bi;
+				} else {
+					bi = next[bi];
+				}
+			}
+			next[0] = 0;
+			return next;
+		}
+	}
 }
