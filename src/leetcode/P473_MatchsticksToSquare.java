@@ -40,4 +40,47 @@ import java.util.Arrays;
  * @date        2016年12月18日 上午11:09:15
  * @details     
  */
-public class P473_MatchsticksToSquare {}
+public class P473_MatchsticksToSquare {
+	static class Solution {
+		int lay = 0;
+		boolean[] iv = null;
+		boolean isS = false;
+		int sum = 0;
+	    public boolean makesquare(int[] nums) {
+	        sum = 0;
+	        int max = 0;
+	        for (int v : nums) {
+	        	sum += v; 
+	        	max = Math.max(max, v);
+	        }
+	        if (sum % 4 != 0) return false;
+	        sum = sum / 4;
+	        if (max > sum) return false;
+	        Arrays.sort(nums);
+	        iv = new boolean[nums.length];
+	        search(nums, sum, 0);
+	        return isS;
+	    }
+		private void search(int[] n, int need, int l) {
+			if (need == 0) {
+				l ++;
+				if (l == 4) {
+					isS = true;
+					return;
+				}
+				need = sum;
+			}
+			int i = n.length - 1;
+			for (; i > -1; i --) {
+				
+				if (i != n.length - 1 && n[i] == n[i+1] && !iv[i] && !iv[i+1])
+					continue;
+				if (! iv[i] && n[i] <= need && ! isS) {
+					iv[i] = true;
+					search(n, need - n[i], l);
+					iv[i] = false;
+				}
+			}
+		}
+	}
+}
