@@ -1,5 +1,7 @@
 package nowcoder.zuo;
 
+import java.util.Scanner;
+
 /**
  * 	给定一个字符串s，返回s的统计字符串，
  * 	例如："aaabbadddffc"的统计字符串为：
@@ -24,5 +26,22 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book075_字符串的统计字符串 {
-
+	static class Solution1 {
+		public String C(String s) {
+			int pi = 0;
+			StringBuilder st = new StringBuilder();
+			for (int i = 0; i <= s.length(); i ++) {
+				if (i != s.length() && ( i == 0 || (i != 0 && s.charAt(i) == s.charAt(i-1)))) {
+				} else {
+					st.append(s.charAt(pi));
+					st.append('_');
+					st.append(i - pi);
+					st.append('_');
+					pi = i;
+				}
+			}
+			st.deleteCharAt(st.length() - 1);
+			return st.toString();
+		}
+	}
 }
