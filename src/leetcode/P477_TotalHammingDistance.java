@@ -32,4 +32,19 @@ package leetcode;
  * @date        2016年12月18日 上午10:53:37
  * @details     
  */
-public class P477_TotalHammingDistance {}
+public class P477_TotalHammingDistance {
+	static class Solution {
+	    public int totalHammingDistance(int[] nums) {
+	        int n = nums.length;
+	        int ans = 0;
+	        for (int i = 0; i < 32; i ++) {
+	        	int c = 0;
+	        	for (int v : nums) {
+	        		c += ((v >>> i) & 0x1) == 1 ? 1 : 0;
+	        	}
+	        	ans += c * (n -c);
+	        }
+	        return ans;
+	    }
+	}
+}
