@@ -22,6 +22,17 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book074_替换字符串中连续出现的指定字符串 {
+	/**
+	 * @author      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     nowcoder.zuo
+	 * @file        Book074_替换字符串中连续出现的指定字符串.java
+	 * @type        MySolution
+	 * @date        2016年12月18日 下午8:45:18
+	 * @details     效率是BookSolution的很多倍就是了。
+	 * @details     严重怀疑作者在偷懒
+	 */
 	static class MySolution {
 		public String replace(String s, String f, String t) {
 			int[] next = getNext(f);
@@ -33,7 +44,6 @@ public class Book074_替换字符串中连续出现的指定字符串 {
 				fi = next[fi];
 			}
 			int count = 0;
-			tools.Utils.printArray(ir, 1000);
 			for (int i = 0; i <= s.length() - f.length(); i ++) {
 				if (ir[i] == 0) continue;
 				int j = i;
@@ -49,7 +59,6 @@ public class Book074_替换字符串中连续出现的指定字符串 {
 				count ++;
 			}
 			if (count == 0) return s;
-			tools.Utils.printArray(ir, 1000);
 			char[] c = new char[s.length() + (t.length() - f.length()) * count];
 			int ci = 0;
 			for (int i = 0; i < s.length(); i ++) {
@@ -80,6 +89,46 @@ public class Book074_替换字符串中连续出现的指定字符串 {
 			}
 			next[0] = 0;
 			return next;
+		}
+	}
+	static class BookSolution {
+		public String replace(String s, String f, String t) {
+			if (s == null || f == null || s.length() == 0 || f.length() == 0) return s;
+			t = t == null ? "" : t;
+			char[] sc = s.toCharArray();
+			char[] fc = f.toCharArray();
+			int match = 0;
+			for (int i = 0; i < sc.length; i ++) {
+				if (sc[i] == fc[match ++]) {
+					if (match == fc.length) {
+						clear(sc, i , fc.length);
+						match=0;
+					}
+				} else {
+					match=0;
+				}
+			}
+			String res = "";
+			String cur = "";
+			for (int i = 0; i < sc.length;i ++) {
+				if (sc[i] != 0) {
+					cur = cur + String.valueOf(sc[i]);
+				}
+				if (sc[i] == 0 && (i == 0 || sc[i - 1] != 0)) {
+					res = res + cur + t;
+					cur = "";
+				}
+			}
+			if (! cur.equals("")) {
+				res = res + cur;
+			}
+			return res;
+		}
+
+		private void clear(char[] sc, int end, int len) {
+			while (len -- != 0) {
+				sc[end --] = 0;
+			}
 		}
 	}
 }
