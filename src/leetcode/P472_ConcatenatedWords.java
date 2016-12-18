@@ -38,7 +38,7 @@ import java.util.Stack;
  * @details     
  */
 public class P472_ConcatenatedWords {
-	
+	main
 	/**
 	 * @author      zxwtry
 	 * @email       zxwtry@qq.com
@@ -147,6 +147,83 @@ public class P472_ConcatenatedWords {
 		}
 	}
 	
-	
+	/**
+	 * @author      zxwtry
+	 * @email       zxwtry@qq.com
+	 * @project     OJ
+	 * @package     leetcode
+	 * @file        P472_ConcatenatedWords.java
+	 * @type        Solution2
+	 * @date        2016年12月18日 下午4:20:58
+	 * @details     TLE
+	 */
+	static class Solution2 {
+		int[][] ne = null;
+		LinkedList<Integer>[][] sl = null; 
+		@SuppressWarnings("unchecked")
+		public List<String> findAllConcatenatedWordsInADict(String[] ws) {
+			ne = new int[ws.length][];
+			sl = new LinkedList[ws.length][];
+			for (int i = 0; i < ws.length; i ++) {
+				sl[i] = new LinkedList[ws[i].length()];
+				ne[i] = getNext(ws[i]);
+			}
+			init(ws);
+			LinkedList<String> ans = new LinkedList<String>();
+			for (int i = 0; i < ws.length; i ++) {
+				if (ws[i].length() == 0) continue;
+				search(ws, i, 0, ans);
+			}
+			return ans;
+			
+		}
+		private void init(String[] ws) {
+			for (int i = 0; i < ws.length; i ++) {
+				for (int j = 0; j < ws.length; j ++) {
+					if (i == j) continue;
+					String s = ws[i], p = ws[j];
+					int[] next = ne[j];
+					kmp_ll(next, s, p, sl[i], j);
+				}
+			}
+		}
+		private void search(String[] ws, int wi, int index, LinkedList<String> ans) {
+			if (index == ws[wi].length() && (ans.size() == 0 || ! ans.peekLast().equals(ws[wi]))) ans.add(ws[wi]);
+			if (index >= ws[wi].length() || sl[wi][index] == null) return;
+			for (int k : sl[wi][index]) {
+				k --;
+				search(ws, wi, index + ws[k].length(), ans);
+			}
+		}
+		private int kmp_ll(int[] next, String s, String p, LinkedList<Integer>[] sss, int j) {
+			int pi = 0;
+			for (int si = 0; si <= s.length() - p.length(); si ++) {
+				while (pi < p.length() && s.charAt(si + pi) == p.charAt(pi)) pi ++;
+				if (pi == p.length()) {
+					if (sss[si] == null)
+						sss[si] = new LinkedList<>();
+					sss[si].add(j+1);
+				}
+				pi = next[pi];
+			}
+			return -1;
+		}
+		private int[] getNext(String p) {
+			int[] next = new int[p.length() + 1];
+			next[0] = -1;
+			int bi = -1, fi = 0;
+			for (; fi < p.length(); fi ++) {
+				if (bi == -1 || p.charAt(bi) == p.charAt(fi)) {
+					bi ++;
+					fi ++;
+					next[fi] = bi;
+				} else {
+					bi = next[bi];
+				}
+			}
+			next[0] = 0;
+			return next;
+		}
+	}
 	
 }
