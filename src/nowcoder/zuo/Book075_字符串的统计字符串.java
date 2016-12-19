@@ -81,7 +81,6 @@ public class Book075_字符串的统计字符串 {
 			}
 			return concat(res, String.valueOf(num), "");
 		}
-
 		private String concat(String s1, String s2, String s3) {
 			return s1+"_"+s2+(s3.length()==0 ? s3 : "_"+s3);
 		}
