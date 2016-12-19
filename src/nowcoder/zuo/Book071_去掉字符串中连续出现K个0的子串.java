@@ -51,4 +51,30 @@ public class Book071_去掉字符串中连续出现K个0的子串 {
 			return String.valueOf(c);
 		}
 	}
+	static class Solution2 {
+		public String removeKZeros(String s, int k) {
+			if (s == null || s.length() == 0 || k < 1) return s;
+			char[] c = s.toCharArray();
+			int cou = 0, sta = -1;	
+			for (int i = 0; i <= c.length; i ++) {
+				if (i != c.length && c[i] == '0') {
+					cou ++;
+					sta = sta == -1 ? i : sta;
+				} else {
+					if (cou == k)
+						while (cou -- != 0)
+							c[sta ++] = 0;
+					cou = 0;
+					sta = -1;
+				}
+			}
+			sta = 0;
+			for (int i = 0; i < c.length; i ++) {
+				if (c[i] != 0) {
+					c[sta ++] = c[i];
+				}
+			}
+			return new String(c, 0, sta);
+		}
+	}
 }
