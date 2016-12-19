@@ -26,6 +26,7 @@ package nowcoder.zuo;
 public class Book075_字符串的统计字符串 {
 	static class Solution1 {
 		public String C(String s) {
+			if (s == null || s.length() == 0) return "";
 			int pi = 0;
 			StringBuilder st = new StringBuilder();
 			for (int i = 0; i <= s.length(); i ++) {
@@ -62,6 +63,27 @@ public class Book075_字符串的统计字符串 {
 				i += 4;
 			}
 			return '\0';
+		}
+	}
+	static class Solution2 {
+		public String C(String s) {
+			if (s == null || s.length() == 0) return "";
+			char[] cs = s.toCharArray();
+			String res = String.valueOf(cs[0]);
+			int num = 1;
+			for (int i = 1; i < cs.length; i ++) {
+				if (cs[i] != cs[i-1]) {
+					res = concat(res, String.valueOf(num), String.valueOf(cs[i]));
+					num = 1;
+ 				} else {
+ 					num ++;
+ 				}
+			}
+			return concat(res, String.valueOf(num), "");
+		}
+
+		private String concat(String s1, String s2, String s3) {
+			return s1+"_"+s2+(s3.length()==0 ? s3 : "_"+s3);
 		}
 	}
 }
