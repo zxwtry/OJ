@@ -24,8 +24,9 @@ package nowcoder.zuo;
  * @type        Book077_添加最少字符使字符串整体是回文串
  * @date        2016年12月20日 上午10:33:20
  * @details     Solution1原问题
+ * @details     Solution2进阶问题
  */
-public class Book077_添加最少字符使字符串整体是回文串 { 
+public class Book077_添加最少字符使字符串整体是回文串 {
 	static class Solution1 {
 		public String getPalindrome(String s) {
 			if (s == null || s.length() < 2) return s;
@@ -59,6 +60,46 @@ public class Book077_添加最少字符使字符串整体是回文串 {
 				}
 			}
 			return dp;
+		}
+	}
+	static class Solution2 {
+		public String getPalindrome(String s, String p) {
+			if (s == null || s.length() == 0) return "";
+			char[] cs = s.toCharArray();
+			char[] cp = p.toCharArray();
+			char[] a = new char[2 * cs.length - cp.length];
+			int csl = 0;
+			int csr = cs.length - 1;
+			int cpl = 0;
+			int cpr = cp.length - 1;
+			int al = 0;
+			int ar = a.length - 1;
+			int tl = 0;
+			int tr = 0;
+			while (cpl <= cpr) {
+				tl = csl;
+				tr = csr;
+				while (cs[csl] != cp[cpl]) csl ++;
+				while (cs[csr] != cp[cpr]) csr --;
+				set(a, al, ar, cs, tl, csl, csr, tr);
+				al += csl - tl + tr - csr;
+				ar -= csl - tl + tr - csr;
+				a[al ++] = cs[csl ++];
+				a[ar --] = cs[csr --];
+				cpl ++;
+				cpr --;
+			}
+			return new String(a);
+		}
+		private void set(char[] a, int al, int ar, char[] cs, int ls, int le, int as, int ae) {
+			for (int i = ls; i < le; i ++) {
+				a[al ++] = cs[i];
+				a[ar --] = cs[i];
+			}
+			for (int i = ae; i > as; i --) {
+				a[al++] = cs[i];
+				a[ar--] = cs[i];
+			}
 		}
 	}
 }
