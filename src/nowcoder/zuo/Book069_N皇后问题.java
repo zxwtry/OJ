@@ -22,16 +22,6 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book069_N皇后问题 {
-	public static void main(String[] args) {
-		debug();
-	}
-	private static void debug() {
-		for (int n = 1; n < 10; n ++) {
-			Solution1 s1 = new Solution1();
-			Solution2 s2 = new Solution2();
-			System.out.println(s1.num(n) +"..."+ s2.num(n));
-		}
-	}
 	static class Solution1 {
 		public int num(int n) {
 			if (n < 1) return 0;

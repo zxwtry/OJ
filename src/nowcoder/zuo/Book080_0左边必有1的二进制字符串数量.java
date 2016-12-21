@@ -20,7 +20,9 @@ package nowcoder.zuo;
  * @file        Book080_0左边必有1的二进制字符串数量.java
  * @type        Book080_0左边必有1的二进制字符串数量
  * @date        2016年12月21日 下午5:13:05
- * @details     
+ * @details     Solution1   O(2^n)
+ * @details     Solution2   O(n)
+ * @details     Solution3   O(logn) 具体看 Book054_斐波那契系列问题的递归和动态规划
  */
 public class Book080_0左边必有1的二进制字符串数量 {
 	static class Solution1 {
