@@ -26,7 +26,7 @@ package nowcoder.zuo;
  * @date        2016年12月21日 上午9:50:51
  * @details     
  */
-public class Book077_括号字符串的有效性和最长有效长度 {
+public class Book078_括号字符串的有效性和最长有效长度 {
 	static class Solution1 {
 		final char l = '(', r = ')';
 		public boolean isValid(String s) {
@@ -40,6 +40,23 @@ public class Book077_括号字符串的有效性和最长有效长度 {
 				if (c == l) ++ n;
 			}
 			return n == 0;
+		}
+	}
+	static class Solution2 {
+		final char l = '(', r = ')';
+		public int maxLength(String s) {
+			if (s == null || s.length() == 0) return 0;
+			int[] dp = new int[s.length()];
+			int pre = 0, ans = 0;
+			for (int i = 1; i < s.length(); i ++) {
+				if (s.charAt(i) == r) {
+					pre = i - dp[i-1] - 1;
+					if (pre >= 0 && s.charAt(pre) == l)
+						dp[i] = dp[i-1] + 2 + (pre > 0 ? dp[pre - 1] : 0);
+				}
+				ans = Math.max(ans, dp[i]);
+			}
+			return ans;
 		}
 	}
 }
