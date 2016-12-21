@@ -23,5 +23,29 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book080_0左边必有1的二进制字符串数量 {
-	
+	static class Solution1 {
+		public int getNum(int n) {
+			if (n < 1) return 0;
+			return p(1, n);
+		}
+		private int p(int i, int n) {
+			if (i == n-1) return 2;
+			if (i == n) return 1;
+			return p(i+1, n) + p(i+2, n);
+		}
+	}
+	static class Solution2 {
+		public int getNum(int n) {
+			if (n < 1) return 0;
+			else if (n == 1) return 1;
+			else if (n == 2) return 2;
+			int a = 1, b = 2, c = 0;
+			for (int i = 3; i <= n; i ++) {
+				c = a + b;
+				a = b;
+				b = c;
+			}
+			return c;
+		}
+	}
 }
