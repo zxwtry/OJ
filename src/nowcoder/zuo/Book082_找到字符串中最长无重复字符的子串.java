@@ -18,5 +18,18 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book082_找到字符串中最长无重复字符的子串 {
-
+	static class Solution {
+		public int maxUnique(String s) {
+			if (s == null || s.length() == 0) return 0;
+			int[] map = new int[256];
+			int a = 0;
+			for (int i = 0; i < s.length(); i ++) {
+				if (map[s.charAt(i)] == 0) {
+					a ++;
+				}
+				map[s.charAt(i)] ++;
+			}
+			return a;
+		}
+	}
 }
