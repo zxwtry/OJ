@@ -27,5 +27,19 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book077_括号字符串的有效性和最长有效长度 {
-
+	static class Solution1 {
+		final char l = '(', r = ')';
+		public boolean isValid(String s) {
+			if (s == null || s.length() == 0) return false;
+			int n = 0;
+			char c = 0;
+			for (int i = 0; i < s.length(); i ++) {
+				c = s.charAt(i);
+				if (c != r && c != l) return false; 
+				if (c == r && -- n < 0) return false;
+				if (c == l) ++ n;
+			}
+			return n == 0;
+		}
+	}
 }
