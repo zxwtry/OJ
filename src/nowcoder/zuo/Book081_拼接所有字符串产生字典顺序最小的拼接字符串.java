@@ -21,5 +21,22 @@ import java.util.Comparator;
  * @details     
  */
 public class Book081_拼接所有字符串产生字典顺序最小的拼接字符串 {
-	
+	static class Solution {
+		public class MC implements Comparator<String> {
+			@Override
+			public int compare(String a, String b) {
+				String c = a+b;
+				String d = b+a;
+				return c.compareTo(d);
+			}
+		}
+		public String pinedString(String[] ss) {
+			if (ss == null || ss.length == 0) return "";
+			Arrays.sort(ss, new MC());
+			StringBuilder st = new StringBuilder();
+			for (String s : ss)
+				st.append(s);
+			return st.toString();
+		}
+	}
 }
