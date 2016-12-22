@@ -1,7 +1,5 @@
 package nowcoder.zuo;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 /**
  * 	字符串匹配问题
  * 	给定字符串s，其中不包含'.'和'*'
@@ -27,5 +25,29 @@ import com.sun.org.apache.bcel.internal.generic.RETURN;
  * @details     
  */
 public class Book085_字符串匹配问题 {
-	
+	static class Solution1 {
+		public boolean isValid(char[] s, char[] p) {
+			for (int i = 0; i < s.length; i ++)
+				if (s[i] == '*' || s[i] == '.') return false;
+			for (int i = 0; i < p.length; i ++) 
+				if (p[i] == '*' && (i == 0 || p[i-1] == '*')) return false;
+			return true;
+		}
+		public boolean isMatch(String str, String exp) {
+			if (str == null || exp == null) return false;
+			char[] s = str.toCharArray();
+			char[] p = exp.toCharArray();
+			return isValid(s, p) ? process(s, p, 0, 0) : false;
+		}
+		private boolean process(char[] s, char[] p, int si, int pi) {
+			if (pi == p.length) return si == s.length;
+			if (pi + 1 == p.length || p[pi + 1] != '*')
+				return si != s.length && (p[pi] == s[si] || p[pi] == '.') && process(s, p, si+1, pi+1);
+			while (si != s.length && (p[pi] == s[si] || p[pi] == '.')) {
+				if (process(s, p, si, pi + 2)) return true;
+				si ++;
+			}
+			return process(s, p, si, pi + 2);
+		}
+	}
 }
