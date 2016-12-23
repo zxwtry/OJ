@@ -39,5 +39,9 @@ package leetcode;
  * @details     
  */
 public class P289_GameOfLife {
-
+	static class Solution {
+	    public void gameOfLife(int[][] board) {
+	        return
+	    }
+	}
 }
