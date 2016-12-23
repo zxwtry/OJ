@@ -28,7 +28,7 @@ public class P283_MoveZeroes {
 	}
 	static class Solution {
 	    public void moveZeroes(int[] nums) {
-	        
+	        re
 	    }
 	}
 }

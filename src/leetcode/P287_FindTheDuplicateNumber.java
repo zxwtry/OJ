@@ -25,5 +25,9 @@ package leetcode;
  * @details     
  */
 public class P287_FindTheDuplicateNumber {
-
+	class Solution {
+	    public int findDuplicate(int[] nums) {
+	        
+	    }
+	}
 }
