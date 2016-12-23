@@ -17,9 +17,9 @@ package nowcoder.zuo;
  * @file        Book085_字典树前缀树的实现.java
  * @type        Book085_字典树前缀树的实现
  * @date        2016年12月22日 下午5:47:37
- * @details     
+ * @details     Trie前缀树，用了path和end两个记录变量
  */
-public class Book085_字典树前缀树的实现 {
+public class Book086_字典树前缀树的实现 {
 	static class Trie {
 		final char startChar = 'a';
 		final char endChar = 'z';
