@@ -27,5 +27,9 @@ package leetcode;
  * @details     
  */
 public class P290_WordPattern {
-
+	static class Solution {
+	    public boolean wordPattern(String pattern, String str) {
+	        
+	    }
+	}
 }
