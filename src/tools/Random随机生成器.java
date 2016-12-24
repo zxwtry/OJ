@@ -7,7 +7,7 @@ public class Random随机生成器 {
 	public static int[] A_生成一个随机数据(int n, int min, int max) {
 		int[] ans = new int[n];
 		int base = min;
-		int range = max - min + 1;
+		long range = (long)max - min + 1;
 		for (int i = 0; i < n; i ++) {
 			ans[i] = base + (int)(Math.random() * range);
 		}
@@ -16,7 +16,7 @@ public class Random随机生成器 {
 	public static int[] A_生成一个随机数据_除了某个数(int n, int min, int max, int val) {
 		int[] ans = new int[n];
 		int base = min;
-		int range = max - min + 1;
+		long range = (long)max - min + 1;
 		for (int i = 0; i < n; i ++) {
 			int new_add = (int)(Math.random() * range);
 			if (new_add == val - min) {
@@ -31,7 +31,7 @@ public class Random随机生成器 {
 		HashSet<Integer> set = new HashSet<Integer>();
 		int[] ans = new int[n];
 		int base = min;
-		int range = max - min + 1;
+		long range = (long)max - min + 1;
 		for (int i = 0; i < n; i ++) {
 			int new_add = (int)(Math.random() * range);
 			if (set.contains(new_add)) {
