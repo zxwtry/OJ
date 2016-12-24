@@ -23,13 +23,6 @@ package nowcoder.zuo;
  * @details     进阶：Solution2
  */
 public class Book089_在其它数都出现偶数次的数组中找到奇数次的数 {
-	public static void main(String[] args) {
-		Solution2 sol2 = new Solution2();
-		int[] arr = new int[] {5, 4, 2, 129, 2, 4};
-		int[] ans = sol2.oddTwo(arr);
-		for (int v : ans)
-			System.out.println(v);
-	}
 	static class Solution1 {
 		public int oddOne(int[] arr) {
 			int ans = 0;
