@@ -23,4 +23,17 @@ package nowcoder.zuo;
  * @date        2016年12月26日 下午9:54:02
  * @details     
  */
-public class Book095_在行列都排好序的矩阵中找数 {}
+public class Book095_在行列都排好序的矩阵中找数 {
+	static class Solution {
+		public boolean isContais(int[][] m, int K) {
+			int row = 0;
+			int col = m[0].length - 1;
+			while (row < m.length && col > -1) {
+				if (m[row][col] == K) return true;
+				else if (m[row][col] > K) col --;
+				else row ++;
+			}
+			return false;
+		}
+	}
+}
