@@ -1,6 +1,7 @@
 package nowcoder.zuo;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * 	先给出可整合数组的定义。如果一个数组在排序之后，每相邻两个数之差的绝对值
@@ -42,6 +43,32 @@ public class Book096_最长的可整合子数组的长度 {
 				if (newArr[i - 1] != newArr[i] - 1)
 					return false;
 			return true;
+		}
+	}
+	static class Soltuion2 {
+		public int getLIL2(int[] arr) {
+			if (arr == null || arr.length == 0) return 0;
+			int len = 0;
+			int max = 0;
+			int min = 0;
+			HashSet<Integer> set = new HashSet<Integer>();
+			for (int i = 0; i < arr.length; i ++) {
+				max = Integer.MIN_VALUE;
+				min = Integer.MAX_VALUE;
+				for (int j = i; i < arr.length; j ++) {
+					if (set.contains(arr[j])) {
+						break;
+					}
+					set.add(arr[j]);
+					max = Math.max(max, arr[j]);
+					min = Math.min(min, arr[j]);
+					if (max - min == j - i) {
+						len = Math.max(len, j - i + 1);
+					}
+				}
+				set.clear();
+			}
+			return len;
 		}
 	}
 }
