@@ -18,15 +18,6 @@ import java.util.Arrays;
  * @details     Solution1:使用长度为k的大堆，时间O(N*logk)
  */
 public class Book092_找到无序数组中最小的k个数 {
-	public static void main(String[] args) {
-		int n = 10000;
-		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, Integer.MIN_VALUE, Integer.MAX_VALUE);
-		int k = (int)(Math.random() * n);
-		Solution1 so1 = new Solution1();
-		Solution2 so2 = new Solution2();
-		Arrays.sort(arr);
-		System.out.println(so1.minK(arr, k) +"..."+ arr[k-1] + "..." + );
-	}
 	static class Solution1 {
 		public int minK(int[] arr, int k) {
 			if (arr == null || k >= arr.length) return 0;
@@ -80,5 +71,87 @@ public class Book092_找到无序数组中最小的k个数 {
 	 * 			如果i>k，说明x处在第k小的数的右边，应该在x的左边寻找第k小的数，
 	 * 					所以递归调用select函数，在左半边寻找k小的数
 	 */
-	static class Solution2 {}
+	static class Solution2 {
+		public int[] getMinKNumsByBFPRT(int[] arr, int k) {
+			if (k < 1 || k > arr.length) return arr;
+			int minKth = getMinKthByBFPRT(arr, k);
+			int[] res = new int[k];
+			int index = 0;
+			for (int i = 0; i != arr.length; i ++) {
+				if (arr[i] < minKth) res[index ++] = arr[i];
+			}
+			for (; index != res.length; index ++)
+				res[index] = minKth;
+			return res;
+		}
+		private int getMinKthByBFPRT(int[] arr, int k) {
+			int[] copyArr = copyArray(arr);
+			return select(copyArr, 0, copyArr.length - 1, k - 1);
+		}
+		private int select(int[] copyArr, int begin, int end, int i) {
+			if (begin == end) return copyArr[begin];
+			int pivot = medianOfMedians(copyArr, begin, end);
+			int[] pivotRange = partition(copyArr, begin, end, pivot);
+			if (i >= pivotRange[0] && i <= pivotRange[1])
+				return copyArr[i];
+			else if (i < pivotRange[0])
+				return select(copyArr, begin, pivotRange[0] - 1, i);
+			else
+				return select(copyArr, pivotRange[1] + 1, end, i);
+		}
+		private int[] partition(int[] copyArr, int begin, int end, int pivot) {
+			int small = begin - 1;
+			int cur = begin;
+			int big = end + 1;
+			while (cur != big) {
+				if (copyArr[cur] < pivot)
+					swap(copyArr, ++small, cur ++);
+				else if (copyArr[cur] > pivot)
+					swap(copyArr, cur, -- big);
+				else
+					cur ++;
+			}
+			int[] range = new int[2];
+			range[0] = small + 1;
+			range[1] = big - 1;
+			return range;
+		}
+		private int medianOfMedians(int[] copyArr, int begin, int end) {
+			int num = end - begin + 1;
+			int offset = num % 5 == 0 ? 0 : 1;
+			int[] mArr = new int[num / 5 + offset];
+			for (int i = 0; i < mArr.length; i ++) {
+				int beginI = begin + i * 5;
+				int endI = beginI + 4;
+				mArr[i] = getMedian(copyArr, beginI, Math.min(end, endI));
+			}
+			return select(mArr, 0, mArr.length - 1, mArr.length / 2);
+		}
+		private int getMedian(int[] copyArr, int begin, int end) {
+			insertionSort(copyArr, begin, end);
+			int sum = end + begin;
+			int mid = (sum / 2) + sum % 2;
+			return copyArr[mid];
+		}
+		private void insertionSort(int[] copyArr, int begin, int end) {
+			for (int i = begin + 1; i != end + 1; i ++) {
+				for (int j = i; j != begin; j --) {
+					if (copyArr[j - 1] > copyArr[j]) {
+						swap(copyArr, j - 1, j);
+					} else break;
+				}
+			}
+		}
+		private void swap(int[] a, int i, int j) {
+			int t = a[i];
+			a[i] = a[j];
+			a[j] = t;
+		}
+		private int[] copyArray(int[] arr) {
+			int[] res = new int[arr.length];
+			for (int i = 0; i != res.length; i ++)
+				res[i] = arr[i];
+			return res;
+		}
+	}
 }
