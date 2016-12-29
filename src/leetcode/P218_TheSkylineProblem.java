@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.List;
+
 /**
  * 	A city's skyline is the outer contour of the silhouette formed by
  *  all the buildings in that city when viewed from a distance. Now
