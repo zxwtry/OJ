@@ -14,18 +14,58 @@ package leetcode;
 	A solution is ["cats and dog", "cat sand dog"].
  */
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P140_WordBreakII.java
+ * @type        P140_WordBreakII
+ * @date        2016年12月29日 下午8:39:47
+ * @details     Solution1: AC 31 ms 3.30%
+ */
 public class P140_WordBreakII {
-	public static void main(String[] args) {
-		
-	}
-	static class Solution {
-		List<String> ans = new ArrayList<String>();
-	    public List<String> wordBreak(String s, Set<String> wordDict) {
-	    	
-	    }
+	static class Solution1 {
+		List<String> a = new LinkedList<String>();
+		StringBuilder st = new StringBuilder();
+		LinkedList<String>[] dp;
+		@SuppressWarnings("unchecked")
+		public List<String> wordBreak(String s, Set<String> wd) {
+			if (s == null || s.length() == 0 || wd == null || wd.size() == 0) return a;
+			dp = new LinkedList[s.length()];
+			for (int i = 0; i < dp.length; i ++) {
+				for (String w : wd) {
+					int j = i+1-w.length();
+					if (j < 0) continue;
+					if (s.substring(j, i+1).equals(w) && 
+							(j == 0 || dp[j-1] != null)) {
+						if (dp[i] == null) dp[i] = new LinkedList<String>();
+						dp[i].add(w);
+					}
+				}
+			}
+			dfs(dp.length - 1);
+			return a;
+		}
+		private void dfs(int i) {
+			if (i < 0) return;
+			if (dp[i] != null)
+			for (String s : dp[i]) {
+				int j = i - s.length();
+				if (j != -1) {
+					st.insert(0, " " + s);
+					dfs(j);
+					st.delete(0, s.length()+1);
+				} else {
+					st.insert(0, s);
+					a.add(st.toString());
+					st.delete(0, s.length());
+				}
+			}
+		}
 	}
 }
