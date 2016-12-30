@@ -22,16 +22,22 @@ package leetcode;
  * @file        P242_ValidAnagram.java
  * @type        P242_ValidAnagram
  * @date        2016年12月12日 下午10:01:59
- * @details     
+ * @details     Solution: AC 7ms 49.78%
  */
 public class P242_ValidAnagram {
-	public static void main(String[] args) {
-		
-	}
 	static class Solution {
 	    public boolean isAnagram(String s, String t) {
-	        
+	        if (s == null || t == null) return s==t;
+	        if (s.length() != t.length()) return false;
+	        int[] map = new int[26];
+	        for (int i = s.length() - 1; i > -1; i --) {
+	        	map[s.charAt(i) - 'a'] ++;
+	        }
+	        for (int i = s.length() - 1; i > -1; i --) {
+	        	int k = -- map[t.charAt(i) - 'a'];
+	        	if (k < 0) return false;
+	        }
+	        return true;
 	    }
 	}
-	
 }
