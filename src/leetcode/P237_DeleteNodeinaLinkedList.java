@@ -1,5 +1,7 @@
 package leetcode;
 
+import tools.ListNode辅助.ListNode;
+
 /**
  * 	Write a function to delete a node (except the tail) in a singly linked list, 
  * 	given only access to that node.
@@ -16,17 +18,14 @@ package leetcode;
  * @file        P237_DeleteNodeinaLinkedList.java
  * @type        P237_DeleteNodeinaLinkedList
  * @date        2016年12月10日 下午10:23:39
- * @details     
+ * @details     Solution: AC 2ms 0.30%
  */
 public class P237_DeleteNodeinaLinkedList {
-	public static void main(String[] args) {
-		
-	}
-	
 	static class Solution {
 	    public void deleteNode(ListNode node) {
-	        
+	        ListNode n = node.next;
+	        node.val = n.val;
+	        node.next = n.next;
 	    }
 	}
-	
 }
