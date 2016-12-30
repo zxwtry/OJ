@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Stack;
+
 import tools.TreeNode辅助.TreeNode;
 
 /**
@@ -30,6 +32,7 @@ import tools.TreeNode辅助.TreeNode;
  * @type        P230_KthSmallestElementInABST
  * @date        2016年12月30日 上午10:02:18
  * @details     Solution1: AC 1ms 51.78%
+ * @details     Solution2: AC 3ms 11.53%
  */
 public class P230_KthSmallestElementInABST {
 	static class Solution1 {
@@ -46,6 +49,23 @@ public class P230_KthSmallestElementInABST {
 			c --;
 			if (c == 0) save = root.val;
 			in(root.right);
+		}
+	}
+	static class Solution2 {
+		public int kthSmallest(TreeNode root, int k) {
+			Stack<TreeNode> stk = new Stack<TreeNode>();
+			while (! stk.isEmpty() || root != null) {
+				if (root != null) {
+					stk.push(root);
+					root = root.left;
+				} else {
+					root = stk.pop();
+					k --;
+					if (k == 0) return root.val;
+					root = root.right;
+				}
+			}
+			return 0;
 		}
 	}
 }
