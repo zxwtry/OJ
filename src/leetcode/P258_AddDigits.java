@@ -29,15 +29,27 @@ package leetcode;
  * @file        P258_AddDigits.java
  * @type        P258_AddDigits
  * @date        2016年12月13日 下午10:18:15
- * @details     
+ * @details     Solution: AC 2ms 22.18%
  */
 public class P258_AddDigits {
-	public static void main(String[] args) {
-		
-	}
 	static class Solution {
 	    public int addDigits(int num) {
-	        
+	        if (num < 10) return num;
+	        int v = num;
+	        int nv = 0;
+	        int c = 0;
+	        while (true) {
+	        	nv = 0;
+	        	c = 0;
+	        	while (v != 0) {
+	        		nv += v % 10;
+	        		v = v / 10;
+	        		c ++;
+	        	}
+	        	v = nv;
+	        	if (c == 1) break;
+	        }
+	        return v;
 	    }
 	}
 }
