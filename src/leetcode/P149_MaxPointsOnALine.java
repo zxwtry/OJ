@@ -18,6 +18,7 @@ import java.util.Map.Entry;
  * @type        P149_MaxPointsOnALine
  * @date        2016年12月30日 上午10:26:23
  * @details     Solution1: AC 128ms 3.48%
+ * @details     Solution2: AC  30ms 54.35%
  */
 public class P149_MaxPointsOnALine {
 	static class Solution1 {
@@ -88,6 +89,32 @@ public class P149_MaxPointsOnALine {
 			public int hashCode() {
 				return (int)(((long)a*10000 + (long)b*100 + c) % 100000007);
 			}
+		}
+	}
+	static class Solution2 {
+		public int maxPoints(Point[] p) {
+			if (p == null || p.length < 2) return p == null ? 0 : p.length;
+			HashMap<Float, Integer> map = new HashMap<Float, Integer>();
+			int ans = 0;
+			for (int i = 0; i < p.length; i ++) {
+				map.clear();
+				int same = 0;
+				int max = 1;
+				for (int j = 0; j < p.length; j ++) {
+					if (i == j) continue;
+					if (p[i].x == p[j].x && p[i].y == p[j].y) {
+						same ++;
+						continue;
+					}
+					float key = p[i].x == p[j].x ? Float.MAX_VALUE : (float)(p[i].y - p[j].y)/(p[i].x - p[j].x);
+					Integer v = map.get(key);
+					int nv = v == null ? 2 : v + 1;
+					max = Math.max(max, nv);
+					map.put(key, nv);
+				}
+				ans = Math.max(ans, max + same);
+			}
+			return ans;
 		}
 	}
 	static class Point {
