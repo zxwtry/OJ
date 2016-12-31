@@ -18,6 +18,7 @@ package nowcoder.zuo;
  * @date        2016年12月31日 下午5:55:15
  * @details     Solution1: 打印所有二元和三元，包含重复
  * @details     Solution2: 打印所有二元，用 l==0 || a[l-1] != a[l]去重
+ * @details     Solution3: 打印所有二元，去重方法和Solution2类似
  */
 public class Book097_不重复打印排序数组中相加和为给定值的所有二元组和三元组 {
 	static class Solution1 {
@@ -54,6 +55,25 @@ public class Book097_不重复打印排序数组中相加和为给定值的所�
 				if (j == 0) {
 					if (l == 0 || a[l-1] != a[l])
 						System.out.println(a[l] + "," + a[r]);
+					l ++; r --;
+				} else if (j < 0) l ++;
+				else r --;
+			}
+		}
+	}
+	static class Solution3 {
+		public void print3(int[] a, int k) {
+			if (a == null || a.length < 3) return;
+			for (int i = 0; i < a.length; i ++)
+				if (i == 0 || a[i] != a[i-1])
+					print3Internal(a, i, i + 1, a.length - 1, k - a[i]);
+		}
+		private void print3Internal(int[] a, int i, int l, int r, int k) {
+			while (l < r) {
+				int j = a[l] + a[r] - k;
+				if (j == 0) {
+					if (l == i+1 || a[l-1] != a[l])
+						System.out.println(a[i]+","+a[l] + "," + a[r]);
 					l ++; r --;
 				} else if (j < 0) l ++;
 				else r --;
