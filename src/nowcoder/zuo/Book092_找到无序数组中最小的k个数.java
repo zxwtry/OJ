@@ -1,7 +1,5 @@
 package nowcoder.zuo;
 
-import java.util.Arrays;
-
 /**
  * 	给一个数组arr，返回这个数组中最小的第k个数
  * 	例如：arr={1, 7, 2, 6, 3, 5, 4}; k=3; 返回3
