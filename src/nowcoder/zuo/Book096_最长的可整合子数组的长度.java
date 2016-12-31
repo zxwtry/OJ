@@ -27,13 +27,11 @@ public class Book096_最长的可整合子数组的长度 {
 			if (arr == null || arr.length == 0) return 0;
 			int len = 0;
 			for (int i = 0; i < arr.length; i ++) {
-				for (int j = i; j < arr.length; j ++)
-				{
+				for (int j = i; j < arr.length; j ++) {
 					if (isIntegrated(arr, i, j))
 						len = Math.max(len, j-i+1);
-					
-					}
 				}
+			}
 			return len;
 		}
 		private boolean isIntegrated(int[] arr, int left, int right) {
