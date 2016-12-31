@@ -24,6 +24,7 @@ import java.util.HashMap;
  * @type        Book098_未排序数组中累加和为给定值的最长子数组系列问题
  * @date        2016年12月31日 下午8:35:33
  * @details     Solution1: 时间O(N^2)，空间O(1)
+ * @details     Solution2: 时间O(N)，空间O(N)
  */
 public class Book098_未排序数组中累加和为给定值的最长子数组系列问题 {
 	static class Solution1 {
@@ -37,6 +38,23 @@ public class Book098_未排序数组中累加和为给定值的最长子数组�
 					if (v == k)
 						maxLen = Math.max(maxLen, j - i + 1);
 				}
+			}
+			return maxLen;
+		}
+	}
+	static class Solution2 {
+		public int getMaxLen(int[] a, int k) {
+			if (a == null || a.length < 1) return 0;
+			HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+			map.put(0, -1);
+			int maxLen = 0;
+			int v = 0;
+			for (int i = 0; i < a.length; i ++) {
+				v += a[i];
+				if (map.containsKey(v - k))
+					maxLen = Math.max(i - map.get(v - k), maxLen);
+				if (! map.containsKey(v))
+					map.put(v, i);
 			}
 			return maxLen;
 		}
