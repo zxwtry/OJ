@@ -36,4 +36,16 @@ public class Book101_自然数数组的排序 {
 			}
 		}
 	}
+	static class Solution2 {
+		public void sort(int[] arr) {
+			int tmp = 0;
+			for (int i = 0; i < arr.length; i ++) {
+				while (arr[i] != i + 1) {
+					tmp = arr[arr[i] - 1];
+					arr[arr[i] - 1] = arr[i];
+					arr[i] = tmp;
+				}
+			}
+		}
+	}
 }
