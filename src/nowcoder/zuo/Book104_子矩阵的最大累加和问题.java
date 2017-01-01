@@ -33,8 +33,31 @@ package nowcoder.zuo;
  * @file        Book104_子矩阵的最大累加和问题.java
  * @type        Book104_子矩阵的最大累加和问题
  * @date        2017年1月1日 下午8:14:03
- * @details     
+ * @details     Solution1: 时间O((N*M)^3)，空间O(1)
  */
 public class Book104_子矩阵的最大累加和问题 {
+	static class Solution1 {
+		public int getMaxSubMatSum(int[][] m) {
+			if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) return 0;
+			int row = m.length, col = m[0].length;
+			int max = Integer.MIN_VALUE;
+			for (int i1 = 0; i1 < row; i1 ++) {
+				for (int j1 = 0; j1 < col; j1 ++) {
+					for (int i2 = i1; i2 < row; i2 ++) {
+						for (int j2 = j1; j2 < col; j2 ++) {
+							int sum = 0;
+							for (int i = i1; i <= i2; i ++) {
+								for (int j = j1; j <= j2; j ++) {
+									sum += m[i][j];
+								}
+							}
+							max = Math.max(max, sum);
+						}
+					}
+				}
+			}
+			return max;
+		}
+	}
 
 }
