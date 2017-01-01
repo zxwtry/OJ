@@ -19,8 +19,21 @@ package nowcoder.zuo;
  * @file        Book101_自然数数组的排序.java
  * @type        Book101_自然数数组的排序
  * @date        2017年1月1日 下午7:36:51
- * @details     
+ * @details     Solution1: 时间O(N)，空间O(1)
  */
 public class Book101_自然数数组的排序 {
-
+	static class Solution1 {
+		public void sort(int[] arr) {
+			int tmp = 0;
+			int next = 0;
+			for (int i = 0; i < arr.length; i ++) {
+				tmp = arr[i];
+				while (arr[i] != i + 1) {
+					next = arr[tmp - 1];
+					arr[tmp - 1] = tmp;
+					tmp = next;
+				}
+			}
+		}
+	}
 }
