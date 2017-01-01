@@ -17,5 +17,17 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book103_子数组的最大累加和问题 {
-
+	static class Solution {
+		public int getMaxSubSum(int[] arr) {
+			if (arr == null || arr.length < 1) return 0;
+			int maxSubSum = Integer.MIN_VALUE;
+			int sum = 0;
+			for (int v : arr) {
+				if (sum < 0) sum = 0;
+				sum += v;
+				maxSubSum = Math.max(maxSubSum, sum);
+			}
+			return maxSubSum;
+		}
+	}
 }
