@@ -25,27 +25,10 @@ import java.util.TreeMap;
  * @details     Solution1: 时间O(N^2)，空间O(1)
  * @details     Solution2: 时间O(N)，空间O(N)
  * @details     看似2比1快很多，但是经测试其实在N=10000时，耗时差不多。。。
+ * @details     Solution3: 时间O(N^logN)，空间O(N)
+ * @details     耗时比例：1:2:3=100:30:1
  */
 public class Book099_未排序数组中累加和小于或等于给定值的最长子数组长度 {
-	public static void main(String[] args) throws InterruptedException {
-		int n = 10000, min = -20, max = 20;
-		int[] a = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
-		
-		
-		long t = System.currentTimeMillis();
-		for (int k = -200; k <= 200; k ++) {
-			Solution1 sol1 = new Solution1();
-			sol1.getMaxLen(a, k);
-		}
-		System.out.println(System.currentTimeMillis()-t);
-		Thread.sleep(1000);
-		t = System.currentTimeMillis();
-		for (int k = -200; k <= 200; k ++) {
-			Solution2 sol2 = new Solution2();
-			sol2.getMaxLen(a, k);
-		}
-		System.out.println(System.currentTimeMillis()-t);
-	}
 	static class Solution1 {
 		public int getMaxLen(int[] a, int k) {
 			if (a == null || a.length < 1) return 0;
@@ -54,9 +37,8 @@ public class Book099_未排序数组中累加和小于或等于给定值的最�
 			for (int i = 0; i < a.length; i ++) {
 				for (int j = i; j < a.length; j ++) {
 					v = i == j ? a[i] : v + a[j];
-					if (v <= k) {
+					if (v <= k)
 						maxLen = Math.max(maxLen, j - i + 1);
-					}
 				}
 			}
 			return maxLen;
@@ -69,9 +51,11 @@ public class Book099_未排序数组中累加和小于或等于给定值的最�
 			TreeMap<Long, Long> t = new TreeMap<Long, Long>();
 			t.put((long)0, (long)-1);
 			int v = 0;
+			long max = 0;
 			for (int i = 0; i < a.length; i ++) {
 				v += a[i];
-				SortedMap<Long, Long> set = t.subMap((long)(v-k), (long)Integer.MAX_VALUE + 1);
+				max += a[i] > 0 ? a[i] : -a[i];
+				SortedMap<Long, Long> set = t.subMap((long)(v-k), Math.max(max, max-k) + 1);
 				if (! set.isEmpty()) {
 					for (Entry<Long, Long> e : set.entrySet())
 						maxLen = Math.max(maxLen, (int)(i - e.getValue()));
@@ -80,6 +64,45 @@ public class Book099_未排序数组中累加和小于或等于给定值的最�
 					t.put((long)v, (long)i);
 			}
 			return maxLen;
+		}
+	}
+	static class Solution3 {
+		public int getMaxLen(int[] a, int k) {
+			if (a == null || a.length < 1) return 0;
+			int[] h = new int[a.length + 1];
+			int v = 0;
+			h[0] = v;
+			for (int i = 0; i < a.length; i ++) {
+				v += a[i];
+				h[i + 1] = Math.max(v, h[i]); 
+			}
+			v = 0;
+			int maxLen = 0;
+			int pre = 0;
+			int len = 0;
+			for (int i = 0; i < a.length; i ++) {
+				v += a[i];
+				pre = getLessIndex(h, v - k);
+				len = pre == -1 ? 0 : i - pre + 1;
+				maxLen = Math.max(maxLen, len);
+			}
+			return maxLen;
+		}
+		private int getLessIndex(int[] h, int num) {
+			int low = 0;
+			int high = h.length - 1;
+			int mid = 0;
+			int lessIndex = -1;
+			while (low <= high) {
+				mid = (low + high) / 2;
+				if (h[mid] >= num) {
+					lessIndex = mid;
+					high = mid - 1;
+				} else {
+					low = mid + 1;
+				}
+			}
+			return lessIndex;
 		}
 	}
 }
