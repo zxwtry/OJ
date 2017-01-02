@@ -19,8 +19,21 @@ package nowcoder.zuo;
  * @file        Book106_数组中子数组的最大累乘积.java
  * @type        Book106_数组中子数组的最大累乘积
  * @date        2017年1月2日 上午10:34:32
- * @details     
+ * @details     Solution1: 时间O(N^3)，空间 O(1)
  */
 public class Book106_数组中子数组的最大累乘积 {
-
+	static class Solution1 {
+		public double getMaxSubMul(double[] arr) {
+			double maxSubMul = Double.MIN_VALUE;
+			for (int i = 0; i < arr.length; i ++) {
+				for (int j = i; j < arr.length; j ++) {
+					double mul = 1.0;
+					for (int k = i; k <= j; k ++)
+						mul *= arr[k];
+					maxSubMul = Math.max(maxSubMul, mul);
+				}
+			}
+			return maxSubMul;
+		}
+	}
 }
