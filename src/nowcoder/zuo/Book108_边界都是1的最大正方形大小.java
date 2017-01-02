@@ -27,6 +27,7 @@ package nowcoder.zuo;
  * @date        2017年1月2日 下午9:21:05
  * @details     Solution1: 时间O(N^4)，空间O(1)
  * @details     Solution2: 时间O(N^4)，空间O(1)
+ * @details     Solution3: 时间O(N^3)，空间O(N^2)
  */
 public class Book108_边界都是1的最大正方形大小 {
 	static class Solution1 {
@@ -78,6 +79,59 @@ public class Book108_边界都是1的最大正方形大小 {
 				}
 			}
 			return max;
+		}
+	}
+	static class Solution3 {
+		public int maxSquareLayer(int[][] m) {
+			if (m == null || m.length == 0 || m[0].length == 0) return 0; 
+			int row = m.length;
+			int col = m[0].length;
+			int[][] r = new int[row][col];
+			int[][] d = new int[row][col];
+			setBorderMap(m, r, d);
+			for (int size = Math.min(row, col); size > 0; size --) {
+				if (hasSizeOfBorder(size, r, d))
+					return size;
+			}
+			return 0;
+		}
+		private boolean hasSizeOfBorder(int size, int[][] r, int[][] d) {
+			for (int i = 0; i < r.length - size + 1; i ++) {
+				for (int j = 0; j < r[0].length - size + 1; j ++) {
+					if (r[i][j] >= size && d[i][j] >= size
+							&& r[i+size-1][j] >= size
+							&& d[i][j+size-1] >= size)
+						return true;
+				}
+			}
+			return false;
+		}
+		private void setBorderMap(int[][] m, int[][] r, int[][] d) {
+			int i = m.length, j = m[0].length;
+			if (m[i - 1][j - 1] == 1) {
+				r[i - 1][j - 1] = 1;
+				d[i - 1][j - 1] = 1;
+			}
+			for (int k = i - 2; k > -1; k --) {
+				if (m[k][j - 1] == 1) {
+					r[k][j - 1] = 1;
+					d[k][j - 1] = d[k + 1][j - 1] + 1;
+				}
+			}
+			for (int k = j - 2; k > -1; k --) {
+				if (m[i - 1][k] == 1) {
+					r[i - 1][k] = r[i - 1][k + 1] + 1;
+					d[i - 1][k] = 1;
+				}
+			}
+			for (int k = i - 2; k > -1; k --) {
+				for (int v = j - 2; v != -1; v --) {
+					if (m[k][v] == 1) {
+						r[k][v] = r[k][v+1] + 1;
+						d[k][v] = d[k+1][v] + 1;
+					}
+				}
+			}
 		}
 	}
 }
