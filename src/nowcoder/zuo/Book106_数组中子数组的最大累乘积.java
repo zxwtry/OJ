@@ -24,6 +24,7 @@ package nowcoder.zuo;
 public class Book106_数组中子数组的最大累乘积 {
 	static class Solution1 {
 		public double getMaxSubMul(double[] arr) {
+			if (arr == null ||  arr.length == 0) return 0.0;
 			double maxSubMul = Double.MIN_VALUE;
 			for (int i = 0; i < arr.length; i ++) {
 				for (int j = i; j < arr.length; j ++) {
@@ -34,6 +35,22 @@ public class Book106_数组中子数组的最大累乘积 {
 				}
 			}
 			return maxSubMul;
+		}
+	}
+	static class Solution2 {
+		public double getMaxSubMul(double[] arr) {
+			if (arr == null ||  arr.length == 0) return 0.0;
+			double maxSubMul = Double.MIN_VALUE;
+			double p = 1;
+			double n = 1;
+			for (double v : arr) {
+				p *= v;
+				n *= v;
+				p = Math.max(Math.max(p, n), v);
+				n = Math.min(Math.min(p, n), v);
+				maxSubMul = Math.max(maxSubMul, p);
+			}
+ 			return maxSubMul;
 		}
 	}
 }
