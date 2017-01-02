@@ -19,8 +19,21 @@ package nowcoder.zuo;
  * @file        Book105_在数组中找到一个局部最小的位置.java
  * @type        Book105_在数组中找到一个局部最小的位置
  * @date        2017年1月2日 上午9:32:38
- * @details     
+ * @details     Solution1: 时间O(N)，空间O(1)
  */
 public class Book105_在数组中找到一个局部最小的位置 {
-	
+	static class Solution1 {
+		public int getLocMinIndex(int[] arr) {
+			if (arr == null || arr.length < 2) 
+				return arr == null ? -1 : arr.length - 1;
+			int n = arr.length;
+			if (arr[0] < arr[1]) return 0;
+			if (arr[n-2] > arr[n-1]) return n-1;
+			for (int i = 1; i < n-1; i ++) {
+				if (arr[i-1] > arr[i] && arr[i+1] > arr[i])
+					return i;
+			}
+			return -1;
+		}
+	}
 }
