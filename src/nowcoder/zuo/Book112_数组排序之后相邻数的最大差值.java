@@ -1,5 +1,9 @@
 package nowcoder.zuo;
 
+import java.util.Arrays;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 /**
  * 	[题目]
  * 	给定一个整型数组arr，返回排序后的相邻两数的最大差值。
@@ -24,5 +28,17 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book112_数组排序之后相邻数的最大差值 {
-
+	static class Solution1 {
+		public int getMaxGap(int[] arr) {
+			if (arr == null || arr.length < 2) return 0;
+			int[] ghost = Arrays.copyOf(arr, arr.length);
+			Arrays.sort(ghost);
+			int maxGap = Integer.MIN_VALUE;
+			for (int i = 1; i < ghost.length; i ++) {
+				maxGap = Math.max(maxGap, ghost[i] - ghost[i - 1]);
+			}
+			return maxGap;
+		}
+	}
+	
 }
