@@ -20,4 +20,16 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book113_从5随机到7随机及其扩展 {
+	static class Solution1 {
+		public int rand1To7Impl() {
+			int newRand = rand1To5() * 5 + rand1To5();
+			while (newRand > 21) {
+				newRand = rand1To5() * 5 + rand1To5();
+			}
+			return newRand;
+		}
+		public int rand1To5() {
+			return (int) (Math.random() * 5) + 1;
+		}
+	}
 }
