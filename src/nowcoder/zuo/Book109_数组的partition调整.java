@@ -31,5 +31,20 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book109_数组的partition调整 {
-
+	static class Solution1 {
+		public void partition(int[] arr) {
+			if (arr == null || arr.length < 2) return;
+			int u = 0, i = 1;
+			while (i != arr.length) {
+				if (arr[i ++] != arr[u]) {
+					swap(arr, ++u, i - 1);
+				}
+			}
+		}
+		private void swap(int[] arr, int i, int j) {
+			int t = arr[i];
+			arr[i] = arr[j];
+			arr[j] = t;
+		}
+	}
 }
