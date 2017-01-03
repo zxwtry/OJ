@@ -47,4 +47,24 @@ public class Book109_数组的partition调整 {
 			arr[j] = t;
 		}
 	}
+	static class Solution2 {
+		public void partition(int[] arr) {
+			if (arr == null || arr.length < 2) return;
+			int left = -1, index = 0, right = arr.length;
+			while (index < right) {
+				if (arr[index] == 0) {
+					swap(arr, ++ left, index ++);
+				} else if (arr[index] == 2) {
+					swap(arr, index, -- right);
+				} else {
+					index ++;
+				}
+			}
+		}
+		private void swap(int[] arr, int i, int j) {
+			int t = arr[i];
+			arr[i] = arr[j];
+			arr[j] = t;
+		}
+	}
 }
