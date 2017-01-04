@@ -23,37 +23,29 @@ package leetcode;
  * @file        P233_NumberofDigitOne.java
  * @type        P233_NumberofDigitOne
  * @date        2016年12月9日 下午10:11:50
- * @details     
+ * @details     Solution: AC 0ms 11.75%
  */
 public class P233_NumberofDigitOne {
-	public static void main(String[] args) {
-		System.out.println(new Solution().countDigitOne(13));
-	}
 	static class Solution {
 	    public int countDigitOne(int n) {
-	    	if (n < 10) return 1;
-	        String s = String.valueOf(n);
-	        int max = 1;
-	        while (max <= n) {
-	        	max = max * 10;
-	        }
-	        max = max / 100;
-	        System.out.println(max);
-	        int ans = 0;
-	        if (s.charAt(0) > '1') {
-		        ans += (s.length() - 1) * max;
-	        	ans += ans * (s.charAt(0) - '1');
-	        	ans += countDigitOne(n - (s.charAt(0) - '0') * max * 10);
-	        	ans += max * 10;
-	        	return ans;
-	        } else {
-	        	ans += (s.length() - 1) * max;
-	        	ans += ans * (s.charAt(0) - '1');
-	        	ans += n - (s.charAt(0) - '0') * max * 10 + 1;
-	        	return ans;
-	        }
-	        return
+	    	if (n < 0) return 0;
+	    	int[] arr = {0,1,1,1,1,1,1,1,1,1,2,4,5,6,7,8,9,10
+	    			,11,12,12,13,13,13,13,13,13,13,13,13,13,14,
+	    			14,14,14,14,14,14,14,14,14,15,15,15,15,15,15
+	    			,15,15,15,15,16,16,16,16,16,16,16,16,16,16,17,
+	    			17,17,17,17,17,17,17,17,17,18,18,18,18,18,18,18,
+	    			18,18,18,19,19,19,19,19,19,19,19,19,19,20,20,20,
+	    			20,20,20,20,20,20};
+	    	if (n < 100) return arr[n];
+	    	char[] c = String.valueOf(n).toCharArray();
+	    	int small = Integer.parseInt(new String(c, 1, c.length - 1));
+	    	int addOnce = 1;
+	    	for (char i = 2; i < c.length; i ++) addOnce *= 10;
+	    	int digitOne = countDigitOne(small);
+	    	if (c[0] == '1') digitOne += small + 1;
+	    	else digitOne += addOnce * 10;
+	    	digitOne += (c[0] - '0') * addOnce * (c.length - 1);
+	    	return digitOne;
 	    }
-	    
 	}
 }
