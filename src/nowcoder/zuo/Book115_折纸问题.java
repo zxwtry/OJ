@@ -23,5 +23,17 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book115_折纸问题 {
+	static class Solution {
+		public void printAllFolds(int N) {
+			printProcess(1, N, true);
+		}
+		private void printProcess(int i, int n, boolean isDown) {
+			if (i < n) {
+				printProcess(i + 1, n, true);
+				System.out.println(isDown ? "down" : "up");
+				printProcess(i + 1, n, false);
+			}
+		}
+	}
 
 }
