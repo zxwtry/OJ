@@ -25,7 +25,8 @@ package nowcoder.zuo;
  * @file        Book114_有关阶乘的两个问题.java
  * @type        Book114_有关阶乘的两个问题
  * @date        2017年1月4日 下午9:42:41
- * @details     Solution1: 时间O(logN)，空间O(1)
+ * @details     Solution1: 时间O(logN)，空间O(1) ---原题目
+ * @details     Solution2: 时间O(logN)，空间O(1) ---进阶题目
  */
 public class Book114_有关阶乘的两个问题 {
 	static class Solution1 {
@@ -37,6 +38,17 @@ public class Book114_有关阶乘的两个问题 {
 				n /= 5;
 			}
 			return zeroNum;
+		}
+	}
+	static class Solution2 {
+		public int getMinIndexOne(int n) {
+			if (n < 1) return -1;
+			int minIndexOne = 0;
+			while (n != 0) {
+				n >>= 1;
+				minIndexOne += n;
+			}
+			return minIndexOne;
 		}
 	}
 }
