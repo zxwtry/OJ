@@ -20,7 +20,10 @@ package nowcoder.zuo;
  * @file        Book115_折纸问题.java
  * @type        Book115_折纸问题
  * @date        2017年1月4日 下午10:05:24
- * @details     
+ * @details     对折第1次产生的折痕：				下
+ * @details     对折第2次产生的折痕：		     上			        下
+ * @details     对折第1次产生的折痕：	      上           下		上	  下
+ * @details     从上到下打印，就是右->中->左。
  */
 public class Book115_折纸问题 {
 	static class Solution {
@@ -35,5 +38,4 @@ public class Book115_折纸问题 {
 			}
 		}
 	}
-
 }
