@@ -25,8 +25,18 @@ package nowcoder.zuo;
  * @file        Book114_有关阶乘的两个问题.java
  * @type        Book114_有关阶乘的两个问题
  * @date        2017年1月4日 下午9:42:41
- * @details     
+ * @details     Solution1: 时间O(logN)，空间O(1)
  */
 public class Book114_有关阶乘的两个问题 {
-
+	static class Solution1 {
+		public int getZeroNum(int n) {
+			if (n < 0) return 0;
+			int zeroNum = 0;
+			while (n != 0) {
+				zeroNum += n / 5;
+				n /= 5;
+			}
+			return zeroNum;
+		}
+	}
 }
