@@ -1,5 +1,7 @@
 package nowcoder.zuo;
 
+import java.util.HashMap;
+
 /**
  * 	[题目]
  * 	哈希表常见的三个操作是put, get和containsKey，而且这三个操作
@@ -29,5 +31,26 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book117_设计有setAll功能的哈希表 {
-
+	static class MyHashMap<K, V> extends HashMap<K, V> {
+		private static final long serialVersionUID = 1L;
+		private HashMap<K, Long> timeMap = new HashMap<K, Long>();
+		private V setAllV = null;
+		private long setAllTime = 0l;
+		@Override
+		public V put(K key, V value) {
+			this.timeMap.put(key, System.currentTimeMillis());
+			return super.put(key, value);
+		}
+		public void setAll(V value) {
+			setAllTime = System.currentTimeMillis();
+			setAllV = value;
+		}
+		@Override
+		public V get(Object key) {
+			if (timeMap.get(key) <= setAllTime) {
+				return setAllV;
+			}
+			return super.get(key);
+		}
+	}
 }
