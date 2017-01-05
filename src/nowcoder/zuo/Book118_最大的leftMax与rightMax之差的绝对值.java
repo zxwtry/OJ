@@ -20,6 +20,7 @@ package nowcoder.zuo;
  * @date        2017年1月5日 下午9:38:19
  * @details     Solution1: 时间复杂度O(N^2)，额外空间O(1)
  * @details     Solution2: 时间复杂度O(N)，额外空间O(N)
+ * @details     Solution3: 时间复杂度O(N)，额外空间O(1)
  */
 public class Book118_最大的leftMax与rightMax之差的绝对值 {
 	static class Solution1 {
@@ -58,6 +59,16 @@ public class Book118_最大的leftMax与rightMax之差的绝对值 {
 			for (int i = 0; i < arr.length - 1; i ++)
 				maxAbs = Math.max(maxAbs, Math.abs(leftMax[i]-rightMax[i]));
 			return maxAbs;
+		}
+	}
+	static class Solution3 {
+		public int getMaxAbs(int[] arr) {
+			if (arr == null || arr.length < 2) return 0;
+			int max = Integer.MIN_VALUE;
+			for (int i = 0; i < arr.length; i ++) {
+				max = Math.max(arr[i], max);
+			}
+			return max - Math.min(arr[0], arr[arr.length - 1]);
 		}
 	}
 }
