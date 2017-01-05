@@ -25,10 +25,28 @@ package nowcoder.zuo;
  * @type        Book116_蓄水池算法
  * @date        2017年1月4日 下午10:20:05
  * @details     题目的核心是蓄水池算法：
- * @details     1，处理1~k号球，直接放进袋子里。
- * @details     1，处理第i号球时(i>k)，以k/i的概率决定
- * @details     是否将i号球放进袋子。如果不决定
+ * @details     1，	处理1~k号球，直接放进袋子里。
+ * @details     2，	处理第i号球时(i>k)，以k/i的概率决定
+ * @details       	是否将i号球放进袋子。如果不决定将第i号球
+ * @details       	放进袋子，直接扔掉第i号球。如果决定将第i号球
+ * @details       	放进袋子，从袋子里的k个球中随机扔掉一个，
+ * @details       	然后把第i号球放入袋子。
+ * @details     3,	处理第i+1号球时，重复步骤1或步骤2
  */
 public class Book116_蓄水池算法 {
-	
+	static class Solution {
+		public int[] getKNumsRand(int k, int max) {
+			if (max < 1 || k < 1) return null;
+			int[] kNumsRand = new int[Math.min(k, max)];
+			for (int i = 0; i < kNumsRand.length; i ++)
+				kNumsRand[i] = i + 1;
+			for (int i = k+1; i <= max; i ++)
+				if (rand(i) <= k)
+					kNumsRand[rand(k) - 1] = i;
+			return kNumsRand;
+		}
+		private int rand(int max) {
+			return (int)(Math.random() * max) + 1;
+		}
+	}
 }
