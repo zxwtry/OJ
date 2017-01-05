@@ -21,5 +21,21 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book118_最大的leftMax与rightMax之差的绝对值 {
-
+	static class Solution1 {
+		public int getMaxAbs(int[] arr) {
+			if (arr == null || arr.length < 2) return 0;
+			int maxAbs = Integer.MIN_VALUE;
+			int maxLeft = 0, maxRight = 0;
+			for (int i = 0; i < arr.length - 1; i ++) {
+				maxLeft = Integer.MIN_VALUE;
+				for (int j = 0; j <= i; j ++)
+					maxLeft = Math.max(maxLeft, arr[j]);
+				maxRight = Integer.MIN_VALUE;
+				for (int j = i + 1; j < arr.length; j ++)
+					maxRight = Math.max(maxRight, arr[j]);
+				maxAbs = Math.max(maxAbs, Math.abs(maxLeft - maxRight));
+			}
+			return maxAbs;
+		}
+	}
 }
