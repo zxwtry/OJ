@@ -18,5 +18,13 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book121_调整0x区间上的数出现的概率 {
-
+	static class Solution1 {
+		public double randXPowerK(int k) {
+			if (k < 1) return 0;
+			double ans = -1;
+			for (int i = 0; i < k; i ++)
+				ans = Math.max(ans,  Math.random());
+			return ans;
+		}
+	}
 }
