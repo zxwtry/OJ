@@ -24,5 +24,33 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book123_一种字符串和数字的对应关系 {
-
+	static class SolutionIntToString {
+		public String getString(char[] chs, int n) {
+			if (chs == null || chs.length == 0 || n < 1) return "";
+			int cur = 1;
+			int base = chs.length;
+			int len = 0;
+			while (n >= cur) {
+				len ++;
+				n -= cur;
+				cur *= base;
+			}
+			char[] ans = new char[len];
+			int index = 0;
+			int ncur = 0;
+			do {
+				cur /= base;
+				ncur = n / cur;
+				ans[index ++] = getKthCharAtChs(chs, ncur + 1); 
+				n %= cur;
+			} while (index != ans.length);
+			return String.valueOf(ans);
+		}
+		private char getKthCharAtChs(char[] chs, int k) {
+			if (k < 1 || k > chs.length) {
+				return 0;
+			}
+			return chs[k - 1];
+		}
+	}
 }
