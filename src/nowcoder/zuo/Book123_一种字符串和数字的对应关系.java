@@ -53,4 +53,28 @@ public class Book123_一种字符串和数字的对应关系 {
 			return chs[k - 1];
 		}
 	}
+	static class SolutionStringToInt {
+		public int getInt(char[] chs, String str) {
+			if (chs == null || chs.length < 1) return 0;
+			char[] strc = str.toCharArray();
+			int base = chs.length;
+			int cur = 1;
+			int ans = 0;
+			for (int i = strc.length - 1; i > -1; i --) {
+				ans += getNthFromChar(chs, strc[i]) * cur;
+				cur *= base;
+			}
+			return ans;
+		}
+		private int getNthFromChar(char[] chs, char c) {
+			int ans = -1;
+			for (int i = 0; i < chs.length; i ++) {
+				if (chs[i] == c) {
+					ans = i + 1;
+					 break;
+				}
+			}
+			return ans;
+		}
+	}
 }
