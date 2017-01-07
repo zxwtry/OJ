@@ -1,5 +1,6 @@
 package nowcoder.zuo;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -31,7 +32,9 @@ import java.util.HashSet;
  * @file        Book122_正数数组的最小不可组成和.java
  * @type        Book122_正数数组的最小不可组成和
  * @date        2017年1月7日 下午9:03:20
- * @details     Solution1: 时间O(2^N)，空间O(N)
+ * @details     Solution1: 时间O(2^N)，空间O(N)	---	原问题
+ * @details     Solution2: 时间O(N*sum)，空间O(N)	--- 原问题
+ * @details     Solution3: 时间O(N*logN)，空间O(1)	--- 原问题
  */
 public class Book122_正数数组的最小不可组成和 {
 	static class Solution1 {
@@ -74,6 +77,21 @@ public class Book122_正数数组的最小不可组成和 {
 				if (! dp[i])
 					return i;
 			return sum + 1;
+		}
+	}
+	static class Solution3 {
+		public int getMinUnformedSum(int[] arr) {
+			if (arr == null || arr.length == 0) return 1;
+			Arrays.sort(arr);
+			int range = 0;
+			for (int i = 0; i < arr.length; i ++) {
+				if (arr[i] > range + 1) {
+					return range + 1;
+				} else {
+					range += arr[i];
+				}
+			}
+			return range + 1;
 		}
 	}
 }
