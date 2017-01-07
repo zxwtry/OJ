@@ -31,6 +31,29 @@ import java.util.HashSet;
  * @file        Book122_正数数组的最小不可组成和.java
  * @type        Book122_正数数组的最小不可组成和
  * @date        2017年1月7日 下午9:03:20
- * @details     
+ * @details     Solution1: 时间O(2^N)，空间O(N)
  */
-public class Book122_正数数组的最小不可组成和 {}
+public class Book122_正数数组的最小不可组成和 {
+	static class Solution1 {
+		public int getMinUnformedSum(int[] arr) {
+			if (arr == null || arr.length == 0) return 1;
+			HashSet<Integer> set = new HashSet<Integer>();
+			process(arr, 0, 0, set);
+			int min = Integer.MAX_VALUE;
+			for (int i = 0; i < arr.length; i ++)
+				min = Math.min(min, arr[i]);
+			for (int i = min + 1; i != Integer.MIN_VALUE; i ++)
+				if (! set.contains(i))
+					return i;
+			return 0;
+		}
+		private void process(int[] arr, int i, int sum, HashSet<Integer> set) {
+			if (i == arr.length) {
+				set.add(sum);
+			} else {
+				process(arr, i + 1, sum, set);
+				process(arr, i + 1, sum + arr[i], set);
+			}
+		}
+	}
+}
