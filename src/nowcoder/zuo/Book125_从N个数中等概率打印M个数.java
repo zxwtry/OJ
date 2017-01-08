@@ -21,5 +21,23 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book125_从N个数中等概率打印M个数 {
-
+	static class Solution {
+		public void printRandM(int[] arr, int m) {
+			if (arr == null || arr.length == 0 || m < 0)
+				return;
+			m = Math.min(arr.length, m);
+			int count = 0;
+			int i = 0;
+			while (count < m) {
+				i = (int) (Math.random() * (arr.length - count));
+				System.out.println(arr[i]);
+				swap(arr, arr.length - count++ - 1, i);
+			}
+		}
+		private void swap(int[] arr, int i, int j) {
+			int t = arr[i];
+			arr[i] = arr[j];
+			arr[j] = t;
+		}
+	}
 }
