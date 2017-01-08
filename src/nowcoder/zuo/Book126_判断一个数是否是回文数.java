@@ -17,5 +17,18 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book126_判断一个数是否是回文数 {
-
+	static class Solution1 {
+		public boolean isPalindrom(int n) {
+			char[] c = String.valueOf(n).toCharArray();
+			int sti = 0, eni = c.length - 1;
+			if (c[sti] == '-') sti ++;
+			while (sti < eni) {
+				if (c[sti] != c[eni])
+					return false;
+				sti ++;
+				eni --;
+			}
+			return true;
+		}
+	}
 }
