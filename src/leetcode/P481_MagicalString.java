@@ -37,4 +37,40 @@ package leetcode;
  * @date        2017年1月8日 上午10:39:47
  * @details     
  */
-public class P481_MagicalString {}
+public class P481_MagicalString {
+	static class Solution {
+		String cons = "122";
+		char sign_1 = '1';
+		char sign_2 = '2';
+		char sign_0 = '0';
+	    public int magicalString(int n) {
+	    	if (n < 0) return 0;
+	    	int count = 0;
+	        if (n <= cons.length()) {
+	        	for (int i = 0; i < n; i ++)
+	        		count += cons.charAt(i) == sign_1 ? 1 : 0;
+	        	return count;
+	        }
+	        char[] cs = new char[n];
+	        System.arraycopy(cons.toCharArray(), 0, cs, 0, cons.length());
+	        int ci = 1, oi = 2;
+	        while (oi < n) {
+	        	char sign = cs[ci + 1];
+	        	if (sign == sign_1) {
+	        		if (oi + 1 >= n) break;
+	        		cs[oi + 1] = cs[oi] == sign_1 ? sign_2 : sign_1;
+	        	} else {
+	        		if (oi + 1 >= n) break;
+	        		cs[oi + 1] = cs[oi] == sign_1 ? sign_2 : sign_1;
+	        		if (oi + 2 >= n) break;
+	        		cs[oi + 2] = cs[oi + 1];
+	        	}
+	        	ci ++;
+	        	oi += sign - sign_0;
+	        }
+	        for (int i = 0; i < n; i ++)
+	        	count += cs[i] == sign_1 ? 1 : 0;
+	        return count;
+	    }
+	}
+}
