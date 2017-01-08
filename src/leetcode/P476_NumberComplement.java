@@ -27,4 +27,16 @@ package leetcode;
  * @date        2017年1月8日 上午10:31:29
  * @details     
  */
-public class P476_NumberComplement {}
+public class P476_NumberComplement {
+	static class Solution {
+	    public int findComplement(int n) {
+	    	int _n = ~ n;
+	    	int i = 1 << 31;
+	    	while ((n & i) == 0) {
+	    		_n ^= i;
+	    		i >>>= 1;
+	    	}
+	        return _n;
+	    }
+	}
+}
