@@ -45,4 +45,19 @@ public class Book124_1到n中1出现的次数 {
 			return numOfOne;
 		}
 	}
+	static class Solution2 {
+		public int getNumOfOne(int n) {
+			if (n < 1) return 0;
+			if (n < 10) return 1;
+			int len = String.valueOf(n).toCharArray().length;
+			int ten_1 = 1;
+			for (int i = 1; i < len; i ++)
+				ten_1 *= 10;
+			int first = n / ten_1;
+			int numOfOne = first == 1 ? n % ten_1 + 1 : ten_1; 
+			numOfOne += first * (len - 1) * (ten_1 / 10);
+			numOfOne += getNumOfOne(n % ten_1);
+			return numOfOne;
+		}
+	}
 }
