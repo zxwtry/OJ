@@ -45,4 +45,28 @@ package leetcode;
  * @date        2017年1月8日 下午4:59:02
  * @details     Solution: AC 10ms
  */
-public class P482_LicenseKeyFormatting {}
+public class P482_LicenseKeyFormatting {
+	static class Solution {
+	    public String licenseKeyFormatting(String s, int k) {
+	    	if (s == null || s.length() < 1 || k < 1) return "";
+	    	int len = 0;
+	    	for (int i = s.length()-1; i > -1; i --)
+	    		len += s.charAt(i) == '-' ? 0 : 1;
+	    	char[] arr = new char[len + (len-1)/k];
+	    	int j = s.length() - 1;
+	    	int count = 0;
+	    	for (int i = arr.length - 1; i > -1; i --) {
+	    		if (count == k) {
+	    			arr[i] = '-';
+	    			count = 0;
+	    		} else {
+	    			while (s.charAt(j) == '-') j --;
+	    			char c = s.charAt(j --);
+	    			arr[i] = c >= 'a' ? (char)(c-'a'+'A') : c;
+	    			count ++;
+	    		}
+	    	}
+	    	return new String(arr);
+	    }
+	}
+}
