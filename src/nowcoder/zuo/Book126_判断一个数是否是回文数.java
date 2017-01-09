@@ -18,7 +18,7 @@ package nowcoder.zuo;
  */
 public class Book126_判断一个数是否是回文数 {
 	static class Solution1 {
-		public boolean isPalindrom(int n) {
+		public boolean isPalindrome(int n) {
 			char[] c = String.valueOf(n).toCharArray();
 			int sti = 0, eni = c.length - 1;
 			if (c[sti] == '-') sti ++;
@@ -27,6 +27,22 @@ public class Book126_判断一个数是否是回文数 {
 					return false;
 				sti ++;
 				eni --;
+			}
+			return true;
+		}
+	}
+	static class Solution2 {
+		public boolean isPalindrome(int n) {
+			if (n == Integer.MIN_VALUE) return false;
+			n = Math.abs(n);
+			int h = 1;
+			while (n / h >= 10)
+				h *= 10;
+			while (n != 0) {
+				if (n / h != n % 10)
+					return false;
+				n = (n % h) / 10;
+				h /= 100;
 			}
 			return true;
 		}
