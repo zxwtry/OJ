@@ -20,15 +20,23 @@ package leetcode;
  * @file        P263_UglyNumber.java
  * @type        P263_UglyNumber
  * @date        2016年12月13日 下午10:22:02
- * @details     
+ * @details     Solution: AC 2ms 18.00%
  */
 public class P263_UglyNumber {
-	public static void main(String[] args) {
-		
-	}
 	static class Solution {
 	    public boolean isUgly(int num) {
-	        
+	        if (num <= 1) return num == 1;
+	        boolean is_2 = false, is_3 = false, is_5 = false;
+	        while (num != 1) {
+	        	is_2 = num % 2 == 0;
+	        	is_3 = num % 3 == 0;
+	        	is_5 = num % 5 == 0;
+	        	if (is_2) num = num / 2;
+	        	if (is_3) num = num / 3;
+	        	if (is_5) num = num / 5;
+	        	if (!is_2 && !is_3 && !is_5) return false;
+	        }
+	        return true;
 	    }
 	}
 }
