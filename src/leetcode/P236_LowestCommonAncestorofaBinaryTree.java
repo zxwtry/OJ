@@ -1,5 +1,12 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+import tools.TreeNode辅助.TreeNode;
+
 /**
  * 	Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
 	
@@ -27,12 +34,57 @@ package leetcode;
  * @file        P236_LowestCommonAncestorofaBinaryTree.java
  * @type        P236_LowestCommonAncestorofaBinaryTree
  * @date        2016年12月10日 下午10:21:43
- * @details     
+ * @details     Solution1: AC 21ms 11.25% 
  */
 public class P236_LowestCommonAncestorofaBinaryTree {
-	static class Solution {
+	static class Solution1 {
 	    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-	        
+	    	if (root == null || p == null || q == null) return null;
+	    	if (p == q) return p;
+	    	LinkedList<TreeNode> qN = new LinkedList<TreeNode>();
+	    	LinkedList<Integer> qI = new LinkedList<Integer>();
+	    	HashMap<TreeNode, TreeNode> parentMap = new HashMap<TreeNode, TreeNode>();
+	    	qN.add(root);
+	    	qI.add(1);
+	    	int pLN = p == root ? 1 : -1;
+	    	int qLN = q == root ? 1 : -1;
+	    	TreeNode rootNow = null;
+	    	int layerNow = 0;
+	    	while (! qN.isEmpty()) {
+	    		rootNow = qN.poll();
+	    		layerNow = qI.poll();
+	    		if (rootNow.left != null) {
+	    			parentMap.put(rootNow.left, rootNow);
+	    			qN.add(rootNow.left);
+	    			qI.add(layerNow + 1);
+	    			if (rootNow.left == p) pLN = layerNow + 1;
+	    			if (rootNow.left == q) qLN = layerNow + 1;
+	    		}
+	    		if (rootNow.right != null) {
+	    			parentMap.put(rootNow.right, rootNow);
+	    			qN.add(rootNow.right);
+	    			qI.add(layerNow + 1);
+	    			if (rootNow.right == p) pLN = layerNow + 1;
+	    			if (rootNow.right == q) qLN = layerNow + 1;
+	    		}
+	    		if (pLN != -1 && qLN != -1) break;
+	    	}
+	    	if (pLN > qLN) {
+	    		TreeNode pG = p;
+	    		for (int i = pLN - qLN; i > 0; i --)
+	    			pG = parentMap.get(pG);
+	    		p = pG;
+	    	} else if (pLN < qLN) {
+	    		TreeNode qG = q;
+	    		for (int i = qLN - pLN; i > 0; i --)
+	    			qG = parentMap.get(qG);
+	    		q = qG;
+	    	}
+	    	while (p != q) {
+	    		p = parentMap.get(p);
+	    		q = parentMap.get(q);
+	    	}
+	    	return p;
 	    }
 	}
 }
