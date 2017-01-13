@@ -1,13 +1,18 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * 	A city's skyline is the outer contour of the silhouette formed by
  *  all the buildings in that city when viewed from a distance. Now
- *   suppose you are given the locations and height of all the buildings
- *    as shown on a cityscape photo (Figure A), write a program to output
- *     the skyline formed by these buildings collectively (Figure B).
+ *  suppose you are given the locations and height of all the buildings
+ *  as shown on a cityscape photo (Figure A), write a program to output
+ *  the skyline formed by these buildings collectively (Figure B).
 
   
 	The geometric information of each building is represented by a triplet 
@@ -55,9 +60,78 @@ import java.util.List;
  * @details     
  */
 public class P218_TheSkylineProblem {
-	static class Solution {
+	public static void main(String[] args) {
+		int[][] b = tools.FileUtils.A_读取二维数组("D:/code/data/P218_TheSkylineProblem.txt", 3);
+//		tools.Utils.A_打印二维数组(b);
+		Solution1 sol1 = new Solution1();
+		List<int[]> ans =  sol1.getSkyline(b);
+		for (int[] a : ans) {
+			if (a != null)
+			tools.Utils.printArray(a, a.length);
+		}
+	}
+	static class Solution1 {
+		List<int[]> ans = null;
+		int h = 0;
+		ArrayList<Integer> lastIndex;
+		int[][] b;
 	    public List<int[]> getSkyline(int[][] buildings) {
-	        
+	    	this.b = buildings;
+	        ans = new LinkedList<int[]>();
+	        lastIndex = new ArrayList<Integer>(b.length);
+	        for (int i = 0; i < b.length; i ++) lastIndex.add(i); 
+	       	Collections.sort(lastIndex, new LastComp());
+	       	dd
+	        return ans;
+	    }
+	    class LastComp implements Comparator<Integer> {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return 0;
+			}
+	    }
+	    
+	}
+	static class Solution {
+	    //大顶推比较器
+	    public class MaxCom implements Comparator<Integer> {
+	        public int compare(Integer a, Integer b){
+	            return b - a ; // 大的在堆的顶端
+	        }
+	    } 
+	    //数组比较器
+	    public class ArrayCom implements Comparator<int[]> {
+	        public int compare(int[] a, int[] b) {
+	            if(a[0] != b[0]) return a[0] - b[0];  //先按左边界进行排序
+	            return b[1] - a[1];  // 相等 则高的在前面
+	        }
+	    }
+	    public List<int[]> getSkyline(int[][] buildings) {  
+	        List<int[]> res = new ArrayList<int[]>();  
+	        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(11, new MaxCom());
+	        List<int[]> ver = new ArrayList<int[]>();  // 记录每一个竖线
+	        for(int i = 0 ; i < buildings.length ; i++){
+	            int[] temp = buildings[i]; 
+	            ver.add(new int[]{temp[0], temp[2]});  // 左边界竖线
+	            ver.add(new int[]{temp[1], -temp[2]});  // 右边界竖线 为了区分 存入负值
+	        }
+	        Collections.sort(ver, new ArrayCom());
+	        int cur = 0, pre = 0;
+	        for(int i = 0 ; i < ver.size() ; i++){
+	            int[] temp = ver.get(i);
+	            if(temp[1] > 0) {  // 左边界
+	                maxHeap.offer(temp[1]);  //高度入队
+	                cur = maxHeap.peek(); // 当前最高的
+	            }else { // 右边界
+	                maxHeap.remove(-temp[1]);  // 将对应的高度从堆中删除 这里就是右边存负值的方便之处
+	                cur = (maxHeap.peek() == null ? 0 : maxHeap.peek()); // 如果右边界是最后一个则高度为0，否则更新当前最高
+	            }
+	            if(cur != pre) {  // 与上一个最高的不相等
+	                res.add(new int[]{temp[0], cur});
+	                pre = cur;  // 保存当前高度为下一次的前面高度
+	            }
+	        }
+	        return res;       
 	    }
 	}
 }
