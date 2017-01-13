@@ -24,9 +24,34 @@ package leetcode;
  * @details     
  */
 public class P238_ProductofArrayExceptSelf {
-	static class Solution {
+	public static void main(String[] args) {
+		int[] nums = new int[] {4, 6, 8, 12, 16, 15};
+		Solution2 sol2 = new Solution2();
+		sol2.productExceptSelf(nums);
+		tools.Utils.printArray(nums, nums.length);
+	}
+	static class Solution1 {
 	    public int[] productExceptSelf(int[] nums) {
-	        
+	    	int sign = nums[0], g = 0, next = 1;
+	    	int[] ans = new int[nums.length];
+	    	for (int i = 1; i < nums.length; i ++) {
+	    		g = gcd(sign, nums[i]);
+	    		sign /= g;
+	    		sign *= nums[i];
+	    	}
+	    	for (int i = 0; i < nums.length; i ++) {
+	    		g = gcd(nums[i], sign / nums[i]);
+	    	}
+	    	return ans;
+	    }
+	    public int gcd(int a, int b) {
+	    	return b == 0 ? a : gcd(b, a % b);
 	    }
 	}
+	static class Solution2 {
+		public int[] productExceptSelf(int[] nums) {
+			
+		}
+	}
+	
 }
