@@ -46,6 +46,7 @@ public class Book100_计算数组的小和 {
 	}
 	static class Solution2 {
 		public int getArrMinSum(int[] arr) {
+			if (arr == null || arr.length < 1) return 0;
 			TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
 			int min = Integer.MAX_VALUE;
 			int arrMinSum = 0;
@@ -60,6 +61,33 @@ public class Book100_计算数组的小和 {
 				map.put(v, val == null ? 1 : val + 1);
 			}
 			return arrMinSum;
+		}
+	}
+	static class Solution3 {
+		int[] h;
+		public int getArrMinSum(int[] arr) {
+			if (arr == null || arr.length < 1) return 0;
+			h = new int[arr.length];
+			return getArrMinSum(arr, 0, arr.length - 1);
+		}
+		private int getArrMinSum(int[] arr, int si, int ei) {
+			if (si == ei) return 0;
+			int mi = (si + ei) / 2;
+			return getArrMinSum(arr, si, mi) + getArrMinSum(arr, mi+1, ei) + merge(arr, si, mi, ei);
+		}
+		private int merge(int[] arr, int si, int mi, int ei) {
+			int hi = 0, i = si, j = mi + 1, smallSum = 0;
+			while (i <= mi && j <= ei) {
+				if (arr[i] <= arr[j]) {
+					smallSum += arr[i] * (ei - j + 1);
+					h[hi ++] = arr[i ++];
+				} else h[hi ++] = arr[j ++];
+			}
+			for (; (j <= ei) || (i <= mi); j ++, i ++)
+				h[hi ++] = i > mi ? arr[j] : arr[i];
+			for (int k = 0; k <= ei - si; k ++)
+				arr[si ++] = h[k]; 
+			return smallSum;
 		}
 	}
 }
