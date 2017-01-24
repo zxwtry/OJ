@@ -27,4 +27,26 @@ public class Book003_两大数的最大公约数 {
 			return gcd(y, x - y);
 		}
 	}
+	static class Solution3 {
+		public long gcd(long x, long y) {
+			if (x < y) return gcd(y, x);
+			if (y == 0) return x;
+			if (isEven(x)) {
+				if (isEven(y)) {
+					return gcd(x >> 1, y >> 1) << 1;
+				} else {
+					return gcd(x >> 1, y);
+				}
+			} else {
+				if (isEven(y)) {
+					return gcd(x, y >> 1);
+				} else {
+					return gcd(y, x - y);
+				}
+			}
+ 		}
+		public boolean isEven(long x) {
+			return (x & 0x1) == 0;
+		}
+	}
 }
