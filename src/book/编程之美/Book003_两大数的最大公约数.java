@@ -49,4 +49,38 @@ public class Book003_两大数的最大公约数 {
 			return (x & 0x1) == 0;
 		}
 	}
+	static class Solution4 {
+		public long gcd(long x, long y) {
+			long t = 0;
+			int leftCount = 0;
+			while (true) {
+				if (x < y) {
+					t = x;
+					x = y;
+					y = t;
+				}
+				if (y == 0) return x << leftCount;
+				if (isEven(x)) {
+					if (isEven(y)) {
+						x = x >> 1;
+						y = y >> 1;
+						leftCount ++;
+					} else {
+						x = x >> 1;
+					}
+				} else {
+					if (isEven(y)) {
+						y = y >> 1;
+					} else {
+						t = x - y;
+						x = y;
+						y = t;
+					}
+				}
+			}
+		}
+		public boolean isEven(long x) {
+			return (x & 0x1) == 0;
+		}
+	}
 }
