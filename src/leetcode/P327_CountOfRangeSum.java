@@ -24,12 +24,25 @@ package leetcode;
  * @file        P327_CountOfRangeSum.java
  * @type        P327_CountOfRangeSum
  * @date        2017年1月10日 下午9:59:31
- * @details     
+ * @details     Solution1: AC 时间O(N^2) 空间O(1)
  */
 public class P327_CountOfRangeSum {
-	static class Solution {
+	static class Solution1 {
 	    public int countRangeSum(int[] nums, int lower, int upper) {
-	        
+	        if (null == nums || nums.length == 0)
+	        	return 0;
+	        int len = nums.length;
+	        int ans = 0;
+	        long sum = 0;
+	        for (int i = 0; i < len; i ++) {
+	        	sum = 0;
+	        	for (int j = i; j < len; j ++) {
+	        		sum += nums[j];
+	        		if (sum >= lower && sum <= upper)
+	        			ans ++;
+	        	}
+	        }
+	        return ans;
 	    }
 	}
 }
