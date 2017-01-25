@@ -36,4 +36,34 @@ public class P367_ValidPerfectSquare {
 	        return sqrt * sqrt == num;
 	    }
 	}
+	static class Solution2 {
+	    public boolean isPerfectSquare(int num) {
+	    	if (num < 0)
+	    		return false;	//负数
+	    	else if (num < 2)
+	    		return true;	//0或1
+	    	int len = 0;
+	    	int n = num;
+	    	while (n != 0) {
+	    		n = n >> 1;
+	    		len ++;
+	    	}
+	    	int min = 1 << ((len-1) / 2);
+	    	int max = min << 1;
+	    	int mid = 0;
+	    	int cut = 0;
+	    	while (min <= max) {
+	    		mid = (min + max) >> 1;
+	    		cut = mid * mid - num;
+	    		if (cut < 0) {
+	    			min = mid + 1;
+	    		} else if (cut > 0) {
+	    			max = mid - 1;
+	    		} else {
+	    			return true;
+	    		}
+	    	}
+	    	return false;
+	    }
+	}
 }
