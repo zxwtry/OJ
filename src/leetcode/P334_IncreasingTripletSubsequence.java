@@ -26,6 +26,7 @@ package leetcode;
  * @type        P334_IncreasingTripletSubsequence
  * @date        2017年1月13日 下午10:21:48
  * @details     Solution1: AC 时间O(N)，空间O(N)
+ * @details     Solution2: AC 时间O(N)，空间O(1)
  */
 public class P334_IncreasingTripletSubsequence {
 	static class Solution1 {
@@ -49,5 +50,28 @@ public class P334_IncreasingTripletSubsequence {
 	    	}
 	    	return false;
 	    }
+	}
+	static class Solution2 {
+		public boolean increasingTriplet(int[] nums) {
+	    	if (nums == null || nums.length < 3)
+	    		return false;
+	    	int len = nums.length;
+	    	int right = len - 1;
+	    	int left = 0;
+	    	while (left < right) {
+	    		while (left < right && left < len && right > -1
+	    				&& nums[left] >= nums[left + 1])
+	    			left ++;
+	    		while (left < right && left < len && right > -1
+	    				&& nums[right] <= nums[right - 1])
+	    			right --;
+	    		if (left + 1 < len && right - 1 > -1 && 
+	    				nums[left + 1] <= nums[right - 1])
+	    			return true;
+	    		left ++;
+	    		right --;
+	    	}
+	    	return false;
+		}
 	}
 }
