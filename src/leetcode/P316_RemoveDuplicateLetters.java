@@ -6,12 +6,12 @@ package leetcode;
  * 	and only once. You must make sure your result is the smallest 
  * 	in lexicographical order among all possible results.
 
-	Example:
-	Given "bcabc"
-	Return "abc"
-	
-	Given "cbacdcbc"
-	Return "acdb"
+ *	Example:
+ *	Given "bcabc"
+ *	Return "abc"
+ *	
+ *	Given "cbacdcbc"
+ *	Return "acdb"
  */
 
 /**
