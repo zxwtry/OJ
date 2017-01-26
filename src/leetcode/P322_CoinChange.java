@@ -25,12 +25,29 @@ package leetcode;
  * @file        P322_CoinChange.java
  * @type        P322_CoinChange
  * @date        2017年1月9日 下午9:09:00
- * @details     
+ * @details     Solution1: AC 优点慢，剪枝没有剪好 
  */
 public class P322_CoinChange {
-	static class Solution {
-	    public int coinChange(int[] coins, int amount) {
-	        
+	static class Solution1 {
+		int len = 0;
+		int use = 0;
+	    public int coinChange(int[] c, int a) {
+	        if (a < 1) return 0;
+	        if (c == null || c.length == 0) return -1;
+	        len = c.length;
+	        use = Integer.MAX_VALUE;
+	        search(c, a, len - 1, 0);
+	        return use;
 	    }
+		private void search(int[] c, int a, int index, int nowUse) {
+			if (nowUse >= use) return;
+			for (int i = index; i > -1; i --) {
+				if (a - c[i] > 0) {
+					search(c, a - c[i], index, nowUse + 1);
+				} else if (a - c[i] == 0) {
+					use = Math.min(use, nowUse + 1);
+				}
+			}
+		}
 	}
 }
