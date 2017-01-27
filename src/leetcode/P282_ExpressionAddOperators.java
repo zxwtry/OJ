@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 	Given a string that contains only digits 0-9 and a target value, 
  * 	return all possibilities to add binary operators (not unary) +, -, 
@@ -25,11 +28,13 @@ package leetcode;
  */
 public class P282_ExpressionAddOperators {
 	public static void main(String[] args) {
-		
+		System.out.println(Integer.MAX_VALUE);
 	}
 	static class Solution {
-	    public List<String> addOperators(String num, int target) {
-	        
+	    public List<String> addOperators(String n, int t) {
+	    	List<String> ans = new LinkedList<String>();
+	    	d
+	    	return ans;
 	    }
 	}
 }
