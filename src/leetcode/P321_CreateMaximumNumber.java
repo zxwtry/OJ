@@ -38,6 +38,8 @@ package leetcode;
 public class P321_CreateMaximumNumber {
 	static class Solution {
 	    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+	        if (nums1 == null || nums2 == null || k < 0 || k > nums1.length + nums2.length)
+	        	return new int[0];
 	        
 	    }
 	}
