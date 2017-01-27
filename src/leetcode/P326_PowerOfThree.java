@@ -29,5 +29,4 @@ public class P326_PowerOfThree {
 	    	return true;
 	    }
 	}
-	
 }
