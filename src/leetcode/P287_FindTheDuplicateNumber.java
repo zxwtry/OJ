@@ -22,12 +22,20 @@ package leetcode;
  * @file        P287_FindTheDuplicateNumber.java
  * @type        P287_FindTheDuplicateNumber
  * @date        2016年12月17日 下午10:26:14
- * @details     
+ * @details     Solution1: 时间O(N),空间O(N)
  */
 public class P287_FindTheDuplicateNumber {
 	static class Solution1 {
 	    public int findDuplicate(int[] nums) {
-	        
+	        if (nums == null || nums.length < 1)
+	        	return 0;
+	        int[] map = new int[nums.length + 1];
+	        for (int v : nums) {
+	        	map[v] ++;
+	        	if (map[v] > 1)
+	        		return v;
+	        }
+	        return 0;
 	    }
 	}
 }
