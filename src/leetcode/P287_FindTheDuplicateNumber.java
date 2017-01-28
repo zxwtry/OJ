@@ -38,4 +38,11 @@ public class P287_FindTheDuplicateNumber {
 	        return 0;
 	    }
 	}
+	static class Solution2 {
+		public int findDuplicate(int[] nums) {
+			if (nums == null || nums.length < 1)
+	        	return 0;
+			
+		}
+	}
 }
