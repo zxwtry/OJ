@@ -5,13 +5,13 @@ package leetcode;
  * 	between 1 and n (inclusive), prove that at least one duplicate number
  *  must exist. Assume that there is only one duplicate number, find the 
  *  duplicate one.
-
-	Note:
-	You must not modify the array (assume the array is read only).
-	You must use only constant, O(1) extra space.
-	Your runtime complexity should be less than O(n2).
-	There is only one duplicate number in the array, but it could 
-	be repeated more than once.
+ *	
+ *	Note:
+ *	You must not modify the array (assume the array is read only).
+ *	You must use only constant, O(1) extra space.
+ *	Your runtime complexity should be less than O(n2).
+ *	There is only one duplicate number in the array, but it could 
+ *	be repeated more than once.
  */
 
 /**
@@ -25,7 +25,7 @@ package leetcode;
  * @details     
  */
 public class P287_FindTheDuplicateNumber {
-	class Solution {
+	static class Solution1 {
 	    public int findDuplicate(int[] nums) {
 	        
 	    }
