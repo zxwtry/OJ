@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.ArrayList;
 
-/*
+/**
  * 	You are given a map in form of a two-dimensional integer grid 
  * 	where 1 represents land and 0 represents water. Grid cells are 
  * 	connected horizontally/vertically (not diagonally). 
@@ -12,16 +12,16 @@ import java.util.ArrayList;
  * 	the water around the island). One cell is a square with side length 1. 
  * 	The grid is rectangular, width and height don't exceed 100. 
  * 	Determine the perimeter of the island.
-
-    Example:
-    
-    [[0,1,0,0],
-     [1,1,1,0],
-     [0,1,0,0],
-     [1,1,0,0]]
-    
-    Answer: 16
-    Explanation: The perimeter is the 16 yellow stripes in the image below:
+ *	
+ *	Example:
+ *	
+ *	[[0,1,0,0],
+ *	 [1,1,1,0],
+ *	 [0,1,0,0],
+ *	 [1,1,0,0]]
+ *	
+ *	Answer: 16
+ *	Explanation: The perimeter is the 16 yellow stripes in the image below:
  */
 
 /**
@@ -35,17 +35,13 @@ import java.util.ArrayList;
  * @details     
  */
 public class P463_IslandPerimeter {
-	public static void main(String[] args) {
-		debugSolution2();
-	}
-	
 	/**
 	 * @method      debugSolution2
 	 * @parameter   
 	 * @return      void
 	 * @details   	  
 	 */
-	private static void debugSolution2() {
+	static void debugSolution2() {
 		Solution2 s = new Solution2();
 		int[][] arr = tools.FileUtils.C_读取int二维数组_LEETCODE("D:/file/data/P463_IslandPerimeter.txt", 1);
 		System.out.println(s.islandPerimeter(arr));
