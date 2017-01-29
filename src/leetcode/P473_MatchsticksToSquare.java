@@ -8,26 +8,26 @@ import java.util.Arrays;
  * 	make one square by using up all those matchsticks. You should not break 
  * 	any stick, but you can link them up, and each matchstick must be used
  * 	exactly one time.
-
-	Your input will be several matchsticks the girl has, represented with 
-	their stick length. Your output will either be true or false, to represent 
-	whether you can save this little girl or not.
-	
-	Example 1:
-	Input: [1,1,2,2,2]
-	Output: true
-	
-	Explanation: You can form a square with length 2, one side of the square 
-	came two sticks with length 1.
-	Example 2:
-	Input: [3,3,3,3,4]
-	Output: false
-	
-	Explanation: You cannot find a way to form a square with all the matchsticks 
-	and you cannot save this little girl.
-	Note:
-	The length sum of the given matchsticks is in the range of 0 to 10^9.
-	The length of the given matchstick array will not exceed 15.
+ *	
+ *	Your input will be several matchsticks the girl has, represented with 
+ *	their stick length. Your output will either be true or false, to represent 
+ *	whether you can save this little girl or not.
+ *	
+ *	Example 1:
+ *	Input: [1,1,2,2,2]
+ *	Output: true
+ *	
+ *	Explanation: You can form a square with length 2, one side of the square 
+ *	came two sticks with length 1.
+ *	Example 2:
+ *	Input: [3,3,3,3,4]
+ *	Output: false
+ *	
+ *	Explanation: You cannot find a way to form a square with all the matchsticks 
+ *	and you cannot save this little girl.
+ *	Note:
+ *	The length sum of the given matchsticks is in the range of 0 to 10^9.
+ *	The length of the given matchstick array will not exceed 15.
  */
 
 /**
