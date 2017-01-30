@@ -1,14 +1,14 @@
 package leetcode;
 
-/*
+/**
  * 	Count the number of segments in a string, 
  * 	where a segment is defined to be a contiguous sequence of non-space characters.
-
-	For example,
-	
-	Input: "Hello, my name is John"
-	
-	Output: 5
+ *	
+ *	For example,
+ *	
+ *	Input: "Hello, my name is John"
+ *	
+ *	Output: 5
  */
 
 /**
@@ -22,9 +22,6 @@ package leetcode;
  * @details     
  */
 public class P434_NumberOfSegmentsInAString {
-	public static void main(String[] args) {
-	}
-	
 	static class Solution {
 	    public int countSegments(String s) {
 	        int count = 0;
