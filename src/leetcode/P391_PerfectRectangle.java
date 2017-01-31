@@ -1,62 +1,15 @@
 package leetcode;
 
-/*
+/**
  * 	Given N axis-aligned rectangles where N > 0, determine 
  * 	if they all together form an exact cover of a rectangular region.
-
-	Each rectangle is represented as a bottom-left point and a top-right point.
-	For example, a unit square is represented as [1,1,2,2].
-	(coordinate of bottom-left point is (1, 1) and top-right point is (2, 2)).
+ * 	
+ * 	Each rectangle is represented as a bottom-left point and a top-right point.
+ * 	For example, a unit square is represented as [1,1,2,2].
+ * 	(coordinate of bottom-left point is (1, 1) and top-right point is (2, 2)).
  */
 
 public class P391_PerfectRectangle {
-	public static void main(String[] args) {
-		System.out.println(new Solution2().isRectangleCover(new int[][]{
-			{1,1,3,3},
-			{3,1,4,2},
-			{3,2,4,4},
-			{1,3,2,4},
-			{2,3,3,4}
-		}));
-		System.out.println(new Solution2().isRectangleCover(new int[][]{
-			{1,1,2,3},
-			{1,3,2,4},
-			{3,1,4,2},
-			{3,2,4,4}
-		}));
-		System.out.println(new Solution2().isRectangleCover(new int[][]{
-			{1,1,3,3},
-			{3,1,4,2},
-			{1,3,2,4},
-			{3,2,4,4}
-		}));
-		System.out.println(new Solution2().isRectangleCover(new int[][]{
-			{1,1,3,3},
-		  	{3,1,4,2},
-		  	{1,3,2,4},
-		  	{2,2,4,4}
-		}));
-		System.out.println(new Solution2().isRectangleCover(new int[][]{
-			{0,0,1,1},
-		  	{0,0,1,1},
-		  	{0,2,1,3},
-		}));
-		System.out.println(new Solution2().isRectangleCover(new int[][]{
-			{0,0,1,1},
-		  	{0,0,1,1},
-		  	{1,1,2,2},
-		  	{1,1,2,2},
-		}));
-		System.out.println(new Solution2().isRectangleCover(new int[][]{
-			{1,1,3,3},
-		  	{3,1,4,2},
-		  	{3,2,4,4},
-		  	{1,3,2,4},
-		  	{2,3,3,4},
-		}));
-//		int[][] input = tools.FileUtils.A_读取二维数组("C:/a.txt", 4);
-//		System.out.println(new Solution2().isRectangleCover(input));
-	}
 	/*
 	 * 	对普通用例没有计算错误
 	 * 	大数字用例，MLE
