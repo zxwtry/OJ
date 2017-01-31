@@ -1,17 +1,14 @@
 package leetcode;
 
-/*
+/**
  * 	Calculate the sum of two integers a and b, 
  * 	but you are not allowed to use the operator + and -.
-
-	Example:
-	Given a = 1 and b = 2, return 3.
+ * 	
+ * 	Example:
+ * 	Given a = 1 and b = 2, return 3.
  */
 
 public class P371_SumofTwoIntegers {
-	public static void main(String[] args) {
-		System.out.println(new Solution().getSum(100, 199));
-	}
 	/*
 	 * 	0 ms
 	 * 	8.45%
