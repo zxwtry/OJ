@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.Stack;
+import javax.script.ScriptEngineManager;
 
 /**
  * 	Implement a basic calculator to evaluate a simple expression string.
@@ -24,6 +25,7 @@ import java.util.Stack;
  * @type        P224_BasicCalculator
  * @date        2017年2月3日 下午6:51:00
  * @details     Solution1: AC 16ms 75.51%
+ * @details     Solution2: 可惜leetcode的编译器不支持javax.script.ScriptEngineManager
  */
 public class P224_BasicCalculator {
 	static class Solution1 {
@@ -65,5 +67,14 @@ public class P224_BasicCalculator {
 	        }
 	        return (int) ans;
 	    }
+	}
+	static class Solution2 {
+		public int calculate(String s) {
+			int ans = 0;
+			try {
+				ans = (int)(double)new ScriptEngineManager().getEngineByName("js").eval(s);
+			} catch (Exception e) {}
+			return ans;
+		}
 	}
 }
