@@ -22,5 +22,12 @@ package leetcode;
  * @details     
  */
 public class P349_IntersectionOfTwoArrays {
-
+	public static void main(String[] args) {
+		
+	}
+	static class Solution1 {
+	    public int[] intersection(int[] nums1, int[] nums2) {
+	        
+	    }
+	}
 }
