@@ -1,5 +1,10 @@
 package leetcode;
 
+import java.util.HashMap;
+
+import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
+import com.sun.xml.internal.ws.handler.HandlerProcessor.RequestOrResponse;
+
 /**
  * 	Given an array of n integers where n > 1, nums, return an array output such that
  *  output[i] is equal to the product of all the elements of nums except nums[i].
@@ -27,7 +32,8 @@ public class P238_ProductofArrayExceptSelf {
 	public static void main(String[] args) {
 		int[] nums = new int[] {4, 6, 8, 12, 16, 15};
 		Solution2 sol2 = new Solution2();
-		sol2.productExceptSelf(nums);
+		Solution1 sol1 = new Solution1();
+		nums = sol1.productExceptSelf(nums);
 		tools.Utils.printArray(nums, nums.length);
 	}
 	static class Solution1 {
@@ -50,8 +56,30 @@ public class P238_ProductofArrayExceptSelf {
 	}
 	static class Solution2 {
 		public int[] productExceptSelf(int[] nums) {
-			
+			if (nums == null || nums.length < 1) return nums;
+			long allGCD = 1l;
+			long tmp = 0l;
+			HashMap<Long, Integer> map = new HashMap<>();
+			for (int v : nums) {
+				tmp = gcd(allGCD, v);
+				Integer val = map.get(tmp);
+				map.put(tmp, val == null ? 1 : val + 1);
+				allGCD *= tmp;
+			}
+			int[] ans = new int[nums.length];
+			long comGCD = 0l;
+			for (int i = 0; i < nums.length; i ++) {
+				comGCD = gcd(allGCD, nums[i]);
+				if (comGCD == 1l) {
+					nums[i] = (int) allGCD;
+				} else {ddd
+					
+				}
+			}
 		}
+		public long gcd(long a, long b) {
+	    	return b == 0 ? a : gcd(b, a % b);
+	    }
 	}
 	
 }
