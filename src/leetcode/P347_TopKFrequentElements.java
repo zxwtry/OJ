@@ -23,5 +23,12 @@ package leetcode;
  * @details     
  */
 public class P347_TopKFrequentElements {
-	main
+	public static void main(String[] args) {
+		
+	}
+	static class Solution {
+	    public List<Integer> topKFrequent(int[] nums, int k) {
+	        
+	    }
+	}
 }
