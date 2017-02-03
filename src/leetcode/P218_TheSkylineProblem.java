@@ -56,39 +56,50 @@ import java.util.PriorityQueue;
  * @file        P218_TheSkylineProblem.java
  * @type        P218_TheSkylineProblem
  * @date        2016年12月29日 下午9:47:43
- * @details     
+ * @details     Solution1: AC 319ms 37.79% 
  */
 public class P218_TheSkylineProblem {
-	public static void main(String[] args) {
-		int[][] b = tools.FileUtils.A_读取二维数组("D:/code/data/P218_TheSkylineProblem.txt", 3);
-//		tools.Utils.A_打印二维数组(b);
-		Solution1 sol1 = new Solution1();
-		List<int[]> ans =  sol1.getSkyline(b);
-		for (int[] a : ans) {
-			if (a != null)
-			tools.Utils.printArray(a, a.length);
-		}
-	}
 	static class Solution1 {
-		List<int[]> ans = null;
-		int h = 0;
-		ArrayList<Integer> lastIndex;
-		int[][] b;
 	    public List<int[]> getSkyline(int[][] buildings) {
-	    	this.b = buildings;
-	        ans = new LinkedList<int[]>();
-	        lastIndex = new ArrayList<Integer>(b.length);
-	        for (int i = 0; i < b.length; i ++) lastIndex.add(i); 
-	       	Collections.sort(lastIndex, new LastComp());
-	        return ans;
+	    	List<int[]> ans = new LinkedList<int[]>();
+	    	if (buildings == null || buildings.length < 1)
+	    		return ans;
+	    	List<int[]> verticalLines = new ArrayList<int[]>(buildings.length * 2);
+	    	for (int[] building : buildings) {
+	    		verticalLines.add(new int[] {building[0], building[2]});
+	    		verticalLines.add(new int[] {building[1], -building[2]});
+	    	}
+	    	Collections.sort(verticalLines, new Comparator<int[]>() {
+				@Override
+				public int compare(int[] o1, int[] o2) {
+					if (o1[0] < o2[0]) return -1;
+					else if (o1[0] == o2[0]) return o2[1] - o1[1];
+					return 1;
+				}
+			});
+	    	PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(verticalLines.size(), 
+	    			new Comparator<Integer>() {
+						@Override
+						public int compare(Integer o1, Integer o2) {
+							return o2 - o1;
+						}
+			});
+	    	int pre = 0, cur = 0;
+	    	for (int[] vl : verticalLines) {
+	    		if (vl[1] > 0) {
+	    			maxHeap.add(vl[1]);
+	    			cur = maxHeap.peek();
+	    		} else {
+	    			maxHeap.remove(-vl[1]);
+	    			cur = maxHeap.peek() == null ? 0 : maxHeap.peek();
+	    		}
+	    		if (cur != pre) {
+	    			ans.add(new int[] {vl[0], cur});
+	    			pre = cur;
+	    		}
+	    	}
+	    	return ans;
 	    }
-	    class LastComp implements Comparator<Integer> {
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return 0;
-			}
-	    }
-	    
 	}
 	static class Solution {
 	    //大顶推比较器
