@@ -23,5 +23,9 @@ package leetcode;
  * @details     
  */
 public class P354_RussianDollEnvelopes {
-
+	static class Solution1 {
+	    public int maxEnvelopes(int[][] envelopes) {
+	        
+	    }
+	}
 }
