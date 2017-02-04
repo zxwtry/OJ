@@ -25,5 +25,25 @@ package leetcode;
  * @details     
  */
 public class P352_DataStreamAsDisjointIntervals {
+	static class SummaryRanges {
 
+	    /** Initialize your data structure here. */
+	    public SummaryRanges() {
+	        
+	    }
+	    
+	    public void addNum(int val) {
+	        
+	    }
+	    
+	    public List<Interval> getIntervals() {
+	        
+	    }
+	}
+	/**
+	 * Your SummaryRanges object will be instantiated and called as such:
+	 * SummaryRanges obj = new SummaryRanges();
+	 * obj.addNum(val);
+	 * List<Interval> param_2 = obj.getIntervals();
+	 */
 }
