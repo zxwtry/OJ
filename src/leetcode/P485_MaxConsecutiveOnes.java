@@ -26,5 +26,12 @@ package leetcode;
  * @details     
  */
 public class P485_MaxConsecutiveOnes {
-
+	public static void main(String[] args) {
+		
+	}
+	static class Solution1 {
+	    public int findMaxConsecutiveOnes(int[] nums) {
+	        
+	    }
+	}
 }
