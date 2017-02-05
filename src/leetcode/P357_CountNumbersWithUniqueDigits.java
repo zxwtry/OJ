@@ -32,5 +32,9 @@ package leetcode;
  * @details     
  */
 public class P357_CountNumbersWithUniqueDigits {
-	
+	static class Solution1 {
+	    public int countNumbersWithUniqueDigits(int n) {
+	        
+	    }
+	}
 }
