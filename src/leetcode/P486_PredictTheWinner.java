@@ -49,5 +49,12 @@ package leetcode;
  * @details     
  */
 public class P486_PredictTheWinner {
-
+	public static void main(String[] args) {
+		
+	}
+	static class Solution {
+	    public boolean PredictTheWinner(int[] nums) {
+	        
+	    }
+	}
 }
