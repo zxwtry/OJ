@@ -34,5 +34,9 @@ package leetcode;
  * @details     
  */
 public class P483_SmallestGoodBase {
-
+	static class Solution1 {
+	    public String smallestGoodBase(String n) {
+	        
+	    }
+	}
 }
