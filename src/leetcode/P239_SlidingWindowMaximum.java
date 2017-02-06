@@ -41,48 +41,33 @@ import java.util.LinkedList;
  * @file        P239_SlidingWindowMaximum.java
  * @type        P239_SlidingWindowMaximum
  * @date        2016年12月10日 下午10:26:54
- * @details     
+ * @details     Solution1: AC 39ms 24.94%
  */
 public class P239_SlidingWindowMaximum {
-	public static void main(String[] args) {
-		int[] nums = new int[] {1,3,-1,-3,5,3,6,7};
-		int k = 3;
-		Solution solution = new Solution();
-		tools.Utils.printArray(solution.maxSlidingWindow(nums, k), nums.length);
-	}
-	static class Solution {
+	static class Solution1 {
 	    public int[] maxSlidingWindow(int[] nums, int k) {
 	    	if (nums == null || nums.length < 1 || k < 1)
 	    		return nums;
 	        LinkedList<Integer> l1 = new LinkedList<Integer>();
 	        LinkedList<Integer> l2 = new LinkedList<Integer>();
-	        l1.add(nums[0]);
-	        l2.add(0);
 	        int[] ans = new int[nums.length - k + 1];
 	        int ansIndex = 0;
-	        int i = 1;
-	        for (; i < k; i ++) {
-	        	while (! l1.isEmpty() && nums[i] > l1.peekLast()) {
+	        for (int i = 0; i < nums.length; i ++) {
+	        	while (!l1.isEmpty() && l1.peekLast() < nums[i]) {
 	        		l1.pollLast();
 	        		l2.pollLast();
 	        	}
-	        	l1.add(nums[i]);
-	        	l2.add(i);
-	        }
-	        ans[ansIndex ++] = l1.peekLast();
- 	        for (; i < nums.length; i ++) {
- 	        	while (i < k && ! l1.isEmpty() && nums[i] > l1.peekLast()) {
-	        		l1.pollLast();
-	        		l2.pollLast();
-	        		if (i - l2.peek() == k - 1) {
-	        			break;
-	        		}
+	        	while (!l1.isEmpty() && i - l2.peekFirst() >= k) {
+	        		l1.pollFirst();
+	        		l2.pollFirst();
 	        	}
- 	        	if (l1.peekLast() >= nums[i]) {
-	 	        	l1.add(nums[i]);
-	 	        	l2.add(i);
- 	        	}
- 	        	ans[ansIndex ++] = l1.peekLast();
+	        	if (l1.isEmpty() || l1.peekLast() >= nums[i]) {
+		        	l1.addLast(nums[i]);
+		        	l2.addLast(i);
+	        	}
+	        	if (i >= k - 1) {
+	        		ans[ansIndex ++] = l1.peekFirst();
+	        	}
 	        }
  	        return ans;
 	    }
