@@ -42,6 +42,7 @@ import java.util.LinkedList;
  * @type        P239_SlidingWindowMaximum
  * @date        2016年12月10日 下午10:26:54
  * @details     Solution1: AC 39ms 24.94%
+ * @details     Solution2: AC 26ms 38.40%
  */
 public class P239_SlidingWindowMaximum {
 	static class Solution1 {
@@ -71,5 +72,29 @@ public class P239_SlidingWindowMaximum {
 	        }
  	        return ans;
 	    }
+	}
+	static class Solution2 {
+		public int[] maxSlidingWindow(int[] nums, int k) {
+	    	if (nums == null || nums.length < 1 || k < 1)
+	    		return nums;
+	    	LinkedList<Integer> list = new LinkedList<Integer>();
+	    	int[] ans = new int[nums.length - k + 1];
+	    	int ansIndex = 0;
+	    	for (int i = 0; i < nums.length; i ++) {
+	    		while (! list.isEmpty() && nums[list.peekLast()] < nums[i]) {
+	    			list.pollLast();
+	    		}
+	    		while (! list.isEmpty() && i - list.peekFirst() >= k) {
+	    			list.pollFirst();
+	    		}
+	    		if (list.isEmpty() || nums[list.peekLast()] >= nums[i]) {
+	    			list.add(i);
+	    		}
+	    		if (i >= k - 1) {
+	    			ans[ansIndex ++] = nums[list.peekFirst()];
+	    		}
+	    	}
+	    	return ans;
+		}
 	}
 }
