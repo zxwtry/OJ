@@ -23,6 +23,7 @@ package leetcode;
  * @type        P238_ProductofArrayExceptSelf
  * @date        2016年12月10日 下午10:25:35
  * @details     Solution1: AC 3ms 10.68%
+ * @details     Solution2: AC 2ms 38.40%
  */
 public class P238_ProductofArrayExceptSelf {
 	static class Solution1 {
@@ -46,6 +47,23 @@ public class P238_ProductofArrayExceptSelf {
 	    	}
 	    	return ans;
 	    }
+	}
+	static class Solution2 {
+		public int[] productExceptSelf(int[] nums) {
+	    	if (nums == null || nums.length < 1) return nums;
+	    	int[] ans = new int[nums.length];
+	    	int product = 1;
+	    	for (int i = nums.length - 1; i > -1; i --) {
+	    		ans[i] = product;
+	    		product *= nums[i];
+	    	}
+	    	product = 1;
+	    	for (int i = 0; i < nums.length; i ++) {
+	    		ans[i] *= product;
+	    		product *= nums[i];
+	    	}
+	    	return ans;
+		}
 	}
 	
 }
