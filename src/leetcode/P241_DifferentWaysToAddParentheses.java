@@ -42,6 +42,7 @@ import java.util.List;
  * @date        2016年12月12日 下午10:00:28
  * @details     Solution1: WA 会多一些重复项
  * @details     Solution2: AC 19ms  3.58%
+ * @details     Solution3: AC  8ms 33.30%
  */
 public class P241_DifferentWaysToAddParentheses {
 	static class Solution1 {
@@ -127,6 +128,42 @@ public class P241_DifferentWaysToAddParentheses {
 				ret.add(Integer.parseInt(input));
 			}
 			return ret;
+		}
+	}
+	static class Solution3 {
+		public List<Integer> diffWaysToCompute(String input) {
+			return diffWaysToCompute(input, 0, input.length() - 1);
+		}
+		private List<Integer> diffWaysToCompute(String input, int leftIndex, int rightIndex) {
+			List<Integer> ans = new LinkedList<Integer>();
+			for (int index = leftIndex; index <= rightIndex; index ++) {
+				char c = input.charAt(index);
+				if (c == '+' || c == '-' || c == '*') {
+					List<Integer> left = diffWaysToCompute(input, leftIndex, index - 1);
+					List<Integer> right = diffWaysToCompute(input, index + 1, rightIndex);
+					for (int leftInt : left) 
+						for (int rightInt : right) {
+							if (c == '+')
+								ans.add(leftInt + rightInt);
+							else if (c == '-')
+								ans.add(leftInt - rightInt);
+							else
+								ans.add(leftInt * rightInt);
+						}
+					
+				}
+			}
+			if (ans.isEmpty()) {
+				ans.add(getVFromString(input, leftIndex, rightIndex));
+			}
+			return ans;
+		}
+		private int getVFromString(String s, int leftIndex, int rightIndex) {
+			int v = 0;
+			for (int index = leftIndex; index <= rightIndex; index ++) {
+				v = v * 10 + s.charAt(index) - '0';
+			}
+			return v;
 		}
 	}
 }
