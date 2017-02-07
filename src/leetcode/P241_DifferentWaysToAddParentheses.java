@@ -41,6 +41,7 @@ import java.util.List;
  * @type        P241_DifferentWaysToAddParentheses
  * @date        2016年12月12日 下午10:00:28
  * @details     Solution1: WA 会多一些重复项
+ * @details     Solution2: AC 19ms  3.58%
  */
 public class P241_DifferentWaysToAddParentheses {
 	static class Solution1 {
@@ -100,5 +101,32 @@ public class P241_DifferentWaysToAddParentheses {
 			}
 	    	return 0;
 	    }
+	}
+	static class Solution2 {
+		public List<Integer> diffWaysToCompute(String input) {
+			List<Integer> ret = new LinkedList<Integer>();
+			for (int i = 0; i < input.length(); i ++) {
+				char c = input.charAt(i);
+				if (c == '+' || c == '-' || c == '*') {
+					List<Integer> left = diffWaysToCompute(input.substring(0, i));
+					List<Integer> right = diffWaysToCompute(input.substring(i+1));
+					for (int le : left) {
+						for (int ri : right) {
+							if (c == '+') {
+								ret.add(le + ri);
+							} else if (c == '-') {
+								ret.add(le - ri);
+							} else {
+								ret.add(le * ri);
+							}
+						}
+					}
+				}
+			}
+			if (ret.isEmpty()) {
+				ret.add(Integer.parseInt(input));
+			}
+			return ret;
+		}
 	}
 }
