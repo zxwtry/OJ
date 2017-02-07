@@ -43,6 +43,7 @@ import java.util.List;
  * @details     Solution1: WA 会多一些重复项
  * @details     Solution2: AC 19ms  3.58%
  * @details     Solution3: AC  8ms 33.30%
+ * @details     Solution4: AC  9ms 20.14%
  */
 public class P241_DifferentWaysToAddParentheses {
 	static class Solution1 {
@@ -155,6 +156,59 @@ public class P241_DifferentWaysToAddParentheses {
 			}
 			if (ans.isEmpty()) {
 				ans.add(getVFromString(input, leftIndex, rightIndex));
+			}
+			return ans;
+		}
+		private int getVFromString(String s, int leftIndex, int rightIndex) {
+			int v = 0;
+			for (int index = leftIndex; index <= rightIndex; index ++) {
+				v = v * 10 + s.charAt(index) - '0';
+			}
+			return v;
+		}
+	}
+	static class Solution4 {
+		public List<Integer> diffWaysToCompute(String input) {
+			ArrayList<Integer> intList = new ArrayList<Integer>();
+			ArrayList<Character> charList = new ArrayList<Character>(); 
+			int preIndex = 0, nowIndex = 0;
+			for (; nowIndex < input.length(); nowIndex ++) {
+				char c = input.charAt(nowIndex);
+				if (c < '0' || c > '9') {
+					intList.add(getVFromString(input, preIndex, nowIndex - 1));
+					preIndex = nowIndex + 1;
+					charList.add(c);
+				}
+			}
+			intList.add(getVFromString(input, preIndex, input.length() - 1));
+			if (charList.size() == 0) {
+				return intList;
+			}
+			return diffWaysToCompute(intList, charList, 0, charList.size() - 1);
+		}
+		private List<Integer> diffWaysToCompute(ArrayList<Integer> intList, ArrayList<Character> charList, int charStartIndex, int charEndIndex) {
+			LinkedList<Integer> ans = new LinkedList<Integer>();
+			for (int index = charStartIndex; index <= charEndIndex; index ++) {
+				List<Integer> left = diffWaysToCompute(intList, charList, charStartIndex, index - 1);
+				List<Integer> right = diffWaysToCompute(intList, charList, index + 1, charEndIndex);
+				for (int leftInt : left) {
+					for (int rightInt : right) {
+						if (charList.get(index) == '+')
+							ans.add(leftInt + rightInt);
+						else if (charList.get(index) == '-')
+							ans.add(leftInt - rightInt);
+						else if (charList.get(index) == '*')
+							ans.add(leftInt * rightInt);
+					}
+				}
+			}
+			if (ans.isEmpty()) {
+				if (charEndIndex == charStartIndex-1) {
+					if (charStartIndex >= 0 && charStartIndex < intList.size())
+						ans.add(intList.get(charStartIndex));
+					if (ans.isEmpty() && charEndIndex >= 0 && charEndIndex < intList.size())
+						ans.add(intList.get(charEndIndex));
+				}
 			}
 			return ans;
 		}
