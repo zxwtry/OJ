@@ -1,5 +1,9 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 	Given a string of numbers and operators, return all possible 
  * 	results from computing all the different possible ways to group
@@ -36,15 +40,65 @@ package leetcode;
  * @file        P241_DifferentWaysToAddParentheses.java
  * @type        P241_DifferentWaysToAddParentheses
  * @date        2016年12月12日 下午10:00:28
- * @details     
+ * @details     Solution1: WA 会多一些重复项
  */
 public class P241_DifferentWaysToAddParentheses {
-	public static void main(String[] args) {
-		
-	}
-	static class Solution {
+	static class Solution1 {
+		List<Integer> ans = null;
+		int[] intSplits = null;
+		String[] signSplits = null;
 	    public List<Integer> diffWaysToCompute(String input) {
-	        
+	        ans = new LinkedList<Integer>();
+	        String[] inputSplits = input.split("[\\*+-]");
+	        intSplits = new int[inputSplits.length];
+	        for (int index = 0; index < inputSplits.length; index ++) {
+	        	intSplits[index] = Integer.parseInt(inputSplits[index]);
+	        }
+	        signSplits = input.split("[0-9]+");
+	        if (intSplits.length == 1 && signSplits.length == 0) {
+	        	ans.add(intSplits[0]);
+	        	return ans;
+	        }
+	        if (intSplits.length == signSplits.length && intSplits.length > 0) {
+	        	return search(0);
+	        }
+	        return ans;
+	    }
+	    private LinkedList<Integer> search(int index) {
+	    	if (index >= intSplits.length) return new LinkedList<Integer>();
+	    	if (index == intSplits.length - 1) {
+	    		LinkedList<Integer> tmp = new LinkedList<Integer>();
+	    		tmp.add(intSplits[index]);
+	    		return tmp;
+	    	} else {
+	    		//两种情况|
+	    		LinkedList<Integer> tmp = new LinkedList<Integer>();
+	    		int save = intSplits[index + 1];
+	    		int res1_op = operate(intSplits[index], intSplits[index + 1], signSplits[index + 1]); 
+	    		intSplits[index + 1] = res1_op;
+	    		LinkedList<Integer> res1 = search(index + 1);
+	    		intSplits[index + 1] =  save;
+	    		tmp.addAll(res1);
+	    		
+	    		LinkedList<Integer> res2 = search(index + 1);
+	    		for (int r : res2) {
+	    			tmp.add(operate(intSplits[index], r, signSplits[index + 1]));
+	    		}
+	    		return tmp;
+	    	}
+ 		}
+		public int operate(int a, int b, String sign) {
+	    	switch (sign) {
+			case "+":
+				return a + b;
+			case "-":
+				return a - b;
+			case "*":
+				return a * b;
+			default:
+				break;
+			}
+	    	return 0;
 	    }
 	}
 }
