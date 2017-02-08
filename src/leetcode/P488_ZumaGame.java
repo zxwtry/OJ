@@ -43,5 +43,12 @@ package leetcode;
  * @details     
  */
 public class P488_ZumaGame {
-
+	public static void main(String[] args) {
+		
+	}
+	static class Solution1 {
+	    public int findMinStep(String board, String hand) {
+	        
+	    }
+	}
 }
