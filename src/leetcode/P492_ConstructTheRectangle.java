@@ -33,5 +33,12 @@ package leetcode;
  * @details     
  */
 public class P492_ConstructTheRectangle {
-
-}
+	public static void main(String[] args) {
+		
+	}
+	static class Solution1 {
+	    public int[] constructRectangle(int area) {
+	        
+	    }
+	}
+}	
