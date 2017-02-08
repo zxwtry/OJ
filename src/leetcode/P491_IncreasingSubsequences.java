@@ -25,5 +25,12 @@ package leetcode;
  * @details     
  */
 public class P491_IncreasingSubsequences {
-
+	public static void main(String[] args) {
+		
+	}
+	static  class Solution {
+	    public List<List<Integer>> findSubsequences(int[] nums) {
+	        
+	    }
+	}
 }
