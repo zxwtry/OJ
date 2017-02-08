@@ -36,5 +36,12 @@ package leetcode;
  * @details     
  */
 public class P494_TargetSum {
-
+	public static void main(String[] args) {
+		
+	}
+	static class Solution1 {
+	    public int findTargetSumWays(int[] nums, int S) {
+	        
+	    }
+	}
 }
