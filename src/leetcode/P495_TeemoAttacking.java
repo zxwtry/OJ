@@ -49,5 +49,12 @@ package leetcode;
  * @details     
  */
 public class P495_TeemoAttacking {
-
+	public static void main(String[] args) {
+		
+	}
+	static class Solution1 {
+	    public int findPoisonedDuration(int[] timeSeries, int duration) {
+	        
+	    }
+	}
 }
