@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.HashSet;
+
 /**
  * 	Given an array of numbers nums, in which exactly 
  * 	two elements appear only once and all the other 
@@ -26,15 +28,26 @@ package leetcode;
  * @file        P260_SingleNumberIII.java
  * @type        P260_SingleNumberIII
  * @date        2016年12月13日 下午10:20:02
- * @details     
+ * @details     Solution1: AC 11ms 16.63%
  */
 public class P260_SingleNumberIII {
-	public static void main(String[] args) {
-		
-	}
-	static class Solution {
+	static class Solution1 {
 	    public int[] singleNumber(int[] nums) {
-	        
+	    	HashSet<Integer> set = new HashSet<Integer>();
+	    	for (int n : nums) {
+	    		if (set.contains(n)) {
+	    			set.remove(n);
+	    		} else {
+	    			set.add(n);
+	    		}
+	    	}
+	    	int[] ans = new int[2];
+	    	int ansIndex = 0;
+	    	for (int v : set) {
+	    		if (ansIndex >= 2) break;
+	    		ans[ansIndex ++] = v;
+	    	}
+	    	return ans;
 	    }
 	}
 }
