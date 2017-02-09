@@ -18,6 +18,7 @@ import java.util.LinkedList;
  * @type        腾讯17_字符移位
  * @date        2017年2月9日 上午11:54:12
  * @details     StandardSolution: 归并排序
+ * @details     Solution1: 归并排序，　可能会栈溢出
  */
 public class 腾讯17_字符移位 {
 	static class StandardSolution {
@@ -38,6 +39,47 @@ public class 腾讯17_字符移位 {
 			for (char c : upperList) {
 				arr[arrIndex ++] = c;
 			}
+		}
+	}
+	static class Solution1 {
+		public void reArrange(char[] arr) {
+			reArrangeInternal(arr, 0, arr.length - 1);
+		}
+		private void reArrangeInternal(char[] arr, int i, int j) {
+			if (i >= j) {
+				return;
+			} else if (i == j - 1) {
+				if (arr[i] >= 'A' && arr[i] <= 'Z' && arr[j] >= 'a' && arr[j] <= 'z') {
+					swap(arr, i, j);
+				}
+			} else {
+				int mid = (i + j) / 2;
+				reArrangeInternal(arr, i, mid);
+				reArrangeInternal(arr, mid + 1, j);
+				int firstIndexOfUpper1 = i, firstIndexOfUpper2 = mid + 1;
+				while (firstIndexOfUpper1 <= mid) {
+					if (arr[firstIndexOfUpper1] >= 'A' && arr[firstIndexOfUpper1] <= 'Z') break;
+					else firstIndexOfUpper1 ++;
+				}
+				while (firstIndexOfUpper2 <= j) {
+					if (arr[firstIndexOfUpper2] >= 'A' && arr[firstIndexOfUpper2] <= 'Z') break;
+					else firstIndexOfUpper2 ++;
+				}
+				firstIndexOfUpper2 --;
+				reverse(arr, firstIndexOfUpper1, firstIndexOfUpper2);
+				reverse(arr, firstIndexOfUpper1, firstIndexOfUpper1 + (firstIndexOfUpper2 - mid - 1));
+				reverse(arr, firstIndexOfUpper1 + (firstIndexOfUpper2 - mid - 1) + 1, firstIndexOfUpper2);
+			}
+		}
+		private void reverse(char[] arr, int sti, int eni) {
+			while (sti < eni) {
+				swap(arr, sti ++, eni --);
+			}
+		}
+		private void swap(char[] arr, int i, int j) {
+			char t = arr[i];
+			arr[i] = arr[j];
+			arr[j] = t;
 		}
 	}
 }
