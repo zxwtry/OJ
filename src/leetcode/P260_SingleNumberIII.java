@@ -29,6 +29,7 @@ import java.util.HashSet;
  * @type        P260_SingleNumberIII
  * @date        2016年12月13日 下午10:20:02
  * @details     Solution1: AC 11ms 16.63%
+ * @details     Solution2: AC  1ms 82.27%
  */
 public class P260_SingleNumberIII {
 	static class Solution1 {
@@ -49,5 +50,23 @@ public class P260_SingleNumberIII {
 	    	}
 	    	return ans;
 	    }
+	}
+	static class Solution2 {
+		public int[] singleNumber(int[] nums) {
+			int XORSign = 0;
+			for (int n : nums) {
+				XORSign ^= n;
+			}
+			int lowBit = XORSign & - XORSign;
+			int a = 0, b = 0;
+			for (int n : nums) {
+				if ((n & lowBit) != 0) {
+					a ^= n;
+				} else {
+					b ^= n;
+				}
+ 			}
+			return new int[] {a, b};
+		}
 	}
 }
