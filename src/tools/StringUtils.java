@@ -24,6 +24,14 @@ public class StringUtils {
 			return st.toString();
 		}
 	}
+	public static String A_生成随机字符串A_Z_a_z(int len) {
+		char[] cs = new char[len];
+		for (int csIndex = 0; csIndex < len; csIndex ++) {
+			int randomInt = (int)(Math.random() * 52);
+			cs[csIndex] = randomInt < 26 ? (char)('a' + randomInt) : (char)('A' + randomInt - 26);
+		}
+		return new String(cs);
+	}
 	public static String A_生成随机回文串char1_char2(char char1, char char2, int len) {
 		if (char1 > char2) {
 			return A_生成随机回文串char1_char2(char2, char1, len);
