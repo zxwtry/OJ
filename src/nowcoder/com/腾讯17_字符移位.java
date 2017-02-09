@@ -19,6 +19,7 @@ import java.util.LinkedList;
  * @date        2017年2月9日 上午11:54:12
  * @details     StandardSolution: 归并排序
  * @details     Solution1: 归并排序，　可能会栈溢出
+ * @details     Solution2: 冒泡排序，　可能会栈溢出
  */
 public class 腾讯17_字符移位 {
 	static class StandardSolution {
@@ -74,6 +75,22 @@ public class 腾讯17_字符移位 {
 		private void reverse(char[] arr, int sti, int eni) {
 			while (sti < eni) {
 				swap(arr, sti ++, eni --);
+			}
+		}
+		private void swap(char[] arr, int i, int j) {
+			char t = arr[i];
+			arr[i] = arr[j];
+			arr[j] = t;
+		}
+	}
+	static class Solution2 {
+		public void reArrange(char[] arr) {
+			for (int i = arr.length - 1; i > -1; i --) {
+				for (int j = i + 1; j < arr.length; j ++) {
+					if (arr[j] >= 'a' && arr[j] <= 'z' && arr[j - 1] >= 'A' && arr[j - 1] <= 'Z') {
+						swap(arr, j - 1, j);
+					}
+				}
 			}
 		}
 		private void swap(char[] arr, int i, int j) {
