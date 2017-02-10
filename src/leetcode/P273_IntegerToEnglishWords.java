@@ -36,11 +36,31 @@ package leetcode;
  */
 public class P273_IntegerToEnglishWords {
 	public static void main(String[] args) {
-		
+		Solution1 solution1 = new Solution1();
+		for (int i = 0; i < 21; i ++) {
+			System.out.println(solution1.numberToWords(i));
+		}
+		System.out.println(Integer.MAX_VALUE);
 	}
-	static class Solution {
+	static class Solution1 {
+		String[] words = new String[] {
+			"zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+			"Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty",
+		};
+		String[] tens = new String[] {
+			"","Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty"
+		};
+		String[] threeTens = new String[] {
+			"", "Thousand", "Million", "Billion"
+		};
 	    public String numberToWords(int num) {
+	        if (num <= 20) return words[num];
+	        char[] numChar = ("" + num).toCharArray();
 	        
+	        return "NULL";
+	    }
+	    public String lessThanThreeChar(char[] cs, int sti, int eni) {
+	    	
 	    }
 	}
 }
