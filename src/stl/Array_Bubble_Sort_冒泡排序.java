@@ -14,4 +14,24 @@ package stl;
  * @date        2017年2月9日 下午8:30:14
  * @details     
  */
-public class Array_Bubble_Sort_冒泡排序 {}
+public class Array_Bubble_Sort_冒泡排序 {
+	static void bubbleSort1(int[] arr) {
+		if (arr == null || arr.length < 2)
+			return;
+		boolean isSwapped = true;
+		while (isSwapped) {
+			isSwapped = false;
+			for (int index = 1; index < arr.length; index ++) {
+				if (arr[index - 1] > arr[index]) {
+					swap(arr, index - 1, index);
+					isSwapped = true;
+				}
+			}
+		}
+	}
+	static void swap(int[] arr, int i, int j) {
+		int t = arr[i];
+		arr[i] = arr[j];
+		arr[j] = t;
+	}
+}
