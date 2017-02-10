@@ -45,6 +45,22 @@ public class Array_Bubble_Sort_冒泡排序 {
 			arrLen --;
 		}
 	}
+	static void bubbleSort3(int[] arr) {
+		if (arr == null || arr.length < 2)
+			return;
+		int n = arr.length;
+		int newN = 0;
+		while (n != 0) {
+			newN = 0;
+			for (int index = 1; index < n; index ++) {
+				if (arr[index - 1] > arr[index]) {
+					swap(arr, index - 1, index);
+					newN = index;
+				}
+			}
+			n = newN;
+		}
+	}
 	static void swap(int[] arr, int i, int j) {
 		int t = arr[i];
 		arr[i] = arr[j];
