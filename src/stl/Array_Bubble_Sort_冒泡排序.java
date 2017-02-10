@@ -29,6 +29,22 @@ public class Array_Bubble_Sort_冒泡排序 {
 			}
 		}
 	}
+	static void bubbleSort2(int[] arr) {
+		if (arr == null || arr.length < 2)
+			return;
+		boolean isSwapped = true;
+		int arrLen = arr.length;
+		while (isSwapped) {
+			isSwapped = false;
+			for (int index = 1; index < arrLen; index ++) {
+				if (arr[index - 1] > arr[index]) {
+					swap(arr, index - 1, index);
+					isSwapped = true;
+				}
+			}
+			arrLen --;
+		}
+	}
 	static void swap(int[] arr, int i, int j) {
 		int t = arr[i];
 		arr[i] = arr[j];
