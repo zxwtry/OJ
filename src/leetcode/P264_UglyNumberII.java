@@ -66,4 +66,22 @@ public class P264_UglyNumberII {
 	        return true;
 	    }
 	}
+	static class Solution1 {
+	    public int nthUglyNumber(int n) {
+	    	ArrayList<Integer> uglyList = new ArrayList<Integer>(n + 20);
+	    	uglyList.add(1);
+	    	int i2 = 0, i3 = 0, i5 = 0;
+	    	int newUgly = 0;
+	    	while (uglyList.size() < n) {
+	    		while(uglyList.get(uglyList.size() - 1) >= uglyList.get(i2) * 2) i2 ++;
+	    		newUgly = uglyList.get(i2) * 2;
+	    		while(uglyList.get(uglyList.size() - 1) >= uglyList.get(i3) * 3) i3 ++;
+	    		newUgly = Math.min(newUgly, uglyList.get(i3) * 3);
+	    		while(uglyList.get(uglyList.size() - 1) >= uglyList.get(i5) * 5) i5 ++;
+	    		newUgly = Math.min(newUgly, uglyList.get(i5) * 5);
+	    		uglyList.add(newUgly);
+	    	}
+	    	return uglyList.get(n - 1);
+	    }
+	}
 }
