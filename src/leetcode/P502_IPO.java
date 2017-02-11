@@ -34,5 +34,9 @@ The answer is guaranteed to fit in a 32-bit signed integer.
  * @details     
  */
 public class P502_IPO {
-
+	class Solution {
+	    public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
+	        
+	    }
+	}
 }
