@@ -26,5 +26,9 @@ You may assume the input string will only contain letters of alphabet.
  * @details     
  */
 public class P500_KeyboardRow {
-
+	class Solution {
+	    public String[] findWords(String[] words) {
+	        
+	    }
+	}
 }
