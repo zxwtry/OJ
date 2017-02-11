@@ -1,8 +1,6 @@
 package leetcode;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * 	Given an array of citations (each citation is a non-negative integer)
@@ -39,7 +37,8 @@ import java.util.Comparator;
  * @file        P274_H_Index.java
  * @type        P274_H_Index
  * @date        2016年12月14日 下午10:18:38
- * @details     Solution1: AC 4ms 6.79%
+ * @details     Solution1: AC 4ms  6.79%
+ * @details     Solution2: AC 1ms 55.06%
  */
 public class P274_H_Index {
 	static class Solution1 {
@@ -65,5 +64,19 @@ public class P274_H_Index {
 	    		endIndex --;
 	    	}
 	    }
+	}
+	static class Solution2 {
+		public int hIndex(int[] citations) {
+			int[] greaterCount = new int[citations.length + 1];
+			for (int cIndex = citations.length - 1; cIndex > -1; cIndex --)
+				greaterCount[Math.min(citations[cIndex], citations.length)] ++;
+			int greaterNum = 0;
+			int hIndex = 0;
+			for (int cIndex = citations.length; cIndex > -1 && hIndex < cIndex; cIndex --) {
+				greaterNum += greaterCount[cIndex];
+				hIndex = Math.max(hIndex, Math.min(cIndex, greaterNum));
+			}
+			return hIndex;
+		}
 	}
 }
