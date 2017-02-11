@@ -33,5 +33,9 @@ Follow up: Could you do that without using any extra space? (Assume that the imp
  * @details     
  */
 public class P501_FindModeinBinarySearchTree {
-
+	class Solution {
+	    public int[] findMode(TreeNode root) {
+	        
+	    }
+	}
 }
