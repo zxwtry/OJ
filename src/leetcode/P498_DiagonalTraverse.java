@@ -28,5 +28,7 @@ package leetcode;
  * @details     
  */
 public class P498_DiagonalTraverse {
-
+	public static void main(String[] args) {
+		System.out.println("AAAA");
+	}
 }
