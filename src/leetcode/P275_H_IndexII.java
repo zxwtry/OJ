@@ -19,7 +19,7 @@ package leetcode;
  * @date        2016年12月14日 下午10:20:20
  * @details     StandardSolution: TLE
  * @details     Solution1:  AC  24ms  17.79%
- * @details     Solution2:  AC  13ms   41.32%
+ * @details     Solution2:  AC  13ms  41.32%
  * @details     Solution3:  AC  11ms  76.40%
  */
 public class P275_H_IndexII {
@@ -124,5 +124,21 @@ public class P275_H_IndexII {
 	        }
 	        return len - first;
 	    }
+	}
+	static class Solution3 {
+		public int hIndex(int[] citations) {
+			int startIndex = 0, endIndex = citations.length - 1, middleIndex = 0;
+			while (startIndex <= endIndex) {
+				middleIndex = (startIndex + endIndex) / 2;
+				if (citations[middleIndex] < citations.length - middleIndex) {
+					startIndex = middleIndex + 1;
+				} else {
+					endIndex = middleIndex;
+				}
+				if (startIndex == middleIndex && middleIndex == endIndex)
+					break;
+			}
+			return citations.length - startIndex;
+		}
 	}
 }
