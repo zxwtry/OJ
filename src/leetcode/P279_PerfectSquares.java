@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.sun.org.apache.xerces.internal.impl.xs.SchemaSymbols;
 
+import sun.security.x509.KeyIdentifier;
+
 /**
  * 	Given a positive integer n, find the least number of perfect 
  * 	square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
@@ -23,6 +25,7 @@ import com.sun.org.apache.xerces.internal.impl.xs.SchemaSymbols;
  * @details     Solution1: AC  75ms 42.59%
  * @details     Solution2: AC 100ms 33.81%
  * @details     Solution3: AC  61ms 74.41%
+ * @details     Solution4: AC   2ms 97.37%
  */
 public class P279_PerfectSquares {
 	static class Solution1 {
@@ -75,6 +78,28 @@ public class P279_PerfectSquares {
 				dp[dpIndex ++] = numSquareNow;
 			}
 			return dp[n];
+		}
+	}
+	static class Solution4 {
+		//Based on Lagrange's Four Square theorem, there are only 4 possible results: 1, 2, 3, 4.
+		public int numSquares(int n) {
+			if (isSquare(n)) return 1;
+			while ((n & 3) == 0) {
+				n = n >> 2;
+			}
+			if ((n & 7) == 7) {
+				return 4;	//4^k*(8*m + 7)
+			}
+			for (int index = (int)Math.sqrt(n); index > 0; index --) {
+				if (isSquare(n - index * index)) {
+					return 2;
+				}
+			}
+			return 3;
+		}
+		private boolean isSquare(int n) {
+			int sqrt = (int) Math.sqrt(n);
+			return sqrt * sqrt == n;
 		}
 	}
 }
