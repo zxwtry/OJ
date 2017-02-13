@@ -26,6 +26,7 @@ import java.util.ArrayList;
  * @type        P493_ReversePairs
  * @date        2017年2月12日 下午4:03:34
  * @details     Solution1: AC 880 ms
+ * @details     Solution2: AC 808 ms
  */
 public class P493_ReversePairs {
 	static class Solution1 {
@@ -42,7 +43,6 @@ public class P493_ReversePairs {
 	    			if (minus > 0) leftIndex = middleIndex + 1;
 	    			else rightIndex = middleIndex;
 	    		}
-	    		//System.out.printf("index=%d\t\tleftIndex=%d\t\trightIndex=%d\r\n", index, leftIndex, rightIndex);
 	    		count += leftIndex;
 	    		leftIndex = 0;
 	    		rightIndex = list.size();
@@ -53,7 +53,6 @@ public class P493_ReversePairs {
 	    			else rightIndex = middleIndex;
 	    		}
 	    		list.add(rightIndex, nums[index]);
-	    		//System.out.println(list);
 	    	}
 	    	return count;
 	    }
@@ -79,16 +78,52 @@ public class P493_ReversePairs {
 		public int reversePairs(int[] nums) {
 	    	int count = 0;
 	    	ArrayList<Integer> list = new ArrayList<Integer>();
-	    	int leftIndex = 0, rightIndex = 0, middleIndex = 0, minus = 0;
 	    	for (int index = nums.length - 1; index > -1; index --) {
-	    		//第一个大于nums[index]
+	    		int countAdd = binaryNumberSmallerThanHalf(nums, index, list);
 	    		list.add(binaryFirstLarger(nums, index, list), nums[index]);
-	    		System.out.println(list);
+	    		count += countAdd;
 	    	}
 	    	return count;
 		}
+		public int binaryNumberSmallerThanHalf(int[] nums, int numsIndex, ArrayList<Integer> list) {
+			//list从小到大
+			if (list.size() == 0) return 0;
+			int listLeftIndex = 0, listRightIndex = list.size() - 1;
+			if (cmp2(nums, numsIndex, list, listLeftIndex) <= 0) return 0;
+			if (cmp2(nums, numsIndex, list, listRightIndex) > 0) return list.size();
+			int listMiddleIndex = 0;
+			int cut = 0;
+			while (listLeftIndex < listRightIndex) {
+				listMiddleIndex = (listLeftIndex + listRightIndex) / 2;
+				cut = cmp2(nums, numsIndex, list, listMiddleIndex);
+				if (cut > 0) {
+					listLeftIndex = listMiddleIndex + 1;
+				} else {
+					listRightIndex = listMiddleIndex;
+				}
+			}
+			return listLeftIndex;
+		}
 		private int binaryFirstLarger(int[] nums, int numsIndex, ArrayList<Integer> list) {
-			
+			//list从小到大
+			if (list.size() == 0) return 0;
+			int listLeftIndex = 0, listRightIndex = list.size() - 1;
+			if (cmp1(nums, numsIndex, list, listRightIndex) >= 0) return listRightIndex + 1;
+			if (cmp1(nums, numsIndex, list, listLeftIndex) <= 0) return listLeftIndex;
+			int listMiddleIndex = 0;
+			int cut = 0;
+			while (listLeftIndex < listRightIndex) {
+				listMiddleIndex = (listLeftIndex + listRightIndex + 1) / 2;
+				cut = cmp1(nums, numsIndex, list, listMiddleIndex);
+				if (cut > 0) {
+					listLeftIndex = listMiddleIndex;
+				} else if (cut == 0) {
+					return listMiddleIndex;
+				} else {
+					listRightIndex = listMiddleIndex - 1;
+				}
+			}
+			return listRightIndex + 1;
 		}
 		private int cmp1(int[] nums, int numsIndex, ArrayList<Integer> list, int listIndex) {
 	    	long cut = (long)nums[numsIndex] - (long)list.get(listIndex);
