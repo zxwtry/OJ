@@ -1,10 +1,13 @@
 package leetcode;
 
+import java.beans.IntrospectionException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.sun.org.apache.xerces.internal.impl.xs.SchemaSymbols;
 
 import sun.security.x509.KeyIdentifier;
+import sun.util.logging.resources.logging_zh_TW;
 
 /**
  * 	Given a positive integer n, find the least number of perfect 
@@ -26,6 +29,7 @@ import sun.security.x509.KeyIdentifier;
  * @details     Solution2: AC 100ms 33.81%
  * @details     Solution3: AC  61ms 74.41%
  * @details     Solution4: AC   2ms 97.37%
+ * @details     Solution5: 傻傻BFS TLE
  */
 public class P279_PerfectSquares {
 	static class Solution1 {
@@ -100,6 +104,35 @@ public class P279_PerfectSquares {
 		private boolean isSquare(int n) {
 			int sqrt = (int) Math.sqrt(n);
 			return sqrt * sqrt == n;
+		}
+	}
+	static class Solution5 {
+		public int numSquares(int n) {
+			LinkedList<Integer> bfsList = new LinkedList<Integer>();
+			bfsList.add(n);
+			bfsList.add(null);
+			int nNow = 0;
+			Integer nNowInteger = null;
+			int layerNow = 1;
+			int endIndex = 0;
+			int index = 0;
+			while (! bfsList.isEmpty()) {
+				nNowInteger = bfsList.pollFirst();
+				if (nNowInteger == null) {
+					layerNow ++;
+					bfsList.add(null);
+				} else {
+					nNow = nNowInteger;
+					endIndex = (int) Math.sqrt(nNow);
+					for (index = endIndex; index > 0; index --) {
+						if (nNow == index * index) {
+							return layerNow;
+						}
+						bfsList.add(nNow - index * index);
+					}
+				}
+			}
+			return 4;
 		}
 	}
 }
