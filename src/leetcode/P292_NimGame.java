@@ -68,6 +68,11 @@ public class P292_NimGame {
 			return (value - 1) % dp.length;
 		}
 	}
+	static class Solution3 {
+		public boolean canWinNim(int n) {
+			return n % 4 != 0;
+		}
+	}
  	static class StandardSolution {
 		public boolean canWinNim(int n) {
 			if (n >= 1 && n <= 3) return true;
