@@ -50,6 +50,24 @@ public class P292_NimGame {
 	        return dp[n];
 	    }
 	}
+	static class Solution2 {
+		public boolean canWinNim(int n) {
+			boolean[] dp = new boolean[] {true, true, true, false};
+			if (n <= dp.length) return dp[n - 1];
+			boolean canWin = false;
+			for (int index = 5; index <= n; index ++) {
+	        	canWin = true;
+	        	for (int otherIndex = index - 1; otherIndex >= index - 3; otherIndex --) {
+	        		canWin &= dp[getIndex(otherIndex, dp)];
+	        	}
+	        	dp[getIndex(index, dp)] = ! canWin;
+	        }
+			return dp[getIndex(n, dp)];
+		}
+		private int getIndex(int value, boolean[] dp) {
+			return (value - 1) % dp.length;
+		}
+	}
  	static class StandardSolution {
 		public boolean canWinNim(int n) {
 			if (n >= 1 && n <= 3) return true;
