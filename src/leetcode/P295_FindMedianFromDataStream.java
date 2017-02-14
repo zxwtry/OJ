@@ -76,6 +76,21 @@ public class P295_FindMedianFromDataStream {
 	    }
 	};
 	
+	static class MedianFinder2 {
+	    private Queue<Long> small = new PriorityQueue<Long>();
+	    private Queue<Long> large = new PriorityQueue<Long>();
+	    public void addNum(int num) {
+	        large.add((long) num);
+	        small.add(-large.poll());
+	        if (large.size() < small.size())
+	            large.add(-small.poll());
+	    }
+	    public double findMedian() {
+	        return large.size() > small.size()
+	               ? large.peek()
+	               : (large.peek() - small.peek()) / 2.0;
+	    }
+	};
 
 	// Your MedianFinder object will be instantiated and called as such:
 	// MedianFinder mf = new MedianFinder();
