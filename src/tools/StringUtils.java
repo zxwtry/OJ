@@ -36,7 +36,7 @@ public class StringUtils {
 		if (char1 > char2) {
 			return A_生成随机回文串char1_char2(char2, char1, len);
 		}
-		int[] arr = tools.Random随机生成器.A_生成一个随机数据(len, 0, char2 - char1 + 1);
+		int[] arr = tools.Random随机生成器.A_生成一个随机数据(len, 0, char2 - char1);
 		char[] cs = new char[len];
 		for (int index = 0; index < len; index ++) {
 			cs[index] = (char) (char1 + arr[index]);
