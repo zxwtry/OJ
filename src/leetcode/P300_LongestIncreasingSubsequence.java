@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 /**
  * 	Given an unsorted array of integers, find the length of longest increasing subsequence.
  *	
@@ -26,12 +28,27 @@ package leetcode;
  * @file        P300_LongestIncreasingSubsequence.java
  * @type        P300_LongestIncreasingSubsequence
  * @date        2016年12月28日 下午10:18:57
- * @details     
+ * @details     Solution1: AC 34ms 12.19%
  */
 public class P300_LongestIncreasingSubsequence {
-	static class Solution {
+	static class Solution1 {
 	    public int lengthOfLIS(int[] nums) {
-	        
+	        if (nums == null || nums.length < 1) return 0;
+	        int[] leftSmallCount = new int[nums.length];
+	        Arrays.fill(leftSmallCount, 1);
+	        int maxLength = 1;
+	        for (int index = 1; index < nums.length; index ++) {
+	        	for (int leftIndex = index - 1; leftIndex > -1; leftIndex --) {
+	        		if (nums[leftIndex] == nums[index]) {
+	        			leftSmallCount[index] = Math.max(leftSmallCount[index], leftSmallCount[leftIndex]);
+	        			break;
+	        		} else if (nums[leftIndex] < nums[index]) {
+	        			leftSmallCount[index] = Math.max(leftSmallCount[index], leftSmallCount[leftIndex] + 1);
+	        			maxLength = Math.max(maxLength, leftSmallCount[index]);
+	        		}
+	        	}
+	        }
+	        return maxLength;
 	    }
 	}
 }
