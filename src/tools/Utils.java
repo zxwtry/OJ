@@ -175,6 +175,20 @@ public class Utils {
 				System.out.printf("%d", arr[i]);
 		}
 	}
+	public static void A_indexAndValue(int[] arr) {
+		if (arr == null || arr.length < 1) return;
+		A_indexAndValue(arr, arr.length);
+	}
+	public static void A_indexAndValue(int[] arr, int n) {
+		A_indexAndValue("", arr, n);
+	}
+	public static void A_indexAndValue(String prefix, int[] arr, int n) {
+		System.out.print(prefix == "" ? "" : prefix + ": ");
+		for (int index = 0; index < arr.length; index ++) {
+			System.out.printf("(%d)%d ", index, arr[index]);
+		}
+		System.out.println();
+	}
 	public static void A_打印二维数组(int[][] arr) {
 		if (arr == null || arr.length < 1)
 			return;
