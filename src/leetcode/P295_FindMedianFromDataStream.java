@@ -1,5 +1,9 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  * 	Median is the middle value in an ordered integer list. 
  * 	If the size of the list is even, there is no middle value. 
@@ -32,21 +36,46 @@ package leetcode;
  * @file        P295_FindMedianFromDataStream.java
  * @type        P295_FindMedianFromDataStream
  * @date        2016年12月17日 下午10:31:58
- * @details     
+ * @details     MedianFinder1: AC 275ms 15.58%
+ * @details     MedianFinder2: AC 310ms  6.12%
  */
 public class P295_FindMedianFromDataStream {
-	static class MedianFinder {
-
+	static class MedianFinder1 {
+		ArrayList<Integer> sortedList = new ArrayList<Integer>();
 	    // Adds a number into the data structure.
 	    public void addNum(int num) {
-	        
+	        if (sortedList.size() == 0) sortedList.add(num);
+	        else if (sortedList.get(0) >= num) sortedList.add(0, num);
+	        else if (sortedList.get(sortedList.size() - 1) <= num) sortedList.add(num);
+	        else sortedList.add(getBinaryIndex(num, 0, sortedList.size() - 1), num);
+	        System.out.println(sortedList);
 	    }
-
-	    // Returns the median of current data stream
+	    private int getBinaryIndex(int num, int startIndex, int endIndex) {
+	    	int middleIndex = 0;
+	    	int cut = 0;
+	    	while (startIndex < endIndex) {
+	    		middleIndex = (startIndex + endIndex) / 2;
+	    		cut = sortedList.get(middleIndex) - num;
+	    		if (cut > 0) {
+	    			endIndex = middleIndex;
+	    		} else if (cut == 0) {
+	    			return middleIndex;
+	    		} else {
+	    			startIndex = middleIndex + 1;
+	    		}
+	    	}
+			return startIndex;
+		}
+		// Returns the median of current data stream
 	    public double findMedian() {
-	        
+	        if (sortedList.size() % 2 == 1) {
+	        	return sortedList.get(sortedList.size() / 2);
+	        } else {
+	        	return (sortedList.get(sortedList.size() / 2) + (double)sortedList.get(sortedList.size() / 2 - 1)) / 2;
+	        }
 	    }
 	};
+	
 
 	// Your MedianFinder object will be instantiated and called as such:
 	// MedianFinder mf = new MedianFinder();
