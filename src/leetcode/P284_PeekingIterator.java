@@ -1,8 +1,6 @@
 package leetcode;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 /**
  * 	Given an Iterator class interface with methods: next() and hasNext(), 
