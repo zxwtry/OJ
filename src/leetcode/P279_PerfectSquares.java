@@ -1,13 +1,8 @@
 package leetcode;
 
-import java.beans.IntrospectionException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-import com.sun.org.apache.xerces.internal.impl.xs.SchemaSymbols;
-
-import sun.security.x509.KeyIdentifier;
-import sun.util.logging.resources.logging_zh_TW;
+import java.util.Queue;
 
 /**
  * 	Given a positive integer n, find the least number of perfect 
@@ -30,6 +25,7 @@ import sun.util.logging.resources.logging_zh_TW;
  * @details     Solution3: AC  61ms 74.41%
  * @details     Solution4: AC   2ms 97.37%
  * @details     Solution5: 傻傻BFS TLE
+ * @details     Solution6: AC  34ms 87.43%
  */
 public class P279_PerfectSquares {
 	static class Solution1 {
@@ -134,5 +130,39 @@ public class P279_PerfectSquares {
 			}
 			return 4;
 		}
+	}
+	static class Solution6 {
+	    public int numSquares(int n) {
+	        if (n <= 0) return 0;
+	        ArrayList<Integer> squareList = new ArrayList<Integer>();
+	        int[] cntSquare = new int[n + 1];
+	        for(int nIndex = 1; nIndex * nIndex <= n; nIndex ++) {
+	        	squareList.add(nIndex * nIndex);
+	        }
+	        if(squareList.get(squareList.size() - 1) == n) return 1;
+	        Queue<Integer> searchQueue = new LinkedList<Integer>();
+	        searchQueue.addAll(squareList);
+	        int valueNow = 0;
+	        int currentCntSquares = 1;
+	        int searchQueueSize = 0;
+	        while (! searchQueue.isEmpty()) {
+	        	currentCntSquares ++;
+	        	searchQueueSize = searchQueue.size();
+	        	while (searchQueueSize -- > 0) {
+		        	valueNow = searchQueue.poll();
+		        	for (int squareValue : squareList) {
+		        		if (valueNow + squareValue == n) {
+		        			return currentCntSquares;
+		        		} else if (valueNow + squareValue < n && cntSquare[valueNow + squareValue] == 0) {
+		        			cntSquare[valueNow + squareValue] = currentCntSquares;
+		        			searchQueue.add(valueNow + squareValue);
+		        		} else if (valueNow + squareValue > n) {
+		        			break;
+		        		}
+		        	}
+	        	}
+	        }
+	        return 0;
+	    }
 	}
 }
