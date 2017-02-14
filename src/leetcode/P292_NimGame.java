@@ -6,7 +6,7 @@ package leetcode;
  * 	you take turns to remove 1 to 3 stones. The one who removes 
  * 	the last stone will be the winner. You will take the first turn
  *  to remove the stones.
-
+ * 
  *	Both of you are very clever and have optimal strategies for the
  *	game. Write a function to determine whether you can win the game
  *	given the number of stones in the heap.
@@ -29,12 +29,21 @@ package leetcode;
  * @file        P292_NimGame.java
  * @type        P292_NimGame
  * @date        2016年12月17日 下午10:33:24
- * @details     
+ * @details     Solution1: MLE
+ * @details     Solution2: TLE
+ * @details     Solution3: AC 0ms 4.85%
  */
 public class P292_NimGame {
-	static class Solution {
-	    public boolean canWinNim(int n) {
-	        
-	    }
+ 	static class StandardSolution {
+		public boolean canWinNim(int n) {
+			if (n >= 1 && n <= 3) return true;
+			if (n == 4) return false;
+			if (n >= 5 && n <= 7) return true;
+			boolean isWin = true;
+			for (int index = 1; index <= 3; index ++) {
+				isWin &= canWinNim(n - index);
+			}
+			return !isWin;
+		}
 	}
 }
