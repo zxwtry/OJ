@@ -307,5 +307,9 @@ public class TreeNode辅助 {
 		public TreeNode(int val) {
 			this.val = val;
 		}
+		@Override
+		public String toString() {
+			return "" + val;
+		}
 	}
 }
