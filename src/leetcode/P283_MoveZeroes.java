@@ -2,16 +2,18 @@ package leetcode;
 
 import java.util.Arrays;
 
+import javafx.util.converter.NumberStringConverter;
+
 /**
  * 	Given an array nums, write a function to move all 0's to the 
  * 	end of it while maintaining the relative order of the non-zero elements.
-
-	For example, given nums = [0, 1, 0, 3, 12], after calling your 
-	function, nums should be [1, 3, 12, 0, 0].
-	
-	Note:
-	You must do this in-place without making a copy of the array.
-	Minimize the total number of operations.
+ * 	
+ * 	For example, given nums = [0, 1, 0, 3, 12], after calling your 
+ * 	function, nums should be [1, 3, 12, 0, 0].
+ * 	
+ * 	Note:
+ * 	You must do this in-place without making a copy of the array.
+ * 	Minimize the total number of operations.
  */
 
 /**
@@ -24,6 +26,7 @@ import java.util.Arrays;
  * @date        2016年12月14日 下午10:25:13
  * @details     Solution1: AC 1ms  18.90%
  * @details     Solution2: AC 10ms 14.89%
+ * @details     Solution3: AC 1ms  16.44%
  */
 public class P283_MoveZeroes {
 	static class Solution1 {
@@ -100,5 +103,18 @@ public class P283_MoveZeroes {
 	    	if (n[is[j]] == 0) return -1;
 	    	return v - is[j];
 	    }
+	}
+	static class Solution3 {
+		public void moveZeroes(int[] num) {
+			int notZeroIndex = 0;
+			for (int n : num) {
+				if (n != 0) {
+					num[notZeroIndex ++] = n;
+				}
+			}
+			for (; notZeroIndex < num.length; notZeroIndex ++) {
+				num[notZeroIndex] = 0;
+			}
+		}
 	}
 }
