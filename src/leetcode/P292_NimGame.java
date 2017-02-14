@@ -34,6 +34,22 @@ package leetcode;
  * @details     Solution3: AC 0ms 4.85%
  */
 public class P292_NimGame {
+	static class Solution1 {
+	    public boolean canWinNim(int n) {
+	        boolean[] dp = new boolean[Math.max(n + 1, 8)];
+	        for (int index = 0; index < 8; index ++) dp[index] = true;
+	        dp[4] = false;
+	        boolean canWin = false;
+	        for (int index = 8; index <= n; index ++) {
+	        	canWin = true;
+	        	for (int otherIndex = index - 1; otherIndex >= index - 3; otherIndex --) {
+	        		canWin &= dp[otherIndex];
+	        	}
+	        	dp[index] = ! canWin;
+	        }
+	        return dp[n];
+	    }
+	}
  	static class StandardSolution {
 		public boolean canWinNim(int n) {
 			if (n >= 1 && n <= 3) return true;
