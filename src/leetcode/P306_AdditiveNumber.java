@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.math.BigInteger;
+
 /**
  * 	Additive number is a string whose digits can form additive sequence.
  *	
@@ -32,12 +34,31 @@ package leetcode;
  * @file        P306_AdditiveNumber.java
  * @type        P306_AdditiveNumber
  * @date        2016年12月29日 下午8:50:40
- * @details     
+ * @details     Solution1: AC 9ms 10.76%
+ * @details     Solution2: AC 4ms 31.51%
  */
 public class P306_AdditiveNumber {
-	static class Solution {
-	    public boolean isAdditiveNumber(String num) {
-	        
-	    }
+	static class Solution1 {
+		public boolean isAdditiveNumber(String num) {
+			if (num == null || num.length() < 3) return false;
+			for (int oneLength = 1; oneLength <= num.length() / 2; oneLength ++) {
+				if (num.charAt(0) == '0' && oneLength > 1) continue;
+				for (int twoLength = 1; Math.max(oneLength, twoLength) <= num.length() - oneLength - twoLength; twoLength ++) {
+					if (num.charAt(oneLength) == '0' && twoLength > 1) continue;
+					BigInteger oneBigInteger = new BigInteger(num.substring(0, oneLength));
+					BigInteger twoBigInteger = new BigInteger(num.substring(oneLength, oneLength + twoLength));
+					String sumString = "";
+					boolean isSuccess = true;
+					for (int numIndex = oneLength + twoLength; isSuccess && numIndex != num.length(); numIndex += sumString.length()) {
+						twoBigInteger = oneBigInteger.add(twoBigInteger);
+						oneBigInteger = twoBigInteger.subtract(oneBigInteger);
+						sumString = twoBigInteger.toString();
+						if (! num.startsWith(sumString, numIndex)) isSuccess = false;
+					}
+					if (isSuccess) return true;
+				}
+			}
+			return false;
+		}
 	}
 }
