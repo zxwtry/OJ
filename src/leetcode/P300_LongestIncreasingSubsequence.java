@@ -29,6 +29,7 @@ import java.util.Arrays;
  * @type        P300_LongestIncreasingSubsequence
  * @date        2016年12月28日 下午10:18:57
  * @details     Solution1: AC 34ms 12.19%
+ * @details     Solution2: AC  1ms 87.95%
  */
 public class P300_LongestIncreasingSubsequence {
 	static class Solution1 {
@@ -50,5 +51,19 @@ public class P300_LongestIncreasingSubsequence {
 	        }
 	        return maxLength;
 	    }
+	}
+	static class Solution2 {
+		public int lengthOfLIS(int[] nums) {
+			if (nums == null || nums.length < 1) return 0;
+			int[] dp = new int[nums.length];
+			int dpIndex = 0;
+			for (int num : nums) {
+				int insertIndex = Arrays.binarySearch(dp, 0, dpIndex, num);
+				if (insertIndex < 0) insertIndex = -(insertIndex + 1);
+				dp[insertIndex] = num;
+				if (insertIndex == dpIndex) dpIndex ++; 
+			}
+			return dpIndex;
+		}
 	}
 }
