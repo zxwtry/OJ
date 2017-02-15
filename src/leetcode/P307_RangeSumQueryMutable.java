@@ -26,21 +26,33 @@ package leetcode;
  * @file        P307_RangeSumQueryMutable.java
  * @type        P307_RangeSumQueryMutable
  * @date        2016年12月29日 下午8:52:11
- * @details     
+ * @details     NumArray1: TLE
  */
 public class P307_RangeSumQueryMutable {
-	static class NumArray {
-
-	    public NumArray(int[] nums) {
-	        
+	static class NumArray1 {
+		long[] sum = null;
+		int[] nums = null;
+	    public NumArray1(int[] nums) {
+	        if (nums == null || nums.length == 0) return;
+	        sum = new long[nums.length];
+	        sum[0] = nums[0];
+	        for (int index = 1; index < nums.length; index ++) {
+	        	sum[index] = sum[index - 1] + nums[index];
+	        }
+	        this.nums = nums;
 	    }
 
 	    void update(int i, int val) {
-	        
+	        long add = -(long)nums[i] + val;
+	        for (int index = i; index < sum.length; index ++) {
+	        	sum[index] += add;
+	        }
+	        nums[i] = val;
 	    }
 
 	    public int sumRange(int i, int j) {
-	        
+	        if (i == 0) return (int)sum[j];
+	        return (int)(sum[j] - sum[i - 1]);
 	    }
 	}
 
