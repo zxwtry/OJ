@@ -25,8 +25,24 @@ package leetcode;
  * @type        P303_RangeSumQueryImmutable
  * @date        2016年12月28日 下午10:25:59
  * @details     NumArray1: AC 241ms 22.91%
+ * @details     NumArray2: AC 240ms 24.04%
  */
 public class P303_RangeSumQueryImmutable {
+	static class NumArray2 {
+		int[] nums = null;
+	    public NumArray2(int[] nums) {
+	    	for (int index = 1; index < nums.length; index ++) {
+	    		nums[index] += nums[index - 1];
+	    	}
+	    	this.nums = nums;
+	    }
+	    public int sumRange(int i, int j) {
+	    	if (i == 0) {
+	    		return nums[j];
+	    	}
+	    	return nums[j] - nums[i - 1];
+	    }
+	}
 	static class NumArray1 {
 		long[] sums = null;
 	    public NumArray1(int[] nums) {
