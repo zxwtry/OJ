@@ -26,12 +26,22 @@ package leetcode;
  * @file        P309_BestTimeToBuyAndSellStockWithCooldown.java
  * @type        P309_BestTimeToBuyAndSellStockWithCooldown
  * @date        2016年12月29日 下午8:53:31
- * @details     
+ * @details     Solution: AC 18ms 61.30%
  */
 public class P309_BestTimeToBuyAndSellStockWithCooldown {
 	static class Solution {
-	    public int maxProfit(int[] prices) {
-	        
-	    }
+		public int maxProfit(int[] prices) {
+		    if(prices == null || prices.length <= 1) return 0;
+		  
+		    int b0 = -prices[0], b1 = b0;
+		    int s0 = 0, s1 = 0, s2 = 0;
+		 
+		    for(int i = 1; i < prices.length; i++) {
+		    	b0 = Math.max(b1, s2 - prices[i]);
+		    	s0 = Math.max(s1, b1 + prices[i]);
+		    	b1 = b0; s2 = s1; s1 = s0; 
+		    }
+		    return s0;
+		}
 	}
 }
