@@ -51,4 +51,8 @@ public class P301_RemoveInvalidParentheses {
 		        ans.add(reversed);
 		}
 	}
+	static class Solution2 {
+		public List<String> removeInvalidParentheses(String s) {
+		}
+	}
 }
