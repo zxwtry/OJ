@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 /**
  * 	Write a program to find the nth super ugly number.
 
@@ -23,6 +25,7 @@ package leetcode;
  * @type        P313_SuperUglyNumber
  * @date        2016年12月29日 下午10:24:20
  * @details     Solution1: AC 29ms 59.72%
+ * @details     Solution2: AC 20ms 95.20%
  */
 public class P313_SuperUglyNumber {
 	static class Solution1 {
@@ -45,5 +48,28 @@ public class P313_SuperUglyNumber {
 
 		    return ugly[n - 1];
 		}
+	}
+	static class Solution2 {
+		public int nthSuperUglyNumber(int n, int[] primes) {
+	        int[] ugly = new int[n];
+	        int[] idx = new int[primes.length];
+	        int[] val = new int[primes.length];
+	        Arrays.fill(val, 1);
+
+	        int next = 1;
+	        for (int i = 0; i < n; i++) {
+	            ugly[i] = next;
+	            
+	            next = Integer.MAX_VALUE;
+	            for (int j = 0; j < primes.length; j++) {
+	                //skip duplicate and avoid extra multiplication
+	                if (val[j] == ugly[i]) val[j] = ugly[idx[j]++] * primes[j];
+	                //find next ugly number
+	                next = Math.min(next, val[j]);
+	            }
+	        }
+
+	        return ugly[n - 1];
+	    }
 	}
 }
