@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 /**
  * 	There are n bulbs that are initially off. You first turn on all the bulbs.
  *  Then, you turn off every second bulb. On the third round, you toggle every third bulb 
@@ -27,15 +29,19 @@ package leetcode;
  * @file        P319_BulbSwitcher.java
  * @type        P319_BulbSwitcher
  * @date        2017年1月9日 下午9:05:02
- * @details     
+ * @details     Solution1: AC 0ms 18.03%
  */
 public class P319_BulbSwitcher {
+    public static void main(String[] args) {
+        StandardSolution standardSolution = new StandardSolution();
+        System.out.println(standardSolution.bulbSwitch(345));
+    }
 	static class Solution1 {
 	    public int bulbSwitch(int n) {
 	        if (n == 1) return 1;
 	        if (n == 2) return 2;
 	        if (n == 3) return 1;
-	        int countOfOn = 0;
+	        int countOfOn = 1;
 	        boolean isOn = false;
 	        for (int nIndex = 2; nIndex < n; nIndex ++) {
 	            isOn = false;
@@ -46,6 +52,32 @@ public class P319_BulbSwitcher {
 	            countOfOn += isOn ? 1 : 0;
 	        }
 	        return countOfOn;
+	    }
+	}
+	static class StandardSolution {
+	    public int bulbSwitch(int n) {
+	        if (n == 1) return 1;
+            if (n == 2) return 2;
+            if (n == 3) return 1;
+	        boolean[] isOn = new boolean[n + 1];
+	        Arrays.fill(isOn, true);
+	        for (int index = 3; index <= n; index ++) {
+	            int times = index;
+	            while (times <= n) {
+	                isOn[times] = !isOn[times];
+	                times += index;
+	            }
+	        }
+	        int countOfOn = 0;
+	        for (boolean on : isOn) {
+	            countOfOn += on ? 1 : 0;
+	        }
+	        return countOfOn;
+	    }
+	}
+	static class Solution2 {
+	    public int bulbSwitch(int n) {
+	        return (int)Math.sqrt(n);
 	    }
 	}
 }
