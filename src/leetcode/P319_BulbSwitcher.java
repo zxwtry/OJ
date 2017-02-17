@@ -30,30 +30,9 @@ import java.util.Arrays;
  * @type        P319_BulbSwitcher
  * @date        2017年1月9日 下午9:05:02
  * @details     Solution1: AC 0ms 18.03%
+ * @details     StandardSolution: TLE
  */
 public class P319_BulbSwitcher {
-    public static void main(String[] args) {
-        StandardSolution standardSolution = new StandardSolution();
-        System.out.println(standardSolution.bulbSwitch(345));
-    }
-	static class Solution1 {
-	    public int bulbSwitch(int n) {
-	        if (n == 1) return 1;
-	        if (n == 2) return 2;
-	        if (n == 3) return 1;
-	        int countOfOn = 1;
-	        boolean isOn = false;
-	        for (int nIndex = 2; nIndex < n; nIndex ++) {
-	            isOn = false;
-	            for (int sqrtIndex = 3; sqrtIndex * sqrtIndex < n; sqrtIndex ++) {
-	                if (nIndex % sqrtIndex == 0)
-	                    isOn = ! isOn;
-	            }
-	            countOfOn += isOn ? 1 : 0;
-	        }
-	        return countOfOn;
-	    }
-	}
 	static class StandardSolution {
 	    public int bulbSwitch(int n) {
 	        if (n == 1) return 1;
@@ -61,10 +40,10 @@ public class P319_BulbSwitcher {
             if (n == 3) return 1;
 	        boolean[] isOn = new boolean[n + 1];
 	        Arrays.fill(isOn, true);
-	        for (int index = 3; index <= n; index ++) {
+	        for (int index = 2; index <= n; index ++) {
 	            int times = index;
 	            while (times <= n) {
-	                isOn[times] = !isOn[times];
+	                isOn[times] = ! isOn[times];
 	                times += index;
 	            }
 	        }
@@ -72,7 +51,7 @@ public class P319_BulbSwitcher {
 	        for (boolean on : isOn) {
 	            countOfOn += on ? 1 : 0;
 	        }
-	        return countOfOn;
+	        return countOfOn - 1;
 	    }
 	}
 	static class Solution2 {
