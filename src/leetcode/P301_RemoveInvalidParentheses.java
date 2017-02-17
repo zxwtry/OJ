@@ -27,6 +27,7 @@ import java.util.List;
  * @date        2016年12月28日 下午10:22:08
  * @details     Solution1: AC 4ms 69.26%
  * @details     Solution1修改后: AC 3ms 75.05%
+ * @details     Solution2: AC 3ms 75.05%
  */
 public class P301_RemoveInvalidParentheses {
 	static class Solution1 {
@@ -68,6 +69,57 @@ public class P301_RemoveInvalidParentheses {
 			for (int index = 0; index < string.length(); index ++) {
 				if (index == j) continue;
 				cs[csIndex ++] = string.charAt(index);
+			}
+			return new String(cs);
+		}
+	}
+	static class Solution2 {
+		public List<String> removeInvalidParentheses(String s) {
+			List<String> answerList = new LinkedList<String>();
+			if (s == null || s.length() < 1) {
+				answerList.add("");
+				return answerList; 
+			}
+			removeInvalidParenthesesInternal(s, answerList, 0, 0, new char[] {'(', ')'});
+			return answerList;
+		}
+		private void removeInvalidParenthesesInternal(String string, List<String> answerList,
+				int checkedIndex, int removedIndex, char[] compareParentheses) {
+			int compareParentheseCount = 0;
+			for (int checkIndex = checkedIndex; checkIndex < string.length(); checkIndex ++) {
+				if (string.charAt(checkIndex) == compareParentheses[0]) compareParentheseCount ++;
+				if (string.charAt(checkIndex) == compareParentheses[1]) compareParentheseCount --;
+				if (compareParentheseCount >= 0) continue;
+				for (int removeIndex = removedIndex; removeIndex <= checkIndex; removeIndex ++) {
+					if (string.charAt(removeIndex) == compareParentheses[1] && 
+							(removeIndex == removedIndex || string.charAt(removeIndex - 1) != compareParentheses[1]))
+						removeInvalidParenthesesInternal(removeCharAtIndex(string, removeIndex),
+								answerList, checkIndex, removeIndex, compareParentheses);
+				}
+				return;
+			}
+			if (compareParentheses[0] == '(')
+				removeInvalidParenthesesInternal(reverse(string), answerList, 0, 0, new char[] {')', '('});
+			else
+				answerList.add(reverse(string));
+		}
+		private String reverse(String string) {
+			int startIndex = 0, endIndex = string.length() - 1;
+			char[] cs = new char[string.length()];
+			while (startIndex <= endIndex) {
+				cs[startIndex] = string.charAt(endIndex);
+				cs[endIndex] = string.charAt(startIndex);
+				startIndex ++;
+				endIndex --;
+			}
+			return new String(cs);
+		}
+		private String removeCharAtIndex(String string, int index) {
+			char[] cs = new char[string.length() - 1];
+			int csIndex = 0;
+			for (int stringIndex = 0; stringIndex <= cs.length; stringIndex ++) {
+				if (stringIndex != index)
+					cs[csIndex ++] = string.charAt(stringIndex); 
 			}
 			return new String(cs);
 		}
