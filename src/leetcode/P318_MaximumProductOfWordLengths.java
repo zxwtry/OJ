@@ -1,5 +1,7 @@
 package leetcode;
 
+import com.sun.org.apache.xml.internal.security.signature.Manifest;
+
 /**
  * 	Given a string array words, find the maximum value of 
  * 	length(word[i]) * length(word[j]) where the two words 
@@ -31,12 +33,32 @@ package leetcode;
  * @file        P318_MaximumProductOfWordLengths.java
  * @type        P318_MaximumProductOfWordLengths
  * @date        2017年1月4日 下午10:18:10
- * @details     
+ * @details     Solution1: AC 47ms 34.38%
  */
 public class P318_MaximumProductOfWordLengths {
-	static class Solution {
-	    public int maxProduct(String[] words) {
-	        
+	static class Solution1 {
+	    public int maxProduct(String[] wordArray) {
+	        int[][] wordMapArray = new int[wordArray.length][26];
+	        for (int wordArrayIndex = 0; wordArrayIndex < wordArray.length; wordArrayIndex ++) {
+	            String word = wordArray[wordArrayIndex];
+	            int[] wordMap = wordMapArray[wordArrayIndex];
+	            for (int wordIndex = word.length() - 1; wordIndex > -1; wordIndex --)
+	                wordMap[word.charAt(wordIndex) - 'a'] ++;
+	        }
+	        int maxProduct = 0;
+	        for (int wordArrayIndexRow = 0; wordArrayIndexRow < wordArray.length; wordArrayIndexRow ++) {
+	            for (int wordArrayIndexCol = wordArrayIndexRow + 1; wordArrayIndexCol < wordArray.length; wordArrayIndexCol ++) {
+	                int[] wordMapRow = wordMapArray[wordArrayIndexRow], wordMapCol = wordMapArray[wordArrayIndexCol];
+	                boolean isNotContainsSame = true;
+	                for (int wordMapIndex = 0; isNotContainsSame && wordMapIndex < 26; wordMapIndex ++)
+	                    isNotContainsSame &= (wordMapRow[wordMapIndex] == 0 || wordMapCol[wordMapIndex] == 0);
+	                if (isNotContainsSame) {
+	                    maxProduct = Math.max(maxProduct, 
+	                            wordArray[wordArrayIndexRow].length() * wordArray[wordArrayIndexCol].length());
+	                }
+	            }
+	        }
+ 	        return maxProduct;
 	    }
 	}
 }
