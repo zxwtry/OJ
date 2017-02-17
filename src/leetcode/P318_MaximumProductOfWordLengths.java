@@ -1,7 +1,5 @@
 package leetcode;
 
-import com.sun.org.apache.xml.internal.security.signature.Manifest;
-
 /**
  * 	Given a string array words, find the maximum value of 
  * 	length(word[i]) * length(word[j]) where the two words 
@@ -34,6 +32,7 @@ import com.sun.org.apache.xml.internal.security.signature.Manifest;
  * @type        P318_MaximumProductOfWordLengths
  * @date        2017年1月4日 下午10:18:10
  * @details     Solution1: AC 47ms 34.38%
+ * @details     Solution2: AC 30ms 74.44%
  */
 public class P318_MaximumProductOfWordLengths {
 	static class Solution1 {
@@ -59,6 +58,25 @@ public class P318_MaximumProductOfWordLengths {
 	            }
 	        }
  	        return maxProduct;
+	    }
+	}
+	static class Solution2 {
+	    public int maxProduct(String[] wordArray) {
+	        int[] wordSignArray = new int[wordArray.length];
+	        for (int wordArrayIndex = 0; wordArrayIndex < wordArray.length; wordArrayIndex ++) {
+	            String word = wordArray[wordArrayIndex];
+	            for (int wordIndex = 0; wordIndex < word.length(); wordIndex ++)
+	                wordSignArray[wordArrayIndex] |= (1 << (word.charAt(wordIndex) - 'a'));
+	        }
+	        int maxProduct = 0;
+	        for (int wordArrayIndexRow = 0; wordArrayIndexRow < wordArray.length; wordArrayIndexRow ++) {
+	            for (int wordArrayIndexCol = wordArrayIndexRow + 1; wordArrayIndexCol < wordArray.length; wordArrayIndexCol ++) {
+	                if ((wordSignArray[wordArrayIndexRow] & wordSignArray[wordArrayIndexCol]) == 0)
+	                    maxProduct = Math.max(maxProduct, 
+	                            wordArray[wordArrayIndexRow].length() *  wordArray[wordArrayIndexCol].length());
+	            }
+	        }
+	        return maxProduct;
 	    }
 	}
 }
