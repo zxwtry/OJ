@@ -30,9 +30,22 @@ package leetcode;
  * @details     
  */
 public class P319_BulbSwitcher {
-	static class Solution {
+	static class Solution1 {
 	    public int bulbSwitch(int n) {
-	        
+	        if (n == 1) return 1;
+	        if (n == 2) return 2;
+	        if (n == 3) return 1;
+	        int countOfOn = 0;
+	        boolean isOn = false;
+	        for (int nIndex = 2; nIndex < n; nIndex ++) {
+	            isOn = false;
+	            for (int sqrtIndex = 3; sqrtIndex * sqrtIndex < n; sqrtIndex ++) {
+	                if (nIndex % sqrtIndex == 0)
+	                    isOn = ! isOn;
+	            }
+	            countOfOn += isOn ? 1 : 0;
+	        }
+	        return countOfOn;
 	    }
 	}
 }
