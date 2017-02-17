@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,8 +29,17 @@ import java.util.List;
  * @type        P315_CountOfSmallerNumbersAfterSelf
  * @date        2016年12月29日 下午10:25:51
  * @details     Solution1: AC 15ms 47.89%
+ * @details     Solution2: TLE
  */
 public class P315_CountOfSmallerNumbersAfterSelf {
+    public static void main(String[] args) {
+        int[] numArray = tools.Random随机生成器.A_生成一个随机数据(5, 0, 10);
+        tools.Utils.printArray(numArray, numArray.length);
+        Solution2 solution2 = new Solution2();
+        System.out.println(solution2.countSmaller(numArray));
+        Solution1 solution1 = new Solution1();
+        System.out.println(solution1.countSmaller(numArray));
+    }
 	static class Solution1 {
 	    class Node {
 	        Node left, right;
@@ -61,6 +71,30 @@ public class P315_CountOfSmallerNumbersAfterSelf {
 	            node.right = insert(num, node.right, ans, i, preSum + node.dup + node.sum);
 	        }
 	        return node;
+	    }
+	}
+	static class Solution2 {
+	    public List<Integer> countSmaller(int[] numArray) {
+	        List<Integer> answerList = new ArrayList<Integer>(numArray.length);
+	        if (numArray == null || numArray.length < 1) return answerList;
+	        answerList.add(0);
+	        int smallerCount = 0;
+	        for (int numArrayIndex = numArray.length - 2; numArrayIndex > -1; numArrayIndex --) {
+	            smallerCount = 0;
+	            for (int numArrayLeftIndex = numArrayIndex + 1; numArrayLeftIndex < numArray.length; numArrayLeftIndex ++) {
+	                if (numArray[numArrayLeftIndex] < numArray[numArrayIndex]) {
+	                    smallerCount ++;
+	                } else if (numArray[numArrayLeftIndex] == numArray[numArrayIndex]) {
+	                    if (smallerCount == 0) {
+    	                    answerList.add(0, answerList.get(numArrayLeftIndex - numArrayIndex - 1));
+    	                    break;
+	                    }
+	                }
+	            }
+	            if (answerList.size() < numArray.length - numArrayIndex)
+	                answerList.add(0, smallerCount);
+	        }
+	        return answerList;
 	    }
 	}
 }
