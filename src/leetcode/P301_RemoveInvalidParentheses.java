@@ -26,6 +26,7 @@ import java.util.List;
  * @type        P301_RemoveInvalidParentheses
  * @date        2016年12月28日 下午10:22:08
  * @details     Solution1: AC 4ms 69.26%
+ * @details     Solution1修改后: AC 3ms 75.05%
  */
 public class P301_RemoveInvalidParentheses {
 	static class Solution1 {
@@ -35,24 +36,40 @@ public class P301_RemoveInvalidParentheses {
 		    return ans;
 		}
 		public void remove(String s, List<String> ans, int last_i, int last_j,  char[] par) {
-		    for (int stack = 0, i = last_i; i < s.length(); ++i) {
+			int stack = 0;
+		    for (int i = last_i; i < s.length(); ++i) {
 		        if (s.charAt(i) == par[0]) stack++;
 		        if (s.charAt(i) == par[1]) stack--;
 		        if (stack >= 0) continue;
 		        for (int j = last_j; j <= i; ++j)
 		            if (s.charAt(j) == par[1] && (j == last_j || s.charAt(j - 1) != par[1]))
-		                remove(s.substring(0, j) + s.substring(j + 1, s.length()), ans, i, j, par);
+		                remove(removeCharAtJ(s, j), ans, i, j, par);
 		        return;
 		    }
-		    String reversed = new StringBuilder(s).reverse().toString();
 		    if (par[0] == '(') // finished left to right
-		        remove(reversed, ans, 0, 0, new char[]{')', '('});
+		        remove(reverse(s), ans, 0, 0, new char[]{')', '('});
 		    else // finished right to left
-		        ans.add(reversed);
+		        ans.add(reverse(s));
 		}
-	}
-	static class Solution2 {
-		public List<String> removeInvalidParentheses(String s) {
+		private String reverse(String string) {
+			char[] cs = new char[string.length()];
+			int startIndex = 0, endIndex = string.length() - 1;
+			while (startIndex <= endIndex) {
+				cs[startIndex] = string.charAt(endIndex);
+				cs[endIndex] = string.charAt(startIndex);
+				startIndex ++;
+				endIndex --;
+			}
+			return new String(cs);
+		}
+		private String removeCharAtJ(String string, int j) {
+			char[] cs = new char[string.length() - 1];
+			int csIndex = 0;
+			for (int index = 0; index < string.length(); index ++) {
+				if (index == j) continue;
+				cs[csIndex ++] = string.charAt(index);
+			}
+			return new String(cs);
 		}
 	}
 }
