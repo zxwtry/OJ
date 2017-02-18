@@ -2,6 +2,7 @@ package leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,10 +31,9 @@ import java.util.List;
  * @date        2016年12月29日 下午10:25:51
  * @details     Solution1: AC 15ms 47.89%
  * @details     Solution2: TLE
+ * @details     Solution3: AC 12ms 60.82%
  */
 public class P315_CountOfSmallerNumbersAfterSelf {
-    public static void main(String[] args) {
-    }
 	static class Solution1 {
 	    class Node {
 	        Node left, right;
@@ -90,5 +90,37 @@ public class P315_CountOfSmallerNumbersAfterSelf {
 	        }
 	        return answerList;
 	    }
+	}
+	static class Solution3 {
+	    class NewTreeNode {
+	        public NewTreeNode left, right;
+	        public int val, sum, dup = 1;
+	        public NewTreeNode(int value) {
+	            this.val = value;
+	        }
+	    }
+	    public List<Integer> countSmaller(int[] numArray) {
+	        LinkedList<Integer> answerList = new LinkedList<Integer>();
+	        NewTreeNode rootNode = null;
+	        for (int numArrayIndex = numArray.length - 1; numArrayIndex > -1; numArrayIndex --) {
+	            rootNode = countSmallerInternal(numArray[numArrayIndex], rootNode, 0, answerList);
+	        }
+	        return answerList;
+	    }
+        private NewTreeNode countSmallerInternal(int num, NewTreeNode rootNode,  int preSum, LinkedList<Integer> answerList) {
+            if (rootNode == null) {
+                rootNode = new NewTreeNode(num);
+                answerList.addFirst(preSum);
+            } else if (num == rootNode.val) {
+                rootNode.dup ++;
+                answerList.addFirst(preSum + rootNode.sum);
+            } else if (num > rootNode.val) {
+                rootNode.right = countSmallerInternal(num, rootNode.right, preSum + rootNode.sum + rootNode.dup, answerList);
+            } else if (num < rootNode.val) {
+                rootNode.sum ++;
+                rootNode.left = countSmallerInternal(num, rootNode.left, preSum, answerList);
+            }
+            return rootNode;
+        }
 	}
 }
