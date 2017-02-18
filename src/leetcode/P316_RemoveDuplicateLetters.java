@@ -1,6 +1,5 @@
 package leetcode;
 
-import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -25,7 +24,8 @@ import java.util.TreeSet;
  * @file        P316_RemoveDuplicateLetters.java
  * @type        P316_RemoveDuplicateLetters
  * @date        2017年1月4日 下午10:16:14
- * @details     Solution1: AC 数据结构有点多
+ * @details     Solution1: WA 数据结构有点多
+ * @details     Solution3: AC 54ms 2.36%
  */
 public class P316_RemoveDuplicateLetters {
     public static void main(String[] args) {
@@ -87,6 +87,18 @@ public class P316_RemoveDuplicateLetters {
 	            
 	        }
 	        return "";
+	    }
+	}
+	static class Solution3 {
+	    public String removeDuplicateLetters(String s) {
+	        int[] cnt = new int[26];
+	        int pos = 0;
+	        for (int i = 0; i < s.length(); i++) cnt[s.charAt(i) - 'a']++;
+	        for (int i = 0; i < s.length(); i++) {
+	            if (s.charAt(i) < s.charAt(pos)) pos = i;
+	            if (--cnt[s.charAt(i) - 'a'] == 0) break;
+	        }
+	        return s.length() == 0 ? "" : s.charAt(pos) + removeDuplicateLetters(s.substring(pos + 1).replaceAll("" + s.charAt(pos), ""));
 	    }
 	}
 }
