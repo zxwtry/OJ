@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -27,6 +28,15 @@ import java.util.TreeSet;
  * @details     Solution1: AC 数据结构有点多
  */
 public class P316_RemoveDuplicateLetters {
+    public static void main(String[] args) {
+//        TreeSet<Integer> treeSet = new TreeSet<Integer>();
+//        treeSet.add(2);
+//        treeSet.add(8);
+//        treeSet.add(-1);
+//        treeSet.add(9);
+//        for (int treeSetValue : treeSet)
+//            System.out.println(treeSetValue);
+    }
 	static class Solution1 {
 	    @SuppressWarnings({ "rawtypes", "unchecked" })
 		public String removeDuplicateLetters(String s) {
@@ -58,6 +68,25 @@ public class P316_RemoveDuplicateLetters {
 	        	ans[ansIndex ++] = s.charAt(i);
 	        }
 	        return new String(ans);
+	    }
+	}
+	static class Solution2 {
+	    public String removeDuplicateLetters(String string) {
+	        final char startChar = 'a';
+	        @SuppressWarnings("unchecked")
+            TreeSet<Integer>[] treeSetArray = new TreeSet[26];
+	        TreeSet<Integer> moreThanTwoSet = new TreeSet<Integer>();
+	        for (int stringIndex = string.length() - 1; stringIndex > -1; stringIndex --) {
+	            int treeSetArrayIndex = string.charAt(stringIndex) - startChar;
+	            if (treeSetArray[treeSetArrayIndex] == null)
+	                treeSetArray[treeSetArrayIndex] = new TreeSet<Integer>();
+	            treeSetArray[treeSetArrayIndex].add(stringIndex);
+	            if (treeSetArray[treeSetArrayIndex].size() == 2) moreThanTwoSet.add(treeSetArrayIndex);
+	        }
+	        while (moreThanTwoSet.size() > 0) {
+	            
+	        }
+	        return "";
 	    }
 	}
 }
