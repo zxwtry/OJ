@@ -27,6 +27,7 @@ package leetcode;
  * @date        2017年1月9日 下午9:09:00
  * @details     Solution1: TLE
  * @details     Solution2: AC 48ms 15.40%
+ * @details     Solution2: AC 24ms 65.27%
  */
 public class P322_CoinChange {
 	static class Solution1 {
@@ -68,6 +69,25 @@ public class P322_CoinChange {
 	        }
 	        count[rem-1] = (min==Integer.MAX_VALUE) ? -1 : min;
 	        return count[rem-1];
+	    }
+    }
+	static class Solution3 {
+	    public int coinChange(int[] coins, int amount) {
+	        if(amount<1) return 0;
+	        int[] dp = new int[amount+1];
+	        int sum = 0;
+	        
+	        while(++sum<=amount) {
+	            int min = -1;
+	            for(int coin : coins) {
+	                if(sum >= coin && dp[sum-coin]!=-1) {
+	                    int temp = dp[sum-coin]+1;
+	                    min = min<0 ? temp : (temp < min ? temp : min);
+	                }
+	            }
+	            dp[sum] = min;
+	        }
+	        return dp[amount];
 	    }
     }
 }
