@@ -26,7 +26,8 @@ package leetcode;
  * @file        P367_ValidPerfectSquare.java
  * @type        P367_ValidPerfectSquare
  * @date        2016年12月8日 下午10:32:36
- * @details     Solution1: AC 
+ * @details     Solution1: AC 0ms 36.96%
+ * @details     Solution2: AC 0ms 36.96%
  * @details     Solution2: AC 速度大概是Solution1的1/3
  */
 public class P367_ValidPerfectSquare {
