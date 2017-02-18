@@ -33,12 +33,6 @@ import java.util.List;
  */
 public class P315_CountOfSmallerNumbersAfterSelf {
     public static void main(String[] args) {
-        int[] numArray = tools.Random随机生成器.A_生成一个随机数据(5, 0, 10);
-        tools.Utils.printArray(numArray, numArray.length);
-        Solution2 solution2 = new Solution2();
-        System.out.println(solution2.countSmaller(numArray));
-        Solution1 solution1 = new Solution1();
-        System.out.println(solution1.countSmaller(numArray));
     }
 	static class Solution1 {
 	    class Node {
