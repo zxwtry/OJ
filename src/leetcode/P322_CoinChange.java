@@ -27,7 +27,7 @@ import java.util.LinkedList;
  * @file        P322_CoinChange.java
  * @type        P322_CoinChange
  * @date        2017年1月9日 下午9:09:00
- * @details     Solution1: AC 优点慢，剪枝没有剪好 
+ * @details     Solution1: TLE
  */
 public class P322_CoinChange {
 	static class Solution1 {
@@ -50,36 +50,6 @@ public class P322_CoinChange {
 					use = Math.min(use, nowUse + 1);
 				}
 			}
-		}
-	}
-	static class Solution2 {
-		public int coinChange(int[] c, int a) {
-	        if (a < 1) return 0;
-	        if (c == null || c.length == 0) return -1;
-	        int len = c.length;
-	        int use = Integer.MAX_VALUE;
-	        LinkedList<Integer> al = new LinkedList<Integer>();
-	        LinkedList<Integer> il = new LinkedList<Integer>();
-	        LinkedList<Integer> ul = new LinkedList<Integer>();
-	        LinkedList<Integer> Il = new LinkedList<Integer>();
-	        al.add(a);
-	        il.add(len - 1);
-	        ul.add(0);
-	        int nowU = 0;
-	        int nowA = 0;
-	        int nowI = 0;
-	        while (true) {
-	        	if (al.isEmpty() || il.isEmpty() || ul.isEmpty()) break;
-	        	nowU = ul.peekLast();
-	        	if (nowU >= use) {
-	        		al.pollLast();
-	        		il.pollLast();
-	        		ul.pollLast();
-	        		continue;
-	        	}
-	        	
-	        }
-	        
 		}
 	}
 }
