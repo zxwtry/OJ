@@ -26,8 +26,31 @@ package leetcode;
  * @file        P520_DetectCapital.java
  * @type        P520_DetectCapital
  * @date        2017年2月19日 上午10:32:09
- * @details     
+ * @details     Solution1: AC 37 ms
  */
 public class P520_DetectCapital {
-
+    static class Solution1 {
+        public boolean detectCapitalUse(String word) {
+            boolean allUpperFlag = true;
+            boolean allLowerFlag = true;
+            boolean firstUpperLaterLowerFlag = true;
+            for (int index = 0; index < word.length(); index ++) {
+                char c = word.charAt(index);
+                boolean isUpper = isUpper(c);
+                if (index == 0) {
+                    firstUpperLaterLowerFlag &= isUpper;
+                } else {
+                    firstUpperLaterLowerFlag &= ! isUpper;
+                }
+                allUpperFlag &= isUpper;
+                allLowerFlag &= !isUpper;
+                if (allUpperFlag || allLowerFlag || firstUpperLaterLowerFlag) {}
+                else return false;
+            }
+            return true;
+        }
+        private boolean isUpper(char c) {
+            return c >= 'A' && c <= 'Z';
+        }
+    }
 }
