@@ -2,6 +2,8 @@ package leetcode;
 
 import java.util.Arrays;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 /**
  * 	Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
  * 	
@@ -26,11 +28,12 @@ import java.util.Arrays;
  * @type        P324_WiggleSortII
  * @date        2017年1月9日 下午9:09:56
  * @details     Solution1: WA
+ * @details     Solution2: AC 8ms 62.29%
  */
 public class P324_WiggleSortII {
     public static void main(String[] args) {
         int[] nums = {0, 1, 2, 3, 4, 5, 6, 7, 3, 3, 3, 3};
-        Solution1 solution1 = new Solution1();
+        Solution2 solution1 = new Solution2();
         solution1.wiggleSort(nums);
         tools.Utils.printArray(nums, nums.length);
     }
@@ -53,5 +56,25 @@ public class P324_WiggleSortII {
 	        nums[j] = temp;
 	    }
 	}
-	
+	static class Solution2 {
+	    public void wiggleSort(int[] nums) {
+	        if (nums == null || nums.length < 2) return;
+	        int[] copy = Arrays.copyOf(nums, nums.length);
+	        Arrays.sort(copy);
+	        int copyIndex = copy.length - 1;
+	        int numsIndex = 1;
+	        while (numsIndex < nums.length) {
+	            nums[numsIndex] = copy[copyIndex];
+	            copyIndex --;
+	            numsIndex += 2;
+	        }
+	        numsIndex = 0;
+	        numsIndex = (numsIndex % 2 == 1 ? numsIndex - 1 : numsIndex);
+	        while (numsIndex < nums.length) {
+	            nums[numsIndex] = copy[copyIndex];
+	            copyIndex --;
+	            numsIndex += 2;
+	        }
+	    }
+	}
 }
