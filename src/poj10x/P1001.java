@@ -59,4 +59,34 @@ import java.util.Scanner;
  * @date        2017年2月19日 下午8:46:36
  * @details     solve1: AC 3364K 141MS
  */
-public class P1001 {}
+public class P1001 {
+    public static void main(String[] args) {
+        solve1();
+    }
+    static void solve1() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            BigDecimal bigDecimal = scanner.nextBigDecimal();
+            bigDecimal = bigDecimal.pow(scanner.nextInt());
+            String string = bigDecimal.toPlainString();
+            
+            if (string.length() > 2 && string.charAt(0) == '0' && string.charAt(1) == '.')
+                string = string.substring(1);
+            if (string.indexOf('.') != -1) {
+                int lastZeroIndex = string.length() - 1;
+                while (lastZeroIndex > -1) {
+                    if (string.charAt(lastZeroIndex) == '0')
+                        lastZeroIndex --;
+                    else break;
+                }
+                string = string.substring(0, lastZeroIndex + 1);
+            }
+            if (string.length() > 0 && string.charAt(string.length() - 1) == '.')
+                string = string.substring(0, string.length() - 1);
+            if (string.length() == 0)
+                string = "0";
+            System.out.println(string);
+        }
+        scanner.close();
+    }
+}
