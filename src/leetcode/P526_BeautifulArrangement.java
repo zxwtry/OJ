@@ -42,4 +42,33 @@ import java.util.HashSet;
  * @date        2017年2月19日 上午10:40:42
  * @details     
  */
-public class P526_BeautifulArrangement {}
+public class P526_BeautifulArrangement {
+    public static void main(String[] args) {
+        int N = 43;
+        Solution1 solution1 = new Solution1();
+        System.out.println(solution1.countArrangement(N));
+    }
+    static class Solution1 {
+        @SuppressWarnings("unchecked")
+        public int countArrangement(int N) {
+            HashSet<Integer>[] sets = new HashSet[N + 1];
+            for (int setsIndex = 1; setsIndex < sets.length; setsIndex ++) {
+                HashSet<Integer> set = new HashSet<Integer>();
+                for (int smallIndex = 1; smallIndex <= setsIndex; smallIndex ++)
+                    if (setsIndex % smallIndex == 0) {
+                        set.add(smallIndex);
+                    }
+                for (int bigIndex = setsIndex + 1; bigIndex <= N; bigIndex ++)
+                    if (bigIndex % setsIndex == 0) {
+                        set.add(bigIndex);
+                    }
+                sets[setsIndex] = set;
+                System.out.println(set);
+            }
+            System.out.println("====");
+            HashSet<Integer> nowGet = new HashSet<Integer>();
+            
+            //return 0;
+        }
+    }
+}
