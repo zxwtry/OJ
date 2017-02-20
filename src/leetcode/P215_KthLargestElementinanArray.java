@@ -65,7 +65,7 @@ public class P215_KthLargestElementinanArray {
 		}
 	}
 	/**
-	 *     时间： O(N) + O(K*logK)
+	 *     时间： O( N*logK + K*logK )
 	 *     空间: O(K)
 	 *     AC
 	 *     2ms
@@ -103,6 +103,43 @@ public class P215_KthLargestElementinanArray {
 	        int tmp = heap[i];
 	        heap[i] = heap[j];
 	        heap[j] = tmp;
+	    }
+	}
+	/**
+	 *     时间：O(N*logN)
+	 *     AC
+	 *     53ms
+	 *     22.80%
+	 */
+	static class Solution4 {
+	    public int findKthLargest(int[] nums, int k) {
+            if (k > nums.length || k <= 0) return 0; 
+            k = nums.length - k;
+            int startIndex = 0;
+            int endIndex = nums.length - 1;
+            int partitionIndex = 0;
+            while (startIndex < endIndex) {
+                partitionIndex = partition(nums, startIndex, endIndex);
+                if (partitionIndex < k) {
+                    startIndex = partitionIndex + 1;
+                } else if (partitionIndex > k) {
+                    endIndex = partitionIndex - 1;
+                } else {
+                    break;
+                }
+            }
+            return nums[k];
+	    }
+	    private int partition(int[] nums, int startIndex, int endIndex) {
+	        int saveValue = nums[startIndex];
+	        while (startIndex < endIndex) {
+	            while (startIndex < endIndex && nums[endIndex] >= saveValue) endIndex --;
+	            nums[startIndex] = nums[endIndex];
+	            while (startIndex < endIndex && nums[startIndex] <= saveValue) startIndex ++;
+	            nums[endIndex] = nums[startIndex];
+	        }
+	        nums[startIndex] = saveValue;
+	        return startIndex;
 	    }
 	}
 }
