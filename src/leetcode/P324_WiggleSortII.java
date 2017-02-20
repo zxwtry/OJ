@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * 	Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
@@ -25,25 +26,12 @@ import java.util.Arrays;
  * @file        P324_WiggleSortII.java
  * @type        P324_WiggleSortII
  * @date        2017年1月9日 下午9:09:56
- * @details     Solution1: TLE              n^2
- * @details     Solution2: AC 8ms 62.29%    n*log(n)
- * @details     Solution3: StackOverflowError
+ * @details     Solution1: TLE                  n^2
+ * @details     Solution2: AC 8ms 62.29%        n*log(n)
+ * @details     Solution3: StackOverflowError   n*log(n)
+ * @details     Solution4: AC 527ms 0.68%      n*log(n)
  */
 public class P324_WiggleSortII {
-    public static void main(String[] args) {
-        Solution1 solution1 = new Solution1();
-        Solution2 solution2 = new Solution2();
-        Solution3 solution3 = new Solution3();
-        int[] arr1 = tools.Random随机生成器.A_生成一个随机数据(15, 0, 4);
-        int[] arr2 = Arrays.copyOf(arr1, arr1.length);
-        int[] arr3 = Arrays.copyOf(arr1, arr1.length);
-        solution1.wiggleSort(arr1);
-        solution2.wiggleSort(arr2);
-        solution3.wiggleSort(arr3);
-        tools.Utils.printArray(arr1, arr1.length);
-        tools.Utils.printArray(arr2, arr1.length);
-        tools.Utils.printArray(arr3, arr1.length);
-    }
 	static class Solution1 {
 	    public void wiggleSort(int[] nums) {
 	        if (nums == null || nums.length < 2) return;
@@ -127,4 +115,43 @@ public class P324_WiggleSortII {
              }
         }
     }
+	static class Solution4 {
+        public void wiggleSort(int[] nums) {
+            if (nums == null || nums.length < 2) return;
+            LinkedList<Integer> is = new LinkedList<Integer>();
+            LinkedList<Integer> js = new LinkedList<Integer>();
+            is.add(0);
+            js.add(nums.length - 1);
+            int p = 0, i = 0, j = 0;
+            while (! is.isEmpty()) {
+                i = is.pollFirst();
+                j = js.pollFirst();
+                if (i < j) {
+                    p = partition(nums, i, j);
+                    is.addFirst(p + 1);
+                    js.addFirst(j);
+                    is.addFirst(i);
+                    js.addFirst(p - 1);
+                }
+            }
+        }
+        private int partition(int[] nums, int i, int j) {
+            int saveValue = nums[getRealIndex(i, nums.length)];
+            while (i < j) {
+                while (i < j && nums[getRealIndex(j, nums.length)] <= saveValue) j --;
+                nums[getRealIndex(i, nums.length)] = nums[getRealIndex(j, nums.length)];
+                while (i < j && nums[getRealIndex(i, nums.length)] >= saveValue) i ++;
+                nums[getRealIndex(j, nums.length)] = nums[getRealIndex(i, nums.length)];
+            }
+            nums[getRealIndex(i, nums.length)] = saveValue;
+            return i;
+        }
+        private int getRealIndex(int index, int length) {
+             if (index < length / 2) {
+                 return 2 * index + 1;
+             } else  {
+                 return (index - length / 2) * 2;
+             }
+        }
+	}
 }
