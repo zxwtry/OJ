@@ -2,7 +2,7 @@ package leetcode;
 
 import java.util.Arrays;
 
-/*
+/**
  * 	Find the kth largest element in an unsorted array. 
  * 	Note that it is the kth largest element in the 
  * 	sorted order, not the kth distinct element.
@@ -15,13 +15,7 @@ import java.util.Arrays;
  */
 
 public class P215_KthLargestElementinanArray {
-	public static void main(String[] args) {
-		int[] nums = new int[] {3,2,1,5,6,4};
-		int k = 6;
-		Solution2 s = new Solution2();
-		System.out.println(s.findKthLargest(nums, k));
-	}
-	/*
+	/**
 	 * 	4 ms
 	 * 	83.11%
 	 */
@@ -31,7 +25,7 @@ public class P215_KthLargestElementinanArray {
 	        return nums[nums.length - k];
 	    }
 	}
-	/*
+	/**
 	 * 	写一个QuickSort
 	 * 	52 ms
 	 * 	25.82%
@@ -69,5 +63,46 @@ public class P215_KthLargestElementinanArray {
 			}
 			return startIndex;
 		}
+	}
+	/**
+	 *     时间： O(N) + O(K*logK)
+	 *     空间: O(K)
+	 *     AC
+	 *     2ms
+	 *     97.27%
+	 */
+	static class Solution3 {
+	    public int findKthLargest(int[] nums, int k) {
+	        if (k > nums.length || k <= 0) return 0; 
+	        int[] heap = new int[k];
+	        System.arraycopy(nums, 0, heap, 0, k);
+	        //build heap
+	        for (int index = (k - 1) /2; index > -1; index --)
+	            heapDown(heap, index);
+	        for (int index = k; index < nums.length; index ++) {
+	            if (heap[0] < nums[index]) {
+	                heap[0] = nums[index];
+	                heapDown(heap, 0);
+	            }
+	        }
+	        return heap[0];
+	    }
+	    private void heapDown(int[] heap, int index) {
+	        int childIndex = 2 * index + 1;
+	        while (childIndex < heap.length) {
+	            if (childIndex + 1 < heap.length && heap[childIndex + 1] < heap[childIndex]) 
+	                childIndex ++;
+	            if (heap[childIndex] < heap[index]) {
+	                swap(heap, childIndex, index);
+	            }
+	            index = childIndex;
+	            childIndex = 2 * index + 1;
+	        }
+ 	    }
+	    private void swap(int[] heap, int i, int j) {
+	        int tmp = heap[i];
+	        heap[i] = heap[j];
+	        heap[j] = tmp;
+	    }
 	}
 }
