@@ -1,12 +1,8 @@
 package leetcode;
 
-import java.awt.font.NumericShaper;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
-
-import jdk.internal.dynalink.beans.StaticClass;
 
 /**
  * 	Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
@@ -38,6 +34,23 @@ import jdk.internal.dynalink.beans.StaticClass;
  * @details     Solution5: WA                   n*log(n)
  */
 public class P324_WiggleSortII {
+    public static void main(String[] args) {
+        int[] arr1 = tools.Random随机生成器.A_生成一个随机数据(10, 0, 3);
+        arr1 = new int[] {0, 1, 2, };
+        System.out.print("a1:\t");
+        tools.Utils.printArray(arr1, arr1.length);
+        int[] arr5 = Arrays.copyOf(arr1, arr1.length);
+        Solution1 solution1 = new Solution1();
+        Solution5 solution5 = new Solution5();
+        solution1.wiggleSort(arr1);
+        solution5.wiggleSort(arr5);
+        System.out.println("=====================");
+        System.out.print("a1:\t");
+        tools.Utils.printArray(arr1, arr1.length);
+        System.out.print("a5:\t");
+        tools.Utils.printArray(arr5, arr5.length);
+        
+    }
 	static class Solution1 {
 	    public void wiggleSort(int[] nums) {
 	        if (nums == null || nums.length < 2) return;
