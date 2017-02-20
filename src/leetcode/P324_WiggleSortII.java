@@ -25,7 +25,7 @@ import java.util.Arrays;
  * @file        P324_WiggleSortII.java
  * @type        P324_WiggleSortII
  * @date        2017年1月9日 下午9:09:56
- * @details     Solution1: TLE
+ * @details     Solution1: TLE              n^2
  * @details     Solution2: AC 8ms 62.29%
  */
 public class P324_WiggleSortII {
@@ -33,13 +33,16 @@ public class P324_WiggleSortII {
 	    public void wiggleSort(int[] nums) {
 	        if (nums == null || nums.length < 2) return;
 	        int length = nums.length;
-	        int i = 0, j = 0, realI = 0, realJ = 0;
-	        for (i = 0; i < length; i ++) {
-	            realI = getRealIndex(i, length);
-	            for (j = i + 1; j < length; j ++) {
+	        int j = 0, realI = 0, realJ = 0;
+	        boolean isSwap = true;
+	        while(isSwap) {
+	            isSwap = false;
+	            for (j = 1; j < length; j ++) {
 	                realJ = getRealIndex(j, length);
+	                realI = getRealIndex(j - 1, length);
 	                if (nums[realI] < nums[realJ]) {
 	                    swap(nums, realI, realJ);
+	                    isSwap = true;
 	                }
 	            }
 	        }
@@ -78,4 +81,32 @@ public class P324_WiggleSortII {
 	        }
 	    }
 	}
+	static class Solution3 {
+        public void wiggleSort(int[] nums) {
+            if (nums == null || nums.length < 2) return;
+            int length = nums.length;
+            int i = 0, j = 0, realI = 0, realJ = 0;
+            for (i = 0; i < length; i ++) {
+                realI = getRealIndex(i, length);
+                for (j = i + 1; j < length; j ++) {
+                    realJ = getRealIndex(j, length);
+                    if (nums[realI] < nums[realJ]) {
+                        swap(nums, realI, realJ);
+                    }
+                }
+            }
+        }
+        private int getRealIndex(int index, int length) {
+             if (index < length / 2) {
+                 return 2 * index + 1;
+             } else  {
+                 return (index - length / 2) * 2;
+             }
+        }
+        private void swap(int[] nums, int i, int j) {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+    }
 }
