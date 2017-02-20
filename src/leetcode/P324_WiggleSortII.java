@@ -1,7 +1,12 @@
 package leetcode;
 
+import java.awt.font.NumericShaper;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
+
+import jdk.internal.dynalink.beans.StaticClass;
 
 /**
  * 	Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
@@ -29,7 +34,8 @@ import java.util.LinkedList;
  * @details     Solution1: TLE                  n^2
  * @details     Solution2: AC 8ms 62.29%        n*log(n)
  * @details     Solution3: StackOverflowError   n*log(n)
- * @details     Solution4: AC 527ms 0.68%      n*log(n)
+ * @details     Solution4: AC 527ms 0.68%       n*log(n)
+ * @details     Solution5: WA                   n*log(n)
  */
 public class P324_WiggleSortII {
 	static class Solution1 {
@@ -153,5 +159,41 @@ public class P324_WiggleSortII {
                  return (index - length / 2) * 2;
              }
         }
+	}
+	static class Solution5 {
+	    public void wiggleSort(int[] nums) {
+            if (nums == null || nums.length < 2) return;
+            int length = nums.length;
+            Integer[] numArray = new Integer[length];
+            for (int index = 0; index < length; index ++)
+                numArray[index] = index;
+            int[] numsCopy = Arrays.copyOf(nums, length);
+            Arrays.sort(numArray, new MyComparator(nums));
+            System.out.print("id:\t");
+            for (Integer integer : numArray)
+                System.out.print(integer + "\t");
+            System.out.println();
+            for (int index = 0; index < nums.length; index ++) {
+                nums[index] = numsCopy[numArray[index]];
+//                nums[numArray[index]] = numsCopy[index];
+            }
+	    }
+	    class MyComparator implements Comparator<Integer> {
+	        int[] myNums = null;
+	        public MyComparator(int[] nums) {
+	            this.myNums = nums;
+            }
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return  myNums[getRealIndex(o2, myNums.length)] - myNums[getRealIndex(o1, myNums.length)];
+            }
+	    }
+	    private int getRealIndex(int index, int length) {
+            if (index < length / 2) {
+                return 2 * index + 1;
+            } else  {
+                return (index - length / 2) * 2;
+            }
+       }
 	}
 }
