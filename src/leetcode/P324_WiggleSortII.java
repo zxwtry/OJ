@@ -26,9 +26,24 @@ import java.util.Arrays;
  * @type        P324_WiggleSortII
  * @date        2017年1月9日 下午9:09:56
  * @details     Solution1: TLE              n^2
- * @details     Solution2: AC 8ms 62.29%
+ * @details     Solution2: AC 8ms 62.29%    n*log(n)
+ * @details     Solution3: StackOverflowError
  */
 public class P324_WiggleSortII {
+    public static void main(String[] args) {
+        Solution1 solution1 = new Solution1();
+        Solution2 solution2 = new Solution2();
+        Solution3 solution3 = new Solution3();
+        int[] arr1 = tools.Random随机生成器.A_生成一个随机数据(15, 0, 4);
+        int[] arr2 = Arrays.copyOf(arr1, arr1.length);
+        int[] arr3 = Arrays.copyOf(arr1, arr1.length);
+        solution1.wiggleSort(arr1);
+        solution2.wiggleSort(arr2);
+        solution3.wiggleSort(arr3);
+        tools.Utils.printArray(arr1, arr1.length);
+        tools.Utils.printArray(arr2, arr1.length);
+        tools.Utils.printArray(arr3, arr1.length);
+    }
 	static class Solution1 {
 	    public void wiggleSort(int[] nums) {
 	        if (nums == null || nums.length < 2) return;
@@ -84,17 +99,25 @@ public class P324_WiggleSortII {
 	static class Solution3 {
         public void wiggleSort(int[] nums) {
             if (nums == null || nums.length < 2) return;
-            int length = nums.length;
-            int i = 0, j = 0, realI = 0, realJ = 0;
-            for (i = 0; i < length; i ++) {
-                realI = getRealIndex(i, length);
-                for (j = i + 1; j < length; j ++) {
-                    realJ = getRealIndex(j, length);
-                    if (nums[realI] < nums[realJ]) {
-                        swap(nums, realI, realJ);
-                    }
-                }
+            qsort(nums, 0, nums.length - 1);
+        }
+        private void qsort(int[] nums, int i, int j) {
+            if(i < j) {
+                int p = partition(nums, i, j);
+                qsort(nums, i, p - 1);
+                qsort(nums, p + 1, j);
             }
+        }
+        private int partition(int[] nums, int i, int j) {
+            int saveValue = nums[getRealIndex(i, nums.length)];
+            while (i < j) {
+                while (i < j && nums[getRealIndex(j, nums.length)] <= saveValue) j --;
+                nums[getRealIndex(i, nums.length)] = nums[getRealIndex(j, nums.length)];
+                while (i < j && nums[getRealIndex(i, nums.length)] >= saveValue) i ++;
+                nums[getRealIndex(j, nums.length)] = nums[getRealIndex(i, nums.length)];
+            }
+            nums[getRealIndex(i, nums.length)] = saveValue;
+            return i;
         }
         private int getRealIndex(int index, int length) {
              if (index < length / 2) {
@@ -102,11 +125,6 @@ public class P324_WiggleSortII {
              } else  {
                  return (index - length / 2) * 2;
              }
-        }
-        private void swap(int[] nums, int i, int j) {
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
         }
     }
 }
