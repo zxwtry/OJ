@@ -2,8 +2,6 @@ package leetcode;
 
 import java.util.Arrays;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 /**
  * 	Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
  * 	
@@ -27,28 +25,31 @@ import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
  * @file        P324_WiggleSortII.java
  * @type        P324_WiggleSortII
  * @date        2017年1月9日 下午9:09:56
- * @details     Solution1: WA
+ * @details     Solution1: TLE
  * @details     Solution2: AC 8ms 62.29%
  */
 public class P324_WiggleSortII {
-    public static void main(String[] args) {
-        int[] nums = {0, 1, 2, 3, 4, 5, 6, 7, 3, 3, 3, 3};
-        Solution2 solution1 = new Solution2();
-        solution1.wiggleSort(nums);
-        tools.Utils.printArray(nums, nums.length);
-    }
 	static class Solution1 {
-	    //0, 1, 2, 3, 4, 5, 6, 7, 3, 3, 3, 3
 	    public void wiggleSort(int[] nums) {
 	        if (nums == null || nums.length < 2) return;
-	        Arrays.sort(nums);
-	        int startIndex = 1, middleIndex = nums.length / 2;
-	        middleIndex = (middleIndex % 2 == 0 ? middleIndex : middleIndex + 1);
-	        while (middleIndex < nums.length) {
-	            swap(nums, startIndex, middleIndex);
-	            startIndex += 2;
-	            middleIndex += 2;
+	        int length = nums.length;
+	        int i = 0, j = 0, realI = 0, realJ = 0;
+	        for (i = 0; i < length; i ++) {
+	            realI = getRealIndex(i, length);
+	            for (j = i + 1; j < length; j ++) {
+	                realJ = getRealIndex(j, length);
+	                if (nums[realI] < nums[realJ]) {
+	                    swap(nums, realI, realJ);
+	                }
+	            }
 	        }
+	    }
+	    private int getRealIndex(int index, int length) {
+	         if (index < length / 2) {
+	             return 2 * index + 1;
+	         } else  {
+	             return (index - length / 2) * 2;
+	         }
 	    }
 	    private void swap(int[] nums, int i, int j) {
 	        int temp = nums[i];
