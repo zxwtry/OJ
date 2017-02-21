@@ -24,7 +24,7 @@ package leetcode;
  * @file        P327_CountOfRangeSum.java
  * @type        P327_CountOfRangeSum
  * @date        2017年1月10日 下午9:59:31
- * @details     Solution1: AC 时间O(N^2) 空间O(1)
+ * @details     Solution1: TLE 时间O(N^2) 空间O(1)
  */
 public class P327_CountOfRangeSum {
 	static class Solution1 {
