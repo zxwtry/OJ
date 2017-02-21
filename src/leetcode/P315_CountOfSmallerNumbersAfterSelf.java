@@ -2,6 +2,8 @@ package leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,11 +35,9 @@ import java.util.List;
  * @details     Solution2: TLE
  * @details     Solution3: AC 12ms 60.82%
  * @details     Solution4: AC 60ms 18.45% 
+ * @details     Solution5: 会WA，不知道为什么
  */
 public class P315_CountOfSmallerNumbersAfterSelf {
-    public static void main(String[] args) {
-        
-    }
 	static class Solution1 {
 	    class Node {
 	        Node left, right;
@@ -156,4 +156,27 @@ public class P315_CountOfSmallerNumbersAfterSelf {
 	        return end;
 	    }
 	}
+	static class Solution5 {
+        public List<Integer> countSmaller(int[] nums) {
+            LinkedList<Integer> ans = new LinkedList<Integer>();
+            List<Integer> sorted = new ArrayList<Integer>();
+            Comparator<Integer> myComparator = new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    long cut = (long)o1 - o2;
+                    if (cut > 0) return 1;
+                    return cut == 0 ? 0 : -1;
+                }
+            };
+            for (int i = nums.length - 1; i >= 0; i--) {
+                int anotherIndex = Collections.binarySearch(sorted, nums[i], myComparator);
+                while (anotherIndex > 0 && sorted.get(anotherIndex - 1) == sorted.get(anotherIndex))
+                    anotherIndex --;
+                anotherIndex = anotherIndex < 0 ? -(anotherIndex + 1) : anotherIndex;
+                ans.addFirst(anotherIndex);
+                sorted.add(anotherIndex, nums[i]);
+            }
+            return ans;
+        }
+    }
 }
