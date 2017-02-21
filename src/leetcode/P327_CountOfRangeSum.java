@@ -1,9 +1,5 @@
 package leetcode;
 
-import java.util.Arrays;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 /**
  * 	Given an integer array nums, return the number of range sums that lie in 
  * 	[lower, upper] inclusive.
@@ -30,20 +26,9 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
  * @date        2017年1月10日 下午9:59:31
  * @details     Solution1: TLE              时间O(N^2) 空间O(1)
  * @details     Solution2: AC 14ms 88.61%   时间O(N * logN) 空间O(N)
+ * @details     Solution3: AC 14ms 88.61%   时间O(N * logN) 空间O(N)
  */
 public class P327_CountOfRangeSum {
-    public static void main(String[] args) {
-        int[] arr1 = tools.Random随机生成器.A_生成一个随机数据(100, -10, 30);
-        int[] arr2 = Arrays.copyOf(arr1, arr1.length);
-        Solution1 solution1 = new Solution1();
-        Solution2 solution2 = new Solution2();
-        int lower = -5;
-        int upper = 30;
-        System.out.println(solution1.countRangeSum(arr1, lower, upper));
-        System.out.println(solution2.countRangeSum(arr2, lower, upper));
-        
-        
-    }
 	static class Solution1 {
 	    public int countRangeSum(int[] nums, int lower, int upper) {
 	        if (null == nums || nums.length == 0)
@@ -89,9 +74,36 @@ public class P327_CountOfRangeSum {
 	    }
 	}
 	static class Solution3 {
+	    int lower = 0, upper = 0, count = 0;
+	    long[] cache = null;
+	    long[] sums = null;
 	    public int countRangeSum(int[] nums, int lower, int upper) {
             if (null == nums || nums.length == 0)
                 return 0;
-            
+            this.cache = new long[nums.length + 1];
+            this.lower = lower;
+            this.upper = upper;
+            this.count = 0;
+            sums = new long[nums.length + 1];
+            for (int index = 0; index < nums.length; index ++)
+                sums[index + 1] = sums[index] + nums[index];
+            mergeSort(0, nums.length);
+            return count;
+	    }
+        private void mergeSort(int startIndex, int endIndex) {
+            if (endIndex - startIndex < 1) return;
+            int middleIndex = (startIndex + endIndex + 1) / 2;
+            mergeSort(startIndex, middleIndex - 1);
+            mergeSort(middleIndex, endIndex);
+            int j = middleIndex, k = middleIndex, t = middleIndex;
+            for (int i = startIndex, r = 0; i < middleIndex; i ++, r ++) {
+                while (k <= endIndex && sums[k] - sums[i] < lower) k ++;
+                while (j <= endIndex && sums[j] - sums[i] <= upper) j ++;
+                while (t <= endIndex && sums[t] < sums[i]) cache[r++] = sums[t++];
+                cache[r] = sums[i];
+                count += j - k;
+            }
+            System.arraycopy(cache, 0, sums, startIndex, t  - startIndex);;
+        }
 	}
 }
