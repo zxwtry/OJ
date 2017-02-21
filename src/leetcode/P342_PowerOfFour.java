@@ -20,9 +20,15 @@ package leetcode;
  * @details     
  */
 public class P342_PowerOfFour {
-	static class Solution {
+	static class Solution1 {
 	    public boolean isPowerOfFour(int num) {
-	        
+	        if (num < 0) return false;
+	        while(num != 0 && num != 1) {
+	            if ((num & 3) != 0)
+	                return false;
+	            num = num >> 2;
+	        }
+	        return num == 1;
 	    }
 	}
 }
