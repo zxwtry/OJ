@@ -39,8 +39,15 @@ package leetcode;
  * @details     
  */
 public class P329_LongestIncreasingPathInAMatrix {
-	static class Solution {
+	static class Solution1 {
 	    public int longestIncreasingPath(int[][] matrix) {
+	        if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+	            return 0;
+	        int row = matrix.length - 1;
+	        int col = matrix[0].length - 1;
+	        int[][] dp = new int[row + 1][col + 1];
+	        
+	        
 	        
 	    }
 	}
