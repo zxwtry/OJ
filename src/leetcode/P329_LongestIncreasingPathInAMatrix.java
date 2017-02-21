@@ -51,4 +51,26 @@ public class P329_LongestIncreasingPathInAMatrix {
 	        
 	    }
 	}
+	static class Solution2 {
+	    int[][] max = null;
+	    int[][] matrix = null;
+	    int row, col;
+	    public int longestIncreasingPath(int[][] matrix) {
+            if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+                return 0;
+            row = matrix.length;
+            col = matrix[0].length;
+            max = new int[row][col];
+            this.matrix = matrix;
+            int answer = 0;
+            for (int rowIndex = 0; rowIndex < row; rowIndex ++) {
+                for (int colIndex = 0; colIndex < col; colIndex ++) {
+                    answer = Math.max(answer, longestIncreasingPath(rowIndex, colIndex));
+                }
+            }
+	    }
+        private int longestIncreasingPath(int rowIndex, int colIndex) {
+            return 0;
+        }
+	}
 }
