@@ -32,8 +32,12 @@ import java.util.List;
  * @details     Solution1: AC 15ms 47.89%
  * @details     Solution2: TLE
  * @details     Solution3: AC 12ms 60.82%
+ * @details     Solution4: AC 60ms 18.45% 
  */
 public class P315_CountOfSmallerNumbersAfterSelf {
+    public static void main(String[] args) {
+        
+    }
 	static class Solution1 {
 	    class Node {
 	        Node left, right;
@@ -122,5 +126,34 @@ public class P315_CountOfSmallerNumbersAfterSelf {
             }
             return rootNode;
         }
+	}
+	static class Solution4 {
+	    public List<Integer> countSmaller(int[] nums) {
+	        LinkedList<Integer> ans = new LinkedList<Integer>();
+	        List<Integer> sorted = new ArrayList<Integer>();
+	        for (int i = nums.length - 1; i >= 0; i--) {
+	            int index = findIndex(sorted, nums[i]);
+	            ans.addFirst(index);
+	            sorted.add(index, nums[i]);
+	        }
+	        return ans;
+	    }
+	    private int findIndex(List<Integer> sorted, int target) {
+	        if (sorted.size() == 0) return 0;
+	        int start = 0;
+	        int end = sorted.size() - 1;
+	        if (sorted.get(end) < target) return end + 1;
+	        if (sorted.get(start) >= target) return 0;
+	        while (start + 1 < end) {
+	            int mid = start + (end - start) / 2;
+	            if (sorted.get(mid) < target) {
+	                start = mid + 1;
+	            } else {
+	                end = mid;
+	            }
+	        }
+	        if (sorted.get(start) >= target) return start;
+	        return end;
+	    }
 	}
 }
