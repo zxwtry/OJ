@@ -1,5 +1,7 @@
 package leetcode;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Single;
+
 /**
  * 	Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
  * 	
@@ -29,6 +31,14 @@ public class P342_PowerOfFour {
 	            num = num >> 2;
 	        }
 	        return num == 1;
+	    }
+	}
+	static class Solution2 {
+	    public boolean isPowerOfFour(int num) {
+            if (num < 0) return false;
+            int sign = num & (num - 1);
+            if (sign != 0) return false;
+            if 
 	    }
 	}
 }
