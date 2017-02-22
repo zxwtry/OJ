@@ -34,12 +34,23 @@ package leetcode;
  * @file        P330_PatchingArray.java
  * @type        P330_PatchingArray
  * @date        2017年1月10日 下午10:04:05
- * @details     
+ * @details     Solution2: AC 1ms 12.17%
  */
 public class P330_PatchingArray {
-	static class Solution {
+	static class Solution2 {
 	    public int minPatches(int[] nums, int n) {
-	        
+    	    long miss = 1;
+    	    int i = 0, added = 0;
+    	    while (miss <= n) {
+    	        if (i < nums.length && nums[i] <= miss) {
+    	            miss += nums[i++];
+    	        } else {
+    	            // i >= nums.length 或者 nums[i] > miss
+    	            miss += miss;
+    	            added++;
+    	        }
+    	    }
+    	    return added;
 	    }
 	}
 }
