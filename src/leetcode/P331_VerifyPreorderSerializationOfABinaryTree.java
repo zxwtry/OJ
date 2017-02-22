@@ -49,9 +49,20 @@ package leetcode;
  * @details     
  */
 public class P331_VerifyPreorderSerializationOfABinaryTree {
-	static class Solution {
+	static class Solution1 {
 	    public boolean isValidSerialization(String preorder) {
 	        
+	    }
+	}
+	static class Solution2 {
+	    public boolean isValidSerialization(String preorder) {
+	        String[] nodes = preorder.split(",");
+	        int diff = 1;
+	        for (String node: nodes) {
+	            if (--diff < 0) return false;
+	            if (!node.equals("#")) diff += 2;
+	        }
+	        return diff == 0;
 	    }
 	}
 }
