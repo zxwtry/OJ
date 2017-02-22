@@ -35,6 +35,7 @@ package leetcode;
  * @type        P330_PatchingArray
  * @date        2017年1月10日 下午10:04:05
  * @details     Solution2: AC 1ms 12.17%
+ * @details     Solution3: AC 1ms 12.17%
  */
 public class P330_PatchingArray {
 	static class Solution2 {
@@ -51,6 +52,25 @@ public class P330_PatchingArray {
     	        }
     	    }
     	    return added;
+	    }
+	}
+	static class Solution3 {
+	    public int minPatches(int[] nums, int n) {
+	        if (n < 1)
+                return 0;
+	        if (nums == null)
+	            nums = new int[0];
+	        long maxGet = 0;
+	        int index = 0, numOfPatches = 0;
+	        while (maxGet < n) {
+	            if (index < nums.length && nums[index] <= maxGet + 1) {
+	                maxGet += nums[index ++];
+	            } else {
+	                maxGet += maxGet + 1;
+	                numOfPatches ++;
+	            }
+	        }
+	        return numOfPatches;
 	    }
 	}
 }
