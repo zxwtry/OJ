@@ -110,4 +110,37 @@ public class P332_ReconstructItinerary {
             return ans;
         }
     }
+	static class Solution3 {
+	    ArrayList<String> answer = new ArrayList<String>();
+        TreeMap<String, TreeMap<String, Integer>> graph = new TreeMap<String, TreeMap<String, Integer>>();
+        int answerExpectSize = 0;
+	    public List<String> findItinerary(String[][] tickets) {
+	        answerExpectSize = tickets.length + 1;
+	        for (String[] ticket : tickets) {
+	            TreeMap<String, Integer> value = graph.get(ticket[0]);
+	            value = value == null ? new TreeMap<String, Integer>() : value;
+	            Integer integerValue = value.get(ticket[1]); 
+	            value.put(ticket[1], (integerValue == null ? 0 : integerValue) + 1);
+	            if (value.size() == 1) graph.put(ticket[0], value);
+	        }
+	        visit("JFK");
+	        return answer;
+	    }
+        private boolean visit(String current) {
+            int toBeRemovedIndex = answer.size();
+            answer.add(current);
+            if (answer.size() == answerExpectSize)
+                return true;
+            TreeMap<String, Integer> nextSteps = graph.get(current);
+            if (nextSteps != null)
+            for (String nextStep : nextSteps.keySet()) {
+                if (nextSteps.get(nextStep) < 1) continue;
+                nextSteps.put(nextStep, nextSteps.get(nextStep) - 1);
+                if (visit(nextStep)) return true;
+                nextSteps.put(nextStep, nextSteps.get(nextStep) + 1);
+            }
+            answer.remove(toBeRemovedIndex);
+            return false;
+        }
+	}
 }
