@@ -72,4 +72,48 @@ import java.util.Scanner;
  * @date        2017年3月1日 上午9:57:01
  * @details     solve1: AC 1793ms 22MB *
  */
-public class N005_数字三角形 {}
+public class N005_数字三角形 {
+    static int[] gifts = new int[5100];
+    static int layer = 0;
+    static int[] save = new int[gifts.length];
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        layer = scanner.nextInt();
+        int giftsIndex = 0;
+        for (int i = 0; i < layer; i ++) {
+            for (int j = 0; j <= i; j ++) {
+                gifts[giftsIndex ++] = scanner.nextInt();
+            }
+        }
+        solve1();
+        scanner.close();
+    }
+    static void solve1() {
+        int realIndex = 0;
+        int max = 0;
+        for (int rowIndex = 0; rowIndex < layer - 1; rowIndex ++) {
+            for (int colIndex = 0; colIndex <= rowIndex; colIndex ++) {
+                save[realIndex] = gifts[realIndex];
+                save[realIndex] = Math.max(accessSave(rowIndex - 1, colIndex) + gifts[realIndex], save[realIndex]);
+                save[realIndex] = Math.max(accessSave(rowIndex - 1, colIndex - 1) + gifts[realIndex], save[realIndex]);
+                realIndex ++;
+            }
+        }
+        int rowIndex = layer - 1;
+        for (int colIndex = 0; colIndex <= rowIndex; colIndex ++) {
+            save[realIndex] = gifts[realIndex];
+            save[realIndex] = Math.max(accessSave(rowIndex - 1, colIndex) + gifts[realIndex], save[realIndex]);
+            save[realIndex] = Math.max(accessSave(rowIndex - 1, colIndex - 1) + gifts[realIndex], save[realIndex]);
+            max = Math.max(max, save[realIndex]);
+            realIndex ++;
+        }
+        System.out.println(max);
+    }
+    private static int accessSave(int rowIndex, int colIndex) {
+        if (rowIndex < 0 || colIndex > rowIndex || colIndex < 0) return Integer.MIN_VALUE;
+        return save[getIndex(rowIndex, colIndex)];
+    }
+    private static int getIndex(int rowIndex, int colIndex) {
+        return ((rowIndex + 1) * rowIndex) / 2 + colIndex;
+    }
+}
