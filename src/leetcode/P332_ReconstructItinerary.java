@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Stack;
+import java.util.TreeMap;
 
 /**
  * 	Given a list of airline tickets represented by pairs of departure and arrival 
@@ -39,25 +40,22 @@ import java.util.Stack;
  * @file        P332_ReconstructItinerary.java
  * @type        P332_ReconstructItinerary
  * @date        2017年1月10日 下午10:07:15
- * @details     
+ * @details     Solution1: AC 100ms  5.04%
+ * @details     Solution2: AC  14ms 50.12%  *
+ * @details     Solution23: AC 12ms 65.71%  *
+ * @details     Solution3: AC  31ms 20.62%  *
+ * @details     Solution3: AC  19ms 30.46%  *
  */
 public class P332_ReconstructItinerary {
-	static class Solution {
-	    public List<String> findItinerary(String[][] tickets) {
-	        
-	    }
-	}
 	static class Solution1 {
+	    Map<String, PriorityQueue<String>> targets = new HashMap<>();
+        List<String> route = new LinkedList<String>();
 	    public List<String> findItinerary(String[][] tickets) {
 	        for (String[] ticket : tickets)
-	            targets.computeIfAbsent(ticket[0], k -> new PriorityQueue()).add(ticket[1]);
+	            targets.computeIfAbsent(ticket[0], k -> new PriorityQueue<String>()).add(ticket[1]);
 	        visit("JFK");
 	        return route;
 	    }
-
-	    Map<String, PriorityQueue<String>> targets = new HashMap<>();
-	    List<String> route = new LinkedList();
-
 	    void visit(String airport) {
 	        while(targets.containsKey(airport) && !targets.get(airport).isEmpty())
 	            visit(targets.get(airport).poll());
@@ -73,7 +71,6 @@ public class P332_ReconstructItinerary {
 	            if(!ticketsMap.containsKey(tickets[i][0])) ticketsMap.put(tickets[i][0], new PriorityQueue<String>());
 	            ticketsMap.get(tickets[i][0]).add(tickets[i][1]);
 	        }
-
 	        String curr = "JFK";
 	        Stack<String> drawBack = new Stack<String>();
 	        for(int i = 0; i < tickets.length; i++) {
