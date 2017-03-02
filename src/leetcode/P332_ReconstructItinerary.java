@@ -42,7 +42,7 @@ import java.util.TreeMap;
  * @date        2017年1月10日 下午10:07:15
  * @details     Solution1: AC 100ms  5.04%
  * @details     Solution2: AC  14ms 50.12%  *
- * @details     Solution23: AC 12ms 65.71%  *
+ * @details     Solution21: AC 12ms 65.71%  *
  * @details     Solution3: AC  31ms 20.62%  *
  * @details     Solution3: AC  19ms 30.46%  *
  */
@@ -86,4 +86,28 @@ public class P332_ReconstructItinerary {
 	        return ans;
 	    }
 	}
+	static class Solution21 {
+        public List<String> findItinerary(String[][] tickets) {
+            LinkedList<String> ans = new LinkedList<String>();
+            if(tickets == null || tickets.length == 0) return ans;
+            Map<String, PriorityQueue<String>> ticketsMap = new HashMap<>();
+            for(int i = 0; i < tickets.length; i++) {
+                if(!ticketsMap.containsKey(tickets[i][0])) ticketsMap.put(tickets[i][0], new PriorityQueue<String>());
+                ticketsMap.get(tickets[i][0]).add(tickets[i][1]);
+            }
+            String curr = "JFK";
+            Stack<String> drawBack = new Stack<String>();
+            for(int i = 0; i < tickets.length; i++) {
+                while(!ticketsMap.containsKey(curr) || ticketsMap.get(curr).isEmpty()) {
+                    drawBack.push(curr);
+                    curr = ans.removeLast();
+                }
+                ans.add(curr);
+                curr = ticketsMap.get(curr).poll();
+            }
+            ans.add(curr);
+            while(!drawBack.isEmpty()) ans.add(drawBack.pop());
+            return ans;
+        }
+    }
 }
