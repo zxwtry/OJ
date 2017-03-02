@@ -44,7 +44,7 @@ import java.util.TreeMap;
  * @details     Solution2: AC  14ms 50.12%  *
  * @details     Solution21: AC 12ms 65.71%  *
  * @details     Solution3: AC  31ms 20.62%  *
- * @details     Solution3: AC  19ms 30.46%  *
+ * @details     Solution4: AC  19ms 30.46%  *
  */
 public class P332_ReconstructItinerary {
 	static class Solution1 {
@@ -143,4 +143,36 @@ public class P332_ReconstructItinerary {
             return false;
         }
 	}
+	static class Solution4 {
+        LinkedList<String> answer = new LinkedList<String>();
+        TreeMap<String, TreeMap<String, Integer>> graph = new TreeMap<String, TreeMap<String, Integer>>();
+        int answerExpectSize = 0;
+        public List<String> findItinerary(String[][] tickets) {
+            answerExpectSize = tickets.length + 1;
+            for (String[] ticket : tickets) {
+                TreeMap<String, Integer> value = graph.get(ticket[0]);
+                value = value == null ? new TreeMap<String, Integer>() : value;
+                Integer integerValue = value.get(ticket[1]); 
+                value.put(ticket[1], (integerValue == null ? 0 : integerValue) + 1);
+                if (value.size() == 1) graph.put(ticket[0], value);
+            }
+            visit("JFK");
+            return answer;
+        }
+        private boolean visit(String current) {
+            answer.add(current);
+            if (answer.size() == answerExpectSize)
+                return true;
+            TreeMap<String, Integer> nextSteps = graph.get(current);
+            if (nextSteps != null)
+            for (String nextStep : nextSteps.keySet()) {
+                if (nextSteps.get(nextStep) < 1) continue;
+                nextSteps.put(nextStep, nextSteps.get(nextStep) - 1);
+                if (visit(nextStep)) return true;
+                nextSteps.put(nextStep, nextSteps.get(nextStep) + 1);
+            }
+            answer.removeLast();
+            return false;
+        }
+    }
 }
