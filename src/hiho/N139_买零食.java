@@ -49,4 +49,45 @@ import java.util.Scanner;
  * @date        2017年3月1日 上午9:25:00
  * @details     solve1: AC 855ms 19MB *
  */
-public class N139_买零食 {}
+public class N139_买零食 {
+    static int[] prices = new int[55];
+    static int[] desires = new int[55];
+    static int num = 0;
+    static int maxDesires = 0;
+    static int sumPrices = 0;
+    static int sumDesires = 0;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        for (int times = scanner.nextInt(); times > 0; times --) {
+            num = scanner.nextInt();
+            for (int numIndex = 0; numIndex < num; numIndex ++) {
+                prices[numIndex] = (int) (2 * scanner.nextFloat());
+                desires[numIndex] = scanner.nextInt();
+            }
+            maxDesires = 0;
+            solve1();
+            System.out.println(maxDesires);
+        }
+        scanner.close();
+    }
+    static void solve1() {
+        for (int i = 0; i < num; i ++) {
+            solve1JudgeSumPrices(i, -1, -1);
+            for (int j = i + 1; j < num; j ++) {
+                solve1JudgeSumPrices(i, j, -1);
+                for (int k = j + 1; k < num; k ++) {
+                    solve1JudgeSumPrices(i, j, k);
+                }
+            }
+        }
+    }
+    static void solve1JudgeSumPrices(int i, int j, int k) {
+        sumPrices = solve1Access(prices, i) + solve1Access(prices, j) + solve1Access(prices, k);
+        sumDesires = solve1Access(desires, i) + solve1Access(desires, j) + solve1Access(desires, k);
+        if (sumPrices % 10 == 0) maxDesires = Math.max(maxDesires, sumDesires);
+    }
+    static int solve1Access(int[] arr, int index) {
+        if (index == -1) return 0;
+        return arr[index];
+    }
+}
