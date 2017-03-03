@@ -100,4 +100,60 @@ public class P336_PalindromePairs {
             return start.charAt(index);
         }
     }
+	static class Solution3 {
+	    public List<List<Integer>> palindromePairs(String[] words) {
+	        List<List<Integer>> answer = new LinkedList<List<Integer>>();
+	        HashMap<String, Integer> map = new HashMap<String, Integer>(words.length);
+	        for (int index = 0; index < words.length; index ++)
+	            map.put(words[index], index);
+	        for (int i = 0; i < words.length; i ++) {
+	            for (int j = words[i].length() - 1; j >= -1; j --) {
+	                String leftPart = words[i].substring(0, j + 1);
+	                String rightPart = words[i].substring(j + 1, words[i].length());
+	                boolean leftPalindrome = isPalindrome(leftPart);
+	                boolean rightPalindrome = isPalindrome(rightPart);
+	                if (leftPalindrome && leftPart.length() != 0) {
+	                    String rightReverse = getReverse(rightPart);
+	                    Integer rightValue = map.get(rightReverse);
+	                    if (rightValue != null && rightValue != i) {
+	                        ArrayList<Integer> newList = new ArrayList<Integer>(2);
+	                        newList.add(rightValue);
+	                        newList.add(i);
+	                        answer.add(newList);
+	                    }
+	                }
+	                if (rightPalindrome) {
+	                    String leftReverse = getReverse(leftPart);
+	                    Integer leftValue = map.get(leftReverse);
+	                    if (leftValue != null && leftValue != i) {
+	                        ArrayList<Integer> newList = new ArrayList<Integer>(2);
+                            newList.add(i);
+                            newList.add(leftValue);
+                            answer.add(newList);
+	                    }
+	                }
+	            }
+	        }
+	        return answer;
+	    }
+
+        private String getReverse(String string) {
+            char[] cs = new char[string.length()];
+            for (int csIndex = 0; csIndex < cs.length; csIndex ++) { 
+                cs[csIndex] = string.charAt(cs.length - 1 - csIndex);
+            }
+            return new String(cs);
+        }
+
+        private boolean isPalindrome(String string) {
+            int left = 0, right = string.length() - 1;
+            while (left < right) {
+                if (string.charAt(left) != string.charAt(right))
+                    return false;
+                left ++;
+                right --;
+            }
+            return true;
+        }
+	}
 }
