@@ -46,4 +46,21 @@ public class P338_CountingBits {
 	        return answer;
 	    }
 	}
+	static class Solution2 {
+	    public int[] countBits(int num) {
+	        if (num == 0) return new int[1];
+	        int[] answer = new int[num + 1];
+	        for (int index = 0; index <= num; index ++)
+	            answer[index] = getBitOf1(index);
+	        return answer;
+	    }
+	    private int getBitOf1(int val) {
+	        int bitOf1 = 0;
+	        while (val != 0) {
+	            bitOf1 ++;
+	            val = (val & (val - 1));
+	        }
+	        return bitOf1;
+	    }
+	}
 }
