@@ -1,5 +1,10 @@
 package leetcode;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * Given a nested list of integers, implement an iterator to flatten it.
  *	
@@ -24,31 +29,52 @@ package leetcode;
  * @file        P341_FlattenNestedListIterator.java
  * @type        P341_FlattenNestedListIterator
  * @date        2017年2月2日 下午9:14:49
- * @details     
+ * @details     NestedIterator1: AC 11ms 26.17% *
+ * @details     NestedIterator2: AC  9ms 57.64% *
  */
 public class P341_FlattenNestedListIterator {
-	static class NestedIterator implements Iterator<Integer> {
-
-	    public NestedIterator(List<NestedInteger> nestedList) {
-	        
+	static class NestedIterator1 implements Iterator<Integer> {
+	    LinkedList<Integer> integerList = new LinkedList<Integer>();
+	    public NestedIterator1(List<NestedInteger> nestedList) {
+	        bfs(nestedList);
 	    }
-
-	    @Override
+	    private void bfs(List<NestedInteger> nestedList) {
+	        for (NestedInteger nestedInteger : nestedList) {
+	            if (nestedInteger.isInteger()) {
+	                integerList.add(nestedInteger.getInteger());
+	            } else {
+	                bfs(nestedInteger.getList());
+	            }
+	        }
+        }
+        @Override
 	    public Integer next() {
-	        
+	        return integerList.pollFirst();
 	    }
-
 	    @Override
 	    public boolean hasNext() {
-	        
+	        return ! integerList.isEmpty();
+	    }
+	}
+	
+	
+	static class NestedInteger {
+	    public boolean isInteger() {
+	        return false;
+	    }
+	    public Integer getInteger() {
+	        return 1;
+	    }
+	    public List<NestedInteger> getList() {
+	        return new LinkedList<NestedInteger>();
 	    }
 	}
 }
 
 /**
- * // This is the interface that allows for creating nested lists.
- * // You should not implement it, or speculate about its implementation
- * public interface NestedInteger {
+ *      // This is the interface that allows for creating nested lists.
+ *      // You should not implement it, or speculate about its implementation
+ *      public interface NestedInteger {
  *
  *     // @return true if this NestedInteger holds a single integer, rather than a nested list.
  *     public boolean isInteger();
