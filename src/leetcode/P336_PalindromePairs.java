@@ -64,4 +64,40 @@ public class P336_PalindromePairs {
 	        return start.charAt(index);
 	    }
 	}
+	static class Solution2 {
+        public List<List<Integer>> palindromePairs(String[] words) {
+            List<List<Integer>> answer = new LinkedList<List<Integer>>();
+            boolean[][] map = new boolean[words.length][words.length];
+            for (int i = 0; i < words.length; i ++) {
+                for (int j = 0; j < words.length; j ++) {
+                    if (i != j) {
+                        if (
+                                (i > j && map[j][i] && words[i].length() == words[j].length()) || 
+                                isPalindrome(words[i], words[j])) {
+                            ArrayList<Integer> newList = new ArrayList<>(2);
+                            newList.add(i);
+                            newList.add(j);
+                            answer.add(newList);
+                            map[i][j] = true;
+                        }
+                    }
+                }
+            }
+            return answer;
+        }
+        private boolean isPalindrome(String start, String end) {
+            int i = 0, j = start.length() + end.length() - 1;
+            while (i < j) {
+                if (accessChar(start, end, i) != accessChar(start, end, j))
+                    return false;
+                i ++;
+                j --;
+            }
+            return true;
+        }
+        private char accessChar(String start, String end, int index ) {
+            if (index >= start.length()) return end.charAt(index - start.length());
+            return start.charAt(index);
+        }
+    }
 }
