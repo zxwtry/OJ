@@ -104,4 +104,29 @@ public class P347_TopKFrequentElements {
 	        return res;
 	    }
 	}
+	static class Solution3 {
+	    public List<Integer> topKFrequent(int[] nums, int k) {
+	        HashMap<Integer, Integer> map1 = new HashMap<>();
+ 	        TreeMap<Integer, LinkedList<Integer>> map2 = new TreeMap<>(new Comparator<Integer>() {
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                    return o2 - o1;
+                }
+            });
+ 	        for (int n : nums)
+ 	            map1.put(n, map1.getOrDefault(n, 0) + 1);
+ 	        for (Map.Entry<Integer, Integer> entry : map1.entrySet()) {
+                LinkedList<Integer> valueList = map2.get(entry.getValue());
+                valueList = valueList == null ? new LinkedList<Integer>() : valueList;
+                valueList.add(entry.getKey());
+                map2.put(entry.getValue(), valueList);
+ 	        }
+ 	        LinkedList<Integer> answer = new LinkedList<>();
+ 	        for (Map.Entry<Integer, LinkedList<Integer>> entry : map2.entrySet()) {
+ 	            answer.addAll(entry.getValue());
+ 	            if (answer.size() >= k) break;
+ 	        }
+ 	        return answer;
+	    }
+	}
 }
