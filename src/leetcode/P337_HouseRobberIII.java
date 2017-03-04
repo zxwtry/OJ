@@ -43,7 +43,7 @@ import tools.TreeNode辅助.TreeNode;
  * @details     Solution1: WA [3,2,3,null,3,null,1] *
  * @details     Solution2: TLE *
  * @details     Solution3: AC 11ms 26.93% *
- * @details     Solution3: AC  3ms 45.04% *
+ * @details     Solution4: AC  3ms 45.04% *
  */
 public class P337_HouseRobberIII {
 	static class Solution1 {
@@ -103,6 +103,25 @@ public class P337_HouseRobberIII {
 	        val = Math.max(val + root.val, robSub(root.left, map) + robSub(root.right, map));
 	        map.put(root, val);
 	        return val;
+	    }
+	}
+	static class Solution4 {
+	    public int rob(TreeNode root) {
+	        int[] res = robSub(root);
+	        return Math.max(res[0], res[1]);
+	    }
+
+	    private int[] robSub(TreeNode root) {
+	        if (root == null) return new int[2];
+	        
+	        int[] left = robSub(root.left);
+	        int[] right = robSub(root.right);
+	        int[] res = new int[2];
+
+	        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+	        res[1] = root.val + left[0] + right[0];
+	        
+	        return res;
 	    }
 	}
 }
