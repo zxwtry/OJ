@@ -103,6 +103,35 @@ public class P352_DataStreamAsDisjointIntervals {
 	        return new ArrayList<>(tree.values());
 	    }
 	}
+	static class SummaryRanges3 {
+	    TreeMap<Integer, Integer> treeMap;
+ 	    public SummaryRanges3() {
+	        treeMap = new TreeMap<>();
+	    }
+	    public void addNum(int val) {
+	        if (treeMap.containsKey(val)) return;
+	        Integer lowKey = treeMap.lowerKey(val);
+	        Integer highKey = treeMap.higherKey(val);
+	        if (lowKey != null && highKey != null && treeMap.get(lowKey) + 1 == val && highKey - 1 == val) {
+	            treeMap.put(lowKey, treeMap.get(highKey));
+	            treeMap.remove(highKey);
+	        } else if (lowKey != null && treeMap.get(lowKey) + 1 >= val) {
+	            treeMap.put(lowKey, Math.max(treeMap.get(lowKey), val));
+	        } else if (highKey != null && highKey - 1 == val) {
+	            treeMap.put(val, treeMap.get(highKey));
+	            treeMap.remove(highKey);
+	        } else {
+	            treeMap.put(val, val);
+	        }
+	    }
+	    public List<Interval> getIntervals() {
+	        List<Interval> answer = new ArrayList<>(treeMap.size());
+	        for (Map.Entry<Integer, Integer> entry : treeMap.entrySet()) {
+	            answer.add(new Interval(entry.getKey(), entry.getValue()));
+	        }
+	        return answer;
+	    }
+	}
 	/**
 	 * Your SummaryRanges object will be instantiated and called as such:
 	 * SummaryRanges obj = new SummaryRanges();
