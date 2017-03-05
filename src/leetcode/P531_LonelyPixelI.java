@@ -29,8 +29,38 @@ package leetcode;
  * @file        P531_LonelyPixelI.java
  * @type        P531_LonelyPixelI
  * @date        2017年3月5日 上午11:13:36
- * @details     
+ * @details     Solution1: AC 42ms 50%
  */
 public class P531_LonelyPixelI {
-    
+    static class Solution1 {
+        public int findLonelyPixel(char[][] p) {
+            if (p == null || p.length == 0 || p[0].length == 0) return 0;
+            int row = p.length, col = p[0].length;
+            int[] rowCount = new int[row];
+            int count = 0;
+            for (int i = 0; i < row; i ++) {
+                count = 0;
+                for (int j = 0; j < col; j ++) {
+                    count += (p[i][j] == 'B' ? 1 : 0);
+                }
+                rowCount[i] = count;
+            }
+            int[] colCount = new int[col];
+            for (int j = 0; j < col; j ++) {
+                count = 0;
+                for (int i = 0; i < row; i ++) {
+                    count += (p[i][j] == 'B' ? 1 : 0);
+                }
+                colCount[j] = count;
+            }
+            int answer = 0;
+            for (int i = 0; i < row; i ++) {
+                for (int j = 0; j < col; j ++) {
+                    if (p[i][j] == 'B' && rowCount[i] == 1 && colCount[j] == 1)
+                        answer ++;
+                }
+            }
+            return answer;
+        }
+    }
 }
