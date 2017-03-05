@@ -1,10 +1,8 @@
 package leetcode;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.TreeSet;
 
 /**
  *  Given an array of integers and an integer k, you need to find the number of 
@@ -40,4 +38,29 @@ import java.util.TreeSet;
  * @date        2017年3月5日 上午10:58:47
  * @details     Solution1: AC 26ms
  */
-public class P532_K_diffPairsInAnArray {}
+public class P532_K_diffPairsInAnArray {
+    static class Solution1 {
+        public int findPairs(int[] nums, int k) {
+            if (nums == null || nums.length < 2) return 0;
+            if (k == 0) {
+                int answer = 0;
+                HashMap<Integer, Integer> map = new HashMap<>(nums.length);
+                for (int num : nums) {
+                    map.put(num, map.getOrDefault(num, 0) + 1);
+                }
+                for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                    if (entry.getValue() >= 2) answer ++;
+                }
+                return answer;
+            }
+            HashSet<Integer> set = new HashSet<Integer>(nums.length);
+            for (int num : nums)
+                set.add(num);
+            int pairs = 0;
+            for (int val : set)
+                if (set.contains(val - k))
+                    pairs ++;
+            return pairs;
+        }
+    }
+}
