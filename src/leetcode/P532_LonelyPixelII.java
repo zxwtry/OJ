@@ -46,4 +46,56 @@ package leetcode;
  * @date        2017年3月5日 上午11:25:38
  * @details     Solution1: AC 21ms
  */
-public class P532_LonelyPixelII {}
+public class P532_LonelyPixelII {
+    static class Solution1 {
+        public int findBlackPixel(char[][] p, int N) {
+            if (p == null || p.length == 0 || p[0].length == 0) return 0;
+            int row = p.length, col = p[0].length;
+            int[] rowCount = new int[row];
+            int count = 0;
+            for (int i = 0; i < row; i ++) {
+                count = 0;
+                for (int j = 0; j < col; j ++) {
+                    count += (p[i][j] == 'B' ? 1 : 0);
+                }
+                rowCount[i] = count;
+            }
+            int[] colCount = new int[col];
+            for (int j = 0; j < col; j ++) {
+                count = 0;
+                for (int i = 0; i < row; i ++) {
+                    count += (p[i][j] == 'B' ? 1 : 0);
+                }
+                colCount[j] = count;
+            }
+            boolean[][] map = new boolean[row][col];
+            int answer = 0;
+            for (int i = 0; i < row; i ++) {
+                if (rowCount[i] != N) continue;
+                for (int j = 0; j < col; j ++) {
+                    if (colCount[j] != N || map[i][j] || p[i][j] != 'B') continue;
+                    boolean isAllTrue = true;
+                    for (int k = 0; k < row; k ++)
+                        if (k != i)
+                        if (p[k][j] == 'B')
+                            if ( !cmp(p[i], p[k]))
+                                isAllTrue = false;
+                    if (isAllTrue) {
+                        for (int k = i + 1; k < row; k ++) 
+                            if (p[k][j] == 'B')
+                                map[k][j] = true;
+                        answer += N;
+                    }
+                    map[i][j] = true;
+                }
+            }
+            return answer;
+        }
+        private boolean cmp(char[] c1, char[] c2) {
+            if (c1.length != c2.length) return false;
+            for (int i = 0; i < c1.length; i ++)
+                if (c1[i] != c2[i]) return false;
+            return true;
+        }
+    }
+}
