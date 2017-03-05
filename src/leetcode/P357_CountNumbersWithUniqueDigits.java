@@ -29,12 +29,24 @@ package leetcode;
  * @file        P357_CountNumbersWithUniqueDigits.java
  * @type        P357_CountNumbersWithUniqueDigits
  * @date        2017年2月5日 下午2:14:55
- * @details     
+ * @details     Solution1: AC 0ms 10.88%
  */
 public class P357_CountNumbersWithUniqueDigits {
 	static class Solution1 {
 	    public int countNumbersWithUniqueDigits(int n) {
-	        
+	        if (n < 0) return 0;
+	        else if (n == 0) return 1;
+	        else if (n == 1) return 10;
+	        else if (n == 2) return 91;
+	        int sum = 91;
+	        int a = 9, b = 72, c = 7;
+	        for (int ni = 3; ni <= n; ni ++) {
+	            a = (c + 1 >= 0 ? a * (c + 1) : 0);
+	            b = (c >= 0 ? b * c : 0);
+	            sum += (a + b);
+	            c --;
+	        }
+	        return sum;
 	    }
 	}
 }
