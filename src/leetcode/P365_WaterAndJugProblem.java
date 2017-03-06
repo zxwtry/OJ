@@ -33,16 +33,22 @@ package leetcode;
  * @file        P365_WaterAndJugProblem.java
  * @type        P365_WaterAndJugProblem
  * @date        2016年12月8日 下午10:33:51
- * @details     
+ * @details     Solution1: AC 1ms 9.24%
  */
 public class P365_WaterAndJugProblem {
-	public static void main(String[] args) {
-		
-	}
-	
-	static class Solution {
+	static class Solution1 {
 	    public boolean canMeasureWater(int x, int y, int z) {
-	        
+	        if(x + y < z) return false;
+	        if( x == z || y == z || x + y == z ) return true;
+	        return z%GCD(x, y) == 0;
+	    }
+	    public int GCD(int a, int b){
+	        while(b != 0 ){
+	            int temp = b;
+	            b = a%b;
+	            a = temp;
+	        }
+	        return a;
 	    }
 	}
 }
