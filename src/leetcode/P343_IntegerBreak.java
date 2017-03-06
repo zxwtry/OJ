@@ -23,7 +23,7 @@ package leetcode;
  * @type        P343_IntegerBreak
  * @date        2017年2月2日 下午9:17:23
  * @details     Solution1: AC 2ms 16.91%
- * @details     Solution1: AC 0ms 49.43%
+ * @details     Solution2: AC 0ms 49.43%
  */
 public class P343_IntegerBreak {
 	static class Solution1 {
@@ -37,6 +37,18 @@ public class P343_IntegerBreak {
 	            }
 	        }
 	        return dp[n];
+	    }
+	}
+	static class Solution2 {
+	    public int integerBreak(int n) {
+	        int answer = 1;
+	        if (n == 1 || n == 2) return answer;
+	        while (n > 4) {
+	            answer *= 3;
+	            n -= 3;
+	        }
+	        answer *= n;
+	        return answer;
 	    }
 	}
 }
