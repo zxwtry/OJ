@@ -19,7 +19,7 @@ package leetcode;
  * @file        P434_NumberOfSegmentsInAString.java
  * @type        P434_NumberOfSegmentsInAString
  * @date        2016年12月4日 上午11:23:53
- * @details     
+ * @details     Solution: AC 4ms 16.37%
  */
 public class P434_NumberOfSegmentsInAString {
 	static class Solution {
@@ -36,6 +36,7 @@ public class P434_NumberOfSegmentsInAString {
 	        	}
 	        }
 	        if (s.length() != 0 && pre == s.length() - 1) count ++;
+	        return count;
 	    }
 	}
 }
