@@ -42,4 +42,25 @@ public class P421_MaximumXOROfTwoNumbersInAnArray {
 	        return max;
 	    }
 	}
+	static class Solution3 {
+	    public int findMaximumXOR(int[] nums) {
+	        int max = 0, mask = 0;
+            Set<Integer> set = new HashSet<>();
+	        for(int i = 31; i >= 0; i --){
+	            mask = mask | (1 << i);
+	            set.clear();
+	            for(int num : nums){
+	                set.add(num & mask);
+	            }
+	            int tmp = max | (1 << i);
+	            for(int prefix : set){
+	                if(set.contains(tmp ^ prefix)) {
+	                    max = tmp;
+	                    break;
+	                }
+	            }
+	        }
+	        return max;
+	    }
+	}
 }
