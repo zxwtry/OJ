@@ -37,12 +37,21 @@ package leetcode;
  * @file        P419_BattleshipsInABoard.java
  * @type        P419_BattleshipsInABoard
  * @date        2016年12月8日 下午10:24:02
- * @details     
+ * @details     Solution1: AC 5ms 15.48% 
  */
 public class P419_BattleshipsInABoard {
-	static class Solution {
-	    public int countBattleships(char[][] board) {
-	        
+	static class Solution1 {
+	    public int countBattleships(char[][] bs) {
+	        int count = 0;
+	        for (int i = 0; i < bs.length; i ++)
+	            for (int j = 0; j < bs[0].length; j ++)
+	                if (bs[i][j] == 'X' && access(bs, i - 1,j) == '.' && access(bs, i,j - 1) == '.')
+	                    count ++;
+            return count;
+	    }
+	    private char access(char[][] bs, int i, int j) {
+	        if (i < 0 || j < 0) return '.';
+	        return bs[i][j];
 	    }
 	}
 }
