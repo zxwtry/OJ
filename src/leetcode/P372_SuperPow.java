@@ -48,4 +48,21 @@ public class P372_SuperPow {
             return j;
         }
     }
+    static class Solution2 {
+        final int base = 1337;
+        public int superPow(int a, int[] b) {
+            int pre = 1;
+            for (int bi : b) {
+                pre = mod(pre, 10) * mod(a, bi) % base;
+            }
+            return pre;
+        }
+        public int mod(int a, int b) {
+            a %= base;
+            int j = 1;
+            for (int i = 0; i < b; i ++)
+                j = (a * j) % base;
+            return j;
+        }
+    }
 }
