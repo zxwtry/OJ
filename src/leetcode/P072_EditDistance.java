@@ -45,4 +45,23 @@ public class P072_EditDistance {
 	        return dp[1][word2.length()];
 	    }
 	}
+	static class Solution2 {
+		public int minDistance(String word1, String word2) {
+			if (word1 == null)	return minDistance("", word2);
+			if (word2 == null)	return minDistance("", word1);
+			int len1 = word1.length(), len2 = word2.length();
+			if (len1 == 0 || len2 == 0)	return len1 + len2;
+			int[][] m = new int[len1 + 1][len2 + 1];
+			for (int i = 0; i <= len1; i ++)
+				m[i][0] = i;
+			for (int j = 1; j <= len2; j ++)
+				m[0][j] = j;
+			for (int i = 1; i <= len1; i ++)
+				for (int j = 1; j <= len2; j ++) {
+					m[i][j] = Math.min(Math.min(m[i - 1][j] + 1, m[i][j - 1] + 1), 
+	        				m[i - 1][j - 1] + (word1.charAt(i - 1) == word2.charAt(j - 1) ?  0 : 1));
+				}
+			return m[len1][len2];
+		}
+	}
 }
