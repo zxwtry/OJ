@@ -64,6 +64,23 @@ public class P435_Non_OverlappingIntervals {
 	        }
 	    }
 	}
+	static class Solution2 {
+	    public int eraseOverlapIntervals(Interval[] intervals) {
+	        Arrays.sort(intervals, new Comparator<Interval>() {
+                @Override
+                public int compare(Interval it1, Interval it2) {
+                    return it1.end - it2.end;
+                }
+            });
+	        int end = Integer.MIN_VALUE, count = 0;
+	        for (Interval interval : intervals)
+	            if (interval.start >= end) {
+	                end = interval.end;
+	                count ++;
+	            }
+	        return intervals.length - count;
+	    }
+	}
 	static class Interval {
 		int start;
 		int end;
