@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * 	Given a set of intervals, for each of the interval i, 
  * 	check if there exists an interval j whose start point is 
@@ -39,13 +42,52 @@ package leetcode;
  *	For [2,3], the interval [3,4] has minimum-"right" start point.
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P436_FindRightInterval.java
+ * @type        P436_FindRightInterval
+ * @date        2017年3月7日 上午10:13:26
+ * @details     Solution1: AC 28ms 91.59%
+ */
 public class P436_FindRightInterval {
-	public static void main(String[] args) {
-		
-	}
-	static class Solution {
+	static class Solution1 {
 	    public int[] findRightInterval(Interval[] intervals) {
+	        Integer[] indices = new Integer[intervals.length];
+	        for (int index = 0; index < indices.length; index ++)
+	            indices[index] = index;
+	        Arrays.sort(indices, new Comparator<Integer>() {
+                @Override
+                public int compare(Integer it1, Integer it2) {
+                    return intervals[indices[it1]].start - intervals[indices[it2]].start;
+                }
+            });
+	        int[] answer = new int[intervals.length];
+	        for (int index = 0; index < answer.length; index ++) {
+	            int binIndex = binarySearch(intervals, indices, intervals[index].end);
+	            binIndex = binIndex >= answer.length ? -1 : binIndex;
+	            answer[index] = binIndex;
+	        }
+	        return answer;
 	    }
+        private int binarySearch(Interval[] intervals, Integer[] indices, int start) {
+            if (start > intervals[indices[indices.length - 1]].start) return indices.length;
+            int startIndex = 0, endIndex = indices.length - 1;
+            int middleIndex = 0;
+            while (startIndex < endIndex) {
+                middleIndex = startIndex + (endIndex - startIndex) / 2 ;
+                if (intervals[indices[middleIndex]].start > start) {
+                    endIndex = middleIndex;
+                } else if (intervals[indices[middleIndex]].start == start) {
+                    return indices[middleIndex];
+                } else {
+                    startIndex = middleIndex + 1;
+                }
+            }
+            return indices[startIndex];
+        }
 	}
 	static class Interval {
 		int start;
