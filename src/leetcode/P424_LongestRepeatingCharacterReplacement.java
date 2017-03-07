@@ -34,12 +34,18 @@ import java.util.ArrayList;
  *	The substring "BBBB" has the longest repeating letters, which is 4.
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P424_LongestRepeatingCharacterReplacement.java
+ * @type        P424_LongestRepeatingCharacterReplacement
+ * @date        2017年3月7日 上午10:25:12
+ * @details     Solution1: AC 257ms 4.07%
+ */
 public class P424_LongestRepeatingCharacterReplacement {
-	/*
-	 * 	AC
-	 * 	242 ms
-	 */
-	static class Solution {
+	static class Solution1 {
 	    public int characterReplacement(String s, int k) {
 	    	if (s == null || s.length() == 0) {
 	    		return 0;
@@ -103,47 +109,6 @@ public class P424_LongestRepeatingCharacterReplacement {
 	    				ans = Math.max(ans, ansNow);
 	    			}
 	    		}
-//	    		if (startIndices[i] != null) {
-//	    			ArrayList<Integer> startIndex = startIndices[i];
-//	    			ArrayList<Integer> endIndex = endIndices[i];
-//	    			int len = startIndex.size();
-//	    			help[0] = k;
-//	    			int ansCount = endIndex.get(0) - startIndex.get(0) + 1;
-//	    			ans = Math.max(ans, ansCount);
-//	    			preIndex = 0;
-//	    			for (int iLen = 1; iLen < len; iLen ++) {
-//	    				int cut = startIndex.get(iLen) - endIndex.get(iLen - 1) - 1;
-//	    				if (help[iLen - 1] < cut) {
-//	    					if (startIndex.get(iLen) != cs.length - 1) {
-//	    						help[iLen] = k;
-//	    					} else {
-//	    						help[iLen] = 0;
-//	    					}
-//	    					ansCount += help[iLen - 1];
-//	    					help[iLen - 1] = 0;
-//	    					ans = Math.max(ans, ansCount);
-//	    					preIndex = iLen;
-//	    					ansCount = endIndex.get(iLen) - startIndex.get(iLen) + 1;
-//	    					ans = Math.max(ans, ansCount);
-//	    				} else {
-//	    					help[iLen] = help[iLen - 1] - cut;
-//	    					ansCount += endIndex.get(iLen) - endIndex.get(iLen - 1);
-//	    					ans = Math.max(ans, ansCount);
-//	    				}
-//	    			}
-//	    			if (help[len - 1] > 0) {
-//	    				int newAnsCountAdd = Math.min(help[len - 1], cs.length - 1 - endIndex.get(len - 1));
-//	    				help[len - 1] -= newAnsCountAdd;
-//	    				ansCount += newAnsCountAdd;
-//	    				ans = Math.max(ans, ansCount);
-//	    			}
-//	    			if (help[len - 1] > 0) {
-//	    				if (startIndex.get(preIndex) != 0) {
-//		    				ansCount += help[len - 1];
-//		    			}
-//	    			}
-//	    			ans = Math.max(ans, ansCount);
-//	    		}
 	    	}
 	    	return ans > cs.length ? cs.length : ans;
 	    }
