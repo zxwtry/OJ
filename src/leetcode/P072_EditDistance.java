@@ -64,4 +64,26 @@ public class P072_EditDistance {
 			return m[len1][len2];
 		}
 	}
+	static class Solution3 {
+        public int minDistance(String word1, String word2) {
+            if (word1 == null || word2 == null) 
+                return minDistance(word1 == null ? "" : word1, word2 == null ? "" : word2);
+            if (word1.length() < word2.length())
+                return minDistance(word2, word1);
+            int[][] dp = new int[2][word2.length() + 1];
+            for (int j = 0; j <= word2.length(); j ++)
+                dp[0][j] = j;
+            for (int i = 1; i <= word1.length(); i ++) {
+                dp[1][0] = i; 
+                for (int j = 1; j <= word2.length(); j ++) {
+                    dp[1][j] = Math.min(Math.min(dp[0][j] + 1, dp[1][j - 1] + 1), 
+                            dp[0][j - 1] + (word1.charAt(i - 1) == word2.charAt(j - 1) ? 0 : 1));
+                }
+                int[] tmp = dp[0];
+                dp[0] = dp[1];
+                dp[1] = tmp;
+            }
+            return dp[0][word2.length()];
+        }
+    }
 }
