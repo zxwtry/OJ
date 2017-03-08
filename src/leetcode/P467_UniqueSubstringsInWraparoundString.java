@@ -1,14 +1,14 @@
 package leetcode;
 
 /**
- * Consider the string s to be the infinite wraparound string
- * 	 of "abcdefghijklmnopqrstuvwxyz", so s will look like this:
+ *  Consider the string s to be the infinite wraparound string
+ * 	of "abcdefghijklmnopqrstuvwxyz", so s will look like this:
  *  "...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd....".
  *	
  *	Now we have another string p. Your job is to find out 
  *	how many unique non-empty substrings of p are present in s.
- *	 In particular, your input is the string p and you need to
- *	  output the number of different non-empty substrings of p in the string s.
+ *	In particular, your input is the string p and you need to
+ *	output the number of different non-empty substrings of p in the string s.
  *	
  *	Note: p consists of only lowercase English letters and the size of p might be over 10000.
  *	
@@ -36,16 +36,29 @@ package leetcode;
  * @file        P467_UniqueSubstringsInWraparoundString.java
  * @type        P467_UniqueSubstringsInWraparoundString
  * @date        2016年12月4日 下午8:29:13
- * @details     
+ * @details     Solution1: WA
  */
 public class P467_UniqueSubstringsInWraparoundString {
-	public static void main(String[] args) {
-		
-	}
 	
-	static class Solution {
+	static class Solution1 {
 	    public int findSubstringInWraproundString(String p) {
-	        
+	        boolean[] map = new boolean[26];
+	        int count = 0;
+	        int mapIndex = 0;
+	        for (int index = p.length() - 1; index > -1; index --) {
+	            mapIndex = p.charAt(index) - 'a';
+	            if (! map[mapIndex]) {
+	                count ++;
+	                map[mapIndex] = true;
+	            }
+	        }
+	        int answer = 1;
+	        while (count > 1) {
+	            answer *= count --;
+	        }
+	        return answer;
 	    }
 	}
+	
+	
 }
