@@ -38,10 +38,10 @@ import java.util.Arrays;
  * @file        P473_MatchsticksToSquare.java
  * @type        P473_MatchsticksToSquare
  * @date        2016年12月18日 上午11:09:15
- * @details     
+ * @details     Solution1: AC 171ms 37.23%
  */
 public class P473_MatchsticksToSquare {
-	static class Solution {
+	static class Solution1 {
 		int lay = 0;
 		boolean[] iv = null;
 		boolean isS = false;
