@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -39,6 +40,7 @@ import java.util.Stack;
  * @details     Solution1: MLE
  * @details     Solution2: TLE
  * @details     Solution3: AC 130ms 79.92%
+ * @details     Solution4: AC 108ms 92.93%
  */
 public class P472_ConcatenatedWords {
 	static class Solution1 {
@@ -231,6 +233,40 @@ public class P472_ConcatenatedWords {
                 }
             }
             return -1;
+        }
+	}
+	static class Solution4 {
+	    List<String> answer = null;
+        HashSet<String> set = null;
+        public List<String> findAllConcatenatedWordsInADict(String[] ws) {
+            answer = new LinkedList<String>();
+            set = new HashSet<String>();
+            for (String w : ws) set.add(w);
+            boolean isFind = false;
+            for (String w : ws) {
+                isFind = false;
+                for (int index = w.length() - 1; ! isFind && index > 0; index --) {
+                    if (set.contains(w.substring(0, index))) {
+                        if (find(w.substring(index))) {
+                            answer.add(w);
+                            isFind = true;
+                        }
+                    }
+                }
+            }
+            return answer;
+        }
+        private boolean find(String w) {
+            boolean isFind = set.contains(w);
+            for (int index = w.length() - 1; !isFind && index > 0; index --) {
+                if (set.contains(w.substring(0, index))) {
+                    if (find(w.substring(index))) {
+                        isFind = true;
+                    }
+                }
+            }
+            if (isFind) set.add(w);
+            return isFind;
         }
 	}
 }
