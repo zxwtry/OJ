@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -37,6 +38,7 @@ import java.util.Stack;
  * @date        2016年12月18日 上午11:40:43
  * @details     Solution1: MLE
  * @details     Solution2: TLE
+ * @details     Solution3: AC 130ms 79.92%
  */
 public class P472_ConcatenatedWords {
 	static class Solution1 {
@@ -205,5 +207,30 @@ public class P472_ConcatenatedWords {
 			return next;
 		}
 	}
-	
+	static class Solution3 {
+	    List<String> answer = null;
+	    HashMap<String, Integer> map = null;
+	    public List<String> findAllConcatenatedWordsInADict(String[] ws) {
+	        answer = new LinkedList<String>();
+	        map = new HashMap<String, Integer>();
+	        for (String w : ws) map.put(w, 0);
+	        for (String w : ws)
+	            if (find(w, 0) >= 1) answer.add(w);
+	        return answer;
+	    }
+        private int find(String w, int i) {
+            Integer val = map.get(w);
+            if (val != null && i != 0) return val;
+            for (int index = 1; index < w.length(); index ++) {
+                if (map.containsKey(w.substring(0, index))) {
+                    int fid = find(w.substring(index), i + 1);
+                    if (fid != -1) {
+                        map.put(w.substring(index), 1);
+                        return fid + 1;
+                    }
+                }
+            }
+            return -1;
+        }
+	}
 }
