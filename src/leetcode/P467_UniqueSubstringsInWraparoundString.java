@@ -38,6 +38,7 @@ package leetcode;
  * @date        2016年12月4日 下午8:29:13
  * @details     Solution1: WA
  * @details     Solution2: AC 24ms 44.69%
+ * @details     Solution3: AC 35ms 11.17%
  */
 public class P467_UniqueSubstringsInWraparoundString {
 	static class Solution1 {
@@ -57,28 +58,6 @@ public class P467_UniqueSubstringsInWraparoundString {
 	            answer *= count --;
 	        }
 	        return answer;
-	    }
-	}
-	static class Solution2 {
-	    public int findSubstringInWraproundString(String p) {
-	        int[] count = new int[26];
-	        int maxLengthCur = 0; 
-	        for (int i = 0; i < p.length(); i++) {
-	            if (i > 0 && (p.charAt(i) - p.charAt(i - 1) == 1 || (p.charAt(i - 1) - p.charAt(i) == 25))) {
-	                maxLengthCur++;
-	            }
-	            else {
-	                maxLengthCur = 1;
-	            }
-	            
-	            int index = p.charAt(i) - 'a';
-	            count[index] = Math.max(count[index], maxLengthCur);
-	        }
-	        int sum = 0;
-	        for (int i = 0; i < 26; i++) {
-	            sum += count[i];
-	        }
-	        return sum;
 	    }
 	}
 }
