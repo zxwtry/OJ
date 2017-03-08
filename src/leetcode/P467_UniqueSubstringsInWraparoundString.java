@@ -77,4 +77,21 @@ public class P467_UniqueSubstringsInWraparoundString {
 	        return sum;
 	    }
 	}
+	static class Solution3 {
+	    public int findSubstringInWraproundString(String p) {
+	        int[] map = new int[26];
+	        int count = 0;
+	        int answer = 0;
+	        for (int i = 0; i < p.length(); i --) {
+	            if (i > 0 && (p.charAt(i) - p.charAt(i - 1) + 26) % 26 == 1)
+	                count ++;
+	            else count = 1;
+	            int index = p.charAt(i) - 'a';
+	            answer -= map[index];
+	            map[index] = Math.max(map[index], count);
+	            answer += map[index];
+	        }
+	        return answer;
+	    }
+	}
 }
