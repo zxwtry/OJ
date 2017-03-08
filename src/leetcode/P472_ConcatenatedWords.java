@@ -35,20 +35,10 @@ import java.util.Stack;
  * @file        P472_ConcatenatedWords.java
  * @type        P472_ConcatenatedWords
  * @date        2016年12月18日 上午11:40:43
- * @details     
+ * @details     Solution1: MLE
+ * @details     Solution2: TLE
  */
 public class P472_ConcatenatedWords {
-	main
-	/**
-	 * @author      zxwtry
-	 * @email       zxwtry@qq.com
-	 * @project     OJ
-	 * @package     leetcode
-	 * @file        P472_ConcatenatedWords.java
-	 * @type        Solution1
-	 * @date        2016年12月18日 下午4:20:40
-	 * @details     MLE
-	 */
 	static class Solution1 {
 		public List<String> findAllConcatenatedWordsInADict(String[] words) {
 			for (String w : words) {
@@ -147,16 +137,6 @@ public class P472_ConcatenatedWords {
 		}
 	}
 	
-	/**
-	 * @author      zxwtry
-	 * @email       zxwtry@qq.com
-	 * @project     OJ
-	 * @package     leetcode
-	 * @file        P472_ConcatenatedWords.java
-	 * @type        Solution2
-	 * @date        2016年12月18日 下午4:20:58
-	 * @details     TLE
-	 */
 	static class Solution2 {
 		int[][] ne = null;
 		LinkedList<Integer>[][] sl = null; 
