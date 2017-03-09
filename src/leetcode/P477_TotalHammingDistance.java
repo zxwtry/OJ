@@ -30,10 +30,11 @@ package leetcode;
  * @file        P477_TotalHammingDistance.java
  * @type        P477_TotalHammingDistance
  * @date        2016年12月18日 上午10:53:37
- * @details     
+ * @details     Solution1: AC 52ms 10.50%
+ * @details     Solution2: AC 33ms 42.65%
  */
 public class P477_TotalHammingDistance {
-	static class Solution {
+	static class Solution1 {
 	    public int totalHammingDistance(int[] nums) {
 	        int n = nums.length;
 	        int ans = 0;
@@ -46,5 +47,25 @@ public class P477_TotalHammingDistance {
 	        }
 	        return ans;
 	    }
+	}
+	static class Solution2 {
+	    public int totalHammingDistance(int[] nums) {
+            int n = nums.length;
+            int ans = 0;
+            boolean notAllZero = true;
+            for (int i = 0; i < 32 && notAllZero; i ++) {
+                int c = 0;
+                notAllZero = false;
+                for (int index = 0; index < n; index ++) {
+                    if (nums[index] != 0) {
+                        c += nums[index] & 1;
+                        nums[index] = nums[index] >>> 1;
+                        notAllZero = true;
+                    }
+                }
+                ans += c * (n -c);
+            }
+            return ans;
+        }
 	}
 }
