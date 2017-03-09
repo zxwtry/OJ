@@ -19,43 +19,17 @@ package leetcode;
  *	Output: "45"
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P423_ReconstructOriginalDigitsfromEnglish.java
+ * @type        P423_ReconstructOriginalDigitsfromEnglish
+ * @date        2017年3月9日 下午9:32:39
+ * @details     Solution: AC 23ms 63.30%
+ */
 public class P423_ReconstructOriginalDigitsfromEnglish {
-	public static void main(String[] args) {
-		String[] s = new String[] {
-				"zero",
-				"one",
-				"two",
-				"three",
-				"four",
-				"five",
-				"six",
-				"seven",
-				"eight",
-				"nine",
-		};
-		for (int i = 0; i < s.length; i ++ ) {
-			int[] ans = new int[10];
-			for (int j = 0; j < 10; j ++) {
-				ans[j] = (int) (Math.random() * 1000) ;
-			}
-			StringBuilder st = new StringBuilder();
-			StringBuilder standrad = new StringBuilder();
-			for (int j = 0; j < 10; j ++) {
-				for (int k = 0; k < ans[j]; k ++) {
-					st.append(s[j]);
-					standrad.append(j);
-				}
-			}
-			Solution s1 = new Solution();
-			String anString = s1.originalDigits(st.toString());
-			System.out.println(anString.equals(standrad.toString()));
-					
-		}
-	}
-	/*
-	 * 	AC
-	 * 	15 ms
-	 */
 	static class Solution {
 		/*
 		 * 	z : zero : 0
