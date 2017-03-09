@@ -87,4 +87,21 @@ public class P474_OnesAndZeroes {
             }
         }
     }
+    static class Solution2 {
+        public int findMaxForm(String[] strs, int m, int n) {
+            int[][] sign = new int[strs.length][2];
+            for (int index = 0; index < strs.length; index ++)
+                for (int j = 0; j < strs[index].length(); j ++)
+                    sign[index][strs[index].charAt(j) - '0'] ++;
+            int[][] map = new int[m + 1][n + 1];
+            for (int index = 0; index < strs.length; index ++) {
+                for (int i = m; i >= sign[index][0]; i --) {
+                    for (int j = n; j >= sign[index][1]; j --) {
+                        map[i][j] = Math.max(map[i][j], 1 + map[i - sign[index][0]][j - sign[index][1]]);
+                    }
+                }
+            }
+            return map[m][n];
+        }
+    }
 }
