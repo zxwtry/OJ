@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *  Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), 
  *  some elements appear twice and others appear once.
@@ -28,4 +31,17 @@ package leetcode;
  * @date        2017年3月9日 下午9:52:44
  * @details     Solution1: AC 17ms 65.56%
  */
-public class P448_FindAllNumbersDisappearedInAnArray {}
+public class P448_FindAllNumbersDisappearedInAnArray {
+    static class Solution1 {
+        public List<Integer> findDisappearedNumbers(int[] nums) {
+            List<Integer> answer = new LinkedList<>();
+            boolean[] ie = new boolean[nums.length];
+            for (int num : nums)
+                ie[num - 1] = true;
+            for (int i = 0; i < ie.length; i ++)
+                if (! ie[i])
+                    answer.add(i + 1);
+            return answer;
+        }
+    }
+}
