@@ -124,4 +124,33 @@ public class P473_MatchsticksToSquare {
             return false;
         }
 	}
+	static class Solution3 {
+        public boolean makesquare(int[] nums) {
+            if (nums == null || nums.length < 4) return false;
+            int sum = 0, max = 0;
+            for (int num : nums) {
+                sum += num;
+                max = Math.max(num, max);
+            }
+            if ((sum & 3) != 0) return false;
+            sum = sum >> 2;
+            if (max > sum) return false;
+            Arrays.sort(nums);
+            return dfs(nums, new int[4], nums.length - 1, sum);
+        }
+        private boolean dfs(int[] nums, int[] sums, int index, int target) {
+            if (index == -1) {
+                int i = 0;
+                for (; i < sums.length && sums[i] == target; i ++){}
+                return i == sums.length;
+            }
+            for (int i = 0; i < sums.length; i ++) {
+                if (sums[i] + nums[index] > target) continue;
+                sums[i] += nums[index];
+                if (dfs(nums, sums, index - 1, target)) return true;
+                sums[i] -= nums[index];
+            }
+            return false;
+        }
+    }
 }
