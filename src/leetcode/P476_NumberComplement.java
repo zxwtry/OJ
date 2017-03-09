@@ -25,7 +25,7 @@ package leetcode;
  * @file        P476_NumberComplement.java
  * @type        P476_NumberComplement
  * @date        2017年1月8日 上午10:31:29
- * @details     
+ * @details     Solution: AC 12ms 42.40%
  */
 public class P476_NumberComplement {
 	static class Solution {
