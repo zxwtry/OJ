@@ -1,5 +1,6 @@
 package leetcode;
 
+
 /**
  * 	Median is the middle value in an ordered integer list. If the size of the list is even, 
  * 	there is no middle value. So the median is the mean of the two middle value.
@@ -39,8 +40,84 @@ package leetcode;
  * @file        P480_SlidingWindowMedian.java
  * @type        P480_SlidingWindowMedian
  * @date        2017年1月8日 下午5:26:44
- * @details     
+ * @details     Solution1: WA
  */
 public class P480_SlidingWindowMedian {
-	d
+    static class Solution1 {
+        public double[] medianSlidingWindow(int[] nums, int k) {
+            if (nums == null || k < 1 || nums.length < k)
+                return new double[0];
+            if (k == 1) {
+                double[] answer = new double[nums.length];
+                for (int index = 0; index < nums.length; index ++) {
+                    answer[index] = nums[index];
+                }
+                return answer;
+            }
+            double[] answer = new double[nums.length - k + 1];
+            int[] nis = new int[nums.length];
+            int[] arr = new int[k];
+            int i = 0;
+            for (; i < k; i ++) {
+                nis[i] = i;
+                arr[i] = nums[i];
+            }
+            int answerIndex = 0;
+            setAnswer(answer, answerIndex ++, arr, k);
+            bubbleSort(arr, nis);
+            int removeNumsIndex = 0;
+            for (; i < nums.length; i ++) {
+                nis[i] = nis[removeNumsIndex];
+                arr[nis[i]] = nums[i];
+                adjust(nis, arr, nis[i]);
+                setAnswer(answer, answerIndex, arr, k);
+                answerIndex ++;
+                removeNumsIndex ++;
+            }
+            return answer;
+        }
+        private void adjust(int[] nis, int[] arr, int i) {
+            while (i >= 0 && i < arr.length) {
+                if (arr[i] >= accessArr(arr, i - 1) && arr[i] <= accessArr(arr, i + 1))
+                    return;
+                if (arr[i] < accessArr(arr, i - 1)) {
+                    swap(arr, i - 1, i);
+                    swap(nis, i - 1, i);
+                    i --;
+                }
+                if (arr[i] > accessArr(arr, i + 1)) {
+                    swap(arr, i + 1, i);
+                    swap(nis, i + 1, i);
+                    i ++;
+                }
+            }
+        }
+        private int accessArr(int[] arr, int index) {
+            if (index < 0) return Integer.MIN_VALUE;
+            else if (index >= arr.length) return Integer.MAX_VALUE;
+            return arr[index];
+        }
+        private void bubbleSort(int[] arr, int[] nis) {
+            for (int i = 0; i < arr.length; i ++) {
+                for (int j = 0; j < i; j ++) {
+                    if (arr[j] > arr[i]) {
+                        swap(arr, i, j);
+                        swap(nis, i, j);
+                    }
+                }
+            }
+        }
+        private void swap(int[] arr, int i, int j) {
+            int tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+        private void setAnswer(double[] answer, int index, int[] arr, int k) {
+            if ((k & 1) == 1) {
+                answer[index] = arr[k >> 1];
+            } else {
+                answer[index] = (arr[k >> 1] + arr[(k >> 1) - 1]) / 2.0;
+            }
+        }
+    }
 }
