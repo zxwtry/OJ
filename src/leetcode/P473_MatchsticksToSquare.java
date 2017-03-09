@@ -1,6 +1,9 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * 	Remember the story of Little Match Girl? By now, you know exactly what 
@@ -39,6 +42,8 @@ import java.util.Arrays;
  * @type        P473_MatchsticksToSquare
  * @date        2016年12月18日 上午11:09:15
  * @details     Solution1: AC 171ms 37.23%
+ * @details     Solution2: AC  81ms 47.16%
+ * @details     Solution3: AC  45ms 63.55%
  */
 public class P473_MatchsticksToSquare {
 	static class Solution1 {
@@ -46,7 +51,7 @@ public class P473_MatchsticksToSquare {
 		boolean[] iv = null;
 		boolean isS = false;
 		int sum = 0;
-	    public boolean makesquare(int[] nums) {
+		public boolean makesquare(int[] nums) {
 	        sum = 0;
 	        int max = 0;
 	        for (int v : nums) {
@@ -72,7 +77,6 @@ public class P473_MatchsticksToSquare {
 			}
 			int i = n.length - 1;
 			for (; i > -1; i --) {
-				
 				if (i != n.length - 1 && n[i] == n[i+1] && !iv[i] && !iv[i+1])
 					continue;
 				if (! iv[i] && n[i] <= need && ! isS) {
@@ -82,5 +86,42 @@ public class P473_MatchsticksToSquare {
 				}
 			}
 		}
+	}
+	static class Solution2 {
+	    public boolean makesquare(int[] nums) {
+	        if (nums == null || nums.length < 4) return false;
+	        ArrayList<Integer> list = new ArrayList<>(nums.length);
+	        int sum = 0, max = 0;
+	        for (int num : nums) {
+	            sum += num;
+	            max = Math.max(num, max);
+	            list.add(num);
+	        }
+	        if ((sum & 3) != 0) return false;
+	        sum = sum >> 2;
+			if (max > sum) return false;
+	        Collections.sort(list, new Comparator<Integer>() {
+                @Override
+                public int compare(Integer val1, Integer val2) {
+                    return val2 - val1;
+                }
+            });
+	        return dfs(list, new int[4], 0, sum);
+	    }
+        private boolean dfs(ArrayList<Integer> nums, int[] sums, int index, int target) {
+            if (index == nums.size()) {
+                boolean isAllT = true;
+                for (int i = 0; isAllT && i < sums.length; i ++)
+                    isAllT = sums[i] == target;
+                return isAllT;
+            }
+            for (int i = 0; i < sums.length; i ++) {
+                if (sums[i] + nums.get(index) > target) continue;
+                sums[i] += nums.get(index);
+                if (dfs(nums, sums, index + 1, target)) return true;
+                sums[i] -= nums.get(index);
+            }
+            return false;
+        }
 	}
 }
