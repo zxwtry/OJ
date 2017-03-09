@@ -30,6 +30,7 @@ import java.util.List;
  * @type        P448_FindAllNumbersDisappearedInAnArray
  * @date        2017年3月9日 下午9:52:44
  * @details     Solution1: AC 17ms 65.56%
+ * @details     Solution2: AC 19ms 41.07%
  */
 public class P448_FindAllNumbersDisappearedInAnArray {
     static class Solution1 {
@@ -42,6 +43,27 @@ public class P448_FindAllNumbersDisappearedInAnArray {
                 if (! ie[i])
                     answer.add(i + 1);
             return answer;
+        }
+    }
+    static class Solution2 {
+        public List<Integer> findDisappearedNumbers(int[] nums) {
+            List<Integer> answer = new LinkedList<>();
+            for (int index = 0; index < nums.length; index ++) {
+                if (nums[index] == index + 1) continue;
+                while (nums[nums[index] - 1] !=  nums[index]) {
+                    swap(nums, index, nums[index] - 1);
+                }
+            }
+            for (int index = 0; index < nums.length; index ++) {
+                if (nums[index] != index + 1)
+                    answer.add(index + 1);
+            }
+            return answer;
+        }
+        private void swap(int[] nums, int i, int j) {
+            int t = nums[i];
+            nums[i] = nums[j];
+            nums[j] = t;
         }
     }
 }
