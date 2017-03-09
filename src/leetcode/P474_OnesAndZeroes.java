@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  *  In the computer world, use restricted resource you have to 
  *  generate maximum benefit is what we always want to pursue.
@@ -35,8 +38,53 @@ package leetcode;
  * @file        P474_OnesAndZeroes.java
  * @type        P474_OnesAndZeroes
  * @date        2017年3月8日 下午2:11:07
- * @details     
+ * @details     Solution1: TLE
+ * @details     Solution2: AC 48ms 61.52%
  */
 public class P474_OnesAndZeroes {
-
+    static class Solution1 {
+        boolean[] iv = null;
+        int maxForm = 0;
+        public int findMaxForm(String[] strs, int m, int n) {
+            int[][] sign = new int[strs.length][2];
+            iv = new boolean[strs.length];
+            int signIndex = 0;
+            int countOfOne = 0;
+            for (String str : strs) {
+                countOfOne = 0;
+                for (int index = str.length() - 1; index > -1; index --)
+                    countOfOne += str.charAt(index) == '1' ? 1 : 0;
+                sign[signIndex][0] = str.length() - countOfOne;
+                sign[signIndex ++][1] = countOfOne;
+            }
+            Arrays.sort(sign, new Comparator<int[]>() {
+                @Override
+                public int compare(int[] arr1, int[] arr2) {
+                    if (arr1[0] > arr2[0]) return -1;
+                    else if (arr1[0] < arr2[0]) return 1;
+                    else {
+                        if (arr1[1] > arr2[1]) return -1;
+                        else if (arr1[1] < arr2[1])return 1;
+                        return 0;
+                    }
+                }
+            });
+            for (int index = strs.length - 1; index >= maxForm; index --) {
+                if (m - sign[index][0] < 0 || n - sign[index][1] < 0) continue;
+                search(sign, new int[] {m - sign[index][0], n - sign[index][1]}, index, 1);
+            }
+            return maxForm;
+        }
+        private void search(int[][] sign, int[] mn, int index, int count) {
+            maxForm = Math.max(maxForm, count);
+            for (int i = index - 1; i > -1 && i >= maxForm - count; i --) {
+                if (mn[0] < sign[i][0] || mn[1] < sign[i][1]) continue;
+                mn[0] -= sign[i][0]; 
+                mn[1] -= sign[i][1]; 
+                search(sign, mn, i, count + 1);
+                mn[0] += sign[i][0]; 
+                mn[1] += sign[i][1]; 
+            }
+        }
+    }
 }
