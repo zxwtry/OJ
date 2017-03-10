@@ -1,11 +1,8 @@
 package leetcode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-
-import javafx.scene.control.RadioButton;
 
 /**
  *  Given scores of N athletes, find their relative ranks and the people with 
@@ -32,10 +29,39 @@ import javafx.scene.control.RadioButton;
  * @file        P506_RelativeRanks.java
  * @type        P506_RelativeRanks
  * @date        2017年3月10日 下午7:50:53
+ * @details     Solution1: AC  26ms 51.87%
  * @details     Solution2: AC 124ms  8.57%
  * @details     Solution3: AC  13ms 95.59%
  */
 public class P506_RelativeRanks {
+    static class Solution1 {
+        public String[] findRelativeRanks(int[] nums) {
+            ArrayList<Integer> list = new ArrayList<Integer>(nums.length);
+            for (int i = 0; i < nums.length; i ++)
+                list.add(i);
+            Collections.sort(list, new Comparator<Integer>() {
+                @Override
+                public int compare(Integer int1, Integer int2) {
+                    if (nums[int1] > nums[int2]) {
+                        return -1;
+                    } else if (nums[int1] == nums[int2]) {
+                        return 0;
+                    }
+                    return 1;
+                }
+            });
+            String[] answer = new String[nums.length];
+            String[] rec = {"Gold Medal", "Silver Medal", "Bronze Medal"};
+            int i = 0;
+            for (; i < nums.length && i < 3; i ++) {
+                answer[list.get(i)] = rec[i];
+            }
+            for (; i < nums.length; i ++) {
+                answer[list.get(i)] = (i + 1) + "";
+            }
+            return answer;
+        }
+    }
     static class Solution2 {
         public String[] findRelativeRanks(int[] nums) {
             int[] rank = new int[nums.length];
