@@ -24,6 +24,7 @@ package leetcode;
  * @type        P485_MaxConsecutiveOnes
  * @date        2017年2月5日 下午2:20:24
  * @details     Solution1: 14ms 18.99%
+ * @details     Solution2: 10ms 70.84%
  */
 public class P485_MaxConsecutiveOnes {
 	static class Solution1 {
@@ -39,6 +40,22 @@ public class P485_MaxConsecutiveOnes {
 	        }
 	        max = Math.max(max, count);
 	        return max;
+	    }
+	}
+	static class Solution2 {
+	    public int findMaxConsecutiveOnes(int[] nums) {
+	        int max = 0;
+            int count = 0;
+            int n = nums.length;
+            for (int i = 0; i < n; i ++) {
+                if (nums[i] == 1) count ++;
+                else {
+                    max = Math.max(max, count);
+                    count = 0;
+                }
+            }
+            max = Math.max(max, count);
+            return max;
 	    }
 	}
 }
