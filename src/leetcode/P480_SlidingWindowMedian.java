@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -44,6 +45,7 @@ import java.util.PriorityQueue;
  * @date        2017年1月8日 下午5:26:44
  * @details     Solution1: WA
  * @details     Solution2: AC 74ms 60.19%
+ * @details     Solution3: TLE
  */
 public class P480_SlidingWindowMedian {
     static class Solution1 {
@@ -66,16 +68,24 @@ public class P480_SlidingWindowMedian {
                 arr[i] = nums[i];
             }
             int answerIndex = 0;
-            setAnswer(answer, answerIndex ++, arr, k);
             bubbleSort(arr, nis);
+            setAnswer(answer, answerIndex ++, arr, k);
             int removeNumsIndex = 0;
+            System.out.print("arr is \t");
+            tools.Utils.printArray(arr, arr.length);
+            System.out.print("nis is \t");
+            tools.Utils.printArray(nis, nis.length);
             for (; i < nums.length; i ++) {
                 nis[i] = nis[removeNumsIndex];
-                arr[nis[i]] = nums[i];
-                adjust(nis, arr, nis[i]);
+                arr[nis[removeNumsIndex]] = nums[i];
+                adjust(nis, arr, nis[removeNumsIndex]);
                 setAnswer(answer, answerIndex, arr, k);
                 answerIndex ++;
                 removeNumsIndex ++;
+                System.out.print("arr is \t");
+                tools.Utils.printArray(arr, arr.length);
+                System.out.print("nis is \t");
+                tools.Utils.printArray(nis, nis.length);
             }
             return answer;
         }
@@ -86,11 +96,13 @@ public class P480_SlidingWindowMedian {
                 if (arr[i] < accessArr(arr, i - 1)) {
                     swap(arr, i - 1, i);
                     swap(nis, i - 1, i);
+//                    swap(nis, nis[i - 1], nis[i]);
                     i --;
                 }
                 if (arr[i] > accessArr(arr, i + 1)) {
                     swap(arr, i + 1, i);
                     swap(nis, i + 1, i);
+//                    swap(nis, nis[i + 1], nis[i]);
                     i ++;
                 }
             }
@@ -106,6 +118,7 @@ public class P480_SlidingWindowMedian {
                     if (arr[j] > arr[i]) {
                         swap(arr, i, j);
                         swap(nis, i, j);
+//                        swap(nis, nis[i], nis[j]);
                     }
                 }
             }
@@ -184,6 +197,18 @@ public class P480_SlidingWindowMedian {
             else {
                     return (double)minHeap.peek();
             }
+        }
+    }
+    static class Solution3 {
+        public double[] medianSlidingWindow(int[] nums, int k) {
+            double[] answer = new double[nums.length - k + 1];
+            int[] arr = new int[k];
+            for (int index = 0; index < answer.length; index ++) {
+                System.arraycopy(nums, index, arr, 0, k);
+                Arrays.sort(arr);
+                answer[index] = ((k & 1) == 1) ? arr[k / 2] : ((long)arr[k / 2] + arr[k / 2 - 1]) / 2.0;
+            }
+            return answer;
         }
     }
 }
