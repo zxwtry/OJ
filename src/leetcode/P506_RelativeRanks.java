@@ -1,5 +1,10 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+
 /**
  *  Given scores of N athletes, find their relative ranks and the people with 
  *  the top three highest scores, who will be awarded medals: "Gold Medal", 
@@ -25,8 +30,33 @@ package leetcode;
  * @file        P506_RelativeRanks.java
  * @type        P506_RelativeRanks
  * @date        2017年3月10日 下午7:50:53
- * @details     
+ * @details     Solution2: AC 124ms 8.57%
  */
 public class P506_RelativeRanks {
-
+    static class Solution2 {
+        public String[] findRelativeRanks(int[] nums) {
+            int[] rank = new int[nums.length];
+            for (int i = 0; i < nums.length; i ++)
+                rank[i] = i;
+            for (int i = 0; i < nums.length; i ++) {
+                for (int j = i + 1; j < nums.length; j ++) {
+                    if (nums[rank[i]] < nums[rank[j]]) {
+                        int t = rank[i];
+                        rank[i] = rank[j];
+                        rank[j] = t;
+                    }
+                }
+            }
+            String[] answer = new String[rank.length];
+            String[] rec = {"Gold Medal", "Silver Medal", "Bronze Medal"};
+            int i = 0;
+            for (; i < rank.length && i < 3; i ++) {
+                answer[rank[i]] = rec[i];
+            }
+            for (; i < rank.length; i ++) {
+                answer[rank[i]] = (i + 1) + "";
+            }
+            return answer;
+        }
+    }
 }
