@@ -1,7 +1,13 @@
 package leetcode;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
+import tools.TreeNode辅助.TreeNode;
+
 /**
- * 	Given a binary search tree (BST) with duplicates, find all the mode(s) (the most frequently occurred element) in the given BST.
+ * 	Given a binary search tree (BST) with duplicates, find all the mode(s) 
+ * (the most frequently occurred element) in the given BST.
  *  
  *  Assume a BST is defined as follows:
  *  
@@ -19,7 +25,8 @@ package leetcode;
  *  
  *  Note: If a tree has more than one mode, you can return them in any order.
  *  
- *  Follow up: Could you do that without using any extra space? (Assume that the implicit stack space incurred due to recursion does not count).
+ *  Follow up: Could you do that without using any extra space? 
+ *  (Assume that the implicit stack space incurred due to recursion does not count).
  */
 
 /**
@@ -30,12 +37,54 @@ package leetcode;
  * @file        P501_FindModeinBinarySearchTree.java
  * @type        P501_FindModeinBinarySearchTree
  * @date        2017年2月8日 下午11:24:26
- * @details     
+ * @details     Solution1: AC 7ms 65.12%
  */
 public class P501_FindModeinBinarySearchTree {
-	class Solution1 {
+	static class Solution1 {
+	    int pre = Integer.MIN_VALUE;
+	    int count = 0;
+	    int max = 0;
+	    boolean compareOne = false;
+	    HashMap<Integer, HashSet<Integer>> map = new HashMap<Integer, HashSet<Integer>>();
 	    public int[] findMode(TreeNode root) {
-	        
+	        if (root == null) return new int[0];
+	        if (root.val == pre) pre = pre + 1;
+	        middle(root);
+	        if (max <= count) {
+                HashSet<Integer> set = map.getOrDefault(count, new HashSet<Integer>());
+                set.add(pre);
+                map.put(count, set);
+                max = count;
+            }
+	        int[] answer = new int[map.get(max).size()];
+	        int answerIndex = 0;
+	        for (Integer i : map.get(max)) {
+	            answer[answerIndex ++] = i;
+	        }
+	        return answer;
+	    }
+	    private void middle(TreeNode root) {
+	        if (root == null) return;
+	        middle(root.left);
+	        if (! compareOne) {
+	            pre = root.val;
+	            count = 1;
+	            compareOne = true;
+	        } else {
+    	        if (pre == root.val) {
+    	            count ++;
+    	        } else {
+    	            if (max <= count) {
+    	                HashSet<Integer> set = map.getOrDefault(count, new HashSet<Integer>());
+    	                set.add(pre);
+    	                map.put(count, set);
+    	                max = count;
+    	            }
+                    pre = root.val;
+    	            count = 1;
+    	        }
+	        }
+	        middle(root.right);
 	    }
 	}
 }
