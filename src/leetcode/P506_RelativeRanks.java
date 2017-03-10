@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javafx.scene.control.RadioButton;
+
 /**
  *  Given scores of N athletes, find their relative ranks and the people with 
  *  the top three highest scores, who will be awarded medals: "Gold Medal", 
@@ -30,7 +32,8 @@ import java.util.Comparator;
  * @file        P506_RelativeRanks.java
  * @type        P506_RelativeRanks
  * @date        2017年3月10日 下午7:50:53
- * @details     Solution2: AC 124ms 8.57%
+ * @details     Solution2: AC 124ms  8.57%
+ * @details     Solution3: AC  13ms 95.59%
  */
 public class P506_RelativeRanks {
     static class Solution2 {
@@ -57,6 +60,42 @@ public class P506_RelativeRanks {
                 answer[rank[i]] = (i + 1) + "";
             }
             return answer;
+        }
+    }
+    static class Solution3 {
+        public String[] findRelativeRanks(int[] nums) {
+            int[] rank = new int[nums.length];
+            for (int i = 0; i < nums.length; i ++)
+                rank[i] = i;
+            qsort(nums, rank, 0, nums.length - 1);
+            String[] answer = new String[rank.length];
+            String[] rec = {"Gold Medal", "Silver Medal", "Bronze Medal"};
+            int i = 0;
+            for (; i < rank.length && i < 3; i ++) {
+                answer[rank[i]] = rec[i];
+            }
+            for (; i < rank.length; i ++) {
+                answer[rank[i]] = (i + 1) + "";
+            }
+            return answer;
+        }
+        static void qsort(int[] nums, int[] rank, int sti, int eni) {
+            if (sti < eni) {
+                int p = partition(nums, rank, sti, eni);
+                qsort(nums, rank, sti, p - 1);
+                qsort(nums, rank, p + 1, eni);
+            }
+        }
+        private static int partition(int[] nums, int[] rank, int sti, int eni) {
+            int save = rank[sti];
+            while (sti < eni) {
+                while (sti < eni && nums[save] >= nums[rank[eni]]) eni --;
+                rank[sti] = rank[eni];
+                while (sti < eni && nums[save] <= nums[rank[sti]]) sti ++;
+                rank[eni] = rank[sti];
+            }
+            rank[sti] = save;
+            return sti;
         }
     }
 }
