@@ -15,7 +15,7 @@ package leetcode;
  * @file        P326_PowerOfThree.java
  * @type        P326_PowerOfThree
  * @date        2017年1月10日 下午9:58:20
- * @details     Solution1: AC 使用了loop
+ * @details     Solution1: AC 26 10.56%
  */
 public class P326_PowerOfThree {
 	static class Solution1 {
