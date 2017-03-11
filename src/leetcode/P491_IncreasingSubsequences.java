@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 
 /**
  * 	Given an integer array, your task is to find all the different possible increasing subsequences 
@@ -106,5 +106,23 @@ public class P491_IncreasingSubsequences {
 	        }
 	        return new LinkedList<>(answerSet);
 	    }
+	}
+	static class Solution2 {
+	    HashSet<List<Integer>> answerSet = new HashSet<List<Integer>>();
+        ArrayList<Integer> list = new ArrayList<>();
+	    public List<List<Integer>> findSubsequences(int[] nums) {
+	        find(0, nums);
+	        return new ArrayList<>(answerSet);
+	    }
+        private void find(int index, int[] nums) {
+            if (list.size() > 1) answerSet.add(new ArrayList<Integer>(list));
+            for (int i = index; i < nums.length; i ++) {
+                if (list.size() == 0 || nums[i] >= list.get(list.size() - 1)) {
+                    list.add(nums[i]);
+                    find(i + 1, nums);
+                    list.remove(list.size() - 1);
+                }
+            }
+        }
 	}
 }
