@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 	A sequence of numbers is called arithmetic if it 
  * 	consists of at least three elements and if the difference between 
@@ -47,12 +50,61 @@ package leetcode;
  *	[2,6,10]
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P446_ArithmeticSlicesII_Subsequence.java
+ * @type        P446_ArithmeticSlicesII_Subsequence
+ * @date        2017年3月11日 下午9:11:33
+ * @details     Solution2: AC 319ms 82.06%
+ */
 public class P446_ArithmeticSlicesII_Subsequence {
-	public static void main(String[] args) {
-		
-	}
 	static class Solution {
+	    public int numberOfArithmeticSlices(int[] arr) {
+	        int answer = 0;
+	        for (int i = 0; i < arr.length; i ++) {
+	            for (int j = i + 1; j < arr.length; j ++) {
+	                int irange = j - i;
+	                int vrange = arr[j] - arr[i];
+	                int k = j, v = arr[j];
+	                int count = 2;
+	                while (true) {
+	                    k += irange;
+	                    v += vrange;
+	                    if (k < arr.length && arr[k] == v) {
+	                        count ++;
+	                    } else break;
+	                }
+	                answer += (count - 2);
+	            }
+	        }
+            return answer;
+	    }
+	}
+	static class Solution2 {
 	    public int numberOfArithmeticSlices(int[] A) {
+	        int res = 0;
+	        @SuppressWarnings("unchecked")
+            Map<Integer, Integer>[] map = new Map[A.length];
+	            
+	        for (int i = 0; i < A.length; i++) {
+	            map[i] = new HashMap<>(i);
+	                
+	            for (int j = 0; j < i; j++) {
+	                long diff = (long)A[i] - A[j];
+	                if (diff <= Integer.MIN_VALUE || diff > Integer.MAX_VALUE) continue;
+	                    
+	                int d = (int)diff;
+	                int c1 = map[i].getOrDefault(d, 0);
+	                int c2 = map[j].getOrDefault(d, 0);
+	                res += c2;
+	                map[i].put(d, c1 + c2 + 1);
+	            }
+	        }
+	            
+	        return res;
 	    }
 	}
 }
