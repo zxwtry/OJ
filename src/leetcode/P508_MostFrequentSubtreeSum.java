@@ -42,6 +42,7 @@ import tools.TreeNode辅助.TreeNode;
  * @date        2017年3月11日 下午9:34:33
  * @details     Solution1: AC 17ms 84.77% 
  * @details     Solution2: AC 29ms 26.15%
+ * @details     Solution3: AC 17ms 84.77%
  */
 public class P508_MostFrequentSubtreeSum {
     static class Solution1 {
@@ -97,6 +98,31 @@ public class P508_MostFrequentSubtreeSum {
             countSet.put(count, set);
             maxCount[0] = Math.max(maxCount[0], count);
             return val;
+        }
+    }
+    static class Solution3 {
+        public int[] findFrequentTreeSum(TreeNode root) {
+            int[] countCount = new int[]{Integer.MIN_VALUE, 0};
+            HashMap<Integer, Integer> sumCount = new HashMap<>();
+            find(root, countCount, sumCount);
+            int[] answer = new int[countCount[1]];
+            int answerIndex = 0;
+            for (Map.Entry<Integer, Integer> entry : sumCount.entrySet())
+                if (entry.getValue() == countCount[0])
+                    answer[answerIndex ++] = entry.getKey();
+            return answer;
+        }
+        private int find(TreeNode root, int[] countCount, HashMap<Integer, Integer> sumCount) {
+            if (root == null) return 0;
+            int sum = root.val + find(root.left, countCount, sumCount) + find(root.right, countCount, sumCount);
+            int count = sumCount.getOrDefault(sum, 0) + 1;
+            sumCount.put(sum, count);
+            if (countCount[0] == count) countCount[1] ++;
+            else if (countCount[0] < count) {
+                countCount[0] = count;
+                countCount[1] = 1;
+            }
+            return sum;
         }
     }
 }
