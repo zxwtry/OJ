@@ -33,8 +33,9 @@ package leetcode;
  * @file        P494_TargetSum.java
  * @type        P494_TargetSum
  * @date        2017年2月6日 下午11:31:12
- * @details     Solution1: AC 20ms 79.13%
- * @details     Solution2: AC 22ms 75.51%
+ * @details     Solution1: AC  20ms 79.13%
+ * @details     Solution2: AC  22ms 75.51%
+ * @details     Solution3: AC 303ms 42.15%
  */
 public class P494_TargetSum {
 	static class Solution1 {
@@ -71,6 +72,28 @@ public class P494_TargetSum {
 	            dp = next;
 	        }
 	        return dp[sum+s];
+	    }
+	}
+	static class Solution3 {
+	    int result = 0;
+	    public int findTargetSumWays(int[] nums, int S) {
+	        if(nums == null || nums.length == 0) return result;
+	        int n = nums.length;
+	        int[] sums = new int[n];
+	        sums[n - 1] = nums[n - 1];
+	        for (int i = n - 2; i >= 0; i--)
+	            sums[i] = sums[i + 1] + nums[i];
+	        helper(nums, sums, S, 0);
+	        return result;
+	    }
+	    public void helper(int[] nums, int[] sums, int target, int pos){
+	        if(pos == nums.length){
+	            if(target == 0) result++;
+	            return;
+	        }
+	        if (sums[pos] < Math.abs(target)) return;
+	        helper(nums, sums, target + nums[pos], pos + 1);
+	        helper(nums, sums, target - nums[pos], pos + 1);
 	    }
 	}
 }
