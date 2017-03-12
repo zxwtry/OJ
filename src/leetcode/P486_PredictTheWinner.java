@@ -46,15 +46,28 @@ package leetcode;
  * @file        P486_PredictTheWinner.java
  * @type        P486_PredictTheWinner
  * @date        2017年2月5日 下午2:22:21
- * @details     
+ * @details     Solution1: AC 14ms 32.68%
  */
 public class P486_PredictTheWinner {
-	public static void main(String[] args) {
-		
-	}
-	static class Solution {
+	static class Solution1 {
 	    public boolean PredictTheWinner(int[] nums) {
-	        
+	        if (nums == null || nums.length < 3) return true;
+	        return PredictTheWinner(nums, 0, nums.length - 1, 0, 0, true);
 	    }
+        private boolean PredictTheWinner(int[] nums, int sti, int eni, int cnt0, int cnt1, boolean isOne) {
+            if (eni - sti == 0)
+                return isOne ? (cnt0 + nums[eni] >= cnt1) : (cnt0 >= nums[eni] + cnt1);
+            if (isOne) {
+                //player one 选择
+                //只要两边有一个保证player one 成功，就是成功
+                return PredictTheWinner(nums, sti + 1, eni, cnt0 + nums[sti], cnt1, ! isOne) ||
+                        PredictTheWinner(nums, sti, eni - 1, cnt0 + nums[eni], cnt1, ! isOne);
+            } else {
+                //player two 选择
+                //其中有一个失败就是失败
+                return PredictTheWinner(nums, sti + 1, eni, cnt0, cnt1 + nums[sti], ! isOne) &&
+                        PredictTheWinner(nums, sti, eni - 1, cnt0, cnt1 + nums[eni], ! isOne);
+            }
+        }
 	}
 }
