@@ -29,19 +29,27 @@ package leetcode;
  * @author      zxwtry
  * @email       zxwtry@qq.com
  * @project     OJ
- * @package     leetcode
+ * @package     leetcode    
  * @file        P494_TargetSum.java
  * @type        P494_TargetSum
  * @date        2017年2月6日 下午11:31:12
- * @details     
+ * @details     Solution1: AC 20ms 79.13%
  */
 public class P494_TargetSum {
-	public static void main(String[] args) {
-		
-	}
 	static class Solution1 {
-	    public int findTargetSumWays(int[] nums, int S) {
-	        
-	    }
+	    public int findTargetSumWays(int[] nums, int s) {
+	        int sum = 0;
+	        for (int n : nums)
+	            sum += n;
+	        return sum < s || (s + sum) % 2 > 0 ? 0 : subsetSum(nums, (s + sum) >>> 1); 
+	    }   
+	    public int subsetSum(int[] nums, int s) {
+	        int[] dp = new int[s + 1]; 
+	        dp[0] = 1;
+	        for (int n : nums)
+	            for (int i = s; i >= n; i--)
+	                dp[i] += dp[i - n]; 
+	        return dp[s];
+	    } 
 	}
 }
