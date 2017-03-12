@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,43 +60,19 @@ import java.util.Map;
  * @type        P446_ArithmeticSlicesII_Subsequence
  * @date        2017年3月11日 下午9:11:33
  * @details     Solution2: AC 319ms 82.06%
+ * @details     Solution3: AC 407ms 28.53%
  */
 public class P446_ArithmeticSlicesII_Subsequence {
-	static class Solution {
-	    public int numberOfArithmeticSlices(int[] arr) {
-	        int answer = 0;
-	        for (int i = 0; i < arr.length; i ++) {
-	            for (int j = i + 1; j < arr.length; j ++) {
-	                int irange = j - i;
-	                int vrange = arr[j] - arr[i];
-	                int k = j, v = arr[j];
-	                int count = 2;
-	                while (true) {
-	                    k += irange;
-	                    v += vrange;
-	                    if (k < arr.length && arr[k] == v) {
-	                        count ++;
-	                    } else break;
-	                }
-	                answer += (count - 2);
-	            }
-	        }
-            return answer;
-	    }
-	}
 	static class Solution2 {
 	    public int numberOfArithmeticSlices(int[] A) {
 	        int res = 0;
 	        @SuppressWarnings("unchecked")
             Map<Integer, Integer>[] map = new Map[A.length];
-	            
 	        for (int i = 0; i < A.length; i++) {
 	            map[i] = new HashMap<>(i);
-	                
 	            for (int j = 0; j < i; j++) {
 	                long diff = (long)A[i] - A[j];
 	                if (diff <= Integer.MIN_VALUE || diff > Integer.MAX_VALUE) continue;
-	                    
 	                int d = (int)diff;
 	                int c1 = map[i].getOrDefault(d, 0);
 	                int c2 = map[j].getOrDefault(d, 0);
@@ -103,8 +80,40 @@ public class P446_ArithmeticSlicesII_Subsequence {
 	                map[i].put(d, c1 + c2 + 1);
 	            }
 	        }
-	            
 	        return res;
+	    }
+	}
+	static class Solution3 {
+	    public int numberOfArithmeticSlices(int[] A) {
+	        int answer = 0;
+	        ArrayList<HashMap<Integer, Integer>> listMap = new ArrayList<>(A.length);
+	        for (int j = 0; j < A.length; j ++) {
+	            listMap.add(new HashMap<>());
+	            for (int i = 0; i < j; i ++) {
+	                if (checkMinus(A[j], A[i])) continue;
+	                int minus = A[j] - A[i];
+	                int val = listMap.get(i).getOrDefault(minus, 0);
+	                answer += val;
+	                listMap.get(j).put(minus, val + listMap.get(j).getOrDefault(minus, 0) + 1);
+	            }
+	        }
+	        return answer;
+	    }
+	    private boolean checkMinus(int v1, int v2) {
+	        if (((v1 >>> 31) ^ (v2 >>> 31)) == 0) {
+	            //同号相减没有溢出
+	            return false;
+	        }
+	        if ((((v1 - v2) >>> 31) ^ (v1 >>> 31)) == 0) {
+	            //如果相减之后(v1 - v2) 和 v1同号号，那么没有溢出
+	            return false;
+	        }
+	        return true;
+	    }
+	    public boolean checkMinus_long(int v1, int v2) {
+	        long minus = (long)v1 - v2;
+	        if (minus > Integer.MAX_VALUE || minus < Integer.MIN_VALUE) return true;
+	        return false;
 	    }
 	}
 }
