@@ -34,6 +34,7 @@ package leetcode;
  * @type        P494_TargetSum
  * @date        2017年2月6日 下午11:31:12
  * @details     Solution1: AC 20ms 79.13%
+ * @details     Solution2: AC 22ms 75.51%
  */
 public class P494_TargetSum {
 	static class Solution1 {
@@ -51,5 +52,25 @@ public class P494_TargetSum {
 	                dp[i] += dp[i - n]; 
 	        return dp[s];
 	    } 
+	}
+	static class Solution2 {
+	    public int findTargetSumWays(int[] nums, int s) {
+	        int sum = 0; 
+	        for(int i: nums) sum+=i;
+	        if(s>sum || s<-sum) return 0;
+	        int[] dp = new int[2*sum+1];
+	        dp[0+sum] = 1;
+	        for(int i = 0; i<nums.length; i++){
+	            int[] next = new int[2*sum+1];
+	            for(int k = 0; k<2*sum+1; k++){
+	                if(dp[k]!=0){
+	                    next[k + nums[i]] += dp[k];
+	                    next[k - nums[i]] += dp[k];
+	                }
+	            }
+	            dp = next;
+	        }
+	        return dp[sum+s];
+	    }
 	}
 }
