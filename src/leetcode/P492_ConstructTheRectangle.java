@@ -1,5 +1,6 @@
 package leetcode;
 
+
 /**
  * 	For a web developer, it is very important to know how to design a web page's size.
  *  So, given a specific rectangular web page’s area, your job by now is to design a
@@ -30,15 +31,19 @@ package leetcode;
  * @file        P492_ConstructTheRectangle.java
  * @type        P492_ConstructTheRectangle
  * @date        2017年2月6日 下午11:30:25
- * @details     
+ * @details     Solution1: AC 5ms 62.58%
  */
 public class P492_ConstructTheRectangle {
-	public static void main(String[] args) {
-		
-	}
 	static class Solution1 {
 	    public int[] constructRectangle(int area) {
-	        
+	        if (area < 4) return new int[] {area, 1};
+	        int sqrt = (int)Math.sqrt(area);
+	        while (sqrt != 0) {
+	            if (area % sqrt == 0)
+	                return new int[] {area / sqrt, sqrt};
+	            sqrt --;
+	        }
+	        return new int[] {area, 1};
 	    }
 	}
 }	
