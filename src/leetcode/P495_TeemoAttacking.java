@@ -46,15 +46,24 @@ package leetcode;
  * @file        P495_TeemoAttacking.java
  * @type        P495_TeemoAttacking
  * @date        2017年2月6日 下午11:31:51
- * @details     
+ * @details     Solution1: AC 9ms 73.00%
  */
 public class P495_TeemoAttacking {
-	public static void main(String[] args) {
-		
-	}
 	static class Solution1 {
 	    public int findPoisonedDuration(int[] timeSeries, int duration) {
-	        
+	        if (timeSeries == null || timeSeries.length == 0) return 0;
+            int count = duration;
+	        int nextTime = timeSeries[0] + duration;
+	        for (int i = 1; i < timeSeries.length; i ++) {
+	            int time = timeSeries[i];
+	            if (time < nextTime) {
+	                count += time - (nextTime - duration);
+	            } else if (time >= nextTime) {
+	                count += duration;
+	            }
+                nextTime = time + duration;
+	        }
+	        return count;
 	    }
 	}
 }
