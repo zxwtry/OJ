@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -28,6 +29,8 @@ import java.util.HashMap;
  * @details     Solution2: TLE
  * @details     Solution3: AC 143ms  6.93%
  * @details     Solution4: AC 101ms 37.30%
+ * @details     Solution5: AC  87ms 58.10%
+ * @details     Solution6: AC  50ms 99.05%
  */
 public class P525_ContiguousArray {
     static class Solution1 {
@@ -122,6 +125,23 @@ public class P525_ContiguousArray {
             map.put(0, -1);
             int sum = 0, max = 0;
             int n = nums.length;
+            for (int i = 0; i < n; i ++) {
+                sum += nums[i] == 0 ? -1 : 1;
+                if (map.containsKey(sum)) {
+                    max = Math.max(max, i - map.get(sum));
+                } else {
+                    map.put(sum, i);
+                }
+            }
+            return max;
+        }
+    }
+    static class Solution5 {
+        public int findMaxLength(int[] nums) {
+            int n = nums.length;
+            HashMap<Integer, Integer> map = new HashMap<>(n);
+            map.put(0, -1);
+            int sum = 0, max = 0;
             for (int i = 0; i < n; i ++) {
                 sum += nums[i] == 0 ? -1 : 1;
                 if (map.containsKey(sum)) {
