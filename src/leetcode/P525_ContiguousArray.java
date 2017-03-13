@@ -153,4 +153,22 @@ public class P525_ContiguousArray {
             return max;
         }
     }
+    static class Solution6 {
+        public int findMaxLength(int[] nums) {
+            int n = nums.length;
+            int[] cnt = new int[2 * n + 1];
+            Arrays.fill(cnt, Integer.MAX_VALUE);
+            cnt[n] = -1;
+            int sum = 0, max = 0;
+            for (int i = 0; i < n; i ++) {
+                sum += nums[i] == 0 ? -1 : 1;
+                if (cnt[n + sum] != Integer.MAX_VALUE) {
+                    max = Math.max(max, i - cnt[n + sum]);
+                } else {
+                    cnt[n + sum] = i;
+                }
+            }
+            return max;
+        }
+    }
 }
