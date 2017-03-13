@@ -26,7 +26,8 @@ import java.util.HashMap;
  * @date        2017年2月19日 上午11:17:38
  * @details     Solution1: TLE
  * @details     Solution2: TLE
- * @details     Solution3: AC 143ms 6.93%
+ * @details     Solution3: AC 143ms  6.93%
+ * @details     Solution4: AC 101ms 37.30%
  */
 public class P525_ContiguousArray {
     static class Solution1 {
@@ -110,6 +111,23 @@ public class P525_ContiguousArray {
                     max = Math.max(max, i - sumToIndex.get(sum));
                 } else {
                     sumToIndex.put(sum, i);
+                }
+            }
+            return max;
+        }
+    }
+    static class Solution4 {
+        public int findMaxLength(int[] nums) {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(0, -1);
+            int sum = 0, max = 0;
+            int n = nums.length;
+            for (int i = 0; i < n; i ++) {
+                sum += nums[i] == 0 ? -1 : 1;
+                if (map.containsKey(sum)) {
+                    max = Math.max(max, i - map.get(sum));
+                } else {
+                    map.put(sum, i);
                 }
             }
             return max;
