@@ -41,12 +41,34 @@ package leetcode;
  * @file        P502_IPO.java
  * @type        P502_IPO
  * @date        2017年2月8日 下午11:25:12
- * @details     
+ * @details     Solution1: TLE
  */
 public class P502_IPO {
-	class Solution {
+	static class Solution1 {
+	    int maxC = 0;
+	    int mk = 0, mw = 0;
+	    int[] mp = null, mc = null;
+	    boolean[] iv = null;
 	    public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
-	        
+	        maxC = Math.max(maxC, W);
+	        mk = k;
+	        mw = W;
+	        mp = Profits;
+	        mc = Capital;
+	        iv = new boolean[mp.length];
+	        find(k, W);
+	        return maxC;
 	    }
+        private void find(int k, int w) {
+            if (k == 0) return;
+            for (int i = 0; i < iv.length; i ++) {
+                if (! iv[i] && w >= mc[i]) {
+                    iv[i] = true;
+                    maxC = Math.max(maxC, w + mp[i]);
+                    find(k - 1, w + mp[i]);
+                    iv[i] = false;
+                }
+            }
+        }
 	}
 }
