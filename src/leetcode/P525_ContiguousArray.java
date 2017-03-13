@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.HashMap;
 
 /**
  *  Given a binary array, find the maximum length of a contiguous subarray with equal number of 0 and 1.
@@ -25,6 +26,7 @@ package leetcode;
  * @date        2017年2月19日 上午11:17:38
  * @details     Solution1: TLE
  * @details     Solution2: TLE
+ * @details     Solution3: AC 143ms 6.93%
  */
 public class P525_ContiguousArray {
     static class Solution1 {
@@ -83,8 +85,8 @@ public class P525_ContiguousArray {
                     maxL = i + 1;
                 }
             }
-            for (int i = 1; i < n; i ++) {
-                for (int j = n - 1; j > i; j --) {
+            for (int i = 1; i < n - maxL; i ++) {
+                for (int j = n - 1; j > i + maxL; j --) {
                     if (((j - i) & 1) == 0) continue;
                     if ((j - i + 1) <= maxL) break;
                     if (cnt0[j + 1] - cnt0[i] == (j - i + 1) / 2)
@@ -92,6 +94,25 @@ public class P525_ContiguousArray {
                 }
             }
             return maxL;
+        }
+    }
+    static class Solution3 {
+        public int findMaxLength(int[] nums) {
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] == 0) nums[i] = -1;
+            }
+            HashMap<Integer, Integer> sumToIndex = new HashMap<Integer, Integer>();
+            sumToIndex.put(0, -1);
+            int sum = 0, max = 0;
+            for (int i = 0; i < nums.length; i++) {
+                sum += nums[i];
+                if (sumToIndex.containsKey(sum)) {
+                    max = Math.max(max, i - sumToIndex.get(sum));
+                } else {
+                    sumToIndex.put(sum, i);
+                }
+            }
+            return max;
         }
     }
 }
