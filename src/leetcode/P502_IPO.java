@@ -1,5 +1,10 @@
 package leetcode;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
+
 /**
  * 	Suppose LeetCode will start its IPO soon. In order to sell a good price of 
  *  its shares to Venture Capital, LeetCode would like to work on some projects 
@@ -42,6 +47,7 @@ package leetcode;
  * @type        P502_IPO
  * @date        2017年2月8日 下午11:25:12
  * @details     Solution1: TLE
+ * @details     Solution2: AC 160ms 12.34%
  */
 public class P502_IPO {
 	static class Solution1 {
@@ -70,5 +76,22 @@ public class P502_IPO {
                 }
             }
         }
+	}
+	static class Solution2 {
+	    public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
+	        PriorityQueue<int[]> pqCap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+	        PriorityQueue<int[]> pqPro  = new PriorityQueue<>((a, b) -> (b[1] - a[1]));
+	        for (int i = 0; i < Profits.length; i++) {
+	            pqCap.add(new int[] {Capital[i], Profits[i]});
+	        }
+	        for (int i = 0; i < k; i++) {
+	            while (!pqCap.isEmpty() && pqCap.peek()[0] <= W) {
+	                pqPro.add(pqCap.poll());
+	            }
+	            if (pqPro.isEmpty()) break;
+	            W += pqPro.poll()[1];
+	        }
+	        return W;
+	    }
 	}
 }
