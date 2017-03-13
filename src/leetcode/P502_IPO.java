@@ -3,8 +3,6 @@ package leetcode;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
-
 /**
  * 	Suppose LeetCode will start its IPO soon. In order to sell a good price of 
  *  its shares to Venture Capital, LeetCode would like to work on some projects 
@@ -48,6 +46,7 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
  * @date        2017年2月8日 下午11:25:12
  * @details     Solution1: TLE
  * @details     Solution2: AC 160ms 12.34%
+ * @details     Solution3: AC  75ms 61.25%
  */
 public class P502_IPO {
 	static class Solution1 {
@@ -90,6 +89,35 @@ public class P502_IPO {
 	            }
 	            if (pqPro.isEmpty()) break;
 	            W += pqPro.poll()[1];
+	        }
+	        return W;
+	    }
+	}
+	static class Solution3 {
+	    public int findMaximizedCapital(int k, int W, int[] pro, int[] cap) {
+	        PriorityQueue<int[]> c = new PriorityQueue<int[]>(new Comparator<int[]>() {
+                @Override
+                public int compare(int[] arr1, int[] arr2) {
+                    if (arr1[0] < arr2[0]) return -1;
+                    else if (arr1[0] > arr2[0]) return 1;
+                    return 0;
+                }
+            });
+	        PriorityQueue<int[]> p = new PriorityQueue<int[]>(new Comparator<int[]>() {
+                @Override
+                public int compare(int[] arr1, int[] arr2) {
+                    if (arr1[1] < arr2[1]) return 1;
+                    else if (arr1[1] > arr2[1]) return -1;
+                    return 0;
+                }
+            });
+	        for (int i = 0; i < pro.length; i ++)
+	            c.add(new int[] {cap[i], pro[i]});
+	        for (int i = 0; i < k; i ++) {
+	            while (! c.isEmpty() && c.peek()[0] <= W)
+	                p.add(c.poll());
+	            if (p.isEmpty()) break;
+	            W += p.poll()[1];
 	        }
 	        return W;
 	    }
