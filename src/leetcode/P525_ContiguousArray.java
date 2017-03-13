@@ -70,4 +70,28 @@ public class P525_ContiguousArray {
             }
         }
     }
+    static class Solution2 {
+        public int findMaxLength(int[] nums) {
+            int n = nums.length;
+            int[] cnt0 = new int[nums.length + 1];
+            int cnt = 0;
+            int maxL = 0;
+            for (int i = 0; i < n; i ++) {
+                cnt += nums[i] == 0 ? 1 : 0;
+                cnt0[i + 1] = cnt;
+                if ((i + 1) == cnt << 1) {
+                    maxL = i + 1;
+                }
+            }
+            for (int i = 1; i < n; i ++) {
+                for (int j = n - 1; j > i; j --) {
+                    if (((j - i) & 1) == 0) continue;
+                    if ((j - i + 1) <= maxL) break;
+                    if (cnt0[j + 1] - cnt0[i] == (j - i + 1) / 2)
+                        maxL = Math.max(maxL, (j - i + 1));
+                }
+            }
+            return maxL;
+        }
+    }
 }
