@@ -23,38 +23,51 @@ package leetcode;
  * @file        P525_ContiguousArray.java
  * @type        P525_ContiguousArray
  * @date        2017年2月19日 上午11:17:38
- * @details     
+ * @details     Solution1: TLE
+ * @details     Solution2: TLE
  */
 public class P525_ContiguousArray {
-    public static void main(String[] args) {
-        double value = 234234234.1231234324;
-        String s = String.format("%f", value);
-        System.out.println(s);
-    }
-    static class Solution {
+    static class Solution1 {
+        int maxL = 0;
         public int findMaxLength(int[] nums) {
-            int len = nums.length;
-            int numOf1 = 0;
-            int[] left1Count = new int[len];
-            for (int numsIndex = 0; numsIndex < len; numsIndex ++) {
-                numOf1 += nums[numsIndex];
-                left1Count[numsIndex] = numOf1;
+            int cnt0 = 0, cnt1 = 0;
+            for (int num : nums)
+                if (num == 0) cnt0 ++;
+                else cnt1 ++;
+            find(nums, 0, nums.length - 1, cnt0, cnt1);
+            return maxL;
+        }
+        private void find(int[] nums, int i, int j, int cnt0, int cnt1) {
+            if (Math.min(cnt0, cnt1) * 2 < maxL) return;
+            if (cnt0 == cnt1) {
+                maxL = cnt0 << 1;
+                return;
             }
-            int[] right1Count = new int[len];
-            int tmp = 0;
-            for (int numsIndex = len-1; numsIndex > -1; numsIndex --) {
-                tmp += nums[numsIndex];
-                right1Count[numsIndex] = tmp;
+            if (nums[i] != nums[j]) {
+                if (cnt0 < cnt1) {
+                    //找到1的去除
+                    if (nums[i] == 1) {
+                        find(nums, i + 1, j, cnt0, cnt1 - 1);
+                    } else {
+                        find(nums, i, j - 1, cnt0, cnt1 - 1);
+                    }
+                } else {
+                    //找到0的去除
+                    if (nums[i] == 0) {
+                        find(nums, i + 1, j, cnt0 - 1, cnt1);
+                    } else {
+                        find(nums, i, j - 1, cnt0 - 1, cnt1);
+                    }
+                }
+            } else {
+                if (nums[i] == 0) {
+                    find(nums, i + 1, j, cnt0 - 1, cnt1);
+                    find(nums, i, j - 1, cnt0 - 1, cnt1);
+                } else {
+                    find(nums, i + 1, j, cnt0, cnt1 - 1);
+                    find(nums, i, j - 1, cnt0, cnt1 - 1);
+                }
             }
-            int numOf0 = len - numOf1;
-            int leftIndex = 0, rightIndex = nums.length - 1;
-            if (len / 2 == numOf1)  {
-                if (len % 2 == 0)
-                    return len;
-                else if (len % 2 == 1 && (nums[0] == 1 || nums[len - 1] == 1))
-                    return len - 1;
-            }
-            
         }
     }
 }
