@@ -1,8 +1,5 @@
 package leetcode;
 
-import java.math.BigInteger;
-import java.util.HashSet;
-
 /**
  *  Suppose you have N integers from 1 to N. We define a beautiful arrangement as an array 
  *  that is constructed by these N numbers successfully if one of the following is true for 
@@ -40,35 +37,28 @@ import java.util.HashSet;
  * @file        P526_BeautifulArrangement.java
  * @type        P526_BeautifulArrangement
  * @date        2017年2月19日 上午10:40:42
- * @details     
+ * @details     Solution3: AC 101ms 51.89%
  */
 public class P526_BeautifulArrangement {
-    public static void main(String[] args) {
-        int N = 43;
-        Solution1 solution1 = new Solution1();
-        System.out.println(solution1.countArrangement(N));
-    }
-    static class Solution1 {
-        @SuppressWarnings("unchecked")
+    static class Solution3 {
+        int count = 0;
         public int countArrangement(int N) {
-            HashSet<Integer>[] sets = new HashSet[N + 1];
-            for (int setsIndex = 1; setsIndex < sets.length; setsIndex ++) {
-                HashSet<Integer> set = new HashSet<Integer>();
-                for (int smallIndex = 1; smallIndex <= setsIndex; smallIndex ++)
-                    if (setsIndex % smallIndex == 0) {
-                        set.add(smallIndex);
-                    }
-                for (int bigIndex = setsIndex + 1; bigIndex <= N; bigIndex ++)
-                    if (bigIndex % setsIndex == 0) {
-                        set.add(bigIndex);
-                    }
-                sets[setsIndex] = set;
-                System.out.println(set);
+            if (N == 0) return 0;
+            helper(N, 1, new boolean[N + 1]);
+            return count;
+        }
+        private void helper(int N, int pos, boolean[] used) {
+            if (pos > N) {
+                count++;
+                return;
             }
-            System.out.println("====");
-            HashSet<Integer> nowGet = new HashSet<Integer>();
-            
-            //return 0;
+            for (int i = 1; i <= N; i++) {
+                if (! used[i] && (i % pos == 0 || pos % i == 0)) {
+                    used[i] = true;
+                    helper(N, pos + 1, used);
+                    used[i] = false;
+                }
+            }
         }
     }
 }
