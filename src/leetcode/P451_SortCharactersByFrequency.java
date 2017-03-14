@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  *  Given a string, sort it in decreasing order based on the frequency of characters.
  *  Example 1:
@@ -41,8 +44,36 @@ package leetcode;
  * @file        P451_SortCharactersByFrequency.java
  * @type        P451_SortCharactersByFrequency
  * @date        2017年3月14日 下午8:54:13
- * @details     
+ * @details     Solution1: AC 15ms 90.79%
  */
 public class P451_SortCharactersByFrequency {
-
+    static class Solution1 {
+        public String frequencySort(String s) {
+            if (s == null || s.length() == 0) return s;
+            int sn = s.length();
+            int n = 256;
+            int[] charCount = new int[n];
+            Integer[] cCIndex = new Integer[n];
+            for (int i = 0; i < n; i ++)
+                cCIndex[i] = i;
+            for (int i = 0; i < sn; i ++) {
+                charCount[s.charAt(i)] ++;
+            }
+            Arrays.sort(cCIndex, new Comparator<Integer>() {
+                @Override
+                public int compare(Integer int1, Integer int2) {
+                    if (charCount[int1] > charCount[int2]) return -1;
+                    else if (charCount[int1] == charCount[int2]) return 0;
+                    return 1;
+                }
+            });
+            char[] ans = new char[sn];
+            int ansIndex = 0;
+            for (int i = 0; i < n; i ++) {
+                for (int j = 0; j < charCount[cCIndex[i]]; j ++)
+                    ans[ansIndex ++] = (char)((int)cCIndex[i]);
+            }
+            return new String(ans);
+        }
+    }
 }
