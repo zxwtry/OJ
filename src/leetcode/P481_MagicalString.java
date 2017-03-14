@@ -35,7 +35,7 @@ package leetcode;
  * @file        P481_MagicalString.java
  * @type        P481_MagicalString
  * @date        2017年1月8日 上午10:39:47
- * @details     
+ * @details     Solution: AC 20ms 47.50%
  */
 public class P481_MagicalString {
 	static class Solution {
