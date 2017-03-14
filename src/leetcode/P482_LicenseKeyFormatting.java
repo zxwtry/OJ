@@ -43,7 +43,7 @@ package leetcode;
  * @file        P482_LicenseKeyFormatting.java
  * @type        P482_LicenseKeyFormatting
  * @date        2017年1月8日 下午4:59:02
- * @details     Solution: AC 10ms
+ * @details     Solution: 12ms 98.97%
  */
 public class P482_LicenseKeyFormatting {
 	static class Solution {
