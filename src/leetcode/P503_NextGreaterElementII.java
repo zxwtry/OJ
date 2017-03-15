@@ -23,8 +23,35 @@ package leetcode;
  * @file        P503_NextGreaterElementII.java
  * @type        P503_NextGreaterElementII
  * @date        2017年3月14日 下午9:53:26
- * @details     
+ * @details     Solution1: AC 279ms 9.11%
  */
 public class P503_NextGreaterElementII {
-
+    public static void main(String[] args) {
+        Solution1 solution1 = new Solution1();
+        int[] nums = new int[] {1,2,1};
+        int[] ans = solution1.nextGreaterElements(nums);
+        tools.Utils.printArray(ans, ans.length);
+    }
+    static class Solution1 {
+        public int[] nextGreaterElements(int[] nums) {
+            if (nums == null || nums.length == 0) return nums;
+            int max = Integer.MIN_VALUE;
+            for (int num : nums) max = Math.max(max, num);
+            int len = nums.length;
+            int[] answer = new int[len];
+            for (int i = 0; i < len; i ++) {
+                if (nums[i] == max) {
+                    answer[i] = -1;
+                } else {
+                    for (int j = 1; j < len; j ++) {
+                        if (nums[(i + j + len) % len] > nums[i]) {
+                            answer[i] = nums[(i + j + len) % len];
+                            break;
+                        }
+                    }
+                }
+            }
+            return answer;
+        }
+    }
 }
