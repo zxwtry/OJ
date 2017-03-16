@@ -45,7 +45,7 @@ public class P526_BeautifulArrangement {
         public int countArrangement(int N) {
             if (N == 0) return 0;
             helper(N, 1, new boolean[N + 1]);
-            return count;
+            return count; 
         }
         private void helper(int N, int pos, boolean[] used) {
             if (pos > N) {
