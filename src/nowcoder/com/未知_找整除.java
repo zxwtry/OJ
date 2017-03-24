@@ -29,4 +29,24 @@ import java.util.Scanner;
  * @date        2017年3月24日 下午12:19:00
  * @details     AC
  */
-public class 未知_找整除 {}
+public class 未知_找整除 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+        int c = scanner.nextInt();
+        if (a <= 0 && b >= 0) {
+            System.out.println(solve(1, -a, c) + 1 + solve(1, b, c));
+        } else {
+            System.out.println(solve(a, b, c));
+        }
+        scanner.close();
+    }
+    private static int solve(int a, int b, int c) {
+        if (a > b) return 0;
+        int v = b - a;
+        int count = b % c == 0 ? 1 : 0;
+        count += v / c;
+        return count;
+    }
+}
