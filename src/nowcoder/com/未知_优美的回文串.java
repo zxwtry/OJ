@@ -28,4 +28,48 @@ import java.util.Scanner;
  * @date        2017年3月24日 下午2:10:34
  * @details     AC
  */
-public class 未知_优美的回文串 {}
+public class 未知_优美的回文串 {
+    static long fac[] = new long[27], res = 0;
+    static int n, m, k , a[] = new int[12];
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        n = scanner.nextInt();
+        m = scanner.nextInt();
+        k = scanner.nextInt();
+        fac[0] = 1;
+        for (int i = 1; i < 26; i ++) {
+            fac[i] = fac[i] * (27 - i);
+        }
+        dfs(0, 0);
+        System.out.println(res);
+        scanner.close();
+    }
+    private static void dfs(int pos, int num) {
+        if (pos == n) {
+            if (ok())
+                res += fac[num];
+        } else {
+            for (int i = 0; i < num; i ++) {
+                a[pos] = i;
+                dfs(pos + 1, num);
+            }
+            a[pos] = num;
+            dfs(pos + 1, num + 1);
+        }
+    }
+    private static boolean ok() {
+        int cnt = 0;
+        for (int i = 0; i <= n - m; i ++) {
+            if (ok(i))
+                ++ cnt;
+        }
+        return cnt >= k;
+    }
+    private static boolean ok(int from) {
+        for (int i = 0; i < m / 2; i ++) {
+            if (a[from + 1] != a[from + m - i - 1])
+                return false;
+        }
+        return true;
+    }
+}
