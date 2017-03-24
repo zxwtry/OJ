@@ -29,6 +29,53 @@ import java.util.Scanner;
  * @file        未知_组装三角形.java
  * @type        未知_组装三角形
  * @date        2017年3月24日 下午1:11:53
- * @details     
+ * @details     AC
  */
-public class 未知_组装三角形 {}
+public class 未知_组装三角形 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i ++)
+            arr[i] = scanner.nextInt();
+        System.out.println(solve1(arr, n));
+        scanner.close();
+    }
+    
+    private static int solve1(int[] arr, int n) {
+        int count = 0;
+        for (int i = 0; i < n; i ++) {
+            for (int j = i + 1; j < n; j ++) {
+                for (int k = j + 1; k < n; k ++) {
+                    int a = arr[i];
+                    int b = arr[j];
+                    int c = arr[k];
+                    if (c > Math.abs(a - b) && c < a + b)
+                        count ++;
+                }
+            }
+        }
+        return count;
+    }
+
+//    static int solve(int[] arr, int n) {
+//        Arrays.sort(arr);
+//        int count = 0;
+//        for (int i = 0; i < n; i ++) {
+//            if (i != 0 && arr[i - 1] == arr[i]) continue;
+//            for (int j = i + 1; j < n; j ++) {
+////                if (j != i + 1 && arr[j - 1] == arr[j]) continue;
+//                int c_min = Math.max(arr[j] - arr[i] + 1, arr[j]);
+//                int c_max = Math.min(arr[n - 1], arr[i] + arr[j] - 1) + 1;
+//                int min_index = Arrays.binarySearch(arr, c_min);
+//                min_index = min_index < 0 ? -(min_index + 1) : min_index;
+//                int max_index = Arrays.binarySearch(arr, c_max);
+//                max_index = max_index < 0 ? -(max_index + 1) : max_index;
+//                count += max_index - min_index - 1;
+//                //System.out.println(count);
+//            }
+//        }
+//        return count;
+//    }
+    
+}
