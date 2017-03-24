@@ -31,6 +31,26 @@ import java.util.Scanner;
  * @file        未知_最小的矩形.java
  * @type        未知_最小的矩形
  * @date        2017年3月24日 下午1:30:00
- * @details     
+ * @details     AC
  */
-public class 未知_最小的矩形 {}
+public class 未知_最小的矩形 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int xmin = Integer.MAX_VALUE;
+        int xmax = Integer.MIN_VALUE;
+        int ymin = Integer.MAX_VALUE;
+        int ymax = Integer.MIN_VALUE;
+        int x = 0, y = 0;
+        for (int i = 0; i < n; i ++) {
+            x = scanner.nextInt();
+            y = scanner.nextInt();
+             xmin = Math.min(x, xmin);
+             xmax = Math.max(x, xmax);
+             ymin = Math.min(y, ymin);
+             ymax = Math.max(y, ymax);
+        }
+        System.out.println((xmax - xmin ) * (ymax - ymin ));
+        scanner.close();
+    }
+}
