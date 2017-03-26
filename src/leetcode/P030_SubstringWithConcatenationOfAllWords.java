@@ -20,9 +20,9 @@ import java.util.List;
 
 public class P030_SubstringWithConcatenationOfAllWords {
 	public static void main(String[] args) {
-//		System.out.println(new Solution1().findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"}));;
-//		System.out.println(new Solution1().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"}));;
-		System.out.println(new Solution1().findSubstring("bbbbbb", new String[]{"b", "b", "b", "b", "b"}));;
+		System.out.println(new Solution2().findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"}));;
+		System.out.println(new Solution2().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"}));;
+		System.out.println(new Solution2().findSubstring("bbbbbb", new String[]{"b", "b", "b", "b"}));;
 	}
 	/*
 	 * 	土方法，KMP
@@ -122,5 +122,47 @@ public class P030_SubstringWithConcatenationOfAllWords {
 			}
 			return next;
 		}
+	}
+	//AC 30ms 87.95%
+	static class Solution2 {
+	    public List<Integer> findSubstring(String s, String[] words) {
+	        int len1 = s == null ? 0 : s.length(), len2 = words == null ? 0 : words.length;
+	        LinkedList<Integer> answer = new LinkedList<Integer>();
+	        if (len1 == 0 || len2 == 0) return answer;
+	        HashMap<String, Integer> map1 = new HashMap<String, Integer>();    //保存s上
+	        HashMap<String, Integer> map2 = new HashMap<String, Integer>();    //保存words上
+	        for (String word : words) map2.put(word, map2.getOrDefault(word, 0) + 1);
+	        int wl = words[0].length(), left = 0, count = 0;
+	        for (int i = 0; i < wl; i ++) {
+	            map1.clear();
+	            left = i;
+	            count = 0;
+	            for (int j = i; j <= len1 - wl; j += wl) {
+	                String s1 = s.substring(j, j + wl);
+	                if (map2.containsKey(s1)) {
+	                    map1.put(s1, map1.getOrDefault(s1, 0) + 1);
+	                    count ++;
+                        while (map1.get(s1) > map2.get(s1)) {
+                            String s2 = s.substring(left, left + wl);
+                            map1.put(s2, map1.get(s2) - 1);
+                            left += wl;
+                            count --;
+                        }
+	                    if (count == len2) {
+	                        answer.add(left);
+                            String s2 = s.substring(left, left + wl);
+                            map1.put(s2, map1.get(s2) - 1);
+	                        left += wl;
+	                        count --;
+	                    }
+	                } else {
+	                    map1.clear();
+	                    count = 0;
+	                    left = j + wl;
+	                }
+	            }
+	        }
+	        return answer;
+	    }
 	}
 }
