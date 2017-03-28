@@ -4,26 +4,6 @@ import java.util.ArrayList;
 
 public class P010_RegularExpressionMatching {
 	public static void main(String[] args) {
-		System.out.println("0, true : " + new Solution7().isMatch("aabb", "aab*"));
-		System.out.println("1, true : " + new Solution7().isMatch("aabb", "a*bb"));
-		System.out.println("2, true : " + new Solution7().isMatch("aabb", ".*bb"));
-		System.out.println("3, true : " + new Solution7().isMatch("aabb", ".*"));
-		System.out.println("4, true : " + new Solution7().isMatch("aabb", ".*b"));
-		System.out.println("5, true : " + new Solution7().isMatch("aabb", ".*bb"));
-		System.out.println("6, false : " + new Solution7().isMatch("aabb", ".*bbb"));
-		System.out.println("7, true : " + new Solution7().isMatch("aabb", "a.*b"));
-		System.out.println("8, true : " + new Solution7().isMatch("aabb", "a.*bb"));
-//		System.out.println(new Solution2().isMatch("abc", "ab*"));
-//		System.out.println(new Solution2().isMatch("abc", "ab."));
-//		System.out.println(new Solution2().isMatch("abc", "a.."));
-//		System.out.println(new Solution2().isMatch("abc", "..."));
-//		System.out.println(new Solution2().isMatch("abc", "a.."));
-//		System.out.println(new Solution2().isMatch("abc", ".*"));
-//		System.out.println(new Solution2().isMatch("abbbcbc", "a.*c"));
-//		System.out.println(new Solution2().isMatch("abc", "..."));
-//		System.out.println(new Solution3().isMatch("ab", ".*c"));
-//		System.out.println(new Solution4().isMatch("ab", ".*c"));
-//		System.out.println(new Solution4().isMatch("ab", ".*"));
 	}
 	static class Solution {
 		private final int dot_sign = 1;
@@ -363,5 +343,40 @@ public class P010_RegularExpressionMatching {
 				return false;
 			}
 		}
+	}
+	//AC 32ms 68.98%
+	static class Solution8 {
+	    public boolean isMatch(String s, String p) {
+	        if (s == null) return p == null;
+	        int sn = s.length(), pn = p.length();
+	        boolean[][] m = new boolean[sn + 1][pn + 1];
+	        m[0][0] = true;
+	        for (int pi = 0; pi < pn; pi ++)
+	            if (p.charAt(pi) == '*' && m[0][pi - 1])
+	                m[0][pi + 1] = true;
+	        for (int si = 0; si < sn; si ++) {
+	            for (int pi = 0; pi < pn; pi ++) {
+	                char sc = s.charAt(si), pc = p.charAt(pi);
+	                if (sc == pc || '.' == pc) {
+	                    m[si + 1][pi + 1] = m[si][pi];     //匹配1次
+	                } else if (pc == '*' ) {
+	                    //[pi-1, pi]结成共同体
+	                    if (sc == p.charAt(pi - 1) || '.' == p.charAt(pi - 1)) {
+ 	                        m[si + 1][pi + 1] = 
+	                                m[si][pi + 1] ||       //匹配很多次 s[si]和{p[pi-1], p[pi]}已经匹配上
+	                                                       //肯定s[0,si-1]还要和p[0,pi]去匹配嘛
+	                                m[si + 1][pi - 1] ||   //匹配0次    按照道理应该是s[0,si]和p[0,pi-2]去匹配
+	                                m[si][pi - 1];         //匹配1次    s[si]和{p[pi-1], p[pi]}匹配上
+	                                                       //就是看，s[0,si-1]和p[0,pi-2]是否能够匹配上
+	                    } else {
+	                        m[si + 1][pi + 1] = m[si + 1][pi - 1];     //只能匹配0次
+	                    }
+	                } else {
+	                    m[si + 1][pi + 1] = false;
+	                }
+	            }
+	        }
+	        return m[sn][pn];
+	    }
 	}
 }
