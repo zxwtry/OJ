@@ -108,4 +108,47 @@ public class 未知_创造新世界 {
     static class A{
         int n, m;
     }
+    static int countChar(String s, char c) {
+        int n = 0;
+        for (int i = 0; i < s.length(); i ++) {
+            if (s.charAt(i) == c) n++;
+        }
+        return n;
+    }
+    static void solve2() {
+        Scanner scanner = new Scanner(System.in);
+        int n = 0, m = 0, strNum = 0, i = 0;
+        String strTmp = "";
+        ArrayList<Integer> n0 = new ArrayList<Integer>();
+        ArrayList<Integer> n1 = new ArrayList<Integer>();
+        strNum = scanner.nextInt();
+        n = scanner.nextInt();
+        m = scanner.nextInt();
+        for (i = 0; i < strNum; i ++) {
+            strTmp = scanner.next();
+            n0.add(countChar(strTmp, '0'));
+            n1.add(countChar(strTmp, '1'));
+        }
+        int max = 0;
+        int[] num = new int[strNum];
+        Arrays.fill(num, 1);
+        for (i = 1; i < strNum; i ++) {
+            int t0 = n0.get(i);
+            int t1 = n1.get(i);
+            for (int j = 0; j < i; ++ j) {
+                t0 += n0.get(j);
+                t1 += n1.get(j);
+                if (t0 <= n && t1 <= m && num[j] + 1 > num[i]) {
+                    num[i] = num[j] + 1;
+                    tools.Utils.printArray(num, num.length);
+                    max = Math.max(max, num[i]);
+                } else {
+                    t0 -= n0.get(j);
+                    t1 -= n1.get(j);
+                }
+            }
+        }
+        System.out.println(max);
+        scanner.close();
+    }
 }
