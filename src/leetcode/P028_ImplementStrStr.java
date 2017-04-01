@@ -1,54 +1,48 @@
 package leetcode;
 
-/*
+/**
  * 	Implement strStr().
-
-	Returns the index of the first occurrence of needle in haystack,
-	 or -1 if needle is not part of haystack.
+ *  
+ *  Returns the index of the first occurrence of needle in haystack,
+ *  or -1 if needle is not part of haystack.
  */
 
 public class P028_ImplementStrStr {
-	public static void main(String[] args) {
-		System.out.println(new Solution1().strStr("abcabcabc", "cab"));
-	}
-	/*
-	 * 	不就是KMP
-	 * 	好久没有写KMP了
-	 * 	4 ms
-	 * 	55.58%
-	 */
-	static class Solution1 {
-		public int strStr(String haystack, String needle) {
-			if (needle == null || needle.length() == 0)
-				return 0;
-			if (haystack == null || haystack.length() < needle.length())
-				return -1;
-			char[] s = haystack.toCharArray(), p = needle.toCharArray();
-			int[] next = getNext(p);
-			int si = 0, pi = 0;
-			while (si != s.length) {
-				if (-1 == pi || p[pi] == s[si]) {
-					pi ++;   si ++;
-				} else {
-					pi = next[pi];
-				}
-				if (pi == p.length)
-					return si - p.length;
-			}
-			return -1;
+    //AC 13ms 34.88%
+	static class Solution {
+		public int strStr(String s, String p) {
+		    int sn = s == null ? 0 : s.length();
+		    int pn = p == null ? 0 : p.length();
+		    //pn == 0, p match at index 0
+		    if (pn == 0) return 0;
+		    //sn == 0 and pn > 0 can not match
+		    if (sn == 0) return -1;
+		    int si = 0, pi = 0, next[] = getNext(p, pn);
+		    while (si < sn) {
+		        if (s.charAt(si) == p.charAt(pi)) {
+		            si ++;
+		            pi ++;
+		            if (pi == pn) break;
+		        } else if (next[pi] == -1) {
+		            si ++;
+		        } else pi = next[pi];
+		    }
+		    return pi == pn ? si - pn : - 1;
 		}
-		public int[] getNext(char[] p) {
-			int[] next = new int[p.length];
-			next[0] = -1;
-			int cur = 0, pre = -1;
-			while (cur != p.length - 1) {
-				if (pre == -1 || p[cur] == p[pre]) {
-					cur ++;   pre ++;
-					next[cur] = pre;
-				} else
-					pre = next[pre];
-			}
-			return next;
+		public int[] getNext(String p, int pn) {
+		    //return short p
+		    if (pn < 2) return new int[] {-1};
+		    int bi = 0, fi = 2, next[] = new int[pn];
+		    next[0] = -1;
+		    next[1] = 0;
+		    while (fi < pn) {
+		        if (p.charAt(fi - 1) == p.charAt(bi)) {
+		            next[fi ++] = ++ bi;
+		        } else if (bi <= 0) {
+		            next[fi ++] = 0;
+		        } else bi = next[bi];
+		    }
+		    return next;
 		}
 	}
 }
