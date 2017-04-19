@@ -35,4 +35,46 @@ public class P084_LargestRectangleInHistogram {
 	        return maxArea;
 	    }
 	}
+	
+	//AC 25ms 57.34%
+	static class Solution2 {
+	    public int largestRectangleArea(int[] h) {
+	        if (h == null || h.length == 0)  return 0;
+	        int a = 0, hn = h.length;
+	        Stack<Integer> s = new Stack<Integer>();
+	        for (int i = 0; i <= hn; i ++) {
+	            int hv = i == hn ? 0 : h[i];
+	            if (s.isEmpty() || hv > h[s.peek()]) {
+	                s.add(i);
+	            } else {
+	                int j = s.pop();
+	                int l = s.isEmpty() ? i : i-1-s.peek();
+	                a = Math.max(a, h[j] * l);
+	                i --;
+	            }
+	        }
+	        return a;
+	    }
+	}
+	//AC 7ms 91.14%
+	static class Solution3 {
+	    public int largestRectangleArea(int[] h) {
+	        if (h == null || h.length == 0)  return 0;
+            int a = 0, hn = h.length, mi = 0;
+            int[] m = new int[hn];
+            for (int i = 0; i <= hn; i ++) {
+                int hv = i == hn ? 0 : h[i];
+                if (mi == 0 || hv > h[m[mi - 1]]) {
+                    m[mi ++] = i;
+                } else {
+                    int j = m[mi-1];
+                    mi --;
+                    int l = mi == 0 ? i : i - 1 - m[mi - 1];
+                    a = Math.max(a, h[j] * l);
+                    i --;
+                }
+            }
+            return a;
+	    }
+	}
 }
