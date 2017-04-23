@@ -1,6 +1,5 @@
 package template;
 
-
 /**
  * @author      zxwtry
  * @email       zxwtry@qq.com
@@ -12,40 +11,48 @@ package template;
  * @details     https://leetcode.com/problems/implement-strstr/
  */
 public class RECITE_String_KMP {
+    public static void main(String[] args) {
+        String s = "mississippi";
+        String p = "issip";
+        Solution solution = new Solution();
+        System.out.println(solution.strStr(s, p));
+    }
 	
 	static class Solution {
 		public int strStr(String s, String p) {
-			int[] next = getNext(p);
-			return kmp(next, s, p);
+			return kmp(s, p);
 		}
-
-		private int kmp(int[] next, String s, String p) {
-			int pi = 0;
-			for (int si = 0; si <= s.length() - p.length(); si ++) {
-				while (pi < p.length() && s.charAt(si + pi) == p.charAt(pi)) pi ++;
-				if (pi == p.length()) return si;
-				pi = next[pi];
-			}
+		private int kmp(String s, String p) {
+			int sn = s == null ? 0 : s.length();
+			int pn = p == null ? 0 : p.length();
+			if (pn == 0) return 0;
+			if (sn == 0) return -1;
+			int[] next = getNext(p, pn);
+            int pi = 0, si = 0;
+			while (si < sn)
+			    if (s.charAt(si) == p.charAt(pi)) {
+			        si ++;
+			        pi ++;
+			        if (pi == pn) return si - pn;
+			    } else if (next[pi] == -1) {
+			        si ++;
+			    } else pi = next[pi];
 			return -1;
 		}
-
-		private int[] getNext(String p) {
-			int[] next = new int[p.length() + 1];
-			next[0] = -1;
-			int bi = -1, fi = 0;
-			for (; fi < p.length(); fi ++) {
-				if (bi == -1 || p.charAt(bi) == p.charAt(fi)) {
-					bi ++;
-					fi ++;
-					next[fi] = bi;
-				} else {
-					bi = next[bi];
-				}
-			}
-			next[0] = 0;
-			return next;
+		private int[] getNext(String p, int pn) {
+		    //return short p
+		    if (pn < 2) return new int[] {-1};
+		    int[] next = new int[pn];
+		    next[0] = -1;
+		    next[1] = 0;
+		    int fi = 2, bi = 0;
+		    while (fi < pn)
+		        if (p.charAt(fi - 1) == p.charAt(bi)) {
+		            next[fi ++] = ++ bi;
+		        } else if (bi <= 0) {
+		            next[fi ++] = 0;
+		        } else bi = next[bi];;
+		    return next;
 		}
 	}
-	
-	
 }
