@@ -1,9 +1,6 @@
 package leetcode;
 
 public class P038_CountAndSay {
-	public static void main(String[] args) {
-
-	}
 	/*
 	 * 	2 ms
 	 * 	85.40%
