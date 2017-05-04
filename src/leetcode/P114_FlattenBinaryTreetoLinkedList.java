@@ -40,37 +40,43 @@ public class P114_FlattenBinaryTreetoLinkedList {
 		TreeNode root = tools.TreeNode辅助.A_生成满二叉树(new int[]{
 				1,
 				2, 3,
-				N, 5, 6, 7
+				4, 5, 6, 7,
+				8, 9, 10, 11, 12, 13, 14, 15,
 		});
 		tools.TreeNode辅助.B_按层打印(root);
-		new Solution().flatten(root);
+		new Solution3().flatten(root);
 		tools.TreeNode辅助.B_按层打印(root);
 	}
-	/*
-	 * 	AC
-	 * 	1 ms
-	 */
+	//AC 1ms 31.65%
 	static class Solution {
-		TreeNode pre = null;
 	    public void flatten(TreeNode root) {
-	        pre_order(root);
+	        pre_reverse_order(root, new TreeNode[] {null});
 	    }
-	    void pre_order(TreeNode root) {
-	    	if (root == null) {
-	    		return;
-	    	}
-	    	if (pre != null) {
-	    		pre.right = root;
-	    	}
-	    	pre = root;
-	    	TreeNode left = root.left, right = root.right;
-	    	if (left != null) {
-	    		root.left = null;
-	    		pre_order(left);
-	    	}
-	    	if (right != null) {
-	    		pre_order(right);
-	    	}
+	    void pre_reverse_order(TreeNode root, TreeNode[] pre) {
+	        if (root == null) return;
+	        pre_reverse_order(root.right, pre);
+	        pre_reverse_order(root.left, pre);
+	        root.right = pre[0];
+	        root.left = null;
+	        pre[0] = root;
+	    }
+	}
+	//AC 1ms 31.65%
+	static class Solution3 {
+	    public void flatten(TreeNode root) {
+	        TreeNode n = root, p = null;
+	        while (n != null) {
+	            System.out.println(n);
+	            while (n.left != null) {
+	                p = n.left;
+	                while (p.right != null)
+	                    p = p.right;
+	                p.right = n.right;
+	                n.right = n.left;
+	                n.left = null;
+	            }
+	            n = n.right;
+	        }
 	    }
 	}
 }
