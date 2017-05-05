@@ -52,4 +52,25 @@ import java.util.Scanner;
  * @date        2017年3月1日 上午11:03:00
  * @details     
  */
-public class N006_01背包 {}
+public class N006_01背包 {
+    static int[] save = new int[500000 + 100];
+    static int[] prices = new int[510];
+    static int[] value = new int[510];
+    static int num = 0;
+    static int money = 0;
+    static int max = 0;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        num = scanner.nextInt();
+        money = scanner.nextInt();
+        for (int index = 0; index < num; index ++) {
+            prices[index] = scanner.nextInt();
+            value[index] = scanner.nextInt();
+        }
+        solve1();
+        scanner.close();
+    }
+    static void solve1() {
+        
+    }
+}
