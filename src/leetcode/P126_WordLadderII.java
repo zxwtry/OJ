@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -43,6 +45,10 @@ import java.util.Set;
  */
 public class P126_WordLadderII {
 	public static void main(String[] args) {
+	    String s = "hit", t = "cog";
+	    List<String> w = Arrays.asList("hot", "dot", "dog", "lot", "log", "cog");
+	    Set<String> wl = new HashSet<String>(w);
+	    System.out.println(new Solution1().findLadders(s, t, wl));
 	}
 	
 	/**
@@ -101,6 +107,7 @@ public class P126_WordLadderII {
 					hv.clear();
 				}
 			}
+			System.out.println(m);
 			backtrace(t, s);
 			return ans;
 		}
@@ -116,5 +123,73 @@ public class P126_WordLadderII {
 					backtrace(nt, s);
 			l.removeFirst();
 		}
+	}
+	static class Solution2 {
+	    public List<List<String>> findLadders(String s, String t, List<String> w) {
+	        int wn = w == null ? 0 : w.size();
+	        List<List<String>> ans = new ArrayList<List<String>>();
+	        if (wn == 0) return ans;
+	        int n = w.get(0).length();
+	        char[] cs = new char[n];
+	        Map<String, ArrayList<String>> m = new HashMap<String, ArrayList<String>>(wn*2);
+	        Map<String, Boolean> u = new HashMap<String, Boolean>(wn*2);
+	        Set<String> e = new HashSet<String>(w);
+	        for (String v : w) {
+	            ArrayList<String> l = new ArrayList<String>();
+	            for (int i = 0; i < n; i ++) cs[i] = v.charAt(i);
+	            for (int i = 0; i < n; i ++) {
+    	            for (char c = 'a'; c <= 'z'; c ++) {
+    	                if (c == v.charAt(i)) continue;
+    	                cs[i] = c;
+    	                String g = new String(cs);
+    	                if (e.contains(g)) l.add(g);
+    	            }
+    	            cs[i] = v.charAt(i);
+	            }
+	            m.put(v, l);
+	            u.put(v, false);
+	        }
+	        String v = s;
+            ArrayList<String> l = new ArrayList<String>();
+            for (int i = 0; i < n; i ++) cs[i] = v.charAt(i);
+            for (int i = 0; i < n; i ++) {
+                for (char c = 'a'; c <= 'z'; c ++) {
+                    if (c == v.charAt(i)) continue;
+                    cs[i] = c;
+                    String g = new String(cs);
+                    if (e.contains(g)) l.add(g);
+                }
+                cs[i] = v.charAt(i);
+            }
+            m.put(v, l);
+	        List<String> p = new ArrayList<String>();
+	        p.add(s);
+	        int[] len = new int[] {Integer.MAX_VALUE};
+	        search(p, m, u, t, ans, len); 
+	        for (int i = 0; i < ans.size(); i ++)
+	            if (ans.get(i).size() > len[0]) {
+	                ans.remove(i);
+	                i --;
+	            }
+	        return ans;
+	    }
+
+        private void search(List<String> p, Map<String, ArrayList<String>> m, Map<String, Boolean> u, String t,
+                List<List<String>> ans, int[] len) {
+            int n = p.size();
+            if (p.get(n-1).equals(t)) {
+                ans.add(new ArrayList<>(p));
+                len[0] = Math.min(len[0], p.size());
+            }
+            if (n >= len[0]) return;
+            for (String g : m.get(p.get(n-1))) {
+                if (u.get(g)) continue;
+                p.add(g);
+                u.put(g, true);
+                search(p, m, u, t, ans, len);
+                p.remove(n);
+                u.put(g, false);
+            }
+        }
 	}
 }
