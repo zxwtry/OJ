@@ -22,4 +22,28 @@ package leetcode;
  * @date        2017年4月30日 上午9:40:41
  * @details     
  */
-public class P560_SubarraySumEqualsK {}
+public class P560_SubarraySumEqualsK {
+    public static void main(String[] args) {
+        int[] n = {1, 6, 2, 5, 3, 4};
+        System.out.println(new Solution().subarraySum(n, 9));
+        
+    }
+    static public class Solution {
+        public int subarraySum(int[] n, int k) {
+            int nn = n == null ? 0 : n.length;
+            if (nn == 0) return 0;
+            long[] s = new long[nn+1];
+            s[0] = 0;
+            for (int si = 0; si < nn; si ++) {
+                s[si+1] = s[si] + n[si];
+            }
+            int cnt = 0;
+            for (int i = 0; i <= nn; i ++) {
+                for (int j = i+1; j <= nn; j ++) {
+                    if (s[j] - s[i] == k) cnt ++;
+                }
+            }
+            return cnt;
+        }
+    }
+}
