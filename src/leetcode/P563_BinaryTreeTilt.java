@@ -36,5 +36,32 @@ import tools.TreeNode辅助.TreeNode;
  * @file        P563_BinaryTreeTilt.java
  * @type        P563_BinaryTreeTilt
  * @date        2017年4月23日 上午9:50:15
+ * @details     Solution: AC
  */
-public class P563_BinaryTreeTilt {}
+public class P563_BinaryTreeTilt {
+    public static void main(String[] args) {
+        TreeNode root = tools.TreeNode辅助.A_生成满二叉树(
+                new int[] {
+                        8,
+                        3, 9,
+                        1, 2, 7, 10
+                }
+                );
+        System.out.println(new Solution().findTilt(root));
+    }
+    static class Solution {
+        int sum = 0;
+        public int findTilt(TreeNode root) {
+            sum = 0;
+            f(root);
+            return sum;
+        }
+        public int f(TreeNode n) {
+            if (n == null) return 0;
+            int l = f(n.left);
+            int r = f(n.right);
+            sum += Math.abs(l - r);
+            return n.val + l + r;
+        }
+    }
+}
