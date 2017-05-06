@@ -50,4 +50,37 @@ package leetcode;
  * @date        2017年4月30日 上午9:31:49
  * @details     
  */
-public class P566_ReshapeTheMatrix {}
+public class P566_ReshapeTheMatrix {
+    public static void main(String[] args) {
+        int[][] nums = {{1, 2}, {3, 4}, {5, 6}};
+        int[][] ans = new Solution().matrixReshape(nums, 2, 3);
+        for (int i = 0; i < ans.length; i ++) {
+            for (int j = 0; j < ans[0].length; j ++) {
+                System.out.print(ans[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    static public class Solution {
+        public int[][] matrixReshape(int[][] nums, int r, int c) {
+            int rr = nums == null ? 0 : nums.length;
+            if (rr == 0) return nums;
+            int cc = nums[0] == null ? 0 : nums[0].length;
+            if (cc == 0) return nums;
+            if (rr * cc != r * c) return nums;
+            int[][] ans = new int[r][c];
+            int ri = 0, ci = 0;
+            for (int rri = 0; rri < rr; rri ++) {
+                for (int cci = 0; cci < cc; cci ++) {
+                    ans[ri][ci] = nums[rri][cci];
+                    ci ++;
+                    if (ci == c) {
+                        ri ++;
+                        ci = 0;
+                    }
+                }
+            }
+            return ans;
+        }
+    }
+}
