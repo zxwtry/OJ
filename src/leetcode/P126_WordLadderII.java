@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+
 /**
  * @author      zxwtry
  * @email       zxwtry@qq.com
@@ -49,6 +50,7 @@ public class P126_WordLadderII {
 	    List<String> w = Arrays.asList("hot", "dot", "dog", "lot", "log", "cog");
 	    Set<String> wl = new HashSet<String>(w);
 	    System.out.println(new Solution1().findLadders(s, t, wl));
+	    System.out.println(new Solution3().findLadders(s, t, w));
 	}
 	
 	/**
@@ -191,5 +193,71 @@ public class P126_WordLadderII {
                 u.put(g, false);
             }
         }
+	}
+	
+	static class Solution3 {
+	    public List<List<String>> findLadders(String s, String t, List<String> w) {
+	        List<List<String>> ans = new LinkedList<List<String>>();
+	        if (s == null || t == null || w == null) {
+	            if (s == null && t == null)
+	                ans.add(Arrays.asList((String)null));
+	            return ans;
+	        } else if (s.equals(t)) {
+	            ans.add(Arrays.asList(s));
+	            return ans;
+	        }
+	        HashSet<String> nv = new HashSet<String>(w);
+	        if (! nv.contains(t) || w.size() == 0) return ans;
+	        HashSet<String> hv = new HashSet<String>();
+	        Queue<String> q = new LinkedList<String>();
+	        nv.remove(s);
+	        q.add(s);
+	        int cur = 1, nxt = 0, wn = w.get(0).length();
+	        char[] cs = new char[wn];
+	        boolean isFind = false;
+	        HashMap<String, ArrayList<String>> m = new HashMap<String, ArrayList<String>>();
+	        while (! q.isEmpty()) {
+	            String n = q.poll();
+	            cur --;
+	            for (int i = 0; i < wn; i ++) cs[i] = n.charAt(i);
+	            for (int i = 0; i < wn; i ++) {
+    	            for (char c = 'a'; c <= 'z'; c ++) {
+    	                cs[i] = c;
+    	                String nn = new String(cs);
+    	                if (! nv.contains(nn)) continue;
+    	                if (hv.add(nn)) {
+    	                    nxt ++;
+    	                    q.add(nn);
+    	                }
+    	                if (! m.containsKey(nn)) 
+    	                    m.put(nn, new ArrayList<String>());
+    	                m.get(nn).add(n);
+    	                isFind |= nn.equals(t);
+    	            }
+    	            cs[i] = n.charAt(i);
+	            }
+	            if (cur == 0) {
+	                if (isFind) break;
+	                cur = nxt;
+	                nxt = 0;
+	                nv.removeAll(hv);
+	                hv.clear();
+	            }
+	        }
+	        System.out.println(m);
+	        find(t, s, new LinkedList<String>(), ans, m);
+	        return ans;
+	    }
+
+        private void find(String t, String s, LinkedList<String> l, List<List<String>> ans,
+                HashMap<String, ArrayList<String>> m) {
+            l.addFirst(t);
+            if (t.equals(s)) {
+                ans.add(new LinkedList<String>(l));
+                
+            }
+            l.removeFirst();
+        }
+
 	}
 }
