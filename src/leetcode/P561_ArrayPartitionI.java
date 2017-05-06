@@ -25,5 +25,22 @@ import java.util.Arrays;
  * @file        P561_ArrayPartitionI.java
  * @type        P561_ArrayPartitionI
  * @date        2017年4月23日 上午9:59:51
+ * @details     Solution: AC 43ms 57.14%
  */
-public class P561_ArrayPartitionI {}
+public class P561_ArrayPartitionI {
+    public static void main(String[] args) {
+        int[] n = {1,4,3,2};
+        System.out.println(new Solution().arrayPairSum(n));
+    }
+    static class Solution {
+        public int arrayPairSum(int[] n) {
+            int nn = n == null ? 0 : n.length;
+            if (nn == 0) return 0;
+            Arrays.sort(n);
+            int ans = 0;
+            for (int i = 0; i < nn; i += 2)
+                ans += n[i];
+            return ans;
+        }
+    }
+}
