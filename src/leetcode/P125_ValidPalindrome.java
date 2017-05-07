@@ -1,8 +1,8 @@
 package leetcode;
 
 /*
- * 	Given a string, determine if it is a palindrome, 
- * considering only alphanumeric characters and ignoring cases.
+    Given a string, determine if it is a palindrome, 
+    considering only alphanumeric characters and ignoring cases.
 
 	For example,
 	"A man, a plan, a canal: Panama" is a palindrome.
@@ -15,48 +15,43 @@ package leetcode;
 	For the purpose of this problem, we define empty string as valid palindrome.
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P125_ValidPalindrome.java
+ * @type        P125_ValidPalindrome
+ * @date        2017年5月7日 下午9:53:18
+ * @details     Solution: AC 5ms 97.89%
+ */
 public class P125_ValidPalindrome {
-	public static void main(String[] args) {
-		Solution s = new Solution();
-		System.out.println(s.isPalindrome("A man, a plan, a canal: Panama"));
-		System.out.println(s.isPalindrome("race a car"));
-//		System.out.println(s.isPalindrome(""));
-//		System.out.println(s.isPalindrome("a"));
-//		System.out.println(s.isPalindrome("ab"));
-//		System.out.println(s.isPalindrome("abc"));
-//		System.out.println(s.isPalindrome("abba"));
-//		System.out.println(s.isPalindrome("aef"));
-	}
-	/*
-	 * 	5 ms
-	 * 	96.22%
-	 */
 	static class Solution {
+	    private char get(String s, int i) {
+	        char c = s.charAt(i);
+	        if (c >= 'A' && c <= 'Z') c -= 'A'-'a';
+	        return c;
+	    }
+	    private boolean cmp(char c) {
+	        return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z');
+	    }
 	    public boolean isPalindrome(String s) {
-	    	int len = 0;
-	    	if (s == null || (len = s.length()) == 0) {
-	    		return true;
-	    	}
-	    	int i = 0, j = len - 1;
-	    	while (i <= j) {
-	    		char ic = s.charAt(i);
-	    		if ( ! ( (ic >= '0' && ic <= '9') || (ic  >= 'A' && ic <= 'Z') || (ic >= 'a' && ic <= 'z') ) ) {
-	    			i ++;
-	    			continue;
-	    		}
-	    		char jc = s.charAt(j);
-	    		if ( ! ( (jc >= '0' && jc <= '9') || (jc  >= 'A' && jc <= 'Z') || (jc >= 'a' && jc <= 'z') ) ) {
-	    			j --;
-	    			continue;
-	    		}
-	    		if (ic == jc || (ic  >= 'A' && ic <= 'Z' && ic + 32 == jc) || (jc  >= 'A' && jc <= 'Z' && jc + 32 == ic)) {
-		    		i ++;
-		    		j --;
-	    		} else {
-	    			return false;
-	    		}
-	    	}
-	    	return true;
+	        int i = 0, j = s == null ? -1 : s.length()-1;
+	        while (i < j) {
+	            char l = get(s, i);
+	            if (! cmp(l)) {
+	                i ++;
+	            } else {
+	                char r = get(s, j);
+	                if (! cmp(r)) {
+	                    j --;
+	                } else if (l == r) {
+	                    i ++;
+	                    j --;
+	                } else return false;
+	            }
+	        }
+	        return true;
 	    }
 	}
 }
