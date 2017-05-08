@@ -1,9 +1,8 @@
 package leetcode;
 
-
-/*
- * 	Say you have an array for which the ith element is the price of
- *  a given stock on day i.
+/**
+    Say you have an array for which the ith element is the price of
+    a given stock on day i.
 
 	Design an algorithm to find the maximum profit. 
 	You may complete as many transactions as you like 
@@ -12,32 +11,25 @@ package leetcode;
 	(ie, you must sell the stock before you buy again).
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P122_BestTimetoBuyandSellStockII.java
+ * @type        P122_BestTimetoBuyandSellStockII
+ * @date        2017年5月8日 下午2:14:39
+ * @details     AC 2ms 10.44%
+ */
 public class P122_BestTimetoBuyandSellStockII {
-	public static void main(String[] args) {
-		Solution s = new Solution();
-		System.out.println(s.maxProfit(new int[] {1, 2, 3, 4, 5}));
-		System.out.println(s.maxProfit(new int[] {5, 4, 3, 2, 1}));
-		System.out.println(s.maxProfit(new int[] {7, 1, 5, 3, 6, 4}));
-	}
-	/*
-	 * 	AC
-	 * 	2 ms
-	 */
 	static class Solution {
 	    public int maxProfit(int[] prices) {
 	    	if (prices == null) {
 	    		return 0;
 	    	}
-	        int min = Integer.MAX_VALUE;
 	        int ans = 0;
-	        for (int i = 0; i < prices.length; i ++) {
-	        	if (prices[i] > min) {
-	        		ans += prices[i] - min;
-	        		min = prices[i];
-	        	} else {
-	        		min = prices[i];
-	        	}
-	        }
+	        for (int i = prices.length-1; i > 0; i --) 
+	            ans += Math.max(0, prices[i] - prices[i-1]);
 	        return ans;
 	    }
 	}
