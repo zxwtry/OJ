@@ -36,4 +36,14 @@ import java.util.HashSet;
  * @date        2017年5月7日 上午9:36:14
  * @details     Solution: AC
  */
-public class P575_DistributeCandies {}
+public class P575_DistributeCandies {
+    static class Solution {
+        public int distributeCandies(int[] c) {
+            int cn = c == null ? 0 : c.length;
+            if (cn == 0) return 0;
+            HashSet<Integer> s = new HashSet<Integer>();
+            for (int v : c) s.add(v);
+            return Math.min(cn/2, s.size());
+        }
+    }
+}
