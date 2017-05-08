@@ -33,6 +33,22 @@ package leetcode;
  * @file        P573_SquirrelSimulation.java
  * @type        P573_SquirrelSimulation
  * @date        2017年5月7日 上午10:14:44
- * @details     
+ * @details     Solution: AC 12ms 33.33%
  */
-public class P573_SquirrelSimulation {}
+public class P573_SquirrelSimulation {
+    static public class Solution {
+        public int minDistance(int h, int w, int[] t, int[] s, int[][] n) {
+            int cut = Integer.MAX_VALUE;
+            int sum = 0;
+            for (int i = n.length - 1; i > -1; i --) {
+                int iv = calc(n[i], t), ov = calc(n[i], s);
+                sum += (iv << 1);
+                cut = Math.min(cut, ov - iv);
+            }
+            return sum + cut;
+        }
+        private int calc(int[] p, int[] t) {
+            return Math.abs(p[0] - t[0]) + Math.abs(p[1] - t[1]);
+        }
+    }
+}
