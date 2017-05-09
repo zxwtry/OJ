@@ -199,6 +199,16 @@ public class Utils {
 			System.out.println();
 		}
 	}
+    public static void A_打印二维数组(long[][] arr) {
+        if (arr == null || arr.length < 1)
+            return;
+        for (int i = 0; i != arr.length; i ++) {
+            for (int j = 0; j != arr[i].length; j ++) {
+                System.out.print(arr[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
 	public static void A_打印二维boolean数组(boolean[][] arr) {
 		if (arr == null || arr.length < 1)
 			return;
