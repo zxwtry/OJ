@@ -309,7 +309,8 @@ public class TreeNode辅助 {
 		}
 		@Override
 		public String toString() {
-			return "" + val;
+			return String.format("val:%-12.12sleft:%-12.12sright:%-12.12s", String.valueOf(val), left == null ?
+			        "null" : String.valueOf(left.val), right == null ? "null" : String.valueOf(right.val));
 		}
 	}
 }
