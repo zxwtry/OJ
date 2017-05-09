@@ -36,6 +36,25 @@ import java.util.Scanner;
  * @file        NOD51_最大集合.java
  * @type        NOD51_最大集合
  * @date        2017年5月7日 下午12:45:31
- * @details     
+ * @details     solve: TLE solve2: AC
  */
-public class NOD51_最大集合 {}
+public class NOD51_最大集合 {
+    static void solve(int n, int[] a) {
+        int[] t = new int[n+1];
+        boolean[] m = new boolean[n+1];
+        int ans = 0;
+        for (int i = 1; i <= n; i ++) {
+            t[0] = a[i];
+            Arrays.fill(m, false);
+            m[t[0]] = true;
+            for (int j = 1; j <= n; j ++) {
+                t[j] = a[t[j-1]];
+                if (m[t[j]]) {
+                    ans = Math.max(ans, j);
+                    break;
+                }
+            }
+        }
+        System.out.println(ans);
+    }
+}
