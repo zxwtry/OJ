@@ -35,4 +35,56 @@ import java.util.Queue;
  * @date        2017年5月8日 下午5:34:36
  * @details     
  */
-public class P576_OutOfBoundaryPaths {}
+public class P576_OutOfBoundaryPaths {
+    public static void main(String[] args) {
+        System.out.println(new Solution().findPaths(1, 2, 50, 0, 0));
+    }
+    static public class Solution {
+        public int findPaths(int m, int n, int N, int i, int j) {
+            int ans = 0, mod = 1000000007;
+            long[][] matrix = new long[m][n];
+            matrix[i][j] = 1;
+            Queue<Integer> qx = new LinkedList<Integer>();
+            Queue<Integer> qy = new LinkedList<Integer>();
+            qx.add(i);
+            qy.add(j);
+            while (! qx.isEmpty() && (N -- > 1)) {
+                int size = qx.size();
+                while (size -- > 0) {
+                    int x = qx.poll(), y = qy.poll();
+                    long v = matrix[x][y];
+                    if (x-1 > -1) {
+                        matrix[x-1][y] = (matrix[x-1][y] + v) % mod;
+                        qx.add(x-1);
+                        qy.add(y);
+                    }
+                    if (x+1 < m) {
+                        matrix[x+1][y] = (matrix[x+1][y] + v) % mod;
+                        qx.add(x+1);
+                        qy.add(y);
+                    }
+                    if (y-1 > -1) {
+                        matrix[x][y-1] = (matrix[x][y-1] + v) % mod;
+                        qx.add(x);
+                        qy.add(y-1);
+                    }
+                    if (y+1 < n) {
+                        matrix[x][y+1] = (matrix[x][y+1] + v) % mod;
+                        qx.add(x);
+                        qy.add(y+1);
+                    }
+                }
+            }
+            tools.Utils.A_打印二维数组(matrix);
+            for (int x = 0; x < m; x ++) {
+                ans = (int)((ans + matrix[x][0]) % mod);
+                ans = (int)((ans + matrix[x][n-1]) % mod);
+            }
+            for (int y = 0; y < n; y ++) {
+                ans = (int)((ans + matrix[0][y]) % mod);
+                ans = (int)((ans + matrix[m-1][y]) % mod);
+            }
+            return ans;
+        }
+    }
+}
