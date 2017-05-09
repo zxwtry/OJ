@@ -2,7 +2,6 @@ package nowcoder.com;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Scanner;
 
 
 /**
@@ -54,6 +53,23 @@ public class NOD51_最大集合 {
                     break;
                 }
             }
+        }
+        System.out.println(ans);
+    }
+    static void solve2(int n, int[] a) {
+        HashSet<Integer> nu = new HashSet<Integer>();
+        for (int i = 1; i <= n; i ++) nu.add(i);
+        int ans = 0;
+        while (! nu.isEmpty()) {
+            int t = 0;
+            int now = nu.iterator().next();
+            while (true) {
+                nu.remove(now);
+                t ++;
+                now = a[now];
+                if (! nu.contains(now)) break;                
+            }
+            ans = Math.max(t, ans);
         }
         System.out.println(ans);
     }
