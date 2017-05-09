@@ -19,8 +19,8 @@ public class RECITE_Geometry_ConvexHull2 {
 	final static P[] p = new P[2 * cut + 1];
 	static int top, n;
 	public static void main(String[] args) throws FileNotFoundException {
-//		Scanner sc = new Scanner(new File("D:/code/data/Template_ConvexHull.txt"));
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(new java.io.File("D:/code/data/Template_ConvexHull.txt"));
+//		Scanner sc = new Scanner(System.in);
 		while (true) {
 			n = sc.nextInt();
 			if (n == 0) break;
