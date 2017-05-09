@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /*
@@ -21,7 +22,8 @@ import java.util.HashSet;
  * @file        P128_LongestConsecutiveSequence.java
  * @type        P128_LongestConsecutiveSequence
  * @date        2017年5月9日 下午10:04:45
- * @details     Solution: AC 86ms 1.69%
+ * @details     Solution:  AC 86ms  1.69%
+ * @details     Solution2: AC 15ms 62.80%
  */
 public class P128_LongestConsecutiveSequence {
 	static class Solution {
@@ -50,6 +52,26 @@ public class P128_LongestConsecutiveSequence {
 	    		}
 	    		ans = Math.max(ans, r - l - 1);
 	    	}
+	        return ans;
+	    }
+	}
+	static class Solution2 {
+	    public int longestConsecutive(int[] n) {
+	        int nn = n == null ? 0 :n.length;
+	        if (nn == 0) return 0;
+	        HashMap<Integer, Integer> m = new HashMap<>();
+	        int ans = 0;
+	        for (int v : n) {
+	            if (! m.containsKey(v)) {
+	                int l = m.getOrDefault(v-1, 0);
+	                int r = m.getOrDefault(v+1, 0);
+	                int sum = l + r + 1;
+	                ans = Math.max(ans, sum);
+	                m.put(v, sum);
+	                m.put(v - l, sum);
+	                m.put(v + r, sum);
+	            }
+	        }
 	        return ans;
 	    }
 	}
