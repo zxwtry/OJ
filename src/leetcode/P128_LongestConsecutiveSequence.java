@@ -13,21 +13,17 @@ import java.util.HashSet;
 	Your algorithm should run in O(n) complexity.
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P128_LongestConsecutiveSequence.java
+ * @type        P128_LongestConsecutiveSequence
+ * @date        2017年5月9日 下午10:04:45
+ * @details     Solution: AC 86ms 1.69%
+ */
 public class P128_LongestConsecutiveSequence {
-	public static void main(String[] args) {
-		int[] nums = new int[]{100, 4, 200, 1, 3, 2, 2};
-		nums = new int[] {4, 3, 2, 1};
-		nums = new int[] {4, 3, 8, 2, 1};
-		nums = new int[] {1};
-		nums = new int[] {9,1,4,7,3,-1,0,5,8,-1,6};
-		Solution s = new Solution();
-		System.out.println(s.longestConsecutive(nums));
-	}
-	/*
-	 * 	AC
-	 * 	86 ms
-	 * 	1.69%
-	 */
 	static class Solution {
 	    public int longestConsecutive(int[] nums) {
 	    	if (nums == null || nums.length == 0) {
