@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,22 +27,10 @@ import java.util.List;
  * @file        P131_PalindromePartitioning.java
  * @type        P131_PalindromePartitioning
  * @date        2016年12月13日 下午6:13:52
- * @details     Solution1 AC
+ * @details     Solution1: AC 10ms 50.34%
+ * @details     Solution2: AC 10ms 50.34%
  */
 public class P131_PalindromePartitioning {
-	public static void main(String[] args) {
-	}
-	
-	/**
-	 * @author      zxwtry
-	 * @email       zxwtry@qq.com
-	 * @project     OJ
-	 * @package     leetcode
-	 * @file        P131_PalindromePartitioning.java
-	 * @type        Solution1
-	 * @date        2016年12月13日 下午6:13:55
-	 * @details     AC 10ms 50.34%
-	 */
 	static class Solution1 {
 		List<List<String>> ans = new LinkedList<List<String>>();
 		LinkedList<String> l = new LinkedList<String>();
@@ -76,5 +65,30 @@ public class P131_PalindromePartitioning {
 			}
 			return true;
 		}
+	}
+	static class Solution2 {
+	    public List<List<String>> partition(String s) {
+	        int sn = s == null ? 0 : s.length();
+	        if (sn == 0) return new ArrayList<List<String>>(0);
+	        List<List<List<String>>> rec = new ArrayList<>(sn+1);
+	        for (int i = 0; i <= sn; i ++)
+	            rec.add(new ArrayList<List<String>>());
+	        rec.get(0).add(new ArrayList<String>());
+	        boolean[][] pair = new boolean[sn][sn];
+	        for (int i = 0; i < sn; i ++) {
+	            for (int left = 0; left <= i; left ++) {
+	                if (s.charAt(left) == s.charAt(i) && (i <= 1 + left || pair[left + 1][i - 1])) {
+	                    pair[left][i] = true;
+	                    String str = s.substring(left, i+1);
+	                    for (List<String> r : rec.get(left)) {
+	                        List<String> ri = new ArrayList<String>(r);
+	                        ri.add(str);
+	                        rec.get(i+1).add(ri);
+	                    }
+	                }
+	            }
+	        }
+	        return rec.get(sn);
+	    }
 	}
 }
