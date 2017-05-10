@@ -36,9 +36,7 @@ import java.util.Queue;
  * @details     
  */
 public class P576_OutOfBoundaryPaths {
-    public static void main(String[] args) {
-        System.out.println(new Solution().findPaths(1, 2, 50, 0, 0));
-    }
+    
     static public class Solution {
         public int findPaths(int m, int n, int N, int i, int j) {
             int ans = 0, mod = 1000000007;
