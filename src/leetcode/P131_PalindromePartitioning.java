@@ -32,40 +32,38 @@ import java.util.List;
  */
 public class P131_PalindromePartitioning {
 	static class Solution1 {
-		List<List<String>> ans = new LinkedList<List<String>>();
-		LinkedList<String> l = new LinkedList<String>();
-		char[] cs = null;
-	    public List<List<String>> partition(String s) {
-	        cs = s.toCharArray();
-	        for (int i = 0; i < cs.length; i ++) {
-	        	search(0, i, 0);
-	        }
-	        return ans;
-	    }
-		private void search(int s, int t, int n) {
-			if (isP(s, t)) {
-				l.add(new String(cs, s, t-s+1));
-				for (int nt = t+1; nt < cs.length; nt ++)
-					search(t+1, nt, n + 1);
-				if (n+1 == l.size()) {
-					if (t == cs.length-1)
-						ans.add(new LinkedList<>(l));
-					l.removeLast();
-				}
-			}
-		}
-		private boolean isP(int s, int t) {
-			while (s < t) {
-				if (cs[s] != cs[t]) {
-					return false;
-				} else {
-					s ++;
-					t --;
-				}
-			}
-			return true;
-		}
-	}
+        List<List<String>> ans = new LinkedList<List<String>>();
+        LinkedList<String> l = new LinkedList<String>();
+        char[] cs = null;
+        public List<List<String>> partition(String s) {
+            cs = s.toCharArray();
+            for (int i = 0; i < cs.length; i ++) {
+                search(0, i);
+            }
+            return ans;
+        }
+        private void search(int s, int t) {
+            if (isP(s, t)) {
+                l.add(new String(cs, s, t-s+1));
+                for (int nt = t+1; nt < cs.length; nt ++)
+                    search(t+1, nt);
+                if (t == cs.length-1)
+                    ans.add(new LinkedList<>(l));
+                l.removeLast();
+            }
+        }
+        private boolean isP(int s, int t) {
+            while (s < t) {
+                if (cs[s] != cs[t]) {
+                    return false;
+                } else {
+                    s ++;
+                    t --;
+                }
+            }
+            return true;
+        }
+    }
 	static class Solution2 {
 	    public List<List<String>> partition(String s) {
 	        int sn = s == null ? 0 : s.length();
