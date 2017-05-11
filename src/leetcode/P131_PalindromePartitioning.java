@@ -29,6 +29,7 @@ import java.util.List;
  * @date        2016年12月13日 下午6:13:52
  * @details     Solution1: AC 10ms 50.34%
  * @details     Solution2: AC 10ms 50.34%
+ * @details     Solution3: AC  8ms 79.05%
  */
 public class P131_PalindromePartitioning {
 	static class Solution1 {
@@ -89,4 +90,30 @@ public class P131_PalindromePartitioning {
 	        return rec.get(sn);
 	    }
 	}
+   static class Solution3 {
+        List<List<String>> ans = new LinkedList<List<String>>();
+        LinkedList<String> l = new LinkedList<String>();
+        char[] cs = null;
+        boolean[][] pal = null;
+        public List<List<String>> partition(String s) {
+            if (s == null) return ans;
+            cs = s.toCharArray();
+            pal = new boolean[cs.length][cs.length];
+            for (int i = 0; i < cs.length; i ++) {
+                search(0, i);
+            }
+            return ans;
+        }
+        private void search(int s, int t) {
+            if (cs[s] == cs[t] && (t <= 1+s || pal[s+1][t-1])) {
+                pal[s][t] = true;
+                l.add(new String(cs, s, t-s+1));
+                for (int nt = t+1; nt < cs.length; nt ++)
+                    search(t+1, nt);
+                if (t == cs.length-1)
+                    ans.add(new LinkedList<>(l));
+                l.removeLast();
+            }
+        }
+    }
 }
