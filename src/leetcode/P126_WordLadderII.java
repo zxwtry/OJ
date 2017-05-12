@@ -31,8 +31,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import sun.net.www.content.audio.wav;
-
 /**
  * @author      zxwtry
  * @email       zxwtry@qq.com
@@ -44,14 +42,6 @@ import sun.net.www.content.audio.wav;
  * @details     Solution: AC 204ms 65.85%
  */
 public class P126_WordLadderII {
-    public static void main(String[] args) {
-        String s = "hit";
-        String e = "cog";
-        String[] ss = {"hot","dot","dog","lot","log","cog"};
-        List<String> w = Arrays.asList(ss);
-        System.out.println(new Solution().findLadders(s, e, w));
-                
-    }
 	static class Solution {
 	    public List<List<String>> findLadders(String s, String t, List<String> w) {
 	        List<List<String>> ans = new LinkedList<List<String>>();
@@ -97,7 +87,6 @@ public class P126_WordLadderII {
 	            nv.removeAll(hv);
 	            hv.clear();
 	        }
-	        System.out.println(m);
 	        find(t, s, new LinkedList<String>(), m, ans);
 	        return ans;
 	    }
