@@ -1,9 +1,7 @@
 package leetcode;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /*
@@ -60,6 +58,29 @@ public class P133_CloneGraph {
 	        for (UndirectedGraphNode l : n.neighbors)
 	            v.neighbors.add(cloneGraph(l));
 	        return v;
+	    }
+	}
+	static class Solution2 {
+	    public UndirectedGraphNode cloneGraph(UndirectedGraphNode n) {
+	        if (n == null) return null;
+	        HashMap<Integer, UndirectedGraphNode> m = new HashMap<>();
+	        Queue<UndirectedGraphNode> q = new LinkedList<>();
+	        UndirectedGraphNode ans = new UndirectedGraphNode(n.label);
+	        m.put(n.label, ans);
+	        q.add(n);
+	        while (! q.isEmpty()) {
+	            UndirectedGraphNode c = q.poll();
+	            for (UndirectedGraphNode l : c.neighbors) {
+	                UndirectedGraphNode v = m.get(l.label);
+	                if (v == null) {
+	                    q.add(l);
+	                    v = new UndirectedGraphNode(l.label);
+	                    m.put(l.label, v);
+	                }
+	                m.get(c.label).neighbors.add(v);
+	            }
+	        }
+	        return ans;
 	    }
 	}
 }
