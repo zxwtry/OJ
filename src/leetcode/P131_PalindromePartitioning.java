@@ -90,7 +90,7 @@ public class P131_PalindromePartitioning {
 	        return rec.get(sn);
 	    }
 	}
-   static class Solution3 {
+   static class Solution3 { 
         List<List<String>> ans = new LinkedList<List<String>>();
         LinkedList<String> l = new LinkedList<String>();
         char[] cs = null;
