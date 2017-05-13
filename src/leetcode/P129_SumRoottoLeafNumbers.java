@@ -41,4 +41,30 @@ public class P129_SumRoottoLeafNumbers {
 			    search(root.right, val * 10 + root.val, sum);
 		}
 	}
+	static class Solution2 {
+	    public int sumNumbers(TreeNode root) {
+	        if (root == null) return 0;
+	        Queue<TreeNode> q = new LinkedList<TreeNode>();
+	        Queue<Integer> v = new LinkedList<Integer>();
+	        q.add(root);
+	        v.add(0);
+	        int ans = 0, t = 0;
+	        TreeNode n = null;
+	        while (! q.isEmpty()) {
+	            n = q.poll();
+	            t = v.poll();
+	            if (n.left == null && n.right == null)
+	                ans += t*10+n.val;
+	            if (n.left != null) {
+	                q.add(n.left);
+	                v.add(t*10 + n.val);
+	            }
+	            if (n.right != null) {
+	                q.add(n.right);
+	                v.add(t*10 + n.val);
+	            }
+	        }
+	        return ans;
+	    }
+	}
 }
