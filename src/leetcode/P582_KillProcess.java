@@ -50,4 +50,31 @@ import java.util.Queue;
  * @date        2017年5月14日 上午9:56:41
  * @details     Solution: AC
  */
-public class P582_KillProcess {}
+public class P582_KillProcess {
+    static public class Solution {
+        public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
+            HashMap<Integer, ArrayList<Integer>> m = new HashMap<>();
+            int n = pid.size();
+            for (int i = 0; i < n; i ++) {
+                ArrayList<Integer> s = m.getOrDefault(ppid.get(i), new ArrayList<Integer>());
+                boolean put = s.size() == 0;
+                s.add(pid.get(i));
+                if (put) m.put(ppid.get(i), s);
+            }
+            ArrayList<Integer> p = m.get(kill);
+            if (p == null) return Arrays.asList(kill);
+            List<Integer> ans = new ArrayList<>();
+            Queue<Integer> q = new LinkedList<Integer>();
+            q.add(kill);
+            ans.add(kill);
+            while (! q.isEmpty()) {
+                p = m.getOrDefault(q.poll(), new ArrayList<>(0));
+                for (int v : p) {
+                    ans.add(v);
+                    q.add(v);
+                }
+            }
+            return ans;
+        }
+    }
+}
