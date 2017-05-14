@@ -27,4 +27,24 @@ package leetcode;
  * @date        2017年5月14日 上午9:36:01
  * @details     Solution: AC 
  */
-public class P581_ShortestUnsortedContinuousSubarray {}
+public class P581_ShortestUnsortedContinuousSubarray {
+    static public class Solution {
+        public int findUnsortedSubarray(int[] n) {
+            int nn = n == null ? 0 : n.length;
+            int[] left = new int[nn];
+            int[] right = new int[nn];
+            left[0] = n[0];
+            for (int i = 1; i < nn; i ++) {
+                left[i] = Math.max(left[i-1], n[i]);
+            }
+            right[nn-1] = n[nn-1];
+            for (int i = nn-2; i > -1; i --) {
+                right[i] = Math.min(right[i+1], n[i]);
+            }
+            int li = right[0] >= n[0] ? 0 : -1, ri = left[nn-1] <= n[nn-1] ? nn - 1 : nn;
+            if (li != -1) while (li+1 < nn && right[li+1] >= n[li+1]) li ++;
+            if (ri != nn) while (ri-1 > -1 && left[ri-1] <= n[ri-1]) ri --;
+            return Math.max(ri-li-1, 0);
+        }
+    }
+}
