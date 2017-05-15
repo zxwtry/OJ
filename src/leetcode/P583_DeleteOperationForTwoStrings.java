@@ -23,4 +23,51 @@ package leetcode;
  * @date        2017年5月14日 上午10:14:54
  * @details     
  */
-public class P583_DeleteOperationForTwoStrings {}
+public class P583_DeleteOperationForTwoStrings {
+    public static void main(String[] args) {
+        String s1 = "abc";
+        String s2 = "adc";
+        System.out.println(new Solution().minDistance(s1, s2));
+    }
+    static public class Solution {
+        public int minDistance(String s1, String s2) {
+            int n1 = s1 == null ? 0 : s1.length();
+            int n2 = s2 == null ? 0 : s2.length();
+            if (n1 == 0 || n2 == 0) return n1+n2;
+            int delete = 1;
+            int insert = 1;
+            int replace = 99999;
+            return editDistance(s1.toCharArray(), s2.toCharArray(), delete, insert, replace);
+        }
+        public int editDistance(char[] c1, char[] c2, int delete, int insert, int replace) {
+            int n1 = c1 == null ? 0 : c1.length;
+            int n2 = c2 == null ? 0 : c2.length;
+            if (n1 < n2) return editDistance(c2, c1, delete, insert, replace);
+            int[] d = new int[n2+1];
+            int[] e = new int[n2+1];
+            int INF = Integer.MAX_VALUE / 3;
+            for (int i1 = 0; i1 <= n1; i1 ++) {
+                for (int i2 = 0; i2 <= n2; i2 ++) {
+                    if (i1 == 0 && i2 == 0) continue;
+                    if (i1 == n1 && i2 == n2) {
+                        System.out.println();
+                    }
+                    int min = INF;
+                    if (i1-1 >= 0) min = Math.min(min, d[i2] + delete);
+                    if (i2-1 >= 0) min = Math.min(min, e[i2-1] + insert);
+                    if (i1-1 >= 0 && i2-1 >= 0) min = Math.min(min, 
+                            d[i2-1] + (c1[i1-1] == c2[i2-1] ? 0 : replace));
+                    e[i2] = min;
+                }
+                tools.Utils.printArray(e, e.length);
+                swap(d, e);
+            }
+            return d[n1];
+        }
+        public void swap(int[] d, int[] e) {
+            int[] t = d;
+            d = e;
+            e = t;
+        }
+    }
+}
