@@ -11,20 +11,6 @@ import java.util.TreeSet;
 public class 爱奇艺_170514_A {
     public static void main(String[] args) {
         solve();
-//        TreeSet<Integer> pset = new TreeSet<>(new Comparator<Integer>() {
-//            @Override
-//            public int compare(Integer o1, Integer o2) {
-//                return Integer.compare(o2, o1);
-//            }
-//        });
-//        pset.add(9);
-//        pset.add(5);
-//        pset.add(2);
-////        for (int v : pset) {
-////            System.out.println(v);
-////        }
-//        System.out.println(pset.lower(2));
-////        solve2();
     }
     static void solve2() {
         Scanner in = new Scanner(System.in);
