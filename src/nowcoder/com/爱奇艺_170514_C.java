@@ -18,6 +18,7 @@ import java.util.Scanner;
  * @details     
  */
 public class 爱奇艺_170514_C {
+    
     static Integer[] is = null;
     static int[] arr = null;
     static class MC implements Comparator<Integer> {
