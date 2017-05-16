@@ -22,6 +22,8 @@ import java.util.List;
  */
 public class P587_ErectTheFence {
     public static void main(String[] args) {
+        
+        
         Point[] ps = {
                 new Point(1,2),
                 new Point(2,2),
