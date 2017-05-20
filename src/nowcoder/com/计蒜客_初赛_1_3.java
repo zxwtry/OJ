@@ -130,4 +130,157 @@ ACTG
 
 
 
-public class 计蒜客_初赛_1_3 {}
+public class 计蒜客_初赛_1_3 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        int L = sc.nextInt();
+        int R = sc.nextInt();
+        char[] t = sc.next().toCharArray();
+        
+        int tn = t.length;
+        
+        int breakIndex = (b+1)  % n;
+        
+        if (breakIndex < L) {
+            if (tn == 1) {
+                char LC = (L - breakIndex) % 2 == 0 ? 'A' : 'T';
+                char RC = (R - breakIndex) % 2 == 0 ? 'A' : 'T';
+                int A0 = L == R ? (LC == 'A' ? 1 : 0) : (LC == 'A' ? 1 : 0) + (RC == 'A' ? 1 : 0);
+                int R0 = L == R ? 1 - A0 : 2 - A0;
+                
+                if (A0 > R0) {
+                    
+                } else if (A0 < R0 ) {
+                    
+                } else {
+                    
+                }
+                
+                int AC = (R - L + 1) / 2;
+                
+                int TC = AC;
+                
+            }
+            
+            
+        } else if (breakIndex <= R) {
+            
+        } else {
+            
+        }
+        
+        if (tn == 0) {
+            System.out.println(0);
+        } else if (tn == 1) {
+            int ans = 0;
+            
+            
+        } else {
+            int ans = 0;
+            String k = new String(t);
+            if (tn == 2 && k.equals("AT")) {
+                
+            } else if (tn == 2 && k.equals("TA")) {
+                
+            } else if (tn == 2 && k.equals("GC")) {
+                
+            } else if (tn == 2 && k.equals("CG")) {
+                
+            } else {
+
+                char[] akkk = new char[3];
+            }
+            
+        }
+        
+        
+        
+        
+        
+//        char[] s = new char[n];
+//        int pw = 0, w = 0;
+//        for (int i = 0; i < n; i ++) {
+//            if (i == 0) {
+//                w = b;
+//                pw = w;
+//            } else {
+//                w = (pw + a) % n;
+//                pw = w;
+//            }
+//            boolean bl = w < L;
+//            boolean br = w > R;
+//            boolean bw = w % 2 == 0;
+//            if ((! bl) && (! br) ) {
+//                if (bw) {
+//                    s[i] = 'A';
+//                } else {
+//                    s[i] = 'T';
+//                }
+//            } else {
+//                if (bw) {
+//                    s[i] = 'G';
+//                } else {
+//                    s[i] = 'C';
+//                }
+//            }
+//        }
+        
+//        System.out.println(new String(s));
+//        System.out.println(t);
+//        System.out.println(t.length);
+//        System.out.println(kmp(s, t, n, t.length));
+//        char[] uu = "ABCABC".toCharArray();
+//        char[] vv = "ABCABCABCABCABCABCABCABC".toCharArray();
+//        System.out.println(uu.length);
+//        System.out.println(vv.length);
+//        
+//        System.out.println(kmp(vv, uu, vv.length, uu.length));
+        
+        
+        sc.close();
+    }
+    
+    
+    
+    
+    private static int kmp(char[] s, char[] p, int sn, int pn) {
+        if (pn == 0) return 0;
+        if (sn == 0) return -1;
+        int[] next = getNext(p, pn);
+//        tools.Utils.printArray(next, next.length);
+        int pi = 0, si = 0;
+        int ans = 0;
+        while (si < sn)
+            if (s[si] == p[pi]) {
+                si ++;
+                pi ++;
+                if (pi == pn) {
+                    ans ++;
+                    pi = next[pn - 1];
+                    si --;
+                }
+            } else if (next[pi] == -1) {
+                si ++;
+            } else pi = next[pi];
+        return ans;
+    }
+    private static int[] getNext(char[] p, int pn) {
+        //return short p
+        if (pn < 2) return new int[] {-1};
+        int[] next = new int[pn];
+        next[0] = -1;
+        next[1] = 0;
+        int fi = 2, bi = 0;
+        while (fi < pn)
+            if (p[fi - 1] == p[bi]) {
+                next[fi ++] = ++ bi;
+            } else if (bi <= 0) {
+                next[fi ++] = 0;
+            } else bi = next[bi];;
+        return next;
+    }
+}
