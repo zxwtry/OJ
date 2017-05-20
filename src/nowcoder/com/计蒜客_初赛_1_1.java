@@ -66,4 +66,76 @@ package nowcoder.com;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class 计蒜客_初赛_1_1 {}
+public class 计蒜客_初赛_1_1 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt(), m = sc.nextInt();
+//        int[][] nn = new int[n][2];
+//        int[][] mm = new int[m][2];
+        HashSet<Integer> sn = new HashSet<>();
+//        HashSet<Integer> sm = new HashSet<>();
+//        int num = 10000;
+        for (int i = 0; i < n; i ++) { 
+//            nn[i][0] = sc.nextInt();
+//            nn[i][1] = sc.nextInt();
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            sn.add(calc(x, y));
+        }
+        for (int i = 0; i < m; i ++) {
+//            mm[i][0] = sc.nextInt();
+//            mm[i][1] = sc.nextInt();
+//            sm.add(sc.nextInt() * num + sc.nextInt());
+            sc.nextInt();
+            sc.nextInt();
+        }
+        
+        int ans = 0;
+        for (int i = -3; i <= 3; i ++) {
+            if (i == 0) continue;
+            int v1 = calc(i, i);
+            int v2 = calc(i, 0);
+            int v3 = calc(i, -i);
+            if (sn.contains(v1) && sn.contains(v2) && sn.contains(v3))
+                ans ++;
+        }
+        for (int i = -3; i <= 3; i ++) {
+            if (i == 0) continue;
+            int v1 = calc(i, i);
+            int v2 = calc(0, i);
+            int v3 = calc(-i, i);
+            if (sn.contains(v1) && sn.contains(v2) && sn.contains(v3))
+                ans ++;
+        }
+        int v1 = 0, v2 = 0, v3 = 0;
+        v1 = calc(0, 1);
+        v2 = calc(0, 2);
+        v3 = calc(0, 3);
+        if (sn.contains(v1) && sn.contains(v2) && sn.contains(v3))
+            ans ++;
+        v1 = calc(0, -1);
+        v2 = calc(0, -2);
+        v3 = calc(0, -3);
+        if (sn.contains(v1) && sn.contains(v2) && sn.contains(v3))
+            ans ++;
+        v1 = calc(1, 0);
+        v2 = calc(2, 0);
+        v3 = calc(3, 0);
+        if (sn.contains(v1) && sn.contains(v2) && sn.contains(v3))
+            ans ++;
+        v1 = calc(-1, 0);
+        v2 = calc(-2, 0);
+        v3 = calc(-3, 0);
+        if (sn.contains(v1) && sn.contains(v2) && sn.contains(v3))
+            ans ++;
+        
+        sc.close();
+        
+        System.out.println(ans);
+        
+    }
+    
+    static int calc(int x, int y) {
+        return x * 10000 + y;
+    }
+}
