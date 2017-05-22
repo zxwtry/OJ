@@ -1,5 +1,10 @@
 package hiho;
 
+
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 /**
 
 时间限制:10000ms
@@ -43,8 +48,8 @@ package hiho;
  * @file        训练17_题目1_F1Score.java
  * @type        训练17_题目1_F1Score
  * @date        2017年5月21日 下午12:00:03
- * @details     
+ * @details     AC 90%
  */
-public class 训练17_题目1_F1Score {
-    
-}
+
+import java.util.Scanner;
+public class 训练17_题目1_F1Score {}
