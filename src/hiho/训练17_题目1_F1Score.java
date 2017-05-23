@@ -52,4 +52,122 @@ import java.io.InputStreamReader;
  */
 
 import java.util.Scanner;
-public class 训练17_题目1_F1Score {}
+public class 训练17_题目1_F1Score {
+    public static void main(String[] args) {
+        
+        
+        char c = '\0';
+        System.out.println();
+        
+        
+        int tmp = 0;
+        if (tmp == 0) return;
+        
+        
+      Scanner sc = new Scanner(System.in);
+      
+      int n = Integer.parseInt(sc.nextLine().trim());
+      
+      int tp = 0;
+      int fp = 0;
+      int fn = 0;
+      
+      char TTT = '+';
+      char FFF = '-';
+      
+      for (int i = 0; i < n; i ++) {
+          char a = 'a';
+          char b = 'b';
+          while (b == 'b') {
+              String l = sc.nextLine();
+              for (int j = 0; j < l.length(); j ++)
+                  if (l.charAt(j) == '+' || l.charAt(j) == '-') {
+                      if (a == 'a')
+                          a = l.charAt(j);
+                      else b = l.charAt(j);
+                  }
+          }
+          if (a == TTT && b == TTT) {
+              tp += 1;
+          }
+          if (a == FFF && b == TTT) {
+              fp += 1;
+          }
+          if (a == TTT && b == FFF) {
+              fn += 1;
+          }
+      }
+      
+      if (tp == 0) {
+          System.out.println("0.00%");
+      } else {
+          double a = ((double)(2 * tp * tp)) / ((double)(2 * tp * tp
+                  + tp * fn + tp * fp)) * 100;
+          System.out.printf("%.2f%%\n", a);
+      }
+      
+//      a = 0.00012;
+//      
+//      int v = (int)(a * 10000);
+//      
+//      
+//      System.out.printf("%d.%02d%%\n", v / 100, v % 100);
+      
+      sc.close();
+        
+        
+    }
+    /**
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    long n,g=0,i,tp=0,fn=0,fp=0,tn=0;
+    double p,r;
+    char c,x[10],y[10],sym='%';
+    scanf("%ld",&n);
+    for (i=1;i<=n;i++)
+    {
+//        c=getchar();
+//        x=getchar();
+//        c=getchar();
+//        y=getchar();
+//        if (x=='+' && y=='+')
+//            tp++;
+//        if (x=='+' && y=='-')
+//            fn++;
+//        if (x=='-' && y=='+')
+//            fp++;
+//        if (x=='-' && y=='-')
+//            tn++;
+        scanf("%s%s",x,y);
+        if (strcmp(x,"+")==0 && strcmp(y,"+")==0)
+            tp++;
+        if (strcmp(x,"+")==0 && strcmp(y,"-")==0)
+            fn++;
+        if (strcmp(x,"-")==0 && strcmp(y,"+")==0)
+            fp++;
+        if (strcmp(x,"-")==0 && strcmp(y,"-")==0)
+            tn++;
+    }
+    p=1.0*tp/(tp+fp);
+    r=1.0*tp/(tp+fn);
+    if (p+r==0)
+        printf("0.00%c\n",sym);
+    else
+        printf("%.2lf%c\n",100.0*2*p*r/(p+r),sym);
+    return 0;
+}
+/*
+4
++ +
++ -
+- +
+- -
+*/
+
+
+    
+}
