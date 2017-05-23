@@ -67,6 +67,58 @@ import java.util.HashMap;
  * @date        2017年5月21日 下午2:40:17
  * @details
  */
-public class 训练17_题目4_逃离迷宫3 {}
+public class 训练17_题目4_逃离迷宫3 {
+    public static void main(String[] args) {
+//        String string = Integer.toHexString(-1);
+//        System.out.println(string);
+//        System.out.println(-1 << 33);
+//        System.out.println(Integer.toHexString(100000));
+        System.out.println(0xffff);
+//        String s = "{{{}}}";
+//        System.out.println(Arrays.asList(s.split("\\{")));
+//        
+//        HashMap<Integer, Integer> i = new HashMap<>();
+//        i.put(4, 100);
+//        ObjectOutputStream oos  = new ObjectOutputStream(out);
+        
+    }
+    
+}
+
+
+/**
+N = int(raw_input().strip())
+char = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+step = "01212121232333233323332333"
+def mycount(x, y):
+    m = max(abs(x), abs(y))
+    r = ((2*m+1)**2)%26
+    if y == m:
+        r = r - 3*(2*m)-(m-x)
+    elif x == m:
+        r = r - 2*(2*m) - (y+m)
+    elif -x == m:
+        r=r-m+y
+    else:
+        r = r-(2*m) - (x+m)
+    return r%26
+
+
+for i in range(N):
+    x,y = map(int, raw_input().strip().split(' '))
+    ans_l = [abs(x)+abs(y)]
+    if mycount(x, y) %2 == 0:
+        ans_l.append(3)
+    else:
+        ans_l.append(4)
+    for j in range(-3, 4): 
+        for k in range(-3, 4):
+            z = mycount(x-j, y-k)
+            s = int(step[(z-1)%26])
+            ans_l.append(s+1+abs(j)+abs(k))
+
+    print min(ans_l)
+
+*/
 
 
