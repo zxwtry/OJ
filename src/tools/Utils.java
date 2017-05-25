@@ -117,7 +117,7 @@ public class Utils {
 			if (i % n == n - 1 || i == arrEnd)
 				System.out.println(arr[i]);
 			else
-				System.out.printf("%d\t", arr[i]);
+				System.out.printf("%d ", arr[i]);
 		}
 	}
 	public static void printArray(long[] arr, int n) {
