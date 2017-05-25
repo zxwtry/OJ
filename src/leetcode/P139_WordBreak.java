@@ -1,8 +1,13 @@
 package leetcode;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
+import sun.awt.image.BytePackedRaster;
 
 /*
  * 	Given a string s and a dictionary of words dict, 
@@ -18,13 +23,30 @@ import java.util.Set;
 
 public class P139_WordBreak {
 	public static void main(String[] args) {
+	    
+	    byte b1 = 1;
+	    byte b2 = 2;
+	    byte b3 = 3;
+	    System.out.println();
+	    
+	    System.out.println("".getBytes());
+	    
+	    byte[] bs = new byte[] {97, 97, 98};
+	    System.out.println(new String(bs));
+	    
+	    
 //		char[] cs = "leetleetleetleet".toCharArray();
 //		System.out.println(new String(cs, 4, 1));
-		Set<String> wordDict = new HashSet<String>();
-		wordDict.add("leet");
-		wordDict.add("code");
-		Solution s = new Solution();
-		System.out.println(s.wordBreak("leetleetleetleetcod", wordDict));
+	    
+//	    String sep = "R@J2t#";
+//	    String s = "abc" + sep + "bcd" + sep;
+//	    System.out.println(Arrays.asList(s.split(sep)));
+	    
+//		Set<String> wordDict = new HashSet<String>();
+//		wordDict.add("leet");
+//		wordDict.add("code");
+//		Solution s = new Solution();
+//		System.out.println(s.wordBreak("leetleetleetleetcod", wordDict));
 	}
 	/*
 	 * 	三次TLE
