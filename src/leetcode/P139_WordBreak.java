@@ -1,18 +1,12 @@
 package leetcode;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
-import sun.awt.image.BytePackedRaster;
-
 /*
- * 	Given a string s and a dictionary of words dict, 
- * 	determine if s can be segmented into a space-separated 
- * 	sequence of one or more dictionary words.
+    Given a string s and a dictionary of words dict, 
+    determine if s can be segmented into a space-separated 
+    sequence of one or more dictionary words.
 
 	For example, given
 	s = "leetcode",
@@ -22,34 +16,7 @@ import sun.awt.image.BytePackedRaster;
  */
 
 public class P139_WordBreak {
-	public static void main(String[] args) {
-	    
-	    byte b1 = 1;
-	    byte b2 = 2;
-	    byte b3 = 3;
-	    System.out.println();
-	    
-	    System.out.println("".getBytes());
-	    
-	    byte[] bs = new byte[] {97, 97, 98};
-	    System.out.println(new String(bs));
-	    
-	    
-//		char[] cs = "leetleetleetleet".toCharArray();
-//		System.out.println(new String(cs, 4, 1));
-	    
-//	    String sep = "R@J2t#";
-//	    String s = "abc" + sep + "bcd" + sep;
-//	    System.out.println(Arrays.asList(s.split(sep)));
-	    
-//		Set<String> wordDict = new HashSet<String>();
-//		wordDict.add("leet");
-//		wordDict.add("code");
-//		Solution s = new Solution();
-//		System.out.println(s.wordBreak("leetleetleetleetcod", wordDict));
-	}
 	/*
-	 * 	三次TLE
 	 * 	14.05%
 	 * 	16 ms
 	 */
