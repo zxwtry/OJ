@@ -197,50 +197,6 @@ public class 计蒜客_初赛_1_3 {
             
         }
         
-        
-        
-        
-        
-//        char[] s = new char[n];
-//        int pw = 0, w = 0;
-//        for (int i = 0; i < n; i ++) {
-//            if (i == 0) {
-//                w = b;
-//                pw = w;
-//            } else {
-//                w = (pw + a) % n;
-//                pw = w;
-//            }
-//            boolean bl = w < L;
-//            boolean br = w > R;
-//            boolean bw = w % 2 == 0;
-//            if ((! bl) && (! br) ) {
-//                if (bw) {
-//                    s[i] = 'A';
-//                } else {
-//                    s[i] = 'T';
-//                }
-//            } else {
-//                if (bw) {
-//                    s[i] = 'G';
-//                } else {
-//                    s[i] = 'C';
-//                }
-//            }
-//        }
-        
-//        System.out.println(new String(s));
-//        System.out.println(t);
-//        System.out.println(t.length);
-//        System.out.println(kmp(s, t, n, t.length));
-//        char[] uu = "ABCABC".toCharArray();
-//        char[] vv = "ABCABCABCABCABCABCABCABC".toCharArray();
-//        System.out.println(uu.length);
-//        System.out.println(vv.length);
-//        
-//        System.out.println(kmp(vv, uu, vv.length, uu.length));
-        
-        
         sc.close();
     }
     
