@@ -1,6 +1,6 @@
 package leetcode;
 
- import java.util.HashMap;
+import java.util.HashMap;
 import java.util.List;
 
 /*
@@ -23,6 +23,7 @@ import java.util.List;
  * @file        P139_WordBreak.java
  * @date        2017年5月29日 上午10:20:42
  * @details     Solution1: AC 18ms 41.08%
+ * @details     Solution2: AC 11ms 86.69%
  */
 public class P139_WordBreak {
     static class Solution1 {
@@ -46,6 +47,33 @@ public class P139_WordBreak {
             }
             nm.put(res, ans);
             return ans;
+        }
+    }
+    static class Solution2 {
+        public boolean wordBreak(String s, List<String> wd) {
+            int sn = s == null ? 0 : s.length();
+            if (sn == 0) return true;
+            boolean[] dp = new boolean[sn + 1];
+            dp[0] = true;
+            int wn = 0;
+            for (int i = 0; i < sn; i ++) {
+                if (! dp[i]) continue;
+                for (String w : wd) {
+                    wn = w == null ? 0 : w.length();
+                    if (i + wn <= sn && (! dp[i+wn]) && compare(s, i, w, wn)) {
+                        dp[i+wn] = true;
+                    }
+                }
+            }
+            return dp[sn];
+        }
+        private boolean compare(String s, int index, String t, int tn) {
+            int ti = 0, si = index;
+            for (; ti < tn; ti ++) {
+                if (s.charAt(si ++) != t.charAt(ti))
+                    return false;
+            }
+            return true;
         }
     }
 }
