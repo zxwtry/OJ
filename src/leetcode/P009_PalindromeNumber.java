@@ -2,14 +2,9 @@ package leetcode;
 
 
 public class P009_PalindromeNumber {
-	public static void main(String[] args) {
-//		System.out.println(Integer.MAX_VALUE);
-		System.out.println(new Solution3().isPalindrome(1221));
-	}
 	/*
 	 * 	16 ms
 	 * 	20.14%
-	 * 
 	 */
 	static class Solution {
 	    public boolean isPalindrome(int x) {
