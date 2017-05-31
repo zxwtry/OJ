@@ -1,7 +1,10 @@
 package leetcode;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeSet;
+
 
 /*
  * 	Design and implement a data structure for Least Recently Used (LRU) cache. 
@@ -23,7 +26,8 @@ import java.util.Map;
  * @file        P146_LRUCache.java
  * @type        P146_LRUCache
  * @date        2016年12月26日 上午10:39:49
- * @details     LRUCache1 14ms 96.60%
+ * @details     LRUCache1  14ms 96.60%
+ * @details     LRUCache2 225ms 11.95%
  */
 public class P146_LRUCache {
 	static class LRUCache1 extends LinkedHashMap<Integer, Integer> {
@@ -48,5 +52,55 @@ public class P146_LRUCache {
 		public void set(int key, int value) {
 			super.put(key, value);
 		}
+	}
+	static class LRUCache2 {
+	    static class A implements Comparable<A> {
+	        int val;
+	        int rank;
+	        int key;
+            @Override
+            public int compareTo(A a) {
+                return this.rank - a.rank;
+            }
+            @Override
+            public int hashCode() {
+                return val;
+            }
+            @Override
+            public boolean equals(Object obj) {
+                if (! (obj instanceof A)) return false;
+                A a = (A) obj;
+                return a.val == this.val;
+            }
+	    }
+	    private TreeSet<A> setA = new TreeSet<A>();
+	    private HashMap<Integer, A> map = new HashMap<>();
+	    private int id = 0;
+	    int cap;
+	    public LRUCache2(int capacity) {
+	        this.cap = capacity;
+	    }
+	    public int get(int key) {
+	        A v = map.get(key);
+	        if (v == null) return -1;
+	        setA.remove(v);
+	        v.rank = id ++;
+	        setA.add(v);
+	        return v.val;
+	    }
+	    public void put(int key, int value) {
+	        A v = map.get(key);
+	        if (v == null) v = new A();
+	        else setA.remove(v);
+	        v.val = value;
+            v.rank = id ++;
+            v.key = key;
+            setA.add(v);
+            map.put(key, v);
+            if (setA.size() > cap) {
+                v = setA.pollFirst();
+                map.remove(v.key);
+            }
+	    }
 	}
 }
