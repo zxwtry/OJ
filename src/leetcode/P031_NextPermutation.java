@@ -27,7 +27,7 @@ public class P031_NextPermutation {
 //		 int[] nums = new int[] {2, 1};
 		int[] nums = new int[] { 1, 2, 3, 4, 5 };
 		new Solution2().nextPermutation(nums);
-		tools.Utils.printArray(nums, 10);
+		tools.Utils.printArray(nums, 10, 5);
 	}
 
 	/*

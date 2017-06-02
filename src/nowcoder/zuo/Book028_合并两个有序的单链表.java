@@ -15,8 +15,8 @@ public class Book028_合并两个有序的单链表 {
 		Arrays.sort(arr2);
 		ListNode head1 = tools.ListNode辅助.A_一维生成器(arr1);
 		ListNode head2 = tools.ListNode辅助.A_一维生成器(arr2);
-		tools.Utils.printArray(arr1, n + 2);
-		tools.Utils.printArray(arr2, n + 2);
+		tools.Utils.printArray(arr1, n + 2, 5);
+		tools.Utils.printArray(arr2, n + 2, 5);
 		MergeSolution ms = new MergeSolution();
 		ListNode head = ms.merge(head1, head2);
 		tools.ListNode辅助.B_打印链表_一行(head, n * 2 + 100);

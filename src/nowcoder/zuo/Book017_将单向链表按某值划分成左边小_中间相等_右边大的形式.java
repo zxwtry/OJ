@@ -12,7 +12,7 @@ public class Book017_将单向链表按某值划分成左边小_中间相等_右
 		int min = 0;
 		int max = n * n * n + 1;
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
-		tools.Utils.printArray(arr, 100);
+		tools.Utils.printArray(arr, 100, 5);
 		AdvanceSolution s = new AdvanceSolution();
 		int pivot = max / 2;
 		ListNode head = tools.ListNode辅助.A_一维生成器(arr);

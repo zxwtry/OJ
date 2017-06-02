@@ -26,7 +26,7 @@ public class Book023_在单链表中删除指定值的节点 {
 		ss.removeVal(head1, num);
 		AdjustSolution as = new AdjustSolution();
 		as.removeVal(head2, num);
-		tools.Utils.printArray(arr, n + 1);
+		tools.Utils.printArray(arr, n + 1, 5);
 		System.out.println(num);
 		tools.ListNode辅助.B_打印链表_一行(head1, n + 100);
 		tools.ListNode辅助.B_打印链表_一行(head2, n + 100);
@@ -39,10 +39,10 @@ public class Book023_在单链表中删除指定值的节点 {
 		int num = arr[(int)(Math.random() * (n + 1))];
 		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
 		AdjustSolution as = new AdjustSolution();
-		tools.Utils.printArray(arr, n + 1);
+		tools.Utils.printArray(arr, n + 1, 5);
 		System.out.println(num);
 		as.removeVal(head, num);
-		tools.Utils.printArray(arr, n + 1);
+		tools.Utils.printArray(arr, n + 1, 5);
 	}
 	static void testStackSolution() {
 		int n = 10;
@@ -52,10 +52,10 @@ public class Book023_在单链表中删除指定值的节点 {
 		int num = arr[(int)(Math.random() * (n + 1))];
 		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
 		StackSolution ss = new StackSolution();
-		tools.Utils.printArray(arr, n + 1);
+		tools.Utils.printArray(arr, n + 1, 5);
 		System.out.println(num);
 		ss.removeVal(head, num);
-		tools.Utils.printArray(arr, n + 1);
+		tools.Utils.printArray(arr, n + 1, 5);
 	}
 	//时间复杂度O(N)，额外空间复杂度O(N)
 	static class StackSolution {

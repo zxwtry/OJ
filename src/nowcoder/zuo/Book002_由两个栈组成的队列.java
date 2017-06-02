@@ -29,7 +29,7 @@ public class Book002_由两个栈组成的队列 {
 		}
 		isTrue &= s.isEmpty();
 		if (! isTrue) {
-			tools.Utils.printArray(arr, 100);
+			tools.Utils.printArray(arr, 100, 5);
 		}
 		System.out.println(isTrue);
 	}

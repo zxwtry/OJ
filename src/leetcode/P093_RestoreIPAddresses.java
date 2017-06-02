@@ -160,8 +160,8 @@ public class P093_RestoreIPAddresses {
 			if (this_count >= ar.length - 2) {
 				if (judge()) {
 					System.out.printf("第\t%d\t次数据\r\n", del_count ++);
-					tools.Utils.printArray(ar, 20);
-					tools.Utils.printArray(ch, 20);
+					tools.Utils.printArray(ar, 20, 4);
+					tools.Utils.printArray(ch, 20, 4);
 				}
 				return;
 			}
