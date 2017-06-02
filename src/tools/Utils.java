@@ -8,6 +8,7 @@ import java.util.List;
 import tools.Models.Node;
 
 public class Utils {
+    
 	// 开始swap区
 	public static <T> void swap(T[] arr, int i, int j) {
 		int arr_end = 0;
@@ -81,99 +82,77 @@ public class Utils {
 		}
 		System.out.println();
 	}
-	public static void printArray_先打印下标(int n) {
+	public static void printArray_先打印下标(int n, int placeHolderNumber) {
 		for (int i = 0; i < n; i ++) {
-			System.out.print(i + "\t");
+			System.out.printf(String.format("%%%dd", placeHolderNumber), i);
 		}
 		System.out.println();
 	}
-	public static void printArray(char[] arr, int n) {
+	public static void printArray(char[] arr, int n, int placeHolderNumber) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.println(arr[i]);
-			else
-				System.out.printf("%c\t", arr[i]);
+		    System.out.printf(String.format("%%%dc" + ((i % n == n - 1 || i == arrEnd)
+                    ? "\n" : ""), placeHolderNumber), arr[i]);
 		}
 	}
-	public static void printArray(boolean[] arr, int n) {
+	public static void printArray(boolean[] arr, int n, int placeHolderNumber) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.println(arr[i]);
-			else
-				System.out.printf("%b\t", arr[i]);
+		    System.out.printf(String.format("%%%db" + ((i % n == n - 1 || i == arrEnd)
+                    ? "\n" : ""), placeHolderNumber), arr[i]);
 		}
 	}
-	public static void printArray(int[] arr, int n) {
+	public static void printArray(int[] arr, int n, int placeHolderNumber) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.println(arr[i]);
-			else
-				System.out.printf("%d ", arr[i]);
+			System.out.printf(String.format("%%%dd" + ((i % n == n - 1 || i == arrEnd)
+			        ? "\n" : ""), placeHolderNumber), arr[i]);
 		}
 	}
-	public static void printArray(long[] arr, int n) {
+	public static void printArray(long[] arr, int n, int placeHolderNumber) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.println(arr[i]);
-			else
-				System.out.printf("%d\t", arr[i]);
+		    System.out.printf(String.format("%%%dd" + ((i % n == n - 1 || i == arrEnd)
+                    ? "\n" : ""), placeHolderNumber), arr[i]);
 		}
 	}
-	public static void printArray(float[] arr, int n) {
+	public static void printArray(float[] arr, int n, int beforeDotNumber, int afterDotNumber) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.printf("%f\r\n", arr[i]);
-			else
-				System.out.printf("%f\t", arr[i]);
+		    System.out.printf(String.format("%%%dd" + (afterDotNumber == 0 ? "" : ".")
+		            , beforeDotNumber), (int)(arr[i]));
+		    if (afterDotNumber == 0) {
+		        if (i % n == n - 1 || i == arrEnd) System.out.println();
+		    } else {
+    		    System.out.printf(String.format("%%0%dd" + ((i % n == n - 1 || i == arrEnd)
+                        ? "\n" : ""), afterDotNumber), (int)((arr[i] - (int)arr[i]) * Math.pow(10, afterDotNumber)));
+		    }
 		}
 	}
-	public static void printArray(double[] arr, int n) {
+	public static void printArray(double[] arr, int n, int beforeDotNumber, int afterDotNumber) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
 			return;
 		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.printf("%f\r\n", arr[i]);
-			else
-				System.out.printf("%f\t", arr[i]);
-		}
-	}
-	public static void printNoBlank(char[] arr, int n) {
-		int arrEnd = 0;
-		if (arr == null || (arrEnd = arr.length-1) < 0)
-			return;
-		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.println(arr[i]);
-			else
-				System.out.printf("%c", arr[i]);
-		}
-	}
-	public static void printNoBlank(int[] arr, int n) {
-		int arrEnd = 0;
-		if (arr == null || (arrEnd = arr.length-1) < 0)
-			return;
-		for (int i = 0; i <= arrEnd; i ++) {
-			if (i % n == n - 1 || i == arrEnd)
-				System.out.println(arr[i]);
-			else
-				System.out.printf("%d", arr[i]);
-		}
+            System.out.printf(String.format("%%%dd" + (afterDotNumber == 0 ? "" : ".")
+                    , beforeDotNumber), (long)(arr[i]));
+            if (afterDotNumber == 0) {
+                if (i % n == n - 1 || i == arrEnd) System.out.println();
+            } else {
+                System.out.printf(String.format("%%0%dd" + ((i % n == n - 1 || i == arrEnd)
+                        ? "\n" : ""), afterDotNumber), (int)((arr[i] - (int)arr[i]) * Math.pow(10, afterDotNumber)));
+            }
+        }
 	}
 	public static void A_indexAndValue(int[] arr) {
 		if (arr == null || arr.length < 1) return;
