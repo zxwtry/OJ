@@ -9,7 +9,7 @@ public class Book001_栈和队列_设计一个有getMin功能的栈 {
 	static void test() {
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(4, 0, 10000);
 //		arr = new int[]{4, 1, 2, 1};
-		tools.Utils.printArray(arr, 100);
+		tools.Utils.printArray(arr, 100, 5);
 		int[] min = new int[arr.length];
 		Stack<Integer> standard = new Stack<>();
 		for (int i = 0; i < arr.length; i ++) {

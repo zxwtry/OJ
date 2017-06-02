@@ -61,7 +61,7 @@ public class Book002_一摞烙饼的排序 {
 			search(nSearch);
 		}
 		public void output() {
-			tools.Utils.printArray(swapArray, swapArray.length);
+			tools.Utils.printArray(swapArray, swapArray.length, 4);
 			System.out.println("Search Times: " + nSearch);
 			System.out.println("Total Swap Times: " + maxSwap);
 		}

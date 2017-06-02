@@ -59,11 +59,11 @@ public class Array_Radix_Sort_基数排序 {
 			}
 			if (! isTrue) {
 				System.out.println("原来的数组是：");
-				tools.Utils.printArray(arr, n + 100);
+				tools.Utils.printArray(arr, n + 100, 5);
 				System.out.println("标准排序后的数组是：");
-				tools.Utils.printArray(arrStandard, n + 100);
+				tools.Utils.printArray(arrStandard, n + 100, 5);
 				System.out.println("位运算基数排序后的数组是：");
-				tools.Utils.printArray(arrSolution_位运算, n + 100);
+				tools.Utils.printArray(arrSolution_位运算, n + 100, 5);
 				isAllTrue &= isTrue;
 				break;
 			}

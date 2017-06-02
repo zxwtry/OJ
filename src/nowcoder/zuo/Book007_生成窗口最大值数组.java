@@ -43,7 +43,7 @@ public class Book007_生成窗口最大值数组 {
 		int w = 3;
 		Solution s = new Solution();
 		int[] ans = s.getMaxWindow(arr, w);
-		tools.Utils.printArray(ans, 100);
+		tools.Utils.printArray(ans, 100, 5);
 	}
 	static class Solution {
 		public int[] getMaxWindow(int[] arr, int w) {
