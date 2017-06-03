@@ -30,7 +30,7 @@ public class P167_TwoSumII_InputArrayIsSorted {
 		target = 9;
 		Solution s = new Solution();
 		int[] ans = s.twoSum(numsInput, target);
-		tools.Utils.printArray(ans, 100);
+		tools.Utils.printArray(ans, 100, 5);
 	}
 	static void TestTwoSumEntry() {
 		int count = 0;

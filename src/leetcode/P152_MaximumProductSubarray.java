@@ -48,8 +48,8 @@ public class P152_MaximumProductSubarray {
 	        		negative[i] = nums[i];
 	        	}
 	        }
-	        tools.Utils.printArray(positive, 100);
-	        tools.Utils.printArray(negative, 100);
+	        tools.Utils.printArray(positive, 100, 5);
+	        tools.Utils.printArray(negative, 100, 5);
 	        return max;
 	    }
 	}

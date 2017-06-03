@@ -36,9 +36,9 @@ public class N120_随机数组不排序找到排序之后的index {
 		RadixSolution rs = new RadixSolution();
 		int[] arr = rs.get题目的样式(10, 0);
 //		arr = new int[] {1, 9, 9, 9, 1, 1, 44, 4, 1};
-		tools.Utils.printArray(arr, 100);
+		tools.Utils.printArray(arr, 100, 5);
 		int newMax = rs.radixSort(arr, 10);
-		tools.Utils.printArray(arr, 100);
+		tools.Utils.printArray(arr, 100, 5);
 		System.out.println(newMax);
 	}
 	static void test() {

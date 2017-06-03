@@ -16,7 +16,7 @@ public class P153_FindMinimuminRotatedSortedArray {
 	public static void main(String[] args) {
 		int[] arr = tools.Random随机生成器.A_生成一个不重复随机数据(100, 0, 100);
 		Arrays.sort(arr);
-		tools.Utils.printArray(arr, 100);
+		tools.Utils.printArray(arr, 100, 5);
 		Solution s = new Solution();
 		int selectIndex = 0;
 		for (; selectIndex < arr.length; selectIndex ++) {
