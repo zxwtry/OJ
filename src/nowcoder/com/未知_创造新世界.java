@@ -140,7 +140,7 @@ public class 未知_创造新世界 {
                 t1 += n1.get(j);
                 if (t0 <= n && t1 <= m && num[j] + 1 > num[i]) {
                     num[i] = num[j] + 1;
-                    tools.Utils.printArray(num, num.length);
+                    tools.Utils.printArray(num, num.length, 5);
                     max = Math.max(max, num[i]);
                 } else {
                     t0 -= n0.get(j);

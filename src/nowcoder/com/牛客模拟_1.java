@@ -34,7 +34,7 @@ public class 牛客模拟_1 {
             save[i] = i;
 //        boolean[][] m = k(a);
         for (int i = 0; i < n; i ++) {
-            if (i == 0 || (save[i-1] == 0 && )j(a, 0, i)) {
+            if (i == 0 || (save[i-1] == 0) && j(a, 0, i)) {
 //            if (m[0][i]) {
                 dp[i+1] = 0;
             } else {
