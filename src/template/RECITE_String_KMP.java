@@ -11,6 +11,14 @@ package template;
  * @details     https://leetcode.com/problems/implement-strstr/
  */
 public class RECITE_String_KMP {
+    public static void main(String[] args) {
+        String s = "aaaaaaaa";
+        String p = "aa";
+        System.out.println(new Solution().strStr(s, p));
+        int[] next = new Solution().getNext(s, s.length());;
+        tools.Utils.printArray_先打印下标(next.length);
+        tools.Utils.printArray(next, next.length, 5);;
+    }
 	static class Solution {
 		public int strStr(String s, String p) {
 			return kmp(s, p);
@@ -28,10 +36,10 @@ public class RECITE_String_KMP {
 			        pi ++;
 			        if (pi == pn) {
 			            //if need many times
-			            //si --
-			            //pi = 0
-			            
-			            return si - pn;
+			            System.out.println(si - pn);
+			            si --;
+			            pi = 0;
+//			            return si - pn;
 			        }
 			    } else if (next[pi] == -1) {
 			        si ++;

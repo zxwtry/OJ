@@ -30,7 +30,7 @@ public class P503_NextGreaterElementII {
         Solution1 solution1 = new Solution1();
         int[] nums = new int[] {1,2,1};
         int[] ans = solution1.nextGreaterElements(nums);
-        tools.Utils.printArray(ans, ans.length);
+        tools.Utils.printArray(ans, ans.length, 5);
     }
     static class Solution1 {
         public int[] nextGreaterElements(int[] nums) {
