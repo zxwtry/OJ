@@ -91,7 +91,7 @@ public class EditDistSep {
         int replace = 41;
         int[] ans2 = editDistance2(c1, c2, delete, insert, replace);
         int ans = editDistance(c1, c2, delete, insert, replace);
-        tools.Utils.printArray(ans2, ans2.length);
+        tools.Utils.printArray(ans2, ans2.length, 5);
         System.out.println(ans);
         System.out.println(ans2[0] * delete + ans2[1] * insert + ans2[2] * replace == ans);
     }

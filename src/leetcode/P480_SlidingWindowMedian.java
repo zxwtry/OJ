@@ -72,9 +72,9 @@ public class P480_SlidingWindowMedian {
             setAnswer(answer, answerIndex ++, arr, k);
             int removeNumsIndex = 0;
             System.out.print("arr is \t");
-            tools.Utils.printArray(arr, arr.length);
+            tools.Utils.printArray(arr, arr.length, 5);
             System.out.print("nis is \t");
-            tools.Utils.printArray(nis, nis.length);
+            tools.Utils.printArray(nis, nis.length, 5);
             for (; i < nums.length; i ++) {
                 nis[i] = nis[removeNumsIndex];
                 arr[nis[removeNumsIndex]] = nums[i];
@@ -83,9 +83,9 @@ public class P480_SlidingWindowMedian {
                 answerIndex ++;
                 removeNumsIndex ++;
                 System.out.print("arr is \t");
-                tools.Utils.printArray(arr, arr.length);
+                tools.Utils.printArray(arr, arr.length, 5);
                 System.out.print("nis is \t");
-                tools.Utils.printArray(nis, nis.length);
+                tools.Utils.printArray(nis, nis.length, 5);
             }
             return answer;
         }

@@ -41,8 +41,8 @@ public class P456_132Pattern {
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
 		NewBigSolution s = new NewBigSolution();
 		int[] big = s.getBig(arr);
-		tools.Utils.printArray(arr, 100);
-		tools.Utils.printArray(big, 100);
+		tools.Utils.printArray(arr, 100, 5);
+		tools.Utils.printArray(big, 100, 5);
 	}
 	static void debugNewSmallSolution() {
 		int n = 10;
@@ -51,8 +51,8 @@ public class P456_132Pattern {
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(n, min, max);
 		NewSmallSolution s = new NewSmallSolution();
 		int[] small = s.getSmall(arr);
-		tools.Utils.printArray(arr, 100);
-		tools.Utils.printArray(small, 100);
+		tools.Utils.printArray(arr, 100, 5);
+		tools.Utils.printArray(small, 100, 5);
 	}
 	static void debugSolution() {
 		int[] nums = new int[] {3,5,0,3,4};
