@@ -47,12 +47,35 @@ the one-to-one mapping relationship between the input and the output.
  * @package     leetcode
  * @file        P606_ConstructStringFromBinaryTree.java
  * @date        2017年6月4日 上午10:22:35
- * @details     
+ * @details     Solution: AC
  */
 public class P606_ConstructStringFromBinaryTree {
     static public class Solution {
+        StringBuilder st = new StringBuilder();
+        TreeNode head = null;
         public String tree2str(TreeNode t) {
-            
+            if (t == null) return "";
+            head = t;
+            search(t);
+            return st.toString();
+        }
+        void search(TreeNode t) {
+            if (t != head) st.append('(');
+            st.append(t.val);
+            if (t.left == null || t.right == null) { 
+                if (t.left == null && t.right == null) {
+                    
+                } else if (t.left == null) {
+                    st.append("()");
+                    search(t.right);
+                } else {
+                    search(t.left);
+                }
+            } else {
+                search(t.left);
+                search(t.right);
+            }
+            if (t != head) st.append(')');
         }
     }
 }
