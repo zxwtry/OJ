@@ -9,21 +9,6 @@ import java.util.List;
  */
 
 public class ListNode辅助 {
-	public static void main(String[] args) {
-//		ListNode head = A_一维生成器(new int[] {1,2,3,4});
-//		B_打印链表(head);
-		List<ListNode> ans = C_二维生成器(new int[][] {
-			{1, 2, 3, 4, 5},
-			{6, 7, 8, 9, 10},
-			{1, 3, 5, 7, 9},
-			{2, 4, 6, 8, 10, 100},
-			{100000}
-		});
-		for (int i = 0; i < ans.size(); i ++) {
-			B_打印链表(ans.get(i));
-			System.out.println("=======================");
-		}
-	}
 	public static ListNode A_一维生成器(int[] nums) {
 		ListNode pre = null, head = null;
 		for (int i = nums.length - 1; i != -1; i --) {
@@ -47,25 +32,15 @@ public class ListNode辅助 {
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(len, min, max);
 		return tools.ListNode辅助.A_一维生成器(arr);
 	}
-	public static void B_打印链表(ListNode head) {
+	public static void B_打印链表(ListNode head, int n, int placeHolderNumber) {
 		ListNode cur = head;
+		int i = 0;
 		while (cur != null) {
-			System.out.println(cur.val);
-			cur = cur.next;
+            System.out.printf(String.format("%%%dd" + ((i % n == n - 1 || cur.next == null)
+                    ? "\n" : ""), placeHolderNumber), cur.val);
+            cur = cur.next;
+            i ++;
 		}
-	}
-	public static void B_打印链表_一行(ListNode head, int sizeOfLine) {
-		ListNode cur = head;
-		int count = 0;
-		while (cur != null) {
-			System.out.print(cur.val + "\t");
-			cur = cur.next;
-			count ++;
-			if (count % sizeOfLine == 0 || cur == null) {
-				System.out.println();
-			}
-		}
-		
 	}
 	public static List<ListNode> C_二维生成器(int[][] nums) {
 		List<ListNode> ans = new LinkedList<ListNode>();
