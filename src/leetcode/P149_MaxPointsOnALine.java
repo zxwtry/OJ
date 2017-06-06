@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
+import leetcode.P149_MaxPointsOnALine.Solution2.Pair;
+
 /**
  * 	Given n points on a 2D plane, find the maximum number of 
  * 	points that lie on the same straight line.
@@ -21,6 +23,22 @@ import java.util.Map.Entry;
  * @details     Solution2: AC  30ms 54.35%
  */
 public class P149_MaxPointsOnALine {
+    public static void main(String[] args) {
+//        [[0,0],[94911151,94911150],[94911152,94911151]]
+        Point p0 = new Point(0, 0);
+        Point p1 = new Point(94911151, 94911150);
+//        Point p2 = new Point(94911152, 94911151);
+        Point p2 = new Point(-94911150, -94911151);
+        
+        Pair pair = new Pair(p1.x - p0.x, p1.y - p0.y);
+//        System.out.println(pair.oneline(p2.x - p0.x, p2.y - p0.y));
+        
+        
+        
+        Point[] points = new Point[]{p0, p1, p2};
+        System.out.println(new Solution1().maxPoints(points));
+        System.out.println(new Solution2().maxPoints(points));
+    }
 	static class Solution1 {
 	    public int maxPoints(Point[] points) {
 	    	if (points == null || points.length < 2) return points == null ? 0 : points.length;
@@ -94,7 +112,7 @@ public class P149_MaxPointsOnALine {
 	static class Solution2 {
 		public int maxPoints(Point[] p) {
 			if (p == null || p.length < 2) return p == null ? 0 : p.length;
-			HashMap<Float, Integer> map = new HashMap<Float, Integer>();
+			HashMap<Pair, Integer> map = new HashMap<Pair, Integer>();
 			int ans = 0;
 			for (int i = 0; i < p.length; i ++) {
 				map.clear();
@@ -106,15 +124,58 @@ public class P149_MaxPointsOnALine {
 						same ++;
 						continue;
 					}
-					float key = p[i].x == p[j].x ? Float.MAX_VALUE : (float)(p[i].y - p[j].y)/(p[i].x - p[j].x);
-					Integer v = map.get(key);
+					Pair pair = new Pair(p[j].x - p[i].x, p[j].y - p[i].y);
+					Integer v = map.get(pair);
 					int nv = v == null ? 2 : v + 1;
 					max = Math.max(max, nv);
-					map.put(key, nv);
+					if (v == null) map.put(pair, nv);
 				}
 				ans = Math.max(ans, max + same);
 			}
 			return ans;
+		}
+		static class Pair implements Comparable<Pair>{
+		    int a, b;
+		    
+		    public Pair(int a, int b) {
+		        int c = gcd(Math.abs(a), Math.abs(b));
+		        a = a / c;
+		        b = b / c;
+		        if (a < 0 && b < 0) {
+		            a = -a;
+		            b = -b;
+		        } else if (((a >>> 31 ) ^ (b >>> 31)) == 1) {
+		            a = -Math.abs(a);
+		            b = Math.abs(b);
+		        }
+		        this.a = a;
+		        this.b = b;
+            }
+		    
+		    public boolean oneline(long dx, long dy) {
+		        return dx * a == dy * a;
+		    }
+		    
+		    private int gcd(int a, int b) {
+		        if (a < b) return gcd(b, a);
+		        int t = 0;
+		        while (b != 0) {
+		            t = a % b;
+		            a = b;
+		            b = t;
+		        }
+		        return a;
+		    }
+		    
+            @Override
+            public int compareTo(Pair o) {
+                if (o.a > this.a) return 1;
+                else if (o.a < this.a) return -1;
+                if (o.b > this.b) return 1;
+                else if (o.b < this.b) return -1;
+                return 0;
+            }
+		    
 		}
 	}
 	static class Point {
