@@ -12,8 +12,9 @@ import tools.ListNode辅助.ListNode;
  * @package     leetcode
  * @file        P148_SortList.java
  * @date        2017年6月5日 下午8:39:40
- * @details     Solution1: AC 21ms 3.70%
- * @details     Solution2: AC 16ms 5.72%
+ * @details     Solution1: AC 21ms  3.70%
+ * @details     Solution2: AC 16ms  5.72%
+ * @details     Solution3: AC  9ms 39.13%
  */
 public class P148_SortList {
 	static class Solution1 {
@@ -105,6 +106,41 @@ public class P148_SortList {
     	            ln = rn = nn;
 	            }
 	        }
+	        return vh.next;
+	    }
+	}
+	static class Solution3 {
+	    ListNode vh = new ListNode(0);
+	    public ListNode sortList(ListNode h) {
+	        if (h == null || h.next == null) return h;
+	        ListNode f = h.next.next;
+	        ListNode s = h;
+	        while (f != null && f.next != null) {
+	            f = f.next.next;
+	            s = s.next;
+	        }
+	        f = sortList(s.next);
+	        s.next = null;
+	        return merge(sortList(h), f);
+	    }
+	    ListNode merge(ListNode a, ListNode b) {
+	        ListNode p = vh;
+	        while (a != null && b != null) {
+	            if (a.val < b.val) {
+	                p.next = a;
+	                p = a;
+	                a = a.next;
+	            } else {
+	                p.next = b;
+	                p = b;
+	                b = b.next;
+	            }
+	            
+	        }
+	        if (a == null)
+	            p.next = b;
+	        if (b == null)
+	            p.next = a;
 	        return vh.next;
 	    }
 	}
