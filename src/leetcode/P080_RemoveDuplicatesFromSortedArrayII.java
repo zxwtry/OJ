@@ -13,13 +13,7 @@ package leetcode;
  */
 
 public class P080_RemoveDuplicatesFromSortedArrayII {
-	public static void main(String[] args) {
-		System.out.println(new Solution().removeDuplicates(new int[] {
-				1, 1, 1, 1, 2, 2, 2, 3, 3, 5, 4, 4, 4, 4, 7, 8,8,8,10
-		}));
-	}
 	/*
-	 * 	WA一次
 	 * 	2 ms
 	 */
 	static class Solution {
@@ -43,7 +37,6 @@ public class P080_RemoveDuplicatesFromSortedArrayII {
 	    			theSame ++;
 	    		}
 	    	}
-	    	tools.Utils.printArray(step, 10);
 	    	int step_now = 0;
 	    	for (int i = 0; i != nums.length; i ++) {
 	    		if (step_now != 0)

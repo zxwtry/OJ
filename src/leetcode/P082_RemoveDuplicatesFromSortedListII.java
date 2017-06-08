@@ -11,18 +11,16 @@ package leetcode;
 
 import tools.ListNode辅助.*;
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P082_RemoveDuplicatesFromSortedListII.java
+ * @date        2017年6月8日 下午10:24:44
+ * @details     Solution: AC
+ */
 public class P082_RemoveDuplicatesFromSortedListII {
-	public static void main(String[] args) {
-//		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {1, 2, 3, 3, 4, 4, 5});
-		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {4});
-		ListNode ans = new Solution().deleteDuplicates(head);
-		tools.ListNode辅助.B_打印链表(ans);
-	}
-	/*
-	 * 	一次AC
-	 * 	之前一直晕晕沉沉，清醒之后，好好分析，真的不难。
-	 * 	1 ms
-	 */
 	static class Solution {
 	    public ListNode deleteDuplicates(ListNode head) {
 	    	if (head == null || head.next == null)
