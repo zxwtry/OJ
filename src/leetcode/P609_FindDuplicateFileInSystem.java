@@ -54,6 +54,30 @@ How to make sure the duplicated files you find are not false positive?
  * @package     leetcode
  * @file        P609_FindDuplicateFileInSystem.java
  * @date        2017年6月4日 上午10:41:02
- * @details     
+ * @details     Solution AC
  */
-public class P609_FindDuplicateFileInSystem {}
+public class P609_FindDuplicateFileInSystem {
+    static public class Solution {
+        public List<List<String>> findDuplicate(String[] paths) {
+            HashMap<String, List<String>> map = new HashMap<>();
+            for (String path : paths) {
+                String[] split = path.split(" ");
+                for (int index = 1; index < split.length; index ++) {
+                    int leftIndex = split[index].indexOf('(');
+                    String key = split[index].substring(leftIndex + 1, split[index].length() - 1);
+                    String pathReal = split[0] + "/" + split[index].substring(0, leftIndex);
+                    List<String> list = map.get(key);
+                    if (list == null) {
+                        list = new ArrayList<>();
+                        map.put(key, list);
+                    }
+                    list.add(pathReal);
+                }
+            }
+            List<List<String>> ans = new ArrayList<>(map.size());
+            for (HashMap.Entry<String, List<String>> en : map.entrySet())
+                if (en.getValue().size() > 1) ans.add(en.getValue());
+            return ans;
+        }
+    }
+}
