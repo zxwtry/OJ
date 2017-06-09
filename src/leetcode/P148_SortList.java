@@ -135,7 +135,6 @@ public class P148_SortList {
 	                p = b;
 	                b = b.next;
 	            }
-	            
 	        }
 	        if (a == null)
 	            p.next = b;
