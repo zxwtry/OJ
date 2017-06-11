@@ -9,12 +9,7 @@ package leetcode;
  */
 
 public class P066_PlusOne {
-	public static void main(String[] args) {
-		int[] ans = new Solution().plusOne(new int[] { 9, 9, 8 });
-		tools.Utils.printArray(ans, 10);
-	}
 	/*
-	 * 	之前没看懂啥意思，就是一个数字进位。
 	 * 	0 ms
 	 * 	43.01% 
 	 */
