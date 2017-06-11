@@ -1,6 +1,5 @@
 package leetcode;
 
-
 /*
  * 	Given an array with n objects colored red, white or blue,
  *  sort them so that objects of the same color are adjacent, 
@@ -13,17 +12,8 @@ package leetcode;
 	You are not suppose to use the library's sort function 
 	for this problem.
  */
-
 public class P075_SortColors {
-	public static void main(String[] args) {
-//		int[] in = new int[] {1, 2, 1, 0, 1, 2, 0, 1, 2};
-//		int[] in = new int[] {2, 1, 1, 1, 0, 1, 1, 1, 1};
-		int[] in = new int[] {0, 0};
-		new Solution().sortColors(in);
-		tools.Utils.printArray(in, 10);
-	}
 	/*
-	 * 	WA了一次，在第一次写条件的时候，尽量写全一点
 	 * 	1 ms
 	 */
 	static class Solution {
