@@ -12,15 +12,9 @@ import tools.ListNode辅助.*;
  */
 
 public class P061_RotateList {
-	public static void main(String[] args) {
-		ListNode input = tools.ListNode辅助.A_一维生成器(new int[] {1});
-		ListNode ans = new Solution().rotateRight(input,0);
-		tools.ListNode辅助.B_打印链表(ans);
-	}
 	/*
 	 * 	1 ms
 	 * 	9.52%
-	 * 	一次AC，好爽!!!
 	 */
 	static class Solution {
 	    public ListNode rotateRight(ListNode head, int k) {
