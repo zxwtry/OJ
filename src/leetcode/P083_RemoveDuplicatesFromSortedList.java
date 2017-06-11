@@ -10,11 +10,6 @@ package leetcode;
 
 import tools.ListNode辅助.*;
 public class P083_RemoveDuplicatesFromSortedList {
-	public static void main(String[] args) {
-		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {});
-		ListNode ans = new Solution().deleteDuplicates(head);
-		tools.ListNode辅助.B_打印链表(ans);
-	}
 	/*
 	 * 	1 ms
 	 * 	17.15%
