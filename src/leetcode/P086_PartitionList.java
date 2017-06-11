@@ -13,21 +13,8 @@ import tools.ListNode辅助.*;
 	Given 1->4->3->2->5->2 and x = 3,
 	return 1->2->2->4->3->5.
  */
-
 public class P086_PartitionList {
-	public static void main(String[] args) {
-		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {1, 4, 3, 2, 5, 2});
-//		head = tools.ListNode辅助.A_一维生成器(new int[] {6, 4, 4, 2, 5, 2});
-//		head = null;
-//		head = tools.ListNode辅助.A_一维生成器(new int[] {6});
-//		head = tools.ListNode辅助.A_一维生成器(new int[] {1, 1, 1, 1, 1});
-//		head = tools.ListNode辅助.A_一维生成器(new int[] {1, 2, 3});
-//		head = tools.ListNode辅助.A_一维生成器(new int[] {3, 1, 2});
-		ListNode ans = new Solution().partition(head, 3);
-		tools.ListNode辅助.B_打印链表(ans);
-	}
 	/*
-	 * 	昨天一天没有弄清楚，其实一个循环完成一个功能才是上上策。
 	 * 	AC
 	 * 	1 ms
 	 */
