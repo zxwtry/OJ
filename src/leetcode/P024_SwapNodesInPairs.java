@@ -19,10 +19,6 @@ package leetcode;
 import tools.ListNode辅助.ListNode;
 
 public class P024_SwapNodesInPairs {
-	public static void main(String[] args) {
-		ListNode input = tools.ListNode辅助.A_一维生成器(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
-		tools.ListNode辅助.B_打印链表(new Solution2().swapPairs(input));
-	}
 	/*
 	 * 	0 ms
 	 * 	6.30%
