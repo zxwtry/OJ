@@ -13,12 +13,6 @@ import java.util.Stack;
  */
 
 public class P150_EvaluateReversePolishNotation {
-	public static void main(String[] args) {
-		String[] input = null;
-		input = new String[] {"4", "13", "5", "/", "+"};
-		Solution s = new Solution();
-		System.out.println(s.evalRPN(input));
-	}
 	/*
 	 * 	 13 ms
 	 * 	 70.79%
