@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 /**
 
 Given an array consists of non-negative integers, your task is to count 
@@ -29,6 +31,4 @@ The integers in the given array are in the range of [0, 1000].
  * @date        2017年6月13日 下午9:57:10
  * @details     
  */
-public class P611_ValidTriangleNumber {
-
-}
+public class P611_ValidTriangleNumber {}
