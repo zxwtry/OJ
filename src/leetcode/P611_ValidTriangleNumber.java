@@ -31,4 +31,32 @@ The integers in the given array are in the range of [0, 1000].
  * @date        2017年6月13日 下午9:57:10
  * @details     
  */
-public class P611_ValidTriangleNumber {}
+public class P611_ValidTriangleNumber {
+    public static void main(String[] args) throws Exception {
+        int[] arr = {9, 1, 7, 3, 5};
+        Arrays.sort(arr);
+        System.out.println(Arrays.binarySearch(arr, 2));
+    }
+    static public class Solution {
+        public int triangleNumber(int[] nums) {
+            int nl = nums == null ? 0 : nums.length;
+            if (nl < 3) return 0;
+            Arrays.sort(nums);
+            int i = 0, j = 0;
+            int cnt = 0;
+            for (i = 0; i < nl-2; i ++) {
+                for (j = i+1; j < nl-1; j ++) {
+                    int startIndex = j+1;
+                    int endIndex = Arrays.binarySearch(nums, nums[i] + nums[j]);
+                    if (endIndex < 0) {
+                        endIndex = (- endIndex) - 1;
+                    } else {
+                        endIndex --;
+                    }
+                    cnt += Math.max(endIndex - startIndex + 1, 0);
+                }
+            }
+            return cnt;
+        }
+    }
+}
