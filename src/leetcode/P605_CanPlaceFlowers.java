@@ -29,12 +29,39 @@ n is a non-negative integer which won't exceed the input array size.
  * @package     leetcode
  * @file        P605_CanPlaceFlowers.java
  * @date        2017年6月4日 上午9:59:35
- * @details     
+ * @details     Solution: AC
  */
 public class P605_CanPlaceFlowers {
     static public class Solution {
-        public boolean canPlaceFlowers(int[] flowerbed, int n) {
-            
+        public boolean canPlaceFlowers(int[] f, int n) {
+            int fsti = 0, feni = f.length - 1;
+            int cnt = 0;
+            while (fsti <= feni && f[fsti] == 0) {
+                cnt ++;
+                fsti ++;
+            }
+            //all zero
+            if (fsti == feni+1) return n <= (feni+2)/2;
+            n -= cnt / 2;
+            if (n < 1) return true;
+            cnt = 0;
+            while (fsti <= feni && f[feni] == 0) {
+                cnt ++;
+                feni --;
+            }
+            n -= cnt / 2;
+            if (n < 1) return true;
+            cnt = 0;
+            for (int i = fsti+1; i <= feni; i ++) {
+                if (f[i] == 1) {
+                    n -= (cnt - 1) / 2;
+                    if (n < 1) return true;
+                    cnt = 0;
+                } else {
+                    cnt ++;
+                }
+            }
+            return false;
         }
     }
 }
