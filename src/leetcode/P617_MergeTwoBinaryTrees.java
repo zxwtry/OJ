@@ -1,7 +1,5 @@
 package leetcode;
 
-import com.sun.istack.internal.localization.NullLocalizable;
-
 import tools.TreeNode辅助.TreeNode;
 
 /**
@@ -39,7 +37,7 @@ Note: The merging process must start from the root nodes of both trees.
  * @package     leetcode
  * @file        P617_MergeTwoBinaryTrees.java
  * @date        2017年6月12日 上午10:39:15
- * @details     
+ * @details     Solution: AC 25ms 16.67%
  */
 public class P617_MergeTwoBinaryTrees {
     static public class Solution {
