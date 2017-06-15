@@ -74,5 +74,10 @@ public class ListNode辅助 {
 		public ListNode(int val) {
 			this.val = val;
 		}
+		@Override
+		public String toString() {
+		    return "val: " + val + "   next: " + 
+		(next == null ? "null" : String.valueOf(next.val));
+		}
 	}
 }
