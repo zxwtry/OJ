@@ -1,5 +1,10 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import tools.TreeNode辅助.TreeNode;
+
 /**
 
 Given the root of a binary tree, then value v and depth d, you need to add 
@@ -70,8 +75,55 @@ The given binary tree has at least one tree node.
  * @package     leetcode
  * @file        P623_AddOneRowToTree.java
  * @date        2017年6月18日 上午9:56:57
- * @details     
+ * @details     AC
  */
 public class P623_AddOneRowToTree {
-
+    static public class Solution {
+        public TreeNode addOneRow(TreeNode root, int v, int d) {
+            if (d == 1) {
+                TreeNode newRoot = new TreeNode(v);
+                newRoot.left = root;
+                return newRoot;
+            }
+            int layerCount = 2;
+            LinkedList<TreeNode> queue = new LinkedList<>();
+            queue.add(root);
+            ArrayList<TreeNode> vTreeNodeList = new ArrayList<>();
+            while (! queue.isEmpty()) {
+                int queueSize = queue.size();
+                for (int queueIndex = 0; queueIndex < queueSize; queueIndex ++) {
+                    TreeNode nodeNow = queue.poll();
+                    if (layerCount == d) {
+                        queue.add(nodeNow.left);
+                        queue.add(nodeNow.right);
+                        nodeNow.left = new TreeNode(v);
+                        vTreeNodeList.add(nodeNow.left);
+                        nodeNow.right = new TreeNode(v);
+                        vTreeNodeList.add(nodeNow.right);
+                    } else {
+                        if (nodeNow.left != null) {
+                            queue.add(nodeNow.left);
+                        }
+                        if (nodeNow.right != null) {
+                            queue.add(nodeNow.right);
+                        }
+                    }
+                }
+                if (layerCount == d) {
+                    break;
+                }
+                layerCount ++;
+            }
+            for (int vTreeNodeIndex = 0, vTreeNodeLength = vTreeNodeList.size(); vTreeNodeIndex < 
+                    vTreeNodeLength; vTreeNodeIndex ++) {
+                TreeNode nodeNow = queue.poll();
+                if (vTreeNodeIndex % 2 == 0) {
+                    vTreeNodeList.get(vTreeNodeIndex).left = nodeNow;
+                } else {
+                    vTreeNodeList.get(vTreeNodeIndex).right = nodeNow;
+                }
+            }
+            return root;
+        }
+    }
 }
