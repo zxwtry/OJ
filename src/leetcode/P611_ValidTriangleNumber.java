@@ -33,9 +33,8 @@ The integers in the given array are in the range of [0, 1000].
  */
 public class P611_ValidTriangleNumber {
     public static void main(String[] args) throws Exception {
-        int[] arr = {9, 1, 7, 3, 5};
-        Arrays.sort(arr);
-        System.out.println(Arrays.binarySearch(arr, 2));
+        int[] arr = {8, 1, 7, 3, 5};
+        System.out.println(new Solution().triangleNumber(arr));
     }
     static public class Solution {
         public int triangleNumber(int[] nums) {
@@ -51,9 +50,12 @@ public class P611_ValidTriangleNumber {
                     if (endIndex < 0) {
                         endIndex = (- endIndex) - 1;
                     } else {
-                        endIndex --;
+//                        endIndex --;
                     }
-                    cnt += Math.max(endIndex - startIndex + 1, 0);
+                    if (endIndex - startIndex > 0) {
+                        System.out.println();
+                    }
+                    cnt += Math.max(endIndex - startIndex, 0);
                 }
             }
             return cnt;
