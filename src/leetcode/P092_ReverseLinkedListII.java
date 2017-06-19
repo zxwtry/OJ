@@ -19,13 +19,7 @@ package leetcode;
 import tools.ListNode辅助.ListNode;;
 
 public class P092_ReverseLinkedListII {
-	public static void main(String[] args) {
-		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {});
-		ListNode ans = new Solution().reverseBetween(head, 1, 1);
-		tools.ListNode辅助.B_打印链表(ans);
-	}
 	/*
-	 * 	题目非常容易，一次AC，好爽
 	 * 	1 ms
 	 */
 	static class Solution {
