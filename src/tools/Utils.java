@@ -97,6 +97,15 @@ public class Utils {
                     ? "\n" : ""), placeHolderNumber), arr[i]);
 		}
 	}
+    public static void printArray(byte[] arr, int n, int placeHolderNumber) {
+        int arrEnd = 0;
+        if (arr == null || (arrEnd = arr.length-1) < 0)
+            return;
+        for (int i = 0; i <= arrEnd; i ++) {
+            System.out.printf(String.format("%%%dd" + ((i % n == n - 1 || i == arrEnd)
+                    ? "\n" : ""), placeHolderNumber), arr[i]);
+        }
+    }
 	public static void printArray(boolean[] arr, int n, int placeHolderNumber) {
 		int arrEnd = 0;
 		if (arr == null || (arrEnd = arr.length-1) < 0)
