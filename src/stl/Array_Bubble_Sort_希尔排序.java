@@ -2,6 +2,15 @@ package stl;
 
 import tools.ListNode辅助.ListNode;
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     stl
+ * @file        Array_Bubble_Sort_希尔排序.java
+ * @date        2017年6月11日 下午10:20:25
+ * @details     
+ */
 public class Array_Bubble_Sort_希尔排序 {
     public static void main(String[] args) {
         int n = 10;
