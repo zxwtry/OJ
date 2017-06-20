@@ -19,7 +19,7 @@ public class P143_ReorderList {
 		Solution s = new Solution();
 		s.reorderList(head);
 //		ListNode ans = s.reverse(head);
-		tools.ListNode辅助.B_打印链表(head);
+		tools.ListNode辅助.B_打印链表(head, 100, 5);
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(100, 0, 900);
 		System.out.println(tools.Utils.LEETCODE_int_array_序列化_(arr));
 	}
