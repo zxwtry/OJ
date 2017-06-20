@@ -1,5 +1,8 @@
 package book.编程之美;
 
+import java.io.File;
+import java.util.Scanner;
+
 /**
  * @author      zxwtry
  * @email       zxwtry@qq.com
@@ -11,6 +14,41 @@ package book.编程之美;
  * @details     Solution1: 很复杂就是了
  */
 public class Book004_24点 {
+    public static void main(String[] args) throws Exception {
+//        Solution1 solution1 = new Solution1();
+        
+//        int[] arr = new int[]{0, 0, 0, 0};
+//        solution1.solve(arr);     //eozpwqcvxxlhieudzph
+        //12951
+        
+//        char [] cs = new char[19];
+//        for (int i = 0; i < cs.length; i ++) {
+//            cs[i] = (char)('a' + (Math.random() * 26));
+//            
+//        }
+//        System.out.println(new String(cs));
+        
+//        Scanner scanner = new Scanner(new File("F:/a.txt"));
+//        while (scanner.hasNextInt()) {
+//            int label = scanner.nextInt();
+//            System.out.printf("=============%d=============", label);
+//            Solution1 solution1 = new Solution1();
+//            solution1.solve(new int[] {scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt()});
+//            System.out.println("==============================");
+//        }
+        
+//        System.out.println("连城诀[www.5tps.com]001.mp3".indexOf('0'));
+        String pathName = "E:/file/dsj/连城诀/";
+        File path = new File(pathName);
+        String[] names = path.list();
+        for (String name : names) {
+            String newName = "连城诀" + name.substring(17);
+              File file = new File(pathName + name);
+                
+            file.renameTo(new File(pathName + newName));
+        }
+//        
+    }
 	static class Solution1 {
 		public Solution1() {
 			this(4, 24);
