@@ -9,7 +9,7 @@ public class P203_RemoveLinkedListElements {
 		});
 		Solution s = new Solution();
 		ListNode ans = s.removeElements(head, 6);
-		tools.ListNode辅助.B_打印链表(ans);
+		tools.ListNode辅助.B_打印链表(ans, 10, 5);
 	}
 	/*
 	 * 	1 ms
