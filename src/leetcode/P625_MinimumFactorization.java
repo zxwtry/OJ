@@ -31,6 +31,8 @@ Output:
  * @date        2017年6月18日 上午10:28:25
  * @details     AC
  */
+
+
 public class P625_MinimumFactorization {
     static public class Solution {
         public int smallestFactorization(int a) {
