@@ -28,7 +28,7 @@ package leetcode;
 public class P414_ThirdMaximumNumber {
 	public static void main(String[] args) {
 		int[] nums = tools.Random随机生成器.A_生成一个随机数据(10, 0, 100);
-		tools.Utils.printArray(nums, 100);
+		tools.Utils.printArray(nums, 100, 5);
 		Solution s = new Solution();
 		System.out.println(s.thirdMax(nums));
 	}
