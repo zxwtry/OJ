@@ -4,12 +4,14 @@ import tools.ListNode辅助.ListNode;
 
 public class P203_RemoveLinkedListElements {
 	public static void main(String[] args) {
-		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {
-			6,2,3,4,5,6,7,7,6,5,43,3,6
-		});
-		Solution s = new Solution();
-		ListNode ans = s.removeElements(head, 6);
-		tools.ListNode辅助.B_打印链表(ans, 10, 5);
+//		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {
+//			6,2,3,4,5,6,7,7,6,5,43,3,6
+//		});
+//		Solution s = new Solution();
+//		ListNode ans = s.removeElements(head, 6);
+//		tools.ListNode辅助.B_打印链表(ans, 10, 5);
+	    byte[] bs = new byte[] {6, 3, 2};
+	    System.out.println(new String(bs));
 	}
 	/*
 	 * 	1 ms
