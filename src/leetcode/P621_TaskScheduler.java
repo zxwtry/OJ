@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 /**
 
 Given a char array representing tasks CPU need to do. It contains capital letters 
@@ -28,11 +30,42 @@ The number of tasks is in the range [1, 10000].
  * @package     leetcode
  * @file        P621_TaskScheduler.java
  * @date        2017年6月18日 上午10:57:49
- * @details     
+ * @details     AC 57ms 53.03%
  */
 public class P621_TaskScheduler {
+    public static void main(String[] args) {
+        String s = "AAABBB";
+        int n = 2;
+        char[] tasks = s.toCharArray();
+        Solution solution = new Solution();
+        System.out.println(solution.leastInterval(tasks, n));
+    }
     static public class Solution {
         public int leastInterval(char[] tasks, int n) {
+            int tasksLength = tasks == null ? 0 : tasks.length;
+            int[] map = new int[128];
+            int[] pre = new int[128];
+            Arrays.fill(pre, -n-1);
+            for (int tasksIndex = 0; tasksIndex != tasksLength; tasksIndex ++) {
+                map[tasks[tasksIndex]] ++; 
+            }
+            int findAll = tasksLength;
+            int target = 0;
+            while (findAll > 0) {
+                int best = 0;
+                for (int i = 'A'; i <= 'Z'; i ++) {
+                    if (map[i] > 0 && map[i] > map[best] && pre[i] + n + 1 <= target) {
+                        best = i;
+                    }
+                }
+                if (best != 0) {
+                    -- map[best];
+                    pre[best] = target;
+                    -- findAll;
+                }
+                ++ target;
+            }
+            return target;
             
         }
     }
