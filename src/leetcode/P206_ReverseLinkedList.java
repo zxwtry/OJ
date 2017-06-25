@@ -6,7 +6,7 @@ public class P206_ReverseLinkedList {
 		ListNode head = tools.ListNode辅助.A_一维生成器(new int[] {1, 2, 3, 4});
 		Solution s = new Solution();
 		ListNode ans = s.reverseList(head);
-		tools.ListNode辅助.B_打印链表(ans);
+		tools.ListNode辅助.B_打印链表(ans, 100, 5);
 	}
 	/*
 	 * 	0 ms
