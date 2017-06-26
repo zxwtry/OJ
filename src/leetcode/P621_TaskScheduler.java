@@ -34,11 +34,6 @@ The number of tasks is in the range [1, 10000].
  */
 public class P621_TaskScheduler {
     public static void main(String[] args) {
-        String s = "AAABBB";
-        int n = 2;
-        char[] tasks = s.toCharArray();
-        Solution solution = new Solution();
-        System.out.println(solution.leastInterval(tasks, n));
     }
     static public class Solution {
         public int leastInterval(char[] tasks, int n) {
@@ -66,7 +61,6 @@ public class P621_TaskScheduler {
                 ++ target;
             }
             return target;
-            
         }
     }
 }
