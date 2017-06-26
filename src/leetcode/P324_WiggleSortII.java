@@ -38,7 +38,7 @@ public class P324_WiggleSortII {
         int[] arr1 = tools.Random随机生成器.A_生成一个随机数据(10, 0, 3);
         arr1 = new int[] {0, 1, 2, };
         System.out.print("a1:\t");
-        tools.Utils.printArray(arr1, arr1.length);
+        tools.Utils.printArray(arr1, arr1.length, 5);
         int[] arr5 = Arrays.copyOf(arr1, arr1.length);
         Solution1 solution1 = new Solution1();
         Solution5 solution5 = new Solution5();
@@ -46,9 +46,9 @@ public class P324_WiggleSortII {
         solution5.wiggleSort(arr5);
         System.out.println("=====================");
         System.out.print("a1:\t");
-        tools.Utils.printArray(arr1, arr1.length);
+        tools.Utils.printArray(arr1, arr1.length, 5);
         System.out.print("a5:\t");
-        tools.Utils.printArray(arr5, arr5.length);
+        tools.Utils.printArray(arr5, arr5.length, 5);
         
     }
 	static class Solution1 {
