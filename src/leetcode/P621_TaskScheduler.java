@@ -1,7 +1,5 @@
 package leetcode;
 
-import java.util.Arrays;
-
 /**
 
 Given a char array representing tasks CPU need to do. It contains capital letters 
@@ -30,53 +28,25 @@ The number of tasks is in the range [1, 10000].
  * @package     leetcode
  * @file        P621_TaskScheduler.java
  * @date        2017年6月18日 上午10:57:49
- * @details     AC 57ms 53.03%
+ * @details     AC 11ms 92.09%
  */
 public class P621_TaskScheduler {
-    public static void main(String[] args) {
-//        String s = "AAABBB";
-//        int n = 2;
-//        char[] tasks = s.toCharArray();
-//        Solution solution = new Solution();
-//        System.out.println(solution.leastInterval(tasks, n));
-//        byte v = (byte)0x87;
- //       System.out.println(v & 0x80);
-        int[][] arr = new int[2][];
-        int[] info = arr[0];
-        info = new int[1];
-        System.out.println(arr[0] == null);
-        System.out.println(info == null);
-        System.out.println(true ^ true);
-        System.out.println(true ^ false);
-        System.out.println(false ^ false);
-        System.out.println(false ^ true);
-    }
-    static public class Solution {
+    static class Solution {
         public int leastInterval(char[] tasks, int n) {
-            int tasksLength = tasks == null ? 0 : tasks.length;
-            int[] map = new int[128];
-            int[] pre = new int[128];
-            Arrays.fill(pre, -n-1);
-            for (int tasksIndex = 0; tasksIndex != tasksLength; tasksIndex ++) {
-                map[tasks[tasksIndex]] ++; 
-            }
-            int findAll = tasksLength;
-            int target = 0;
-            while (findAll > 0) {
-                int best = 0;
-                for (int i = 'A'; i <= 'Z'; i ++) {
-                    if (map[i] > 0 && map[i] > map[best] && pre[i] + n + 1 <= target) {
-                        best = i;
-                    }
+            if (tasks == null) return 0;
+            int[] map = new int[26];
+            for (char task : tasks) map[task - 'A'] ++;
+            int mapMax = map[0];
+            int mapMaxCount = 1;
+            for (int i = 1; i < 26; i ++) {
+                if (map[i] > mapMax) {
+                    mapMaxCount = 1;
+                    mapMax = map[i];
+                } else if (map[i] == mapMax) {
+                    mapMaxCount ++;
                 }
-                if (best != 0) {
-                    -- map[best];
-                    pre[best] = target;
-                    -- findAll;
-                }
-                ++ target;
             }
-            return target;
+            return Math.max(tasks.length, (mapMax - 1) * (n + 1) + mapMaxCount);
         }
     }
 }
