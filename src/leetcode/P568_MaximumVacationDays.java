@@ -37,7 +37,7 @@ public class P568_MaximumVacationDays {
                 {0, 7, 0},
                 {0, 0, 7},
         };
-        System.out.println(new Solution2().maxVacationDays(f, d));
+        System.out.println(new Solution().maxVacationDays(f, d));
     }
     
     static public class Solution {
@@ -58,34 +58,6 @@ public class P568_MaximumVacationDays {
                     search(f, d, n, k, nj, ki+1, a, c+d[nj][ki]);
                 }
             }
-        }
-    }
-    
-    static public class Solution2 {
-        public int maxVacationDays(int[][] f, int[][] d) {
-            int n = f == null ? 0 : f.length;
-            if (n == 0) return 0;
-            int k = d[0] == null ? 0 : d[0].length;
-            if (k == 0) return 0;
-            int ans = 0;
-            int[][] m = new int[n+1][k];
-            boolean[][] a = new boolean[k][k];
-            a[0][0] = true;
-            for (int ni = 1; ni <= n; ni ++) {
-                boolean[][] aa = new boolean[k][k];
-                for (int ki = 0; ki < k; ki ++) {
-                    if (a[m])
-                    aa[ki][ki] = true;
-                    for (int kj = 0; kj < k; kj ++) {
-                        
-                    }
-                }
-                a = aa;
-            }
-            for (int ni = 0; ni <= n; ni ++)
-                ans = Math.max(m[ni][k-1], ans);
-            return ans;
-            
         }
     }
     

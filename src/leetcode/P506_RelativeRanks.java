@@ -35,7 +35,7 @@ import java.util.Comparator;
  */
 public class P506_RelativeRanks {
     static class Solution1 {
-        public String[] findRelativeRanks(int[] nums) {
+        public String[] findRelativeRanks(final int[] nums) {
             ArrayList<Integer> list = new ArrayList<Integer>(nums.length);
             for (int i = 0; i < nums.length; i ++)
                 list.add(i);

@@ -1,6 +1,5 @@
 package leetcode;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -76,48 +75,46 @@ public class P502_IPO {
             }
         }
 	}
-	static class Solution2 {
-	    public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
-	        PriorityQueue<int[]> pqCap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
-	        PriorityQueue<int[]> pqPro  = new PriorityQueue<>((a, b) -> (b[1] - a[1]));
-	        for (int i = 0; i < Profits.length; i++) {
-	            pqCap.add(new int[] {Capital[i], Profits[i]});
-	        }
-	        for (int i = 0; i < k; i++) {
-	            while (!pqCap.isEmpty() && pqCap.peek()[0] <= W) {
-	                pqPro.add(pqCap.poll());
-	            }
-	            if (pqPro.isEmpty()) break;
-	            W += pqPro.poll()[1];
-	        }
-	        return W;
-	    }
-	}
 	static class Solution3 {
+	    static class T implements Comparable<T> {
+	        int[] arr;
+	        T(int[] arr) {
+	            this.arr = arr;
+	        }
+            @Override
+            public int compareTo(T t) {
+                int[] arr1 = this.arr;
+                int[] arr2 = t.arr;
+                if (arr1[0] < arr2[0]) return -1;
+                else if (arr1[0] > arr2[0]) return 1;
+                return 0;
+            }
+	    }
+	    static class P implements Comparable<P> {
+	        int[] arr;
+	        P(int[] arr) {
+	            this.arr = arr;
+	        }
+            @Override
+            public int compareTo(P o) {
+                int[] arr1 = this.arr;
+                int[] arr2 = o.arr;
+                if (arr1[1] < arr2[1]) return 1;
+                else if (arr1[1] > arr2[1]) return -1;
+                return 0;
+            }
+	        
+	    }
 	    public int findMaximizedCapital(int k, int W, int[] pro, int[] cap) {
-	        PriorityQueue<int[]> c = new PriorityQueue<int[]>(new Comparator<int[]>() {
-                @Override
-                public int compare(int[] arr1, int[] arr2) {
-                    if (arr1[0] < arr2[0]) return -1;
-                    else if (arr1[0] > arr2[0]) return 1;
-                    return 0;
-                }
-            });
-	        PriorityQueue<int[]> p = new PriorityQueue<int[]>(new Comparator<int[]>() {
-                @Override
-                public int compare(int[] arr1, int[] arr2) {
-                    if (arr1[1] < arr2[1]) return 1;
-                    else if (arr1[1] > arr2[1]) return -1;
-                    return 0;
-                }
-            });
+	        PriorityQueue<T> c = new PriorityQueue<T>();
+	        PriorityQueue<P> p = new PriorityQueue<P>();
 	        for (int i = 0; i < pro.length; i ++)
-	            c.add(new int[] {cap[i], pro[i]});
+	            c.add(new T(new int[] {cap[i], pro[i]}));
 	        for (int i = 0; i < k; i ++) {
-	            while (! c.isEmpty() && c.peek()[0] <= W)
-	                p.add(c.poll());
+	            while (! c.isEmpty() && c.peek().arr[0] <= W)
+	                p.add(new P(c.poll().arr));
 	            if (p.isEmpty()) break;
-	            W += p.poll()[1];
+	            W += p.poll().arr[1];
 	        }
 	        return W;
 	    }

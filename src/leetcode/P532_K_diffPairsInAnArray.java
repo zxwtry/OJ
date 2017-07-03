@@ -46,7 +46,12 @@ public class P532_K_diffPairsInAnArray {
                 int answer = 0;
                 HashMap<Integer, Integer> map = new HashMap<>(nums.length);
                 for (int num : nums) {
-                    map.put(num, map.getOrDefault(num, 0) + 1);
+                    Integer numVal = map.get(num);
+                    if (numVal == null) {
+                        numVal = 0;
+                    }
+                    numVal ++;
+                    map.put(num, numVal);
                 }
                 for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
                     if (entry.getValue() >= 2) answer ++;

@@ -69,7 +69,11 @@ public class P508_MostFrequentSubtreeSum {
             int left = postOrder(root.left);
             int right = postOrder(root.right);
             int sum = left + right + root.val;
-            int count = sumToCount.getOrDefault(sum, 0) + 1;
+            Integer count = sumToCount.get(sum);
+            if (count == null) {
+                count = 0;
+            }
+            count ++;
             sumToCount.put(sum, count);
             maxCount = Math.max(maxCount, count);
             return sum;
@@ -90,10 +94,17 @@ public class P508_MostFrequentSubtreeSum {
         private int search(TreeNode root, HashMap<Integer, HashSet<Integer>> countSet, int[] maxCount, HashMap<Integer, Integer> sumCount) {
             if (root == null) return 0;
             int val = root.val + search(root.left, countSet, maxCount, sumCount) + search(root.right, countSet, maxCount, sumCount);
-            int count = sumCount.getOrDefault(val, 0) + 1;
+            Integer count = sumCount.get(val);
+            if (count == null) {
+                count = 0;
+            }
+            count ++;
             sumCount.put(val, count);
             if (count != 1) countSet.get(count - 1).remove(val);
-            HashSet<Integer> set = countSet.getOrDefault(count, new HashSet<Integer>());
+            HashSet<Integer> set = countSet.get(count);
+            if (set == null) {
+                set = new HashSet<>();
+            }
             set.add(val);
             countSet.put(count, set);
             maxCount[0] = Math.max(maxCount[0], count);
@@ -115,7 +126,11 @@ public class P508_MostFrequentSubtreeSum {
         private int find(TreeNode root, int[] countCount, HashMap<Integer, Integer> sumCount) {
             if (root == null) return 0;
             int sum = root.val + find(root.left, countCount, sumCount) + find(root.right, countCount, sumCount);
-            int count = sumCount.getOrDefault(sum, 0) + 1;
+            Integer count = sumCount.get(sum);
+            if (count == null) {
+                count = 0;
+            }
+            count ++;
             sumCount.put(sum, count);
             if (countCount[0] == count) countCount[1] ++;
             else if (countCount[0] < count) {

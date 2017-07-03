@@ -3,6 +3,7 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 Given a list of directory info including directory path, and all the files 
@@ -75,7 +76,7 @@ public class P609_FindDuplicateFileInSystem {
                 }
             }
             List<List<String>> ans = new ArrayList<>(map.size());
-            for (HashMap.Entry<String, List<String>> en : map.entrySet())
+            for (Map.Entry<String, List<String>> en : map.entrySet())
                 if (en.getValue().size() > 1) ans.add(en.getValue());
             return ans;
         }

@@ -56,7 +56,10 @@ public class P582_KillProcess {
             HashMap<Integer, ArrayList<Integer>> m = new HashMap<>();
             int n = pid.size();
             for (int i = 0; i < n; i ++) {
-                ArrayList<Integer> s = m.getOrDefault(ppid.get(i), new ArrayList<Integer>());
+                ArrayList<Integer> s = m.get(ppid.get(i));
+                if (s == null) {
+                    s = new ArrayList<>();
+                }
                 boolean put = s.size() == 0;
                 s.add(pid.get(i));
                 if (put) m.put(ppid.get(i), s);
@@ -68,7 +71,10 @@ public class P582_KillProcess {
             q.add(kill);
             ans.add(kill);
             while (! q.isEmpty()) {
-                p = m.getOrDefault(q.poll(), new ArrayList<>(0));
+                p = m.get(q.poll());
+                if (p == null) {
+                    p = new ArrayList<>();
+                }
                 for (int v : p) {
                     ans.add(v);
                     q.add(v);

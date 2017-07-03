@@ -51,7 +51,10 @@ public class P501_FindModeinBinarySearchTree {
 	        if (root.val == pre) pre = pre + 1;
 	        middle(root);
 	        if (max <= count) {
-                HashSet<Integer> set = map.getOrDefault(count, new HashSet<Integer>());
+                HashSet<Integer> set = map.get(count);
+                if (set == null) {
+                    set = new HashSet<Integer>();
+                }
                 set.add(pre);
                 map.put(count, set);
                 max = count;
@@ -75,7 +78,10 @@ public class P501_FindModeinBinarySearchTree {
     	            count ++;
     	        } else {
     	            if (max <= count) {
-    	                HashSet<Integer> set = map.getOrDefault(count, new HashSet<Integer>());
+    	                HashSet<Integer> set = map.get(count);
+    	                if (set == null) {
+    	                    set = new HashSet<Integer>();
+    	                }
     	                set.add(pre);
     	                map.put(count, set);
     	                max = count;

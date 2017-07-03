@@ -73,8 +73,14 @@ public class P594_LongestHarmoniousSubsequence {
     static public class Solution2 {
         public int findLHS(int[] n) {
             HashMap<Integer, Integer> m = new HashMap<>();
-            for (int v : n)
-                m.put(v, m.getOrDefault(v, 0) + 1);
+            for (int v : n) {
+                Integer vVal = m.get(v);
+                if (vVal == null) {
+                    vVal = 0;
+                }
+                vVal ++;
+                m.put(v, vVal);
+            }
             int ans = 0;
             for (Entry<Integer, Integer> e : m.entrySet()) {
                 Integer v1 = m.get(e.getKey() + 1);
