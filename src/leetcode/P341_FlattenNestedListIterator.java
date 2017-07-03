@@ -55,6 +55,9 @@ public class P341_FlattenNestedListIterator {
 	    public boolean hasNext() {
 	        return ! integerList.isEmpty();
 	    }
+        @Override
+        public void remove() {
+        }
 	}
 	
 	static class NestedIterator2 implements Iterator<Integer> {
@@ -82,6 +85,9 @@ public class P341_FlattenNestedListIterator {
 	        }
 	        return false;
 	    }
+        @Override
+        public void remove() {
+        }
 	}
 	
 	static class NestedInteger {

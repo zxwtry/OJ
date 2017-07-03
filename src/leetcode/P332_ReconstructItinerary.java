@@ -47,21 +47,6 @@ import java.util.TreeMap;
  * @details     Solution4: AC  19ms 30.46%  *
  */
 public class P332_ReconstructItinerary {
-	static class Solution1 {
-	    Map<String, PriorityQueue<String>> targets = new HashMap<>();
-        List<String> route = new LinkedList<String>();
-	    public List<String> findItinerary(String[][] tickets) {
-	        for (String[] ticket : tickets)
-	            targets.computeIfAbsent(ticket[0], k -> new PriorityQueue<String>()).add(ticket[1]);
-	        visit("JFK");
-	        return route;
-	    }
-	    void visit(String airport) {
-	        while(targets.containsKey(airport) && !targets.get(airport).isEmpty())
-	            visit(targets.get(airport).poll());
-	        route.add(0, airport);
-	    }
-	}
 	static class Solution2 {
 	    public List<String> findItinerary(String[][] tickets) {
 	        List<String> ans = new ArrayList<String>();

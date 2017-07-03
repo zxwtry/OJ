@@ -35,6 +35,10 @@ import java.util.LinkedList;
  */
 public class P324_WiggleSortII {
     public static void main(String[] args) {
+        LinkedList<Integer> list = new LinkedList<>();
+        list.add(1);
+        list.addLast(2);
+        list.addFirst(3);
         int[] arr1 = tools.Random随机生成器.A_生成一个随机数据(10, 0, 3);
         arr1 = new int[] {0, 1, 2, };
         System.out.print("a1:\t");

@@ -1,6 +1,5 @@
 package leetcode;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -43,18 +42,23 @@ public class P321_CreateMaximumNumber {
 	    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
 	        if (nums1 == null || nums2 == null || k < 0 || k > nums1.length + nums2.length)
 	        	return new int[0];
-	        PriorityQueue<Integer> priorityQueue = new PriorityQueue<Integer>(new Comparator<Integer>() {
-                @Override
-                public int compare(Integer o1, Integer o2) {
-                    return o2 - o1;
-                }
-            });
-	        for (int num : nums1) priorityQueue.add(num);
-	        for (int num : nums2) priorityQueue.add(num);
+	        PriorityQueue<T> priorityQueue = new PriorityQueue<T>();
+	        for (int num : nums1) priorityQueue.add(new T(num));
+	        for (int num : nums2) priorityQueue.add(new T(num));
 	        int[] maxNumber = new int[k];
 	        for (int maxNumberIndex = 0; maxNumberIndex < maxNumber.length; maxNumberIndex ++)
-	            maxNumber[maxNumberIndex] = priorityQueue.poll();
+	            maxNumber[maxNumberIndex] = priorityQueue.poll().val;
 	        return maxNumber;
+	    }
+	    private static class T implements Comparable<T> {
+	        int val;
+	        T(int val) {
+	            this.val = val;
+	        }
+            @Override
+            public int compareTo(T o) {
+                return Integer.compare(o.val, this.val);
+            }
 	    }
 	}
 	static class Solution2 {

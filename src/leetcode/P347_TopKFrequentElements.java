@@ -38,8 +38,11 @@ public class P347_TopKFrequentElements {
 	static class Solution1 {
 	    public List<Integer> topKFrequent(int[] nums, int k) {
 	        HashMap<Integer, Integer> map = new HashMap<>();
-	        for (int n : nums )
-	            map.put(n, map.getOrDefault(n, 0) + 1);
+	        for (int n : nums ) {
+	            Integer nVal = map.get(n);
+	            if (nVal == null) nVal = 0;
+	            map.put(n, nVal + 1);
+	        }
 	        //使用堆完成前K个查找
 	        int[] maxK = new int[k];
 	        int maxKIndex = 0;
@@ -86,7 +89,9 @@ public class P347_TopKFrequentElements {
             List<Integer>[] bucket = new List[nums.length + 1];
 	        Map<Integer, Integer> frequencyMap = new HashMap<Integer, Integer>();
 	        for (int n : nums) {
-	            frequencyMap.put(n, frequencyMap.getOrDefault(n, 0) + 1);
+	            Integer nVal = frequencyMap.get(n);
+	            if (nVal == null) nVal = 0;
+	            frequencyMap.put(n, nVal + 1);
 	        }
 	        for (int key : frequencyMap.keySet()) {
 	            int frequency = frequencyMap.get(key);
@@ -113,8 +118,11 @@ public class P347_TopKFrequentElements {
                     return o2 - o1;
                 }
             });
- 	        for (int n : nums)
- 	            map1.put(n, map1.getOrDefault(n, 0) + 1);
+ 	        for (int n : nums) {
+ 	            Integer nVal = map1.get(n);
+ 	            if (nVal == null) nVal = 0;
+ 	            map1.put(n, nVal + 1);
+ 	        }
  	        for (Map.Entry<Integer, Integer> entry : map1.entrySet()) {
                 LinkedList<Integer> valueList = map2.get(entry.getValue());
                 valueList = valueList == null ? new LinkedList<Integer>() : valueList;

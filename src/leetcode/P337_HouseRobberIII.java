@@ -87,7 +87,7 @@ public class P337_HouseRobberIII {
 	}
 	static class Solution3 {
 	    public int rob(TreeNode root) {
-	        return robSub(root, new HashMap<>());
+	        return robSub(root, new HashMap<TreeNode, Integer>());
 	    }
 	    private int robSub(TreeNode root, Map<TreeNode, Integer> map) {
 	        if (root == null) return 0;
