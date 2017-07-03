@@ -143,7 +143,7 @@ public class 训练17_题目2_数组重排2 {
     
     
     
-    private static void solve2() {
+    static void solve2() {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int[] a = new int[n];
@@ -162,9 +162,10 @@ public class 训练17_题目2_数组重排2 {
             }
         }
         System.out.println(ans);
+        sc.close();
     }
 
-    private static void solve() {
+    static void solve() {
         Scanner sc = new Scanner(System.in);
         
         
@@ -173,7 +174,6 @@ public class 训练17_题目2_数组重排2 {
         int[][] t = new int[2][n];
         
         int[] a = t[0];
-        int maxIndex = 0;
         int max = 0;
         int ans = 0;
         int[] b = t[1];

@@ -1,10 +1,5 @@
 package hiho;
 
-
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 /**
 
 时间限制:10000ms
@@ -55,8 +50,6 @@ import java.util.Scanner;
 public class 训练17_题目1_F1Score {
     public static void main(String[] args) {
         
-        
-        char c = '\0';
         System.out.println();
         
         

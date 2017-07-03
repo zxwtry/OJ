@@ -46,8 +46,6 @@ import java.io.UnsupportedEncodingException;
 
 import java.util.Scanner;
 
-import com.sun.swing.internal.plaf.basic.resources.basic;
-
 public class 训练17_题目3_逆序对 {
     public static void main(String[] args) throws UnsupportedEncodingException {
 //        StringBuilder st = new StringBuilder();
@@ -118,9 +116,6 @@ public class 训练17_题目3_逆序对 {
         int n = sc.nextInt();
         
         int[] a = new int[n];
-        int max = 0;
-        long ans = 0;
-        
         
         for (int i = 0; i < n; i ++) 
             a[i] = sc.nextInt();
