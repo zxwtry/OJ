@@ -54,8 +54,8 @@ import java.util.Comparator;
  */
 public class P436_FindRightInterval {
 	static class Solution1 {
-	    public int[] findRightInterval(Interval[] intervals) {
-	        Integer[] indices = new Integer[intervals.length];
+	    public int[] findRightInterval(final Interval[] intervals) {
+	        final Integer[] indices = new Integer[intervals.length];
 	        for (int index = 0; index < indices.length; index ++)
 	            indices[index] = index;
 	        Arrays.sort(indices, new Comparator<Integer>() {

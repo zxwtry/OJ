@@ -64,7 +64,7 @@ public class P417_PacificAtlanticWaterFlow {
 		Solution s = new Solution();
 		List<int[]> ans = s.pacificAtlantic(m);
 		for (int[] pAns : ans) {
-			tools.Utils.printArray(pAns, 3);
+			tools.Utils.printArray(pAns, 3, 5);
 		}
 	}
 	/*

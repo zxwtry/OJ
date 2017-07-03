@@ -74,8 +74,14 @@ public class P446_ArithmeticSlicesII_Subsequence {
 	                long diff = (long)A[i] - A[j];
 	                if (diff <= Integer.MIN_VALUE || diff > Integer.MAX_VALUE) continue;
 	                int d = (int)diff;
-	                int c1 = map[i].getOrDefault(d, 0);
-	                int c2 = map[j].getOrDefault(d, 0);
+	                Integer c1 = map[i].get(d);
+	                if (c1 == null) {
+	                    c1 = 0;
+	                }
+	                Integer c2 = map[j].get(d);
+	                if (c2 == null) {
+	                    c2 = 0;
+	                }
 	                res += c2;
 	                map[i].put(d, c1 + c2 + 1);
 	            }
@@ -88,13 +94,20 @@ public class P446_ArithmeticSlicesII_Subsequence {
 	        int answer = 0;
 	        ArrayList<HashMap<Integer, Integer>> listMap = new ArrayList<>(A.length);
 	        for (int j = 0; j < A.length; j ++) {
-	            listMap.add(new HashMap<>());
+	            listMap.add(new HashMap<Integer, Integer>());
 	            for (int i = 0; i < j; i ++) {
 	                if (checkMinus(A[j], A[i])) continue;
 	                int minus = A[j] - A[i];
-	                int val = listMap.get(i).getOrDefault(minus, 0);
+	                Integer val = listMap.get(i).get(minus);
+	                if (val == null) {
+	                    val = 0;
+	                }
 	                answer += val;
-	                listMap.get(j).put(minus, val + listMap.get(j).getOrDefault(minus, 0) + 1);
+	                Integer minusVal = listMap.get(j).get(minus);
+	                if (minusVal == null) {
+	                    minusVal = 0;
+	                }
+	                listMap.get(j).put(minus, val + minusVal + 1);
 	            }
 	        }
 	        return answer;

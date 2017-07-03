@@ -44,7 +44,10 @@ public class P491_IncreasingSubsequences {
 	        HashSet<List<Integer>> answerSet = new HashSet<List<Integer>>();
 	        HashMap<Integer, TreeSet<Integer>> mapValueIndex = new HashMap<>();
 	        for (int index = 0; index < nums.length; index ++) {
-	            TreeSet<Integer> set = mapValueIndex.getOrDefault(nums[index], new TreeSet<Integer>());
+	            TreeSet<Integer> set = mapValueIndex.get(nums[index]);
+	            if (set == null) {
+	                set = new TreeSet<Integer>();
+	            }
 	            set.add(index);
 	            mapValueIndex.put(nums[index], set);
 	        }

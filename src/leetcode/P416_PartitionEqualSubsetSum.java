@@ -38,7 +38,7 @@ public class P416_PartitionEqualSubsetSum {
 			Solution2 s = new Solution2();
 			int[] nums = tools.Random随机生成器.A_生成一个随机数据(400, 1, 1000);
 			Arrays.sort(nums);
-			tools.Utils.printArray(nums, 200);
+			tools.Utils.printArray(nums, 200, 5);
 			System.out.println(s.canPartition(nums));
 //		}
 //		int[] arr = tools.Random随机生成器.A_生成一个随机数据(100, 1, 1000);

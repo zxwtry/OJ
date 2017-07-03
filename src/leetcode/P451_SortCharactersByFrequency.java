@@ -52,7 +52,7 @@ public class P451_SortCharactersByFrequency {
             if (s == null || s.length() == 0) return s;
             int sn = s.length();
             int n = 256;
-            int[] charCount = new int[n];
+            final int[] charCount = new int[n];
             Integer[] cCIndex = new Integer[n];
             for (int i = 0; i < n; i ++)
                 cCIndex[i] = i;

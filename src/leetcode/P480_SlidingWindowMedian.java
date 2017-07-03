@@ -1,7 +1,6 @@
 package leetcode;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -138,14 +137,25 @@ public class P480_SlidingWindowMedian {
     }
     
     static class Solution2 {
-        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(
-            new Comparator<Integer>() {
-                public int compare(Integer i1, Integer i2) {
-                    return i2.compareTo(i1);
-                }
+        static class T implements Comparable<T> {
+            int val;
+            public T(int val) {
+                this.val = val;
             }
-        );
+            @Override
+            public int compareTo(T o) {
+                return Integer.compare(o.val, this.val);
+            }
+        }
+        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+//        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(
+//            new Comparator<Integer>() {
+//                public int compare(Integer i1, Integer i2) {
+//                    return i2.compareTo(i1);
+//                }
+//            }
+//        );
+        PriorityQueue<T> maxHeap = new PriorityQueue<>();
         public double[] medianSlidingWindow(int[] nums, int k) {
             int n = nums.length - k + 1;
             if (n <= 0) return new double[0];
@@ -163,16 +173,16 @@ public class P480_SlidingWindowMedian {
         }
         private void add(int num) {
             if (num < getMedian()) {
-                maxHeap.add(num);
+                maxHeap.add(new T(num));
             }
             else {
                 minHeap.add(num);
             }
             if (maxHeap.size() > minHeap.size()) {
-                    minHeap.add(maxHeap.poll());
+                    minHeap.add(maxHeap.poll().val);
             }
             if (minHeap.size() - maxHeap.size() > 1) {
-                maxHeap.add(minHeap.poll());
+                maxHeap.add(new T(minHeap.poll()));
             }
         }
         private void remove(int num) {
@@ -183,16 +193,16 @@ public class P480_SlidingWindowMedian {
                 minHeap.remove(num);
             }
             if (maxHeap.size() > minHeap.size()) {
-                    minHeap.add(maxHeap.poll());
+                    minHeap.add(maxHeap.poll().val);
             }
             if (minHeap.size() - maxHeap.size() > 1) {
-                maxHeap.add(minHeap.poll());
+                maxHeap.add(new T(minHeap.poll()));
             }
         }
         private double getMedian() {
             if (maxHeap.isEmpty() && minHeap.isEmpty()) return 0;
             if (maxHeap.size() == minHeap.size()) {
-                return ((double)maxHeap.peek() + (double)minHeap.peek()) / 2.0;
+                return ((double)maxHeap.peek().val + (double)minHeap.peek()) / 2.0;
             }
             else {
                     return (double)minHeap.peek();
