@@ -21,7 +21,7 @@ public class Book021_将单链表的每K个节点之间逆序 {
 			ListNode head = tools.ListNode辅助.A_一维生成器(arr);
 			AdjustSolution ss = new AdjustSolution();
 			ListNode newHead = ss.reverseKNodes(head, K);
-			tools.ListNode辅助.B_打印链表_一行(newHead, sizeOfLine);
+			tools.ListNode辅助.B_打印链表(newHead, sizeOfLine, 5);
 		}
 	}
 	static void testStackSolution() {
@@ -36,7 +36,7 @@ public class Book021_将单链表的每K个节点之间逆序 {
 			ListNode head = tools.ListNode辅助.A_一维生成器(arr);
 			StackSolution ss = new StackSolution();
 			ListNode newHead = ss.reverseKNodes(head, K);
-			tools.ListNode辅助.B_打印链表_一行(newHead, sizeOfLine);
+			tools.ListNode辅助.B_打印链表(newHead, sizeOfLine, 5);
 		}
 	}
 	//时间复杂度O(N)，额外空间复杂度O(K)

@@ -20,12 +20,11 @@ public class Book012_在单链表和双链表中删除倒数第K个节点 {
 	static void testSingle() {
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(10, 0, 100);
 		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
-		tools.ListNode辅助.B_打印链表_一行(head, 100);
+		tools.ListNode辅助.B_打印链表(head, 100, 5);
 		SolutionSingleList ssl = new SolutionSingleList();
 		int lastKth = 3;
 		head = ssl.removeLastKthNode(head, lastKth);
-		tools.ListNode辅助.B_打印链表_一行(head, 100);
-		
+		tools.ListNode辅助.B_打印链表(head, 100, 5);
 	}
 	static class SolutionSingleList {
 		public ListNode removeLastKthNode(ListNode head, int lastKth) {

@@ -30,7 +30,7 @@ public class Book017_将单向链表按某值划分成左边小_中间相等_右
 			}
 		}
 		System.out.println("pivot : " + pivot);
-		tools.ListNode辅助.B_打印链表_一行(ansSave, 100);
+		tools.ListNode辅助.B_打印链表(ansSave, 100, 5);
 		System.out.println(isTrue);
 	}
 	static void testSolution() {

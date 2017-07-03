@@ -9,10 +9,10 @@ public class Book013_删除链表的中间节点和a_b处的节点 {
 	static void testListMiddle() {
 		int[] arr = tools.Random随机生成器.A_生成一个随机数据(20, 0, 100);
 		ListNode head = tools.ListNode辅助.A_一维生成器(arr);
-		tools.ListNode辅助.B_打印链表_一行(head, 100);
+		tools.ListNode辅助.B_打印链表(head, 100, 5);
 		SolutionListMiddle slm = new SolutionListMiddle();
 		head = slm.removeMiddleNode(head);
-		tools.ListNode辅助.B_打印链表_一行(head, 100);
+		tools.ListNode辅助.B_打印链表(head, 100, 5);
 	}
 	static class SolutionListMiddle {
 		public ListNode removeMiddleNode(ListNode head) {

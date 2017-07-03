@@ -48,10 +48,10 @@ public class Book022_删除无序单链表里面重复出现的节点 {
 		HashSetSolution hs = new HashSetSolution();
 		System.out.println("原来的链表是：");
 		int sizeOfLine = n + 100;
-		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
+		tools.ListNode辅助.B_打印链表(head, sizeOfLine, 5);
 		hs.removeRep(head);
 		System.out.println("修正之后的链表是：");
-		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
+		tools.ListNode辅助.B_打印链表(head, sizeOfLine, 5);
 	}
 	static void testHashMap() {
 		int min = 0;
@@ -62,10 +62,10 @@ public class Book022_删除无序单链表里面重复出现的节点 {
 		HashSetSolution hs = new HashSetSolution();
 		System.out.println("原来的链表是：");
 		int sizeOfLine = n + 100;
-		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
+		tools.ListNode辅助.B_打印链表(head, sizeOfLine, 5);
 		hs.removeRep(head);
 		System.out.println("修正之后的链表是：");
-		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
+		tools.ListNode辅助.B_打印链表(head, sizeOfLine, 5);
 	}
 	//时间复杂度O(N)，额外空间复杂度O(N)
 	static class HashSetSolution {

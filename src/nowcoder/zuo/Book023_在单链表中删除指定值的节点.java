@@ -28,8 +28,8 @@ public class Book023_在单链表中删除指定值的节点 {
 		as.removeVal(head2, num);
 		tools.Utils.printArray(arr, n + 1, 5);
 		System.out.println(num);
-		tools.ListNode辅助.B_打印链表_一行(head1, n + 100);
-		tools.ListNode辅助.B_打印链表_一行(head2, n + 100);
+		tools.ListNode辅助.B_打印链表(head1, n + 100, 5);
+		tools.ListNode辅助.B_打印链表(head2, n + 100, 5);
 	}
 	static void testAdjustSolution() {
 		int n = 10;
