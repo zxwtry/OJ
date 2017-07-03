@@ -19,11 +19,6 @@ import java.util.List;
  */
 
 public class P030_SubstringWithConcatenationOfAllWords {
-	public static void main(String[] args) {
-		System.out.println(new Solution2().findSubstring("wordgoodgoodgoodbestword", new String[]{"word","good","best","good"}));;
-		System.out.println(new Solution2().findSubstring("barfoothefoobarman", new String[]{"foo", "bar"}));;
-		System.out.println(new Solution2().findSubstring("bbbbbb", new String[]{"b", "b", "b", "b"}));;
-	}
 	/*
 	 * 	土方法，KMP
 	 * 	算法正确性没有错
@@ -131,7 +126,11 @@ public class P030_SubstringWithConcatenationOfAllWords {
 	        if (len1 == 0 || len2 == 0) return answer;
 	        HashMap<String, Integer> map1 = new HashMap<String, Integer>();    //保存s上
 	        HashMap<String, Integer> map2 = new HashMap<String, Integer>();    //保存words上
-	        for (String word : words) map2.put(word, map2.getOrDefault(word, 0) + 1);
+	        for (String word : words) {
+	        	Integer wordVal = map2.get(word);
+	        	if (wordVal == null) wordVal = 0;
+	        	map2.put(word, wordVal + 1);
+	        }
 	        int wl = words[0].length(), left = 0, count = 0;
 	        for (int i = 0; i < wl; i ++) {
 	            map1.clear();
@@ -140,7 +139,11 @@ public class P030_SubstringWithConcatenationOfAllWords {
 	            for (int j = i; j <= len1 - wl; j += wl) {
 	                String s1 = s.substring(j, j + wl);
 	                if (map2.containsKey(s1)) {
-	                    map1.put(s1, map1.getOrDefault(s1, 0) + 1);
+	                    Integer s1Val = map1.get(s1);
+	                    if (s1Val == null) {
+	                        s1Val = 0;
+	                    }
+	                    map1.put(s1, s1Val + 1);
 	                    count ++;
                         while (map1.get(s1) > map2.get(s1)) {
                             String s2 = s.substring(left, left + wl);
