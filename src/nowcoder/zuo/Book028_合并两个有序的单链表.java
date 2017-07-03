@@ -19,7 +19,7 @@ public class Book028_合并两个有序的单链表 {
 		tools.Utils.printArray(arr2, n + 2, 5);
 		MergeSolution ms = new MergeSolution();
 		ListNode head = ms.merge(head1, head2);
-		tools.ListNode辅助.B_打印链表_一行(head, n * 2 + 100);
+		tools.ListNode辅助.B_打印链表(head, n * 2 + 100, 5);
 	}
 	static class MergeSolution {
 		public ListNode merge(ListNode head1, ListNode head2) {

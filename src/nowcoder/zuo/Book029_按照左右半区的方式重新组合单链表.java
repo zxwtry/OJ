@@ -21,7 +21,7 @@ public class Book029_按照左右半区的方式重新组合单链表 {
 		RelocateSolution rs = new RelocateSolution();
 		rs.relocate(head);
 		int sizeOfLine = len + 2;
-		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
+		tools.ListNode辅助.B_打印链表(head, sizeOfLine, 5);
 	}
 	static class RelocateSolution {
 		public void relocate(ListNode head) {

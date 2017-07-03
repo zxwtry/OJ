@@ -29,7 +29,7 @@ public class Book026_一种怪异的节点删除方式 {
 		ms.solve(toBeDeleted);
 		System.out.println("len is " + len);
 		int sizeOfLine = len + 100;
-		tools.ListNode辅助.B_打印链表_一行(head, sizeOfLine);
+		tools.ListNode辅助.B_打印链表(head, sizeOfLine, 5);
 	}
 	//无法完成
 	static class MySolution {

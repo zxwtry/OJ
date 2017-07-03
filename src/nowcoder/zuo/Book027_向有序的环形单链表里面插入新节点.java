@@ -15,7 +15,7 @@ class Book027_向有序的环形单链表里面插入新节点 {
 		InsertSolution is = new InsertSolution();
 		ListNode newHead = is.insert(head, num);
 		int sizeOfLine = n + 100;
-		tools.ListNode辅助.B_打印链表_一行(newHead, sizeOfLine);
+		tools.ListNode辅助.B_打印链表(newHead, sizeOfLine, 5);
 	}
 	static class InsertSolution {
 		public ListNode insert(ListNode head, int num) {

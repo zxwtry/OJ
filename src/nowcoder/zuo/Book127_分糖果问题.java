@@ -30,9 +30,9 @@ package nowcoder.zuo;
  * @details     
  */
 public class Book127_分糖果问题 {
-	static class Solution1 {
-		public int getNumOfCandy(int[] arr) {
-			
-		}
-	}
+//	static class Solution1 {
+//		public int getNumOfCandy(int[] arr) {
+//			
+//		}
+//	}
 }

@@ -17,7 +17,7 @@ public class Book025_单链表的选择排序 {
 		ListNode list = tools.ListNode辅助.A_随机生成器_最大长度N_范围min_max(N, min, max);
 		SelectSolution s = new SelectSolution();
 		ListNode ans = s.sort(list);
-		tools.ListNode辅助.B_打印链表(ans);
+		tools.ListNode辅助.B_打印链表(ans, 100, 5);
 	}
 	static class SelectSolution {
 		public ListNode sort(ListNode head) {
