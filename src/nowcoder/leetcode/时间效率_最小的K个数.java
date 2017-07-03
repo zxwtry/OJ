@@ -1,7 +1,6 @@
 package nowcoder.leetcode;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -63,24 +62,27 @@ public class 时间效率_最小的K个数 {
     }
     //jdk7 不支持这种PriorityQueue的构造方法
     static public class Solution {
+        private static class T implements Comparable<T> {
+            int val;
+            T(int val) {
+                this.val = val;
+            }
+            @Override
+            public int compareTo(T o) {
+                return Integer.compare(o.val, this.val);
+            }
+        }
         public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
-            PriorityQueue<Integer> pq = new PriorityQueue<Integer>(
-                    new Comparator<Integer>() {
-                        @Override
-                        public int compare(Integer o1, Integer o2) {
-                            return o2 - o1;
-                        }
-                    }     
-            );
+            PriorityQueue<T> pq = new PriorityQueue<T>();
             for (int v : input) {
-                pq.add(v);
+                pq.add(new T(v));
                 if (pq.size() > k) {
                     pq.poll();
                 }
             }
             ArrayList<Integer> ans = new ArrayList<Integer>(k);
             for (int i = 0; i < k; i ++) ans.add(0);
-            for (int i = k - 1; i > -1; i --) ans.set(i, pq.poll());
+            for (int i = k - 1; i > -1; i --) ans.set(i, pq.poll().val);
             return ans;
         }
     }

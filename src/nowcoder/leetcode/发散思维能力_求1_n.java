@@ -14,6 +14,7 @@ public class 发散思维能力_求1_n {
         public int Sum_Solution(int n) {
             int sum = n;
             boolean t = (n != 1) && (sum += Sum_Solution(n - 1)) > 0;
+            if (t) {}
             return sum;
         }
     }
