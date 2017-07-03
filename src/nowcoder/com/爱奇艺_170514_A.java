@@ -1,9 +1,7 @@
 package nowcoder.com;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -37,7 +35,6 @@ public class 爱奇艺_170514_A {
         ArrayList<Integer> al = new ArrayList<>();
         for (int i = 0; i < pl.size(); i ++) {
 //            Integer p = pset.lower(e)
-            int ruler = s+1;
             while (true) {
                 Integer v = pset.lower(s);
                 if (v == null) break;
@@ -73,13 +70,13 @@ public class 爱奇艺_170514_A {
             al.clear();
         }
         System.out.println(ans);
+        in.close();
     }
     static void solve() {
         Scanner in = new Scanner(System.in);
         int s = in.nextInt();   // money
         ArrayList<Integer> pl = new ArrayList<>();
         ArrayList<Integer> vl = new ArrayList<>();
-        int ans = 0;
         int[] m = new int[s + 1];
         int pm = Integer.MAX_VALUE;
         while (in.hasNextInt()) {
@@ -98,5 +95,6 @@ public class 爱奇艺_170514_A {
             }
         }
         System.out.println(m[s]);
+        in.close();
     }
 }

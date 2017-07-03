@@ -1,7 +1,4 @@
 package nowcoder.com;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Scanner;
 
 
@@ -53,6 +50,7 @@ public class 牛客模拟_1 {
             }
         }
         System.out.println(dp[n] + 1);
+        in.close();
     }
     
     static boolean[][] k(int[] a) {

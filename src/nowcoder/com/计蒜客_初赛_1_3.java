@@ -135,7 +135,6 @@ public class 计蒜客_初赛_1_3 {
         Scanner sc = new Scanner(System.in);
         
         int n = sc.nextInt();
-        int a = sc.nextInt();
         int b = sc.nextInt();
         int L = sc.nextInt();
         int R = sc.nextInt();
@@ -160,9 +159,7 @@ public class 计蒜客_初赛_1_3 {
                     
                 }
                 
-                int AC = (R - L + 1) / 2;
                 
-                int TC = AC;
                 
             }
             
@@ -176,11 +173,9 @@ public class 计蒜客_初赛_1_3 {
         if (tn == 0) {
             System.out.println(0);
         } else if (tn == 1) {
-            int ans = 0;
             
             
         } else {
-            int ans = 0;
             String k = new String(t);
             if (tn == 2 && k.equals("AT")) {
                 
@@ -192,7 +187,6 @@ public class 计蒜客_初赛_1_3 {
                 
             } else {
 
-                char[] akkk = new char[3];
             }
             
         }
@@ -203,7 +197,7 @@ public class 计蒜客_初赛_1_3 {
     
     
     
-    private static int kmp(char[] s, char[] p, int sn, int pn) {
+    static int kmp(char[] s, char[] p, int sn, int pn) {
         if (pn == 0) return 0;
         if (sn == 0) return -1;
         int[] next = getNext(p, pn);

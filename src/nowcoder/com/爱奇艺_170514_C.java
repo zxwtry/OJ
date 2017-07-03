@@ -2,10 +2,7 @@ package nowcoder.com;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Scanner;
-
 
 /**
  * @author      zxwtry
@@ -46,6 +43,7 @@ public class 爱奇艺_170514_C {
         m = new boolean[n+2];
         search(0, 0, 1);
         System.out.println(ans);
+        in.close();
     }
     private static void search(int sum, int cnt, int index) {
         if (cnt == n) return;

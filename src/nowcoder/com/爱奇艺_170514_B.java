@@ -30,6 +30,8 @@ public class 爱奇艺_170514_B {
             }
             sum += v;
         }
+
+        in.close();
         if ( k < 1 || sum < 2 * k)  {
             System.out.println(sum / k);
             return;
@@ -62,7 +64,6 @@ public class 爱奇艺_170514_B {
             }
         }
         System.out.println(minLen);
-        
     }
     
     static boolean  j(ArrayList<Integer> l, int k, int len) {
