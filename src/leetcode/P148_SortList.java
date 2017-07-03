@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 import tools.ListNode辅助.ListNode;
@@ -26,7 +27,7 @@ public class P148_SortList {
 	            list.add(node);
 	            node = node.next;
 	        }
-	        list.sort(new Comparator<ListNode>() {
+	        Collections.sort(list, new Comparator<ListNode>() {
                 @Override
                 public int compare(ListNode o1, ListNode o2) {
                     if (o1.val > o2.val) return 1;

@@ -63,8 +63,10 @@ public class P128_LongestConsecutiveSequence {
 	        int ans = 0;
 	        for (int v : n) {
 	            if (! m.containsKey(v)) {
-	                int l = m.getOrDefault(v-1, 0);
-	                int r = m.getOrDefault(v+1, 0);
+	                Integer l = m.get(v-1);
+	                Integer r = m.get(v+1);
+	                if (l == null) l = 0;
+	                if (r == null) r = 0;
 	                int sum = l + r + 1;
 	                ans = Math.max(ans, sum);
 	                m.put(v, sum);

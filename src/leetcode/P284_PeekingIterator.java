@@ -64,6 +64,9 @@ public class P284_PeekingIterator {
 		public boolean hasNext() {
 		    return hasNextBoolean;
 		}
+        @Override
+        public void remove() {
+        }
 	}
 	
 }

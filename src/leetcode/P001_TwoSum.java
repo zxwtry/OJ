@@ -31,7 +31,7 @@ public class P001_TwoSum {
 	    }
 	}
 	static class Solution2 {
-		public int[] twoSum(int[] nums, int target) {
+		public int[] twoSum(final int[] nums, int target) {
 		    int len = nums == null ? 0 : nums.length;
 		    Integer[] index = new Integer[len];
 		    for (int i = 0; i < len; i ++) index[i] = i;
