@@ -1,6 +1,5 @@
 package leetcode;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -96,8 +95,12 @@ public class P126_WordLadderII {
             if (t.equals(s)) {
                 ans.add(new LinkedList<String>(l));
             } else {
-                for (String v : m.getOrDefault(t, new ArrayList<String>(0)))
-                    find(v, s, l, m, ans);
+                List<String> vs = m.get(t);
+                if (vs != null) {
+                    for (String v : vs) {
+                        find(v, s, l, m, ans);
+                    }
+                }
             }
             l.removeFirst();
         }
