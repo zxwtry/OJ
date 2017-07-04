@@ -1,7 +1,5 @@
 package poj10x;
 
-import java.util.Scanner;
-
 /**
  * 两只青蛙在网上相识了，它们聊得很开心，于是觉得很有必要见一面。
  * 它们很高兴地发现它们住在同一条纬度线上，于是它们约定各自朝西跳，
@@ -27,14 +25,14 @@ import java.util.Scanner;
  * 4
  */
 public class P1061 {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		//
-		long x = sc.nextInt(), y = sc.nextInt(), m = sc.nextInt(), n = sc.nextInt(), p = sc.nextInt(); 
-		long a = n - m, b = 0, c = gcd(a, b), d = x - y;
-		
-		sc.close();
-	}
+//	public static void main(String[] args) {
+//		Scanner sc = new Scanner(System.in);
+//		//
+//		long x = sc.nextInt(), y = sc.nextInt(), m = sc.nextInt(), n = sc.nextInt(), p = sc.nextInt(); 
+//		long a = n - m, b = 0, c = gcd(a, b), d = x - y;
+//		
+//		sc.close();
+//	}
 	static long gcd(long a, long b) {
 		return b == 0 ? a : gcd(b, a % b);
 	}
