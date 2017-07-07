@@ -1,7 +1,5 @@
 package nowcoder.com;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.TreeSet;
@@ -47,21 +45,24 @@ public class 微软_LUCKY_STRING {
             pv = nv;
             nv = xv;
         }
-        System.out.println(set);
         TreeSet<String> ans = new TreeSet<>();
         for (int i = 0; i < sn; i ++) {
             int[] im = m[i];
             int cnt = 0;
-            
+            for (int t = 0; t < 26; t ++) {
+                cnt += (im[t] == 0 ? 0 : 1);
+            }
+            if (set.contains(cnt)) {
+                ans.add(s.substring(0, i + 1));
+            }
             for (int j = i + 1; j < sn; j ++) {
-                
                 int[] jm = m[j];
                 cnt = 0;
                 for (int t = 0; t < 26; t ++) {
                     cnt += (jm[t] == im[t] ? 0 : 1);
                 }
                 if (set.contains(cnt)) {
-                    ans.add(s.substring(i + 1, j));
+                    ans.add(s.substring(i+1, j+1));
                 }
             }
         }
