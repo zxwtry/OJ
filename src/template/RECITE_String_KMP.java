@@ -19,7 +19,7 @@ public class RECITE_String_KMP {
 			int sn = s == null ? 0 : s.length();
 			int pn = p == null ? 0 : p.length();
 			if (pn == 0) return 0;
-			if (sn == 0) return -1;
+			if (sn < pn) return -1;
 			int[] next = getNext(p, pn);
             int pi = 0, si = 0;
 			while (si < sn)
@@ -27,11 +27,13 @@ public class RECITE_String_KMP {
 			        si ++;
 			        pi ++;
 			        if (pi == pn) {
-			            //if need many times
-			            System.out.println(si - pn);
-			            si --;
-			            pi = 0;
-//			            return si - pn;
+//			            many times
+//			            System.out.println(si - pn);
+//			            si -= pn - 1;
+//			            pi = 0;
+			            
+//			            once
+			            return si - pn;
 			        }
 			    } else if (next[pi] == -1) {
 			        si ++;
@@ -39,7 +41,6 @@ public class RECITE_String_KMP {
 			return -1;
 		}
 		private int[] getNext(String p, int pn) {
-		    //return short p
 		    if (pn < 2) return new int[] {-1};
 		    int[] next = new int[pn];
 		    next[0] = -1;
