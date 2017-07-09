@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 /**
@@ -33,61 +35,44 @@ The given list may contain duplicates, so ascending order means >= here.
  * @details     
  */
 public class P632_SmallestRange {
-    static public class Solution {
-        public int[] smallestRange(int[][] n) {
-            int nl = n == null ? 0 : n.length;
-            if (nl == 0) {
-                return new int[] {0, 0};
+    static class Solution {
+        public int[] smallestRange(final List<List<Integer>> n) {
+            int r = n == null ? 0 : n.size();
+            if (r == 0) return new int[] {0, 0};
+            final int[] rs = new int[r];
+            PriorityQueue<Integer> pq = new PriorityQueue<>(r, 
+                    new Comparator<Integer>() {
+                        @Override
+                        public int compare(Integer a, Integer b) {
+                            if (rs[a] == n.get(a).size()) return -1;
+                            if (rs[b] == n.get(b).size()) return 1;
+                            return Integer.compare(n.get(a).get(
+                                    rs[a]), n.get(b).get(rs[b]));
+                        }
+                    });
+            int a1 = Integer.MAX_VALUE, a2 = Integer.MIN_VALUE;
+            //a1最小  a2最大
+            for (int i = 0; i < r; i ++) {
+                a1 = Math.min(a1, n.get(i).get(0));
+                a2 = Math.max(a2, n.get(i).get(0));
+                pq.add(i);
             }
-            PriorityQueue<T> queue = new PriorityQueue<>();
-            int curMax = Integer.MIN_VALUE;
-            for (int i = 0; i < nl; i++) {
-                int[] num = n[i];
-                curMax = Math.max(curMax, num[0]);
-                int next = num.length > 1 ? num[1] : Integer.MAX_VALUE;
-                queue.add(new T(num[0], i, 0, next));
-            }
-            int[] answer = new int[]{queue.peek().value, curMax};
+            int max = a2;
+            int ans = a2 - a1;
             while (true) {
-                T node = queue.poll();
-                int[] newAnswer = new int[]{node.value, curMax};
-                if (shorter(newAnswer, answer)) {
-                    answer = newAnswer;
-                }
-                int[] num = n[node.index];
-                if (node.arrayIndex + 1 >= num.length) {
-                    break;
-                }
-                int value = num[node.arrayIndex + 1];
-                curMax = Math.max(curMax, value);
-                int next = node.arrayIndex + 2 < num.length ? num[node.arrayIndex + 2] : Integer.MAX_VALUE;
-                queue.add(new T(value, node.index, node.arrayIndex + 1, next));
+                int min = pq.poll();
+                rs[min] ++;
+                if (rs[min] == n.get(min).size()) break;
+                max = Math.max(max, n.get(min).get(rs[min]));
+                pq.add(min);
+                int peek = pq.peek();
+                if (max - n.get(peek).get(rs[peek]) < ans) {
+                    a2 = max;
+                    a1 = n.get(peek).get(rs[peek]);
+                    ans = a2 - a1;
+                } 
             }
-            return answer;
-        }
-        private boolean shorter(int[] newAnswer, int[] answer) {
-            return newAnswer[1] - newAnswer[0] < answer[1] - answer[0] || (
-                    newAnswer[1] - newAnswer[0] == answer[1] - answer[0] && newAnswer[1] < newAnswer[0]
-            );
-        }
-        private static class T implements Comparable<T> {
-            int value;
-            int index;
-            int arrayIndex;
-            int next;
-            T(int value, int index, int arrayIndex, int next) {
-                this.value = value;
-                this.index = index;
-                this.arrayIndex = arrayIndex;
-                this.next = next;
-            }
-            @Override
-            public int compareTo(T o) {
-                if (this.value == o.value) {
-                    return Integer.compare(this.next, o.next);
-                }
-                return Integer.compare(this.value, o.value);
-            }
+            return new int[] {a1, a2};
         }
     }
 }
