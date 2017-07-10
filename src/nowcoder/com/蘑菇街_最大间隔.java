@@ -14,6 +14,12 @@ import java.util.Scanner;
 public class 蘑菇街_最大间隔 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        while (sc.hasNext()) {
+            solve(sc);
+        }
+        sc.close();
+    }
+    static void solve(Scanner sc) {
         int n = sc.nextInt();
         int[] arr = new int[n];
         int max = 0;
@@ -32,6 +38,5 @@ public class 蘑菇街_最大间隔 {
             }
             System.out.println(ans);
         }
-        sc.close();
     }
 }
