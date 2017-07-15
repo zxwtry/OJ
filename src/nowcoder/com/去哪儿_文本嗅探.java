@@ -1,6 +1,5 @@
 package nowcoder.com;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -56,20 +55,20 @@ public class 去哪儿_文本嗅探 {
                 String s = A[i];
                 int sn = s.length();
                 boolean isFind = false;
-                for (int kBase = 0; kBase < sn; kBase ++) {
-                    rootNow = root;
-                    for (int k = kBase; k < sn; k ++) {
-                        rootNow = rootNow.nexts[s.charAt(i) - 'a'];
-                    }
-                    isFind = rootNow.isEndOfAWord;
-                    if (isFind) break;
+                rootNow = root;
+                for (int k = 0; k < sn && ! isFind; k ++) {
+                    rootNow = rootNow.nexts[s.charAt(k) - 'a'];
+                    isFind |= rootNow.isEndOfAWord;
                 }
                 if (isFind) {
                     ll.add(i);
                 }
             }
+
+            if (ll.size() == 0) {
+                return new int[]{-1};
+            }
             int[] ans = new int[ll.size()];
-            System.out.println("ans length --> " + ans.length);
             int ansi = 0;
             for (Integer llv : ll) {
                 ans[ansi ++] = llv;
