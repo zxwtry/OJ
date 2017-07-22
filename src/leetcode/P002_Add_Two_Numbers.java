@@ -1,5 +1,7 @@
 package leetcode;
 
+import tools.ListNode辅助.ListNode;
+
 /*
 
 You are given two linked lists representing two non-negative numbers.
@@ -16,17 +18,10 @@ Output: 7 -> 0 -> 8
 
 public class P002_Add_Two_Numbers {
 	public static void main(String[] args) {
-		ListNode t1 = new ListNode(9);
-		ListNode l1 = t1;
-		ListNode u1 = new ListNode(1);
-		ListNode u2 = new ListNode(8);
-		u1.next = u2;
-		ListNode l2 = u1;
+	    ListNode l1 = tools.ListNode辅助.A_一维生成器(new int[] {9});
+	    ListNode l2 = tools.ListNode辅助.A_一维生成器(new int[] {1, 8});
 		ListNode ans = new Solution2().addTwoNumbers(l1, l2);
-		while (ans != null) {
-			System.out.println(ans.val);
-			ans = ans.next;
-		}
+		tools.ListNode辅助.B_打印链表(ans, 100, 5);
 	}
 	/*
 	 * 	31.63%
@@ -93,13 +88,5 @@ public class P002_Add_Two_Numbers {
 	    		current.next = new ListNode(assist);
 	    	return head;
 	    }
-	}
-	
-	static class ListNode {
-		int val;
-		ListNode next;
-		public ListNode(int x) {
-			this.val = x;
-		}
 	}
 }
