@@ -13,44 +13,26 @@ package leetcode;
  */
 
 public class P020_ValidParentheses {
-	public static void main(String[] args) {
-//		System.out.println(new Solution().isValid("([{}()])"));
-//		System.out.println(new Solution().isValid("()()()([)(])"));
-		System.out.println(new Solution().isValid(")("));
-	}
-	/*
-	 * 	1ms
-	 * 	52.87%
-	 */
 	static class Solution {
 	    public boolean isValid(String s) {
-	        StringBuilder st = new StringBuilder(s);
-	        for (int i = st.length() - 1; i > 0; i --) {
-	        	if (judge(st.charAt(i - 1), st.charAt(i))) {
-	        		st.delete(i - 1, i + 1);
-	        		i = st.length();
-	        	}
+	        int sn = s == null ? 0 : s.length();
+	        if (sn < 2) return sn == 0;
+	        char[] stk = new char[sn];
+	        int top = -1;
+	        for (int i = 0; i < sn; i ++) {
+	            char c = s.charAt(i);
+	            if (c == '(' || c == '[' || c == '{') {
+	                stk[++ top] = c;
+	                continue;
+	            }
+	            if (top == -1) return false;
+	            char t = stk[top --];
+	            if ( (c == ')' && t == '(') || 
+	                    (c == ']' && t == '[') ||
+	                    (c == '}' && t == '{') ) {}
+	            else return false;
 	        }
-	        return st.length() == 0;
+	        return top == -1;
 	    }
-		private boolean judge(char c1, char c2) {
-			switch (c1) {
-			case '(':
-				if (c2 == ')')
-					return true;
-				break;
-			case '[':
-				if (c2 == ']')
-					return true;
-				break;
-			case '{':
-				if (c2 == '}')
-					return true;
-				break;
-			default:
-				break;
-			}
-			return false;
-		}
 	}
 }
