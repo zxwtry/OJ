@@ -1,10 +1,13 @@
 package leetcode;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 import tools.ListNode辅助.ListNode;
 
 public class P023_MergeKSortedLists {
     
-	static class Solution {
+	static class Solution1 {
         public ListNode mergeKLists(ListNode[] ls) {
             int ln = ls == null ? 0 : ls.length;
             if (ln == 0) return null;
@@ -60,5 +63,39 @@ public class P023_MergeKSortedLists {
             ls[j] = tmp;
         }
 	}
+	
+	static class Solution2 {
+        public ListNode mergeKLists(final ListNode[] ls) {
+            int ln = ls == null ? 0 : ls.length;
+            if (ln == 0) return null;
+            PriorityQueue<Integer> pq = new PriorityQueue<>(ln, new Comparator<Integer>() {
+                @Override
+                public int compare(Integer ai, Integer bi) {
+                    ListNode a = ls[ai];
+                    ListNode b = ls[bi];
+                    return Integer.compare( a == null ? Integer.MAX_VALUE : a.val, 
+                                            b == null ? Integer.MAX_VALUE : b.val);
+                }
+            });
+            for (int i = 0; i < ls.length; i ++) pq.add(i);
+            int i = pq.poll();
+            ListNode ans = ls[i];
+            if (ans == null) return null;
+            ls[i] = ls[i].next;
+            pq.add(i);
+            ListNode t = ans;
+            while (true) {
+                i = pq.poll();
+                ListNode now = ls[i];
+                if (now == null) break;
+                ls[i] = ls[i].next;
+                pq.add(i);
+                t.next = now;
+                t = now;
+            }
+            return ans;
+        }
+	}
+	
 }
 
