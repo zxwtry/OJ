@@ -16,66 +16,31 @@ package leetcode;
 	only nodes itself can be changed.
  */
 
+
 import tools.ListNode辅助.ListNode;
 
 public class P024_SwapNodesInPairs {
-	/*
-	 * 	0 ms
-	 * 	6.30%
-	 */
-	static class Solution1 {
-	    public ListNode swapPairs(ListNode head) {
-	    	if (head == null || head.next == null)
-	    		return head;
-	        ListNode pre = head, cur = pre.next.next, tmp = null, ans = head.next;
-	        pre.next.next = head;
-	        head.next = cur;
-	        boolean isOdd = true;
-	        while (cur != null) {
-	        	if (! isOdd) {
-	        		tmp = cur.next;
-	        		cur.next = pre.next;
-	        		pre.next.next = tmp;
-	        		pre.next = cur;
-	        		pre = cur.next;
-	        		cur = pre.next;
-	        	} else {
-		        	cur = cur.next;
-	        	}
-	        	isOdd = ! isOdd;
-	        }
-	        return ans;
-	    }
-	}
-	/*
-	 * 	1的问题就是代码太麻烦
-	 * 	一定要有更加简洁的代码
-	 * 	0 ms
-	 * 	6.30%
-	 */
-	static class Solution2 {
-	    public ListNode swapPairs(ListNode head) {
-	    	if (head == null || head.next == null)
-	    		return head;
-	        ListNode pre = head, cur = pre.next.next, next_cur = null, ans = head.next;
-	        pre.next.next = head;
-	        head.next = cur;
-	        boolean isOdd = true;
-	        while (cur != null) {
-	        	if (! isOdd) {
-	        		next_cur = cur.next;
-	        		cur.next = pre.next;
-	        		pre.next = cur;
-	        		cur = cur.next;
-	        		cur.next = next_cur;
-	        		pre = cur;
-	        		cur = next_cur;
-	        	} else {
-		        	cur = cur.next;
-	        	}
-	        	isOdd = ! isOdd;
-	        }
-	        return ans;
+	static class Solution {
+	    public ListNode swapPairs(ListNode h) {
+	    	if (h == null || h.next == null)
+	    		return h;
+	    	ListNode ans = h.next;
+	    	ListNode p = null;
+	    	ListNode a = h, b = null;
+	    	ListNode next = null;
+	    	while (a != null) {
+	    	    next = a.next == null ? null : a.next.next;
+	    	    
+	    	    b = a.next;
+	    	    if (b != null) b.next = a;
+	    	    if (p != null) p.next = b == null ? a : b;
+	    	    
+	    	    p = a;
+	    	    a = next;
+	    	}
+	    	if (p != null) p.next = null;
+	    	
+	    	return ans;
 	    }
 	}
 }
