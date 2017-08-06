@@ -48,7 +48,8 @@ public class RECITE_Geometry_ConvexHull2 {
 		for (; i <= n; i ++) {
 			int m = multiply(p[cut+top-1], p[cut+top], p[i]);
 			if (m == 0) {
-				if (distSquare(p[cut+top-1], p[cut+top]) < distSquare(p[cut+top-1], p[i]))
+				if (distSquare(p[cut+top-1], p[cut+top]) 
+				        < distSquare(p[cut+top-1], p[i]))
 					set(cut+top, p[i].x, p[i].y);
 			} else {
 				while (m < 0) {
