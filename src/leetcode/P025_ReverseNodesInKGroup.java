@@ -26,36 +26,52 @@ package leetcode;
 import tools.ListNode辅助.ListNode;;
 
 public class P025_ReverseNodesInKGroup {
-    public static void main(String[] args) {
-        ListNode h = tools.ListNode辅助.A_一维生成器(new int[] {
-                1, 2, 3
-        });
-        int k = 4;
-        ListNode ans = new Solution1().reverseKGroup(h, k);
-        tools.ListNode辅助.B_打印链表(ans, 100, 4);
-    }
 	static class Solution1 {
 	    public ListNode reverseKGroup(ListNode h, int k) {
+	        if (k < 2) return h;
 	        ListNode ans = null;
-	        ListNode a = null, b = null, t = h;
+	        ListNode b = null, t = h;
 	        ListNode p = null;
+	        ListNode head = null, tail = null;
 	        while (true) {
 	            int i = 0; 
+	            head = tail = null;
 	            for (; i < k && t != null; i ++) {
 	                b = t.next;
-	                
-	                t.next = a;
-	                if (a != null) a.next = b;
-	                if (p != null) p.next = t;
+
+	                t.next = head;
+	                head = t;
+	                if (tail == null) tail = t;
 	                
 	                t = b;
 	            }
 	            
-	            if (p != null && ans == null) ans = a;
-	            p = b;
-	            if (t == null) break;
+	            if (i == k || head == null) {
+                    if (p != null) {
+                        p.next = head;
+                    }
+                    if (ans == null) ans = head;
+                    p = tail;
+	            } else {
+	                ListNode nh = null, nt = null, ns = null, tt = head;
+	                while (true) {
+	                    ns = tt.next;
+	                    
+	                    tt.next = nh;
+	                    nh = tt;
+	                    if (nt == null) nt = tt;
+	                    if (tt == tail) break;
+	                    
+	                    tt = ns;
+	                }
+	                if (p != null) {
+	                    p.next = nh;
+	                }
+	                if (ans == null) ans = nh;
+	                p = nt;        //虽然没用
+	            }
+	            if (i != k) break;
 	        }
-//	        if (a != null) a.next = null;
 	        return ans;
 	    }
 	}
