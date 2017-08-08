@@ -19,21 +19,12 @@ package leetcode;
  */
 
 public class P026_RemoveDuplicatesFromSortedArray {
-	public static void main(String[] args) {
-		System.out.println(new Soltion1().removeDuplicates(new int[] {1, 1, 2}));
-	}
-	/*
-	 * 	修改原数组
-	 * 	返回"长度"
-	 * 	1 ms
-	 * 	54.77%
-	*/
 	static class Soltion1 {
 	    public int removeDuplicates(int[] nums) {
-	        if (nums == null || nums.length < 2)
-	        	return nums == null ? 0 : nums.length;
+	        int len = nums == null ? 0 : nums.length;
+	        if (len < 2) return len;
 	        int pre = nums[0], count = 1;
-	        for(int i = 1; i != nums.length; i ++) {
+	        for(int i = 1; i != len; i ++) {
 	        	if (pre != nums[i]) {
 	        		nums[count ++] = nums[i];
 	        		pre = nums[i];
