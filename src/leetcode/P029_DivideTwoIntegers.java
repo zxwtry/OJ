@@ -7,58 +7,50 @@ package leetcode;
  */
 
 public class P029_DivideTwoIntegers {
-	public static void main(String[] args) {
-//		System.out.println(new Solution1().divide(2147483647, 2));
-//		System.out.println(new Solution1().divide(2147483647, 2));
-		System.out.println(new Solution2().divide(9, 0));
-	}
-	/*
-	 * 	这个方法会TLE
-	 */
-	static class Solution1 {
-		public int divide(int dividend, int divisor) {
-	        if (divisor == 0 || (dividend == Integer.MIN_VALUE && divisor == -1))
-	        	return Integer.MAX_VALUE;
-	        if (Math.abs(divisor) == 1)
-	        	return divisor == 1 ? dividend : - dividend;
-	        int ans = 0;
-	        while (dividend >= divisor) {
-	        	dividend -= divisor;
-	        	ans ++;
+	static class Solution {
+	    final int sign = Integer.MIN_VALUE >> 1;
+	    public int divide(int dividend, int divisor) {
+	        if (divisor == 0 || (dividend == Integer.MIN_VALUE && divisor == -1)) {
+	            return Integer.MAX_VALUE;
 	        }
-	        return ans;
+	        boolean isNegative = (dividend ^ divisor) >>> 31 == 1;
+	        if (dividend > 0) {
+	            dividend = - dividend;
+	        }
+	        if (divisor > 0) {
+	            divisor = - divisor;
+	        }
+	        return isNegative ? - divideInternal(dividend, divisor) : 
+	            divideInternal(dividend, divisor);
 	    }
-	}
-	/*
-	 * 	正确的思路应该是:
-	 * 		使用类似二分的方法来计算
-	 * 		但是暴力右移是无法得到正确结果的。
-	 * 		1,	dividend = 求和(i * 2 ^ k)
-	 * 		2,	一次一次地减去最大的2 ^ k就行了。
-	 * 	3 ms 
-	 * 	10.48%
-	 */
-	static class Solution2 {
-		public int divide(int dividend, int divisor) {
-			if (divisor == 0 || (dividend == Integer.MIN_VALUE && divisor == -1))
-				return Integer.MAX_VALUE;
-			boolean isNegative = (dividend ^ divisor) >>> 31 == 1;
-			int ans = (int)divide(Math.abs((long)dividend), Math.abs((long)divisor));
-			return isNegative ? - ans : ans;
-		}
-		public long divide(long n, long d) {
-			long ans = 0;
-			while (n >= d) {
-				int count = 1;
-				long val = d;
-				while (val + val < n) {
-					count = count + count;
-					val = val + val;
-				}
-				n -= val;
-				ans += count;
-			}
-			return ans;
-		}
+
+        private int divideInternal(int dividend, int divisor) {
+            int[] val = new int[34];
+            int[] tim = new int[34];
+            val[0] = divisor;
+            tim[0] = 1;
+            int i = 1;
+            for (; i < 34; i ++) {
+                if (val[i - 1] < sign) {
+                    i --;
+                    break;
+                }
+                val[i] = val[i - 1] + val[i - 1];
+                tim[i] = tim[i - 1] + tim[i - 1];
+                if (val[i] <= dividend) {
+                    break;
+                }
+            }
+            int ans = 0;
+            int v = dividend;
+            while (v <= divisor) {
+                while (i > -1 && val[i] < v) {
+                    i --;
+                }
+                v -= val[i];
+                ans += tim[i];
+            }
+            return ans;
+        }
 	}
 }
