@@ -14,21 +14,6 @@ import java.util.Stack;
  */
 
 public class P032_LongestValidParentheses {
-	public static void main(String[] args) {
-//		System.out.println(new Solution1().longestValidParentheses("((()))(((())))()()"));
-//		System.out.println(new Solution1().longestValidParentheses("((()))((((()))))"));
-//		System.out.println(new Solution1().longestValidParentheses(")()())()()("));
-//		System.out.println(new Solution1().longestValidParentheses("(()(((()()()()"));
-//		System.out.println(new Solution1().longestValidParentheses(new StringBuilder("(()(((()()()()").reverse().toString()));
-		System.out.println(new Solution1().longestValidParentheses("()((((()"));
-	}
-	/*
-	 * 	TLE
-	 * 	对全"("的长字符串，时间超出
-	 * 	又是一次艰难AC的过程
-	 * 	11 ms
-	 * 	22.39%
-	 */
 	static class Solution1 {
 	    public int longestValidParentheses(String s) {
 	    	if (s == null)
