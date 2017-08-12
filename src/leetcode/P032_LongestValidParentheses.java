@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Stack;
+
 /*
  * 	Given a string containing just the characters '(' and ')', 
  * 	find the length of the longest valid (well-formed) parentheses substring.
@@ -12,7 +14,8 @@ package leetcode;
  */
 
 public class P032_LongestValidParentheses {
-    static class Solution {
+    
+    static class Solution1 {
         public int longestValidParentheses(String s) {
             int sn = s == null ? 0 : s.length();
             int[] arr = new int[sn + 1];
@@ -29,6 +32,28 @@ public class P032_LongestValidParentheses {
                 }
                 ans = Math.max(ans, arr[i + 1]);
                 pc = c;
+            }
+            return ans;
+        }
+    }
+    
+    static class Solution2 {
+        public int longestValidParentheses(String s) {
+            int sn = s == null ? 0 : s.length();
+            Stack<Integer> stk = new Stack<>();
+            boolean[] vs = new boolean[sn];
+            for (int si = 0; si < sn; si ++) {
+                if (s.charAt(si) == '(') {
+                    stk.add(si);
+                } else if (! stk.isEmpty()) {
+                    vs[si] = true;
+                    vs[stk.pop()] = true;
+                }
+            }
+            int ans = 0, cnt = 0;
+            for (int si = 0; si < sn; si ++) {
+                cnt = vs[si] ? cnt + 1 : 0;
+                ans = Math.max(ans, cnt);
             }
             return ans;
         }
