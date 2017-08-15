@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 /*
  * 	Given a sorted array and a target value, 
  * 	return the index if the target is found. 
@@ -15,7 +17,8 @@ package leetcode;
  */
 public class P035_SearchInsertPosition {
 	public static void main(String[] args) {
-		System.out.println(new Solution().searchInsert(new int[] {1,3,5,6}, 69));
+		System.out.println(new Solution().searchInsert(new int[] {1,3,5,6,69}, 69));
+		System.out.println(new Solution2().searchInsert(new int[] {1,3,5,6,69}, 69));
 	}
 	/*
 	 * 	0 ms
@@ -42,6 +45,19 @@ public class P035_SearchInsertPosition {
 	    			return mid;
 	    	}
 	    	return sti;
+	    }
+	}
+	static class Solution2 {
+	    public int searchInsert(int[] nums, int target) {
+	        int nn = nums == null ? 0 : nums.length;
+	        if (nn == 0) {
+	            return 0;
+	        }
+	        int index = Arrays.binarySearch(nums, target);
+	        if (index < 0) {
+	            index = - (index + 1);
+	        }
+	        return index;
 	    }
 	}
 }
