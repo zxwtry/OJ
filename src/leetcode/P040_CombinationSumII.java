@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,9 +27,56 @@ import java.util.List;
 
 public class P040_CombinationSumII {
 	public static void main(String[] args) {
-//		System.out.println(new Solution2().combinationSum2(new int[] {10, 1, 2, 7, 6, 1, 5}, 8));
+	    int t = 7;
+		System.out.println(new Solution2().combinationSum2(new int[] {10, 1, 2, 7, 6, 1, 5}, t));
+		System.out.println(new Solution3().combinationSum2(new int[] {10, 1, 2, 7, 6, 1, 5}, t));
 //		System.out.println(new Solution2().combinationSum2(new int[] {2, 5, 2, 1, 2}, 5));
-		System.out.println(new Solution2().combinationSum2(new int[] {3,1,3,5,1,1}, 8));
+//		System.out.println(new Solution3().combinationSum2(new int[] {2, 5, 2, 1, 2}, 5));
+//		System.out.println(new Solution2().combinationSum2(new int[] {3,1,3,5,1,1}, t));
+//		System.out.println(new Solution3().combinationSum2(new int[] {3,1,3,5,1,1}, t));
+	}
+	static class Solution3 {
+	    public List<List<Integer>> combinationSum2(int[] cs, int t) {
+	        List<List<Integer>> ans = new LinkedList<>();
+	        int cn = cs == null ? 0 : cs.length;
+	        if (cn < 1) {
+	            return ans;
+	        }
+	        Arrays.sort(cs);
+	        int[] s = new int[getSLength(cs, 0, cn - 1, t)];
+	        search(ans, cs, 0, s, 0, t, false);
+	        return ans;
+	    }
+	    private void search(List<List<Integer>> ans, int[] cs, int ci, int[] s,
+                int si, int t, boolean lu) {
+	        if (t == 0) {
+	            ArrayList<Integer> oneAns = new ArrayList<>(si);
+	            for (int i = 0; i < si; i ++) {
+	                oneAns.add(s[i]);
+	            }
+	            ans.add(oneAns);
+	            return;
+	        }
+	        if (ci == cs.length) {
+	            return;
+	        }
+	        if (ci != 0 && cs[ci - 1] == cs[ci] && ! lu) {
+	            search(ans, cs, ci + 1, s, si, t, false);
+	            return;
+	        }
+	        s[si] = cs[ci];
+	        //选用
+	        search(ans, cs, ci + 1, s, si + 1, t - cs[ci], true);
+	        //不用
+	        search(ans, cs, ci + 1, s, si, t, false);
+        }
+        int getSLength(int[] cs, int ci, int cj, int t) {
+	        int min = cs[ci];
+	        for (int i = ci + 1; i <= cj; i ++) {
+	            min = Math.min(min, cs[i]);
+	        }
+	        return t / min + 1;
+	    }
 	}
 	/*
 	 * 	想复杂了
