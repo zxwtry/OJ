@@ -11,12 +11,6 @@ package leetcode;
  */
 public class P660_Remove9 {
     
-    public static void main(String[] args) {
-        for (int i = 1; i < 90; i ++) {
-            System.out.printf("%03d  %03d  %03d\n", i, standard(i), new Solution().newInteger(i));
-        }
-    }
-    
     static int standard(int n) {
         int cnt = 0;
         for (int i = 1; i <= n; i ++) {
@@ -37,20 +31,34 @@ public class P660_Remove9 {
     static public class Solution {
         public int newInteger(int n) {
             //1, 2, 3, 4, 5, 6, 7, 8, 10, 11, ..
-            return n - get9Cnt(n);
+            if (n < 1) {
+                return 0;
+            }
+            String s = String.valueOf(n);
+            int sn = s.length();
+            return n - get9Cnt(s, 0, sn - 1);
         }
         
-        public int get9Cnt(int n) {
-            if (n < 90) {
-                int v = n / 10;
-                int u = n % 10;
-                return u < 9 ? v : v + 1;
+        private int get9Cnt(String s, int i, int j) {
+            if (i == j) {
+                return s.charAt(i) < '9' ? 0 : 1;
             }
-            if (n <= 100) {
-                
+            //创建一个 长度为 j-i的字符串
+            char[] cs = new char[j - i];
+            for (int csIndex = 0; csIndex < cs.length; csIndex ++) {
+                cs[csIndex] = '9';
             }
-            return 0;
+            int base = get9Cnt(new String(cs), 0, cs.length - 1);
+            char c = s.charAt(i);
+            int ans = (c - '0') * base;
+            if (c == '9') {
+                //需要增加
+                int nineAdd = Integer.parseInt(s.substring(i + 1)) + 1;
+                ans += nineAdd;
+            } else {
+                ans += get9Cnt(s, i + 1, j);
+            }
+            return ans;
         }
-        
     }
 }
