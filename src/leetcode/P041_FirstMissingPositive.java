@@ -11,79 +11,44 @@ package leetcode;
  */
 
 public class P041_FirstMissingPositive {
-	public static void main(String[] args) {
-//		System.out.println(new Solution1().firstMissingPositive(new int[]{1,2,0}));
-//		System.out.println(new Solution1().firstMissingPositive(new int[]{3,4,-1,1}));
-		System.out.println(new Solution1().firstMissingPositive(new int[]{8, 5, 4, 3, 2, 1}));
-	}
-	static class Solution2 {
-	    public int firstMissingPositive(int[] ns) {
-	        int nn = ns == null ? 0 : ns.length;
-	        if (nn < 1) {
-	            return 1;
-	        }
-	        //两个指针，维持最大可能和最小可能
-	        int min = 0;
-	        int max = nn - 1;
-	        for (int i = 0; i < nn; i ++) {
-	            int v = ns[i] - 1;
-	            if (v < min || v > max) {
-	                max --;
-	                //意味着[min, max]之前肯定有空格
-	                //max --肯定没错
-	                continue;
-	            }
-	            if (v == min) {
-	                min ++;
-	                continue;
-	            }
-	            if (v == max) {
-	                max --;
-	                continue;
-	            }
-	            if (v == i) {
-	                continue;
-	            }
-	            
-	        }
-	    }
-	    //[i, j]
-	    //k是候选下标
-	    int place(int[] ns, int i, int j, int k) {
-	        int index = ns[k] - 1;
-	        if (ns[index] == index) {
-	            
-	        }
-	    }
-	}
-	
-	/*
-	 * 	测试用例肯定特别多，HashMap完成不了
-	 * 	时间O(N) 空间O(1)　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
-	 * 	巨魔性
-	 * 	先假设没有重复数字
-	 * 	AC了
-	 * 	leetcode 却不告诉时间和排名
-	 * 	1 ms
-	 * 	18.19% 
-	 */
-	static class Solution1 {
-	    public int firstMissingPositive(int[] nums) {
-	    	if (nums == null || nums.length == 0)
-	    		return 0;
-	    	int l = 0, r = nums.length;
-	    	while (l < r) {
-	    		if (nums[l] == l + 1) {
-	    			l ++;
-	    		} else if (nums[l] <= 1 || nums[l] > r || nums[nums[l] - 1] == nums[l]) {
-	    			nums[l] = nums[-- r];
-	    		} else {
-	    			int temp = nums[nums[l] - 1];
-	    			nums[nums[l] - 1] = nums[l];
-	    			nums[l] = temp;
-	    		}
-	    	}
-	        return l + 1;
-	    }
-	}
+    
+    static class Solution {
+        /**
+         *  对left的操作:
+         *      定下，nums[left]的范围是：[left+1, right+1]
+         *      低于这个范围，高于这个范围都是无效的。
+         *      如果nums[left]有效，那么个将nums[val]填到该填的地方
+         *  对right的操作：
+         *      不能对right直接操作，因为只能从左边生成连续。
+         *      right维持的是：还有可能填充的最大下标
+         */
+        public int firstMissingPositive(int[] nums) {
+            int left = 0, right = nums == null ? -1 : nums.length - 1;
+            while (left <= right) {
+                //当前数据范围：[left+1, right+1]
+                int val = nums[left];
+                if (val == left + 1) {
+                    left ++;
+                } else if (val <= left) {
+                    //当前val无效
+                    nums[left] = nums[right];
+                    right --;
+                } else if (val > right + 1) {
+                    //当前val无效
+                    nums[left] = nums[right];
+                    right --;
+                } else if (nums[nums[left] - 1] == val) {
+                    //当前val无效
+                    nums[left] = nums[right];
+                    right --;
+                } else {
+                    //将val放到该放的地方
+                    int tmp = nums[nums[left] - 1];
+                    nums[nums[left] - 1] = nums[left];
+                    nums[left] = tmp;
+                }
+            }
+            return left + 1;
+        }
+    }
 }
