@@ -1,53 +1,67 @@
 package leetcode;
 
-/*
- * 	Given two numbers represented as strings, 
- * 	return multiplication of the numbers as a string.
+/**
+ *  Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2.
 
-	Note:
-	The numbers can be arbitrarily large and are non-negative.
-	Converting the input string to integer is NOT allowed.
-	You should NOT use internal library such as BigInteger.
+Note:
+
+The length of both num1 and num2 is < 110.
+Both num1 and num2 contains only digits 0-9.
+Both num1 and num2 does not contain any leading zero.
+You must not use any built-in BigInteger library or convert the inputs to integer directly.
  */
 
+/**
+ * @author      zxwtry
+ * @email       zxwtry@qq.com
+ * @project     OJ
+ * @package     leetcode
+ * @file        P043_MultiplyStrings.java
+ * @date        2017年8月23日 上午9:18:20
+ * @details     AC
+ */
 public class P043_MultiplyStrings {
-	public static void main(String[] args) {
-//		System.out.println(new Solution().multiply("99", "9"));
-		System.out.println(new Solution().multiply("99", "0"));
-	}
-	/*
-	 * 	 一个简单的大数乘法
-	 * 	8 ms
-	 * 	79.50% 
-	 */
-	static class Solution {
-	    public String multiply(String num1, String num2) {
-	    	int len1 = 0, len2 = 0;
-	    	if (num1 == null || (len1 = num1.length()) == 0 || 
-	    			num1 == null || (len2 = num2.length()) == 0 )
-	    		return String.valueOf(0);
-	    	int[] ans = new int[len1 + len2 + 1];
-	    	for (int i = len1 - 1; i > -1; i --)
-	    		for (int j = len2 - 1; j > -1; j --)
-	    			ans[i + 2 + j] += (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
-	    	int carry = 0;
-	    	for (int i = len1 + len2; i > -1; i --) {
-	    		int temp = ans[i] + carry;
-	    		ans[i] = temp % 10;
-	    		carry = temp / 10;
-	    	}
-	    	int i = 0;
-	    	char[] cs = null;
-	    	for (carry = -1; i != ans.length; i ++)
-	    		if (carry == -1) {
-	    			if (ans[i] != 0) {
-		    			cs = new char[ans.length - i];
-		    			carry = i;
-		    			cs[0] = (char)(ans[i] + '0');
-	    			}
-	    		} else
-	    			cs[i - carry] = (char)(ans[i] + '0');
-	        return cs == null ? "0" : new String(cs);
-	    }
-	}
+    static class Solution {
+        public String multiply(String num1, String num2) {
+            int n1n = num1 == null ? 0 : num1.length();
+            int n2n = num2 == null ? 0 : num2.length();
+            if (n1n == 0 || n2n == 0) {
+                return "0";
+            }
+            /**
+             * 结果最长可能为：n1n + n2n
+             */
+            char[] ans = new char[n1n + n2n];
+            for (int n1i = n1n - 1; n1i > -1; n1i --) {
+                for (int n2i = n2n - 1; n2i > -1; n2i --) {
+                    /**
+                     *  n1n - 1 - n1i + n2n - 1 - n2i
+                     *  n1n + n2n + 1 减去上式
+                     *  得到：ansIndex = n1i + n2i + 1
+                     */
+                    int ansIndex = n1i + n2i + 1;
+                    int ansValue = (num1.charAt(n1i) - '0') * 
+                            (num2.charAt(n2i) - '0');
+                    ans[ansIndex] += ansValue;
+                }
+                int carry = 0;
+                for (int ansIndex = ans.length - 1; ansIndex > -1; ansIndex --) {
+                    carry += ans[ansIndex];
+                    ans[ansIndex] = (char)(carry % 10);
+                    carry /= 10;
+                }
+            }
+            int ansIndex = 0;
+            while (ansIndex < ans.length && ans[ansIndex] == 0) {
+                ansIndex ++;
+            }
+            for (int j = ansIndex; j < ans.length; j ++) {
+                ans[j] = (char) ('0' + ans[j]);
+            }
+            if (ansIndex == ans.length) {
+                return "0";
+            }
+            return new String(ans, ansIndex, ans.length - ansIndex);
+        }
+    }
 }
