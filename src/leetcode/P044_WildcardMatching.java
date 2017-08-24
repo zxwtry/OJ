@@ -1,7 +1,5 @@
 package leetcode;
 
-
-
 /*
  * 	Implement wildcard pattern matching with support for '?' and '*'.
 	'?' Matches any single character.
@@ -21,200 +19,71 @@ package leetcode;
  */
 
 public class P044_WildcardMatching {
-	public static void main(String[] args) {
-		// System.out.println(new Solution().isMatch("ab", "?*"));
-		// System.out.println(new Solution().isMatch("aab", "c*a*b"));
-		// System.out.println(new
-		// Solution3().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba",
-		// "a*******b"));
-		// System.out.println(new Solution3().isMatch("abcba", "ab*ba"));
-		// System.out.println(new Solution3().isMatch("aa", "*"));
-		// System.out.println(new Solution3().isMatch("a", "a*"));
-//		System.out.println(new Solution4().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b"));
-//		System.out.println(new Solution4().isMatch("abcba", "ab*ba"));
-//		System.out.println(new Solution4().isMatch("aa", "*"));
-//		System.out.println(new Solution4().isMatch("a", "a*"));
-//		System.out.println(new Solution4().isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******a"));
-//		System.out.println(new Solution4().isMatch("aaabbba", "a***dfdfdfdfdfdf****a"));
-//		System.out.println(new Solution5().isMatch("ab", "?*"));
-		String s = "aaaabaaaabbbbaabbbaabbaababbabbaaaababaaabbbbbbaabbbabababbaaabaabaaaaaabbaabbbbaababbababaabbbaababbbba";
-		String p = "*****b*aba***babaa*bbaba***a*aaba*b*aa**a*b**ba***a*a*";
-		System.out.println(new Solution5().isMatch(s, p));
+
+	static class Solution1 {
+	    public boolean isMatch(String s, String p) {
+	        int sn = s == null ? 0 : s.length();
+	        int pn = p == null ? 0 : p.length();
+	        if (sn == 0 || pn == 0) {
+	            return sn == 0 && pn == 0;
+	        }
+	        boolean[][] dp = new boolean[sn + 1][pn + 1];
+	        /**
+	         * si == 0情况：
+	         * 应该pi == 0时候，为true
+	         * pi >= 1的时候，如果p[pi] == '*'，且dp[0][pi - 1] == true
+	         */
+	        int si = 0, pi = 0;
+	        dp[0][0] = true;
+	        for (si = -1, pi = 0; pi < pn; pi ++) {
+	            if (dp[si + 1][pi - 1 + 1] && p.charAt(pi) == '*') {
+	                dp[si + 1][pi + 1] = true;
+	            } else {
+	                break;
+	            }
+	        }
+	        for (si = 0; si < sn; si ++) {
+	            char sc = s.charAt(si);
+	            for (pi = 0; pi < pn; pi ++) {
+	                char pc = p.charAt(pi);
+	                if (pc == '*') {
+	                    //匹配0次
+	                    if (! dp[si + 1][pi + 1]) {
+	                        //匹配[0, si] 和 [0, pi - 1]
+	                        dp[si + 1][pi + 1] = dp[si + 1][pi - 1 + 1];
+	                    }
+	                    //匹配1次
+	                    if (! dp[si + 1][pi + 1]) {
+	                        //匹配[0, si-1] 和[0, pi-1]
+	                        dp[si + 1][pi + 1] = dp[si - 1 + 1][pi - 1 + 1];
+	                    }
+	                    //匹配多次
+	                    if (! dp[si + 1][pi + 1]) {
+	                        //匹配[0, si-1] 和 [0, pi]
+	                        dp[si + 1][pi + 1] = dp[si - 1 + 1][pi + 1];
+	                    }
+	                } else if (pc == '?') {
+	                    //匹配[0, si-1] 和[0, pi-1]
+                        dp[si + 1][pi + 1] = dp[si - 1 + 1][pi - 1 + 1];
+	                } else {
+	                    if (sc == pc) {
+	                        //匹配[0, si-1] 和[0, pi-1]
+	                        dp[si + 1][pi + 1] = dp[si - 1 + 1][pi - 1 + 1];
+	                    } else {
+	                        dp[si + 1][pi + 1] = false;
+	                    }
+	                }
+	            }
+	        }
+	        return dp[sn][pn];
+	    }
 	}
-
-	/*
-	 * 还是没有吃透10题 这题TLE
-	 */
-	static class Solution {
-		public boolean isMatch(String s, String p) {
-			if (s == null)
-				return p == null;
-			if (p == null)
-				return s == null;
-			StringBuilder st = new StringBuilder(p);
-			for (int i = p.length() - 1; i > -1; i--) {
-				if (st.charAt(i) == '*')
-					st.insert(i, '?');
-			}
-			p = st.toString();
-			char[] cs = new char[s.length() + 1], cp = new char[p.length() + 1];
-			cs[cs.length - 1] = '\0';
-			cp[cp.length - 1] = '\0';
-			System.arraycopy(s.toCharArray(), 0, cs, 0, cs.length - 1);
-			System.arraycopy(p.toCharArray(), 0, cp, 0, cp.length - 1);
-			return isMatch(cs, 0, cs.length, cp, 0, cp.length);
-		}
-
-		private boolean isMatch(char[] s, int i, int I, char[] p, int j, int J) {
-			if (p[j] == '\0')
-				return s[i] == '\0';
-			if (p[j + 1] == '*') {
-				while (s[i] == p[j] || (p[j] == '?' && s[i] != '\0')) {
-					if (isMatch(s, i++, I, p, j + 2, J)) {
-						return true;
-					}
-				}
-				return isMatch(s, i, I, p, j + 2, J);
-			} else {
-				if (s[i] == p[j] || (p[j] == '?' && s[i] != '\0'))
-					return isMatch(s, i + 1, I, p, j + 1, J);
-				return false;
-			}
-		}
-	}
-
-	/*
-	 * 自己按照自己的理解去写 还是会TLE
-	 */
-	static class Solution2 {
-		public boolean isMatch(String s, String p) {
-			if (s == null || p == null)
-				return false;
-			if (s.length() == 0 && (p.length() == 0 || p.equals("*")))
-				return true;
-			return isMatch(s.toCharArray(), 0, p.toCharArray(), 0);
-		}
-
-		public boolean isMatch(char[] s, int si, char[] p, int pi) {
-			if (si >= s.length || pi >= p.length) {
-				boolean isAllStar = true;
-				for (int i = pi; i != p.length; i++)
-					isAllStar &= '*' == p[i];
-				if (isAllStar)
-					return si == s.length;
-				return s.length - si == 0 && p.length - pi == 0;
-			}
-			if (p[pi] == '?') {
-				return isMatch(s, si + 1, p, pi + 1);
-			} else if (p[pi] == '*') {
-				boolean matchSince = false;
-				for (int i = si; i <= s.length; i++)
-					matchSince |= isMatch(s, i, p, pi + 1);
-				return matchSince;
-			} else {
-				if (s[si] == p[pi])
-					return isMatch(s, si + 1, p, pi + 1);
-				else
-					return false;
-			}
-		}
-	}
-
-	/*
-	 * 处理*的方法太差了，肯定有更加好的方法 其实可以先预先处理非*的匹配
-	 */
-	static class Solution3 {
-		private boolean isTwoStar = false;
-		public boolean isMatch(String s, String p) {
-			if (s == null || p == null)
-				return false;
-			if (s.length() == 0 && (p.length() == 0 || p.equals("*")))
-				return true;
-			return isMatchBackward(s.toCharArray(), 0, s.length() - 1, p.toCharArray(), 0, p.length() - 1);
-		}
-
-		public boolean isMatchForward(char[] s, int si, int se, char[] p, int pi, int pe) {
-			if (si > se || pi > pe) {
-				boolean isAllStar = true;
-				for (int i = pi; i != pe + 1; i++)
-					isAllStar &= '*' == p[i];
-				if (isAllStar)
-					return 1 == si - se;
-				return 1 == si - se && 1 == pi - pe;
-			}
-			if (p[pi] == '?') {
-				isTwoStar = false;
-				return isMatchForward(s, si + 1, se, p, pi + 1, pe);
-			} else if (p[pi] == '*') {
-				/*
-				 * 这里的复杂度太高了
-				 */
-				if (isTwoStar)
-					return isMatchTwoStar(s, si, se, p, pi, pe);
-				isTwoStar = true;
-				return isMatchBackward(s, si, se, p, pi, pe);
-				// boolean matchSince = false;
-				// for (int i = si; i <= se + 1; i ++)
-				// matchSince |= isMatchForward(s, i, se, p, pi + 1, pe);
-				// return matchSince;
-			} else {
-				isTwoStar = false;
-				if (s[si] == p[pi])
-					return isMatchForward(s, si + 1, se, p, pi + 1, pe);
-				else
-					return false;
-			}
-		}
-
-		public boolean isMatchBackward(char[] s, int si, int se, char[] p, int pi, int pe) {
-			if (si > se || pi > pe) {
-				boolean isAllStar = true;
-				for (int i = pe; i != -1; i--)
-					isAllStar &= '*' == p[i];
-				if (isAllStar)
-					return 1 == si - se;
-				return 1 == si - se && 1 == pi - pe;
-			}
-			if (p[pe] == '?') {
-				isTwoStar = false;
-				return isMatchBackward(s, si, se - 1, p, pi, pe - 1);
-			} else if (p[pe] == '*') {
-				if (isTwoStar)
-					return isMatchTwoStar(s, si, se, p, pi, pe);
-				isTwoStar = true;
-				return isMatchForward(s, si, se, p, pi, pe);
-				// boolean matchSince = false;
-				// for (int i = se; i >= si -1; i --)
-				// matchSince |= isMatchBackward(s, si, i, p, pi, pe - 1);
-				// return matchSince;
-			} else {
-				isTwoStar = false;
-				if (s[se] == p[pe])
-					return isMatchBackward(s, si, se - 1, p, pi, pe - 1);
-				else
-					return false;
-			}
-		}
-
-		private boolean isMatchTwoStar(char[] s, int si, int se, char[] p, int pi, int pe) {
-			int countNotQNotS = 0;
-			for (int i = pi; i <= pe; i++)
-				countNotQNotS += (p[i] == '?' || p[i] == '*') ? 0 : 1;
-			if (countNotQNotS == 0)
-				return true;
-			else if (countNotQNotS > se - si + 1)
-				return false;
-			/*
-			 * 这里的逻辑过于复杂，放弃
-			 */
-			return false;
-		}
-	}
+	
 	/*
 	 * 	35 ms
 	 * 	54.88%
 	 */
-	static class Solution4 {
+	static class Solution2 {
 		public boolean isMatch(String s, String p) {
 			if (p == null || p.length() == 0)
 				return s.length() == 0;
@@ -236,31 +105,6 @@ public class P044_WildcardMatching {
 				res[0] = res[0] && p.charAt(j) == '*';
 			}
 			return res[s.length()];
-		}
-	}
-	/*
-	 * 	作弊，使用正则表达式
-	 * 	wo cao这个竟然会TLE
-	 */
-	static class Solution5 {
-		public boolean isMatch(String s, String p) {
-			if (s == null)
-				return p == null;
-			if (p == null)
-				return s == null;
-			StringBuilder st = new StringBuilder(p);
-			for (int i = p.length() - 1; i > -1; i--) {
-				if (st.charAt(i) == '*')
-					st.insert(i, '.');
-				else if (st.charAt(i) == '?')
-					st.setCharAt(i, '.');
-			}
-			System.out.println(st.length());
-			p = st.toString();
-			System.out.println(p);
-			java.util.regex.Pattern r = java.util.regex.Pattern.compile(p);
-			java.util.regex.Matcher m = r.matcher(s);
-			return m.matches();
 		}
 	}
 }
