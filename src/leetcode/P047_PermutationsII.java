@@ -1,7 +1,14 @@
 package leetcode;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import sun.misc.OSEnvironment;
 
 
 /*
@@ -18,63 +25,29 @@ import java.util.List;
  */
 
 public class P047_PermutationsII {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 //		System.out.println(new Solution().permuteUnique(new int[] {3, 2, 1}));
 //		System.out.println(new Solution().permuteUnique(new int[] {3, 2, 1}));
 //		System.out.println(new Solution().permuteUnique(new int[] {5, 4,3, 2, 2, 2, 1, 0, -1, -2}));
 //		System.out.println(new Solution().permuteUnique(new int[] {3, 3, 2, 2, 1}));
 //		System.out.println(new Solution2().permuteUnique(new int[] {1, 2, 3, 4}));
-		System.out.println(new Solution2().permuteUnique(new int[] {3, 3, 5}));
+//		System.out.println(new Solution2().permuteUnique(new int[] {3, 3, 5}));
+		
+		ArrayList<Integer> list = new ArrayList<>();
+		list.add(0);
+		list.add(1);
+		list.add(2);
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:/a.obj"));
+		oos.writeObject(list);
+		oos.close();
+		
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:/a.obj"));
+		ArrayList<Integer> newList = (ArrayList<Integer>) ois.readObject();
+		System.out.println(newList);
+		ois.close();
+		
 	}
 	/*
-	 * 	先用HashSet试试
-	 * 	32 ms
-	 * 	10.27%
-	 * 	第一次提交没有AC，将<<i修改成<<i*(i + 1)就AC了
-	 * 	说明这种方法是对应现在的leetcode测试数据可行。。。
-	 * 	况且效率真的不高
-	 */
-	static class Solution {
-		List<List<Integer>> ans = new LinkedList<List<Integer>>();
-		java.util.HashSet<Long> set = new java.util.HashSet<Long>();
-		public List<List<Integer>> permuteUnique(int[] nums) {
-			if (nums == null || nums.length < 1)
-				return ans;
-			searchAllPermutation(nums, 0);
-			return ans;
-		}
-		private void searchAllPermutation(int[] nums, int index) {
-			if (index == nums.length) {
-				long l = generateLong(nums);
-				if (set.contains(l))
-					return;
-				else
-					set.add(l);
-				List<Integer> answer = new LinkedList<Integer>();
-				for (int i = 0; i != nums.length; i ++)
-					answer.add(nums[i]);
-				ans.add(answer);
-			}
-			for (int i = index; i != nums.length; i ++) {
-				swap(nums, index, i);
-				searchAllPermutation(nums, index + 1);
-				swap(nums, index, i);
-			}
-		}
-		private void swap(int[] nums, int i, int j) {
-			int temp = nums[i];
-			nums[i] = nums[j];
-			nums[j] = temp;
-		}
-		long generateLong(int[] nums) {
-			long l = 0l;
-			for (int i = 0; i != nums.length; i ++)
-				l += (nums[i] << (i * (i + 1)));
-			return l;
-		}
-	}
-	/*
-	 * 	使用HashSet是不行的。
 	 * 	没有重复的规则是：
 	 * 		第i个数与第j个数交换时，要求[i,j)中没有与第j个数相等的数
 	 * 	6 ms
