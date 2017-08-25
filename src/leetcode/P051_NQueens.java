@@ -33,6 +33,8 @@ public class P051_NQueens {
 //		queen.backtrack(1);
 		System.out.println(new Solution2().solveNQueens(8).size());
 	}
+	
+	
 	/*
 	 * 	4 ms
 	 * 	91.55% 
