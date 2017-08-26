@@ -1,15 +1,7 @@
 package leetcode;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import sun.misc.OSEnvironment;
-
 
 /*
  * 	Given a collection of numbers that might contain duplicates, 
@@ -25,28 +17,6 @@ import sun.misc.OSEnvironment;
  */
 
 public class P047_PermutationsII {
-	public static void main(String[] args) throws Exception {
-//		System.out.println(new Solution().permuteUnique(new int[] {3, 2, 1}));
-//		System.out.println(new Solution().permuteUnique(new int[] {3, 2, 1}));
-//		System.out.println(new Solution().permuteUnique(new int[] {5, 4,3, 2, 2, 2, 1, 0, -1, -2}));
-//		System.out.println(new Solution().permuteUnique(new int[] {3, 3, 2, 2, 1}));
-//		System.out.println(new Solution2().permuteUnique(new int[] {1, 2, 3, 4}));
-//		System.out.println(new Solution2().permuteUnique(new int[] {3, 3, 5}));
-		
-		ArrayList<Integer> list = new ArrayList<>();
-		list.add(0);
-		list.add(1);
-		list.add(2);
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("E:/a.obj"));
-		oos.writeObject(list);
-		oos.close();
-		
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:/a.obj"));
-		ArrayList<Integer> newList = (ArrayList<Integer>) ois.readObject();
-		System.out.println(newList);
-		ois.close();
-		
-	}
 	/*
 	 * 	没有重复的规则是：
 	 * 		第i个数与第j个数交换时，要求[i,j)中没有与第j个数相等的数
