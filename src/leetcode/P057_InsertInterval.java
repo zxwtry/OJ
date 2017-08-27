@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,14 +50,27 @@ public class P057_InsertInterval {
 //			new Solution().getIndex(input, newInterval);
 //		}
 	}
-	/*
-	 * 	先用二分做一下，又不会爆炸
-	 * 	如果leetcode的List的内部实现是ArrayList的话，会有神秘加成
-	 * 	一次AC，好爽！！！
-	 * 	2 ms
-	 * 	95.54% 
-	 * 	经验证，leetcode上的List都是ArrayList
-	 */
+	
+	static class Solution2 {
+        public List<Interval> insert(List<Interval> is, Interval ni) {
+            if (ni == null) {
+                return is;
+            }
+            int in = is == null ? 0 : is.size();
+            if (in == 0) {
+                return Arrays.asList(ni);
+            }
+            int li = Collections.binarySearch(is, ni, new Comparator<Interval>() {
+                @Override
+                public int compare(Interval a, Interval b) {
+                    
+                    return 0;
+                }
+            });
+        }
+	}
+	
+	
 	static class Solution {
 	    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
 	    	if (intervals == null) {
