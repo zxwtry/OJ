@@ -1,1 +1,9 @@
 /bin/
+.gitignore
+*.out
+*.class
+*.py[cod]
+*.zxw
+.DS_Store
+Thumbs.db
+.git/
