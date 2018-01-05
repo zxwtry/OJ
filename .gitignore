@@ -8,3 +8,4 @@
 Thumbs.db
 .git/
 *.swp
+git_add_commit_push.sh
