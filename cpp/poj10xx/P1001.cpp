@@ -110,8 +110,8 @@ int main() {
     string s;
     int t;
     while(cin>>s>>t) {
-	    int sl = s.length();
-	    int* ar = string_remove_dot_reverse(s, 0, sl);
+        int sl = s.length();
+        int* ar = string_remove_dot_reverse(s, 0, sl);
         if (check_all_zero(ar, 1, ar[0])) {
             printf("0\n");
             continue;
@@ -120,34 +120,34 @@ int main() {
             printf("1\n");
             continue;
         } 
-	    int cap = count_after_point(s, 0, sl) * t;
-	    int* c = calc(ar, 1, ar[0], t);
-	    int ci = 1, cj = c[0];
-	    while (ci < cj && c[ci] == 0) {
-	        ci ++;
-	    }
-	    while (ci < cj && c[cj - 1] == 0) {
-	        cj --;
-	    }
-	    if (cap >= cj - 1) {
-	        printf(".");
-	        for (int pk = cj - 1; pk < cap; pk ++) {
-	            printf("0");
-	        }
-	    }
-	    for (int ck = cj - 1; ck >= ci; ck --) {
-	        printf("%c", (char)(c[ck] + '0'));
-	        if (cap != 0 && ck != ci && ck - 1 == cap) {
-	            printf(".");
-	        }
-	    }
+        int cap = count_after_point(s, 0, sl) * t;
+        int* c = calc(ar, 1, ar[0], t);
+        int ci = 1, cj = c[0];
+        while (ci < cj && c[ci] == 0) {
+            ci ++;
+        }
+        while (ci < cj && c[cj - 1] == 0) {
+            cj --;
+        }
+        if (cap >= cj - 1) {
+            printf(".");
+            for (int pk = cj - 1; pk < cap; pk ++) {
+                printf("0");
+            }
+        }
+        for (int ck = cj - 1; ck >= ci; ck --) {
+            printf("%c", (char)(c[ck] + '0'));
+            if (cap != 0 && ck != ci && ck - 1 == cap) {
+                printf(".");
+            }
+        }
         if (cap <= ci) {
             for (int pk = cap + 1; pk < ci; pk ++) {
                 printf("0");
             }
         }
-	    printf("\n");
-	    delete []ar;
+        printf("\n");
+        delete []ar;
         delete []c;
     }
     return 0;
