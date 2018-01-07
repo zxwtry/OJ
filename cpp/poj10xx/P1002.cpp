@@ -11,6 +11,8 @@
 /*
     去重，排序
     使用cin>>s 会超时
+    
+    使用qsort_main同样会超时
 */
 
 #include<iostream>
@@ -18,6 +20,7 @@
 #include<string>
 #include<algorithm>
 #include<map>
+#include<stdlib.h>
 
 using namespace std;
 
@@ -59,6 +62,38 @@ int map_string_to_arr(string & s) {
 
 int cmp(const void *a, const void *b) {
     return *(int *) a - *(int *) b;
+}
+
+
+void swap(int* a, int ai, int aj) {
+    int t = a[ai];
+    a[ai] = a[aj];
+    a[aj] = t;
+}
+
+int qsort_part(int* a, int ai, int aj) {
+    aj --;
+    int v = a[ai];
+    while (ai < aj) {
+        while (ai < aj && a[aj] >= v) {
+            aj --;
+        } 
+        a[ai] = a[aj];
+        while (ai < aj && a[ai] <= v) {
+            ai ++;
+        }
+        a[aj] = a[ai];
+    }
+    a[ai] = v;
+    return ai;
+}
+
+void qsort_main(int* a, int ai, int aj) {
+    if (ai < aj) {
+        int ap = qsort_part(a, ai, aj);
+        qsort_main(a, ai, ap);
+        qsort_main(a, ap + 1, aj);
+    }
 }
 
 
@@ -115,7 +150,7 @@ int string_to_int(char* cs) {
     return v;
 }
 
-int main_arr() {
+int main() {
     int t;
     char cs[108];
     scanf("%d\n", &t);
@@ -126,6 +161,7 @@ int main_arr() {
         a[tk] = string_to_int(cs);
     }
     qsort(a, t, sizeof(a[0]), cmp);   
+    //qsort_main(a, 0, t);
     int k = a[0];
     int v = 1;
     bool out = false;
