@@ -6,129 +6,113 @@
     date:    2018-01-05 20:44:00
 */
 
+/*
+*/
+
 #include<iostream>
 #include<stdio.h>
 #include<string>
 #include<algorithm>
 #include<map>
 #include<vector>
+#include<stdlib.h>
 
 using namespace std;
 
 
-int xa[] = {-1, 0, 1, -1, 1, -1, 0, 1};
-int ya[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+int xa[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+int ya[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
-
-int find_value(vector<int> & cm, int i, int bi) {
-    int n = cm.size();
-    int ci = bi;
-    for (; ci < n; ci ++) {
-        if (cm[ci] > i) break;
+// 找到第一个大于p的下标
+int get_vi(vector<int> & m, int ml, int mr, int p) {
+    mr --;
+    while (ml < mr) {
+        int mm = ml + (mr - ml) / 2;
+        int cmp = m[mm] - p;
+        if (cmp <= 0) {
+            ml = mm + 1;
+        } else {
+            mr = mm;
+        }
     }
-    return ci;
+    return ml;
+}
+
+int cnt_my = 0;
+
+int get_range(vector<int> & v, vector<int> & m, int xn, int yn, int x, int y, int val) {
+    int range = 0;
+    int ml = 0, mr = m.size();
+    for (int i = 0; i < 8; i ++) {
+        int xx = x + xa[i], yy = y + ya[i];
+        if (xx < 0 || xx >= xn || yy < 0 || yy >= yn) continue;
+        int pp = xx * yn + yy;
+        range = max(range, abs(val - v[get_vi(m, ml, mr, pp)]));
+    }
+    return range;
 }
 
 
-int calc_value(vector<int> & v, vector<int> & c, vector<int> & cm,
-    int xn, int yn, int x, int y, int val, int & bi) {
-    int ans = 0;
-    for (int xi = 0; xi < 8; xi ++) {
-        int xx = x + xa[xi];
-        int yy = y + ya[xi];
-        printf("xx:%d  yy:%d\n", xx, yy);
-        if (xx < 0 || xx >= xn || yy < 0 || yy >= yn) {
-            continue;
-        }
-        int ii = xx + yn * yy;
-        int ci = find_value(cm, ii, bi);
-        if (xi == 0) {
-            bi = ci;
-        }
-        printf("v[ci] is %d\n", v[ci]);
-        ans = max(ans, abs(val - v[ci]));        
-    }
-    return ans;
-}
-
-
-void add_vvcc(vector<int> & vv, vector<int> & cc, int cnt, int val) {
-    printf("add vvcc cnt:%d   val:%d\n", cnt, val);
-    int nn = vv.size();
-    if (nn == 0) {
-        vv.push_back(val);
-        cc.push_back(cnt);
-        return;
-    }
-    if (vv[nn - 1] == val) {
-        cc[nn - 1] += cnt;
+void print_range(int* last, int range, int times) {
+    if (last[0] == range || last[1] == 0) {
+        last[1] += times;
     } else {
-        vv.push_back(val);
-        cc.push_back(cnt);
+        printf("%d %d\n", last[0], last[1]);
+        last[0] = range;
+        last[1] = times;
     }
 }
 
 
-void solve(vector<int> & v, vector<int> & c, int n) {
-    int s = 0;
+void solve(vector<int> & v, vector<int> & c, vector<int> & m, int yn) {
     int vn = v.size();
-    vector<int> cm;
-    for (int vi = 0; vi < vn; vi ++) {
-        s += c[vi];
-        cm.push_back(s);
-    }
-    int yn = n, xn = s / n;
-    s = 0;
-    vector<int> vv, cc;
-    int bi = 0;
-    for (int vi = 0; vi < vn; vi ++) {
-        int s1 = s + yn + 1;
-        int s2 = s + c[vi] - yn - 1;
-        int s3 = s + c[vi];
-        int si = s;
-        for (; si < s1 && si < s3; si ++) {
-            add_vvcc(vv, cc, 1, 
-                calc_value(v, c, cm, xn, yn, si / yn, si % yn, v[vi], bi)
-            );
+    int p = 0;
+    int last[2] = {0, 0};
+    int xn = m[vn - 1] / yn;
+    for (int i = 0; i < vn; i ++) {
+        int p1 = p + yn + 1;
+        int p2 = p + c[i] - yn - 1;
+        int p3 = p + c[i];
+        int pi = p;
+        // printf("%d %d %d %d\n", p1, p2, p3, pi);
+        for (; pi < p1 && pi < p2; pi ++) {
+            print_range(last, get_range(v, m, xn, yn, pi / yn, pi % yn, v[i]), 1);
         }
-        if (s2 > si) {
-            // 增加 s2 - si个0
-            add_vvcc(vv, cc, s2 - si, 0);
-            si = s2;
+        if (p2 > pi) {
+            print_range(last, 0, p2 - pi);
+        }
+        pi = p2;
+        for (; pi < p3; pi ++) {
+            print_range(last, get_range(v, m, xn, yn, pi / yn, pi % yn, v[i]), 1);
         } 
-        for (; si < s3; si ++) {
-            add_vvcc(vv, cc, 1, 
-                calc_value(v, c, cm, xn, yn, si / yn, si % yn, v[vi], bi)
-            );
-        }
-        s += c[vi]; 
+        p += c[i];
     }
-    printf("\nstart print ans\n");
-    printf("%d\n", n);
-    for (int i = 0, vvn = vv.size(); i < vvn; i ++) {
-        printf("%d %d\n", vv[i], cc[i]);
-    }
-    printf("end print ans\n");
+    printf("%d %d\n", last[0], last[1]);
 }
-
 
 
 int main() {
-    vector<int> vv, vc;
-    int n;
+    int n, t;
+    vector<int> v, c, m;
     while(true) {
+        t = 0;
         scanf("%d", &n);
         if (n == 0) break;
-        vv.clear();
-        vc.clear();
-        int v,c;
-        while (true) {
-            scanf("%d %d", &v, &c);
-            if (v == 0 && c == 0) break;
-            vv.push_back(v);
-            vc.push_back(c);
+        printf("%d\n", n);
+        v.clear();
+        c.clear();
+        m.clear();
+        while(true) {
+            int vt, ct;
+            scanf("%d %d", &vt, &ct);
+            t += ct;
+            if (vt == 0 && ct == 0) break;
+            v.push_back(vt);
+            c.push_back(ct);
+            m.push_back(t);
         }
-        solve(vv, vc, n);
+        solve(v, c, m, n);
+        printf("0 0\n");
     }    
     return 0;
 }
