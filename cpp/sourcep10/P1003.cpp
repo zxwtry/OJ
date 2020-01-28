@@ -28,6 +28,7 @@ void print_arr(int* a, int ai, int aj) {
         printf("%-4d   %d\n", ak, a[ak]);
     }
     printf("ending...\n");
+    
 }
 
 
@@ -38,7 +39,7 @@ int cal(float v ) {
         n ++;
     }
     return n - 2;
-}
+}cc
 
 int main() {
     float v;

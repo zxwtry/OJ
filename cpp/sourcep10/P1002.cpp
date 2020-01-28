@@ -27,7 +27,8 @@ using namespace std;
 
 void print_arr(int* a, int ai, int aj) {
     printf("starting...\n");
-    for (int ak = ai; ak < aj; ak ++) {
+
+       for (int ak = ai; ak < aj; ak ++) {
         printf("%-4d   %d\n", ak, a[ak]);
     }
     printf("ending...\n");

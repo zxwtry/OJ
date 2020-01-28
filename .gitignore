@@ -9,3 +9,8 @@ Thumbs.db
 .git/
 *.swp
 git_add_commit_push.sh
+*.in
+*.ans
+.clang-format
+.vscode/*
+*.exe

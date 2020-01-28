@@ -11,11 +11,10 @@
 /*
     数字的幂次方
 */
-
-
 #include<iostream>
 #include<stdio.h>
 #include<string>
+#include<stack>
 
 using namespace std;
 
