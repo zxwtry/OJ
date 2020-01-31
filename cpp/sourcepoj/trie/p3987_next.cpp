@@ -1,4 +1,5 @@
 // AC 30740K	672MS
+// h3695 MLE
 #include <cstring>
 #include <iostream>
 #include <queue>
@@ -100,6 +101,7 @@ long long trieNodeQuery(struct TrieNode *root, char *s, int sn) {
     return ans;
 }
 
+// 这个free有问题，暂且保留
 void trieNodeFree(struct TrieNode *root) {
     if (!root) {
         return;
