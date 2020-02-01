@@ -18,8 +18,8 @@ int main() {
     for (int numIndex = 0; numIndex < costNum; numIndex++) {
         scanf("%d %d\n", &cost[numIndex], &value[numIndex]);
     }
-    for (int numIndex = 1; numIndex < costNum; numIndex++) {
-    }
+    for (int numIndex = 0; numIndex < costNum; numIndex++) {
+        }
     printf("%d\n", maxValue[costMax]);
     return 0;
 }
