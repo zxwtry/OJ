@@ -19,7 +19,12 @@ int main() {
         scanf("%d %d\n", &cost[numIndex], &value[numIndex]);
     }
     for (int numIndex = 0; numIndex < costNum; numIndex++) {
+        for (int costIndex = costNum; costIndex >= cost[numIndex];
+             costIndex--) {
+            maxValue[costIndex] =
+                maxValue[costIndex - cost[numIndex]] + value[numIndex];
         }
+    }
     printf("%d\n", maxValue[costMax]);
     return 0;
 }
