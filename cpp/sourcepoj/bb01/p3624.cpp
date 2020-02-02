@@ -22,9 +22,10 @@ int main() {
         for (int costIndex = costNum; costIndex >= cost[numIndex];
              costIndex--) {
             maxValue[costIndex] =
-                maxValue[costIndex - cost[numIndex]] + value[numIndex];
+                std::max(maxValue[costIndex - cost[numIndex]] + value[numIndex],
+                         maxValue[costIndex]);
         }
     }
-    printf("%d\n", maxValue[costMax]);
+    printf("%d\n", maxValue[costNum]);
     return 0;
 }
