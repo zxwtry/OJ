@@ -19,7 +19,7 @@ int main() {
         scanf("%d %d\n", &cost[numIndex], &value[numIndex]);
     }
     for (int numIndex = 0; numIndex < costNum; numIndex++) {
-        for (int costIndex = costNum; costIndex >= cost[numIndex];
+        for (int costIndex = costMax; costIndex >= cost[numIndex];
              costIndex--) {
             maxValue[costIndex] =
                 std::max(maxValue[costIndex - cost[numIndex]] + value[numIndex],
