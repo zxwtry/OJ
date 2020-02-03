@@ -5,7 +5,7 @@ const int COSTMAX = 13880;
 const int COSTNUM = 3502;
 int cost[COSTNUM] = {0};
 int value[COSTNUM] = {0};
-int maxValue[COSTMAX] = {0};
+int maxValue[COSTNUM][COSTMAX] = {0};
 
 int main() {
     if (getenv("ZXWPC")) {
@@ -18,14 +18,7 @@ int main() {
     for (int numIndex = 0; numIndex < costNum; numIndex++) {
         scanf("%d %d\n", &cost[numIndex], &value[numIndex]);
     }
-    for (int numIndex = 0; numIndex < costNum; numIndex++) {
-        for (int costIndex = costMax; costIndex >= cost[numIndex];
-             costIndex--) {
-            maxValue[costIndex] =
-                std::max(maxValue[costIndex - cost[numIndex]] + value[numIndex],
-                         maxValue[costIndex]);
-        }
-    }
-    printf("%d\n", maxValue[costNum]);
+    for (int costIndex =)
+        printf("%d\n", maxValue[costMax]);
     return 0;
 }
