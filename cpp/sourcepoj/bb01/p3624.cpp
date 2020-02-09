@@ -15,6 +15,7 @@ int main() {
         freopen("p3624.out", "w", stdout);
     }
     int costNum = 0;
+
     int costMax = 0;
     scanf("%d %d\n", &costNum, &costMax);
     for (int numIndex = 1; numIndex <= costNum; numIndex++) {
