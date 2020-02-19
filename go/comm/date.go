@@ -30,7 +30,7 @@ func DataFormatToString() {
 func dayToWpc() {
 	wpcTime, _ := time.Parse("20060102", "20200801")
 	dayToWpc := (wpcTime.Unix() - time.Now().Unix()) / (24 * 60 * 60)
-	fmt.Printf("xinweizhu 还有 %d 天就开始WPC比赛了。", dayToWpc)
+	fmt.Printf("xinweizhu 还有 %d 天就开始WPC比赛了。\n", dayToWpc)
 }
 
 // Notify 提醒消息
