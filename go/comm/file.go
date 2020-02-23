@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func RenameFile() {
@@ -22,6 +23,35 @@ func RenameFile() {
 				fmt.Println(fileNewName)
 				os.Rename(fileDir+fileName, fileNewName)
 			}
+		}
+	}
+}
+
+func MergeFile() {
+	fileDir := "D:/file/ffout/"
+	fileList, _ := ioutil.ReadDir(fileDir)
+	for _, fileInfo := range fileList {
+		fileName := fileInfo.Name()
+		fileNamePart := strings.Split(fileName, "-")
+		if len(fileNamePart) == 2 {
+			fileHandler, _ := os.Open(fileDir + fileName)
+			fileAllBytes, _ := ioutil.ReadAll(fileHandler)
+			fileNewName := fileDir + fileNamePart[0] + ".mp3"
+			ioutil.WriteFile(fileNewName, fileAllBytes, os.ModeAppend)
+			fileHandler.Close()
+		}
+	}
+}
+
+func DelFile() {
+	fileDir := "D:/file/ffout/"
+	fileList, _ := ioutil.ReadDir(fileDir)
+	for _, filePath := range fileList {
+		fileIndex := strings.Index(filePath.Name(), "-")
+		if fileIndex != -1 {
+
+			os.Remove(fileDir + filePath.Name())
+			fmt.Println(fileDir + filePath.Name())
 		}
 	}
 }
