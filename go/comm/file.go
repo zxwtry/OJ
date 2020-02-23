@@ -49,7 +49,6 @@ func DelFile() {
 	for _, filePath := range fileList {
 		fileIndex := strings.Index(filePath.Name(), "-")
 		if fileIndex != -1 {
-
 			os.Remove(fileDir + filePath.Name())
 			fmt.Println(fileDir + filePath.Name())
 		}
