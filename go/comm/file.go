@@ -82,5 +82,15 @@ func SolveBzBlv() {
 		bzFileInfo := ReadBZFileInfo(entryName)
 		fmt.Printf("%+v\n", bzFileInfo)
 
+		blvDir := fmt.Sprintf("D:/file/video/s_28898/%s/", fileName)
+		blvFileList, _ := ioutil.ReadDir(blvDir)
+		for _, bzFileHandler := range blvFileList {
+			if bzFileHandler.IsDir() {
+				videoDir := blvDir + bzFileHandler.Name()
+				videoPath := videoDir + "/0.blv"
+				videoNewName := fmt.Sprintf("D:/file/video/今日说法_%s_%s.blv", bzFileInfo.Ep.Index, bzFileInfo.Ep.IndexTitle)
+				os.Rename(videoPath, videoNewName)
+			}
+		}
 	}
 }
