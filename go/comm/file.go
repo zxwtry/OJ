@@ -1,6 +1,7 @@
 package comm
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -52,5 +53,34 @@ func DelFile() {
 			os.Remove(fileDir + filePath.Name())
 			fmt.Println(fileDir + filePath.Name())
 		}
+	}
+}
+
+type BZFileInfoEP struct {
+	Index      string `json:"index"`
+	IndexTitle string `json:"index_title"`
+}
+type BZFileInfo struct {
+	Ep BZFileInfoEP `json:"ep"`
+}
+
+func ReadBZFileInfo(path string) *BZFileInfo {
+	filePath, _ := os.Open(path)
+	defer filePath.Close()
+	fileBytes, _ := ioutil.ReadAll(filePath)
+	var bzFileInfo BZFileInfo
+	json.Unmarshal(fileBytes, &bzFileInfo)
+	return &bzFileInfo
+}
+
+func SolveBzBlv() {
+	fileDir := "D:/file/video/s_28898/"
+	fileList, _ := ioutil.ReadDir(fileDir)
+	for _, fileHandler := range fileList {
+		fileName := fileHandler.Name()
+		entryName := fmt.Sprintf("D:/file/video/s_28898/%s/entry.json", fileName)
+		bzFileInfo := ReadBZFileInfo(entryName)
+		fmt.Printf("%+v\n", bzFileInfo)
+
 	}
 }
