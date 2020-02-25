@@ -1,7 +1,8 @@
 package main
 
-import "github.com/zxwtry/OJ/go/comm"
+import "fmt"
 
 func main() {
-	comm.SolveBzBlv()
+	l := make([]int, 4, 4)
+	fmt.Println(len(l))
 }
