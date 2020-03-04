@@ -1,12 +1,7 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/zxwtry/OJ/go/helper"
-)
+import "github.com/zxwtry/OJ/go/comm"
 
 func main() {
-	ret := helper.GetSignInPushRedisKey(479671264)
-	fmt.Println(ret)
+	comm.JinParseLog()
 }
