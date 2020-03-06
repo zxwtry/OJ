@@ -66,6 +66,7 @@ type JinDoFileParse struct {
 	Hansen  float64
 	Er      float64
 	Er1     float64
+	CofM    float64
 }
 
 func JinGenerateDoFile(filePrefix string, fileLimitInt uint64, startValue uint64, endValue uint64, fileExec string) {
@@ -156,6 +157,16 @@ func (l JinDoFileParseList) GetSumAllP(i int) float64 {
 		sum += 0
 	} else {
 		sum += JIN_S_FACTOR * v.Sargan * 5
+	}
+
+	if v.Ar1 < 0.1 &&
+		v.Ar2 > 0.1 &&
+		v.Sargan > 0.1 &&
+		v.Hansen > 0.1 &&
+		v.Er < 0.1 &&
+		v.Er1 < 0.1 &&
+		v.CofM < 0 {
+		sum -= 10
 	}
 
 	return sum
@@ -323,24 +334,12 @@ func JinParseLogToSrtSQL(lines []string, linesLen int) string {
 
 func JinParseLogToSrt(lines []string, linesLen int) JinDoFileParse {
 	jinDoFileParse := JinDoFileParse{}
-	var cofM float64
-	jinDoFileParse.ArrAllP, jinDoFileParse.Er, jinDoFileParse.Er1, cofM = JinParseLogToSrtAllP(lines, linesLen)
+	jinDoFileParse.ArrAllP, jinDoFileParse.Er, jinDoFileParse.Er1, jinDoFileParse.CofM = JinParseLogToSrtAllP(lines, linesLen)
 	jinDoFileParse.Ar1 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(1)")
 	jinDoFileParse.Ar2 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(2)")
 	jinDoFileParse.Sargan = JinParseLogToSrtFilter(lines, linesLen, "Sargan test of overid.")
 	jinDoFileParse.Hansen = JinParseLogToSrtFilter(lines, linesLen, "Hansen test of overid.")
 	jinDoFileParse.ExecSQL = JinParseLogToSrtSQL(lines, linesLen)
-
-	if jinDoFileParse.Ar1 < 0.1 &&
-		jinDoFileParse.Ar2 > 0.1 &&
-		jinDoFileParse.Sargan > 0.1 &&
-		jinDoFileParse.Hansen > 0.1 &&
-		jinDoFileParse.Er < 0.1 &&
-		jinDoFileParse.Er1 < 0.1 &&
-		cofM < 0 {
-		jinDoFileParse.Er = 1000
-		jinDoFileParse.Er1 = 1000
-	}
 
 	return jinDoFileParse
 }
