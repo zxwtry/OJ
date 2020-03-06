@@ -8,7 +8,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var JinWrite *os.File = nil
@@ -190,8 +189,14 @@ func JinParseLog(allFile []string, allOutFile string) {
 	fmt.Printf("jinDoFileParseListLen:%d\r\n", len(jinDoFileParseList))
 	defer JinWriteLog.Close()
 	for i := 0; i < 100 && i < len(jinDoFileParseList); i++ {
-		fmt.Println(jinDoFileParseList[i].ExecSQL)
-		JinWriteLog.WriteString(jinDoFileParseList[i].ExecSQL + "\r\n\r\n")
+		JinWriteLog.WriteString(jinDoFileParseList[i].ExecSQL + "\r\n")
+		JinWriteLog.WriteString(fmt.Sprintf("Er:%f\r\n", jinDoFileParseList[i].Er))
+		JinWriteLog.WriteString(fmt.Sprintf("Er1:%f\r\n", jinDoFileParseList[i].Er1))
+		JinWriteLog.WriteString(fmt.Sprintf("Ar1:%f\r\n", jinDoFileParseList[i].Ar1))
+		JinWriteLog.WriteString(fmt.Sprintf("Ar2:%f\r\n", jinDoFileParseList[i].Ar2))
+		JinWriteLog.WriteString(fmt.Sprintf("Sargan:%f\r\n", jinDoFileParseList[i].Sargan))
+		JinWriteLog.WriteString(fmt.Sprintf("Hansen:%f\r\n", jinDoFileParseList[i].Hansen))
+		JinWriteLog.WriteString(fmt.Sprintf("AllP:%+v\r\n\r\n", jinDoFileParseList[i].ArrAllP))
 	}
 }
 
@@ -227,8 +232,6 @@ func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse)
 				// fmt.Println(lineIndex)
 				jinDoFileParse := JinParseLogToSrt(lines, lineIndex)
 				*jinDoFileParseList = append(*jinDoFileParseList, jinDoFileParse)
-				fmt.Println(jinDoFileParse)
-				time.Sleep(time.Second * 3)
 			}
 			cnt2++
 			lineIndex = 0
@@ -246,6 +249,8 @@ func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, flo
 	arrAllP := make([]float64, 0, 10)
 	er := float64(0)
 	er1 := float64(0)
+	erCof := float64(0)
+	er1Cof := float64(0)
 	for i := 0; i < linesLen; i++ {
 		line := lines[i]
 		if strings.Index(line, "|") != -1 {
@@ -254,6 +259,17 @@ func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, flo
 			for _, value := range arrValues {
 				if len(value) != 0 {
 					count++
+					if count == 3 {
+						valueFloat, valueFloatErr := strconv.ParseFloat(value, 64)
+						if valueFloatErr == nil {
+							if strings.Index(line, "er |") != -1 {
+								erCof = valueFloat
+							}
+							if strings.Index(line, "er1 |") != -1 {
+								er1Cof = valueFloat
+							}
+						}
+					}
 					if count == 6 {
 						valueFloat, valueFloatErr := strconv.ParseFloat(value, 64)
 						if valueFloatErr == nil {
@@ -270,6 +286,9 @@ func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, flo
 			}
 		}
 	}
+	if erCof*er1Cof < 0 {
+		return arrAllP, 1000, 1000
+	}
 	return arrAllP, er, er1
 }
 
@@ -281,12 +300,12 @@ func JinParseLogToSrtFilter(lines []string, linesLen int, filter string) float64
 			ar1 := arrValues[len(arrValues)-1]
 			valueFloat, valueFloatErr := strconv.ParseFloat(ar1, 64)
 			if valueFloatErr != nil {
-				return -1001
+				return 1000
 			}
 			return valueFloat
 		}
 	}
-	return -1001
+	return 1000
 }
 
 func JinParseLogToSrtSQL(lines []string, linesLen int) string {
