@@ -107,12 +107,12 @@ func (l JinDoFileParseList) Len() int {
 	return len(l)
 }
 
-const JIN_ER_FACTOR = 3
-const JIN_ER1_FACTOR = 3
-const JIN_AR1_FACTOR = 3
-const JIN_AR2_FACTOR = 3
-const JIN_H_FACTOR = 3
-const JIN_S_FACTOR = 3
+var JIN_ER_FACTOR float64 = 3
+var JIN_ER1_FACTOR float64 = 3
+var JIN_AR1_FACTOR float64 = 3
+var JIN_AR2_FACTOR float64 = 3
+var JIN_H_FACTOR float64 = 3
+var JIN_S_FACTOR float64 = 3
 
 func (l JinDoFileParseList) GetSumAllP(i int) float64 {
 	v := l[i]
@@ -171,8 +171,8 @@ func (l JinDoFileParseList) GetSumAllP(i int) float64 {
 		v.Hansen > 0.1 &&
 		v.Er < 0.1 &&
 		v.Er1 < 0.1 &&
-		v.CofM < 0 {
-		sum -= 10
+		v.ErCoef*v.Er1Coef < 0 {
+		sum -= 1
 	}
 
 	return sum
@@ -205,15 +205,22 @@ func JinParseLog(allFile []string, allOutFile string) {
 	}
 	fmt.Printf("jinDoFileParseListLen:%d\r\n", len(jinDoFileParseList))
 	defer JinWriteLog.Close()
-	for i := 0; i < 100 && i < len(jinDoFileParseList); i++ {
+	for i := 0; i < 50 && i < len(jinDoFileParseList); i++ {
 		JinWriteLog.WriteString(jinDoFileParseList[i].ExecSQL + "\r\n")
-		JinWriteLog.WriteString(fmt.Sprintf("Er:%f\r\n", jinDoFileParseList[i].Er))
-		JinWriteLog.WriteString(fmt.Sprintf("Er1:%f\r\n", jinDoFileParseList[i].Er1))
-		JinWriteLog.WriteString(fmt.Sprintf("Ar1:%f\r\n", jinDoFileParseList[i].Ar1))
-		JinWriteLog.WriteString(fmt.Sprintf("Ar2:%f\r\n", jinDoFileParseList[i].Ar2))
-		JinWriteLog.WriteString(fmt.Sprintf("Sargan:%f\r\n", jinDoFileParseList[i].Sargan))
-		JinWriteLog.WriteString(fmt.Sprintf("Hansen:%f\r\n", jinDoFileParseList[i].Hansen))
-		JinWriteLog.WriteString(fmt.Sprintf("AllP:%+v\r\n\r\n", jinDoFileParseList[i].ArrAllP))
+		JinWriteLog.WriteString(fmt.Sprintf("Er:\t\t%5.3f\r\n", jinDoFileParseList[i].Er))
+		JinWriteLog.WriteString(fmt.Sprintf("Er1:\t\t%f\r\n", jinDoFileParseList[i].Er1))
+		JinWriteLog.WriteString(fmt.Sprintf("Er2:\t\t%f\r\n", jinDoFileParseList[i].Er2))
+		JinWriteLog.WriteString(fmt.Sprintf("Er22:\t\t%f\r\n", jinDoFileParseList[i].Er22))
+		JinWriteLog.WriteString(fmt.Sprintf("Ar1:\t\t%f\r\n", jinDoFileParseList[i].Ar1))
+		JinWriteLog.WriteString(fmt.Sprintf("Ar2:\t\t%f\r\n", jinDoFileParseList[i].Ar2))
+		JinWriteLog.WriteString(fmt.Sprintf("Sargan:\t\t%f\r\n", jinDoFileParseList[i].Sargan))
+		JinWriteLog.WriteString(fmt.Sprintf("Hansen:\t\t%f\r\n", jinDoFileParseList[i].Hansen))
+		JinWriteLog.WriteString(fmt.Sprintf("AllP:%+v\r\n", jinDoFileParseList[i].ArrAllP))
+		JinWriteLog.WriteString(fmt.Sprintf("ErCoef:\t\t%+v\r\n", jinDoFileParseList[i].ErCoef))
+		JinWriteLog.WriteString(fmt.Sprintf("Er1Coef:\t\t%+v\r\n", jinDoFileParseList[i].Er1Coef))
+		JinWriteLog.WriteString(fmt.Sprintf("Er2Coef:\t\t%+v\r\n", jinDoFileParseList[i].Er2Coef))
+		JinWriteLog.WriteString(fmt.Sprintf("Er22Coef:\t\t%+v\r\n", jinDoFileParseList[i].Er22Coef))
+		JinWriteLog.WriteString(fmt.Sprintf("ArrCoef:%+v\r\n\r\n\r\n", jinDoFileParseList[i].ArrCoef))
 	}
 }
 
@@ -305,7 +312,7 @@ func JinParseLogToSrtAllP(lines []string, linesLen int, parse *JinDoFileParse) {
 								parse.Er2 = valueFloat
 							}
 							if strings.Index(line, "er22 |") != -1 {
-								er22 = valueFloat
+								parse.Er22 = valueFloat
 							}
 						}
 					}
