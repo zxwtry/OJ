@@ -8,6 +8,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var JinWrite *os.File = nil
@@ -218,29 +219,33 @@ func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse)
 		if err != nil || io.EOF == err {
 			break
 		}
+
 		// fmt.Println(line)
 		if strings.Index(line, "xtabond2") != -1 {
+
+			if cnt2 > 0 {
+				// fmt.Println(lineIndex)
+				jinDoFileParse := JinParseLogToSrt(lines, lineIndex)
+				*jinDoFileParseList = append(*jinDoFileParseList, jinDoFileParse)
+				fmt.Println(jinDoFileParse)
+				time.Sleep(time.Second * 3)
+			}
 			cnt2++
 			lineIndex = 0
 			start = true
 		}
 		if start && len(line) > 3 {
 			cnt++
-
-			lines[lineIndex%lineLen] = line
+			lines[lineIndex%lineLen] = strings.ReplaceAll(strings.ReplaceAll(line, "\n", ""), "\r", "")
 			lineIndex++
-			if strings.Index(line, "xtabond2") != -1 && cnt2 > 1 {
-				// 	fmt.Println(lines)
-				// }
-				jinDoFileParse := JinParseLogToSrt(lines, lineIndex)
-				*jinDoFileParseList = append(*jinDoFileParseList, jinDoFileParse)
-			}
 		}
 	}
 }
 
-func JinParseLogToSrtAllP(lines []string, linesLen int) []float64 {
+func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, float64) {
 	arrAllP := make([]float64, 0, 10)
+	er := float64(0)
+	er1 := float64(0)
 	for i := 0; i < linesLen; i++ {
 		line := lines[i]
 		if strings.Index(line, "|") != -1 {
@@ -251,79 +256,59 @@ func JinParseLogToSrtAllP(lines []string, linesLen int) []float64 {
 					count++
 					if count == 6 {
 						valueFloat, valueFloatErr := strconv.ParseFloat(value, 64)
-						if valueFloatErr != nil {
+						if valueFloatErr == nil {
 							arrAllP = append(arrAllP, valueFloat)
+							if strings.Index(line, "er |") != -1 {
+								er = valueFloat
+							}
+							if strings.Index(line, "er1 |") != -1 {
+								er1 = valueFloat
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-	return arrAllP
+	return arrAllP, er, er1
+}
+
+func JinParseLogToSrtFilter(lines []string, linesLen int, filter string) float64 {
+	for i := 0; i < linesLen; i++ {
+		line := lines[i]
+		if strings.Index(line, filter) != -1 {
+			arrValues := strings.Split(line, " ")
+			ar1 := arrValues[len(arrValues)-1]
+			valueFloat, valueFloatErr := strconv.ParseFloat(ar1, 64)
+			if valueFloatErr != nil {
+				return -1001
+			}
+			return valueFloat
+		}
+	}
+	return -1001
+}
+
+func JinParseLogToSrtSQL(lines []string, linesLen int) string {
+	sql := ""
+	for i := 0; i < linesLen; i++ {
+		line := lines[i]
+		if len(line) > 2 && (line[0] == '.' || line[0] == '>') {
+			sql += line[2:]
+		} else {
+			return sql
+		}
+	}
+	return sql
 }
 
 func JinParseLogToSrt(lines []string, linesLen int) JinDoFileParse {
-
-	// arrAllP := make([]string, 0, 10)
-	ar1 := ""
-	ar2 := ""
-	Sargan := ""
-	Hansen := ""
-
-	// // 第一个指标，全部p值
-	// for line2Index := 18; line2Index <= 29; line2Index++ {
-	// 	arrValues := strings.Split(lines[line2Index], " ")
-	// 	count := 0
-	// 	for _, value := range arrValues {
-	// 		if len(value) != 0 {
-	// 			count++
-	// 			if count == 6 {
-	// 				arrAllP = append(arrAllP, value)
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	arrValues := strings.Split(lines[53], " ")
-	// fmt.Println(arrValues)
-	ar1 = strings.Trim(arrValues[len(arrValues)-1], "\n")
-	ar1 = strings.Trim(ar1, "\r")
-	arrValues = strings.Split(lines[54], " ")
-	ar2 = strings.Trim(arrValues[len(arrValues)-1], "\n")
-	ar2 = strings.Trim(ar2, "\r")
-
-	arrValues = strings.Split(lines[56], " ")
-	Sargan = strings.Trim(arrValues[len(arrValues)-1], "\n")
-	Sargan = strings.Trim(Sargan, "\r")
-	arrValues = strings.Split(lines[58], " ")
-	Hansen = strings.Trim(arrValues[len(arrValues)-1], "\n")
-	Hansen = strings.Trim(Hansen, "\r")
-
-	// fmt.Println(arrAllP)
-	// fmt.Println(ar1)
-	// fmt.Println(ar2)
-	// fmt.Println(Sargan)
-	// fmt.Println(Hansen)
-
 	jinDoFileParse := JinDoFileParse{}
-
-	// arrAllPF := make([]float64, 0, len(arrAllP))
-	// for _, allP := range arrAllP {
-	// 	allPF, _ := strconv.ParseFloat(allP, 64)
-	// 	arrAllPF = append(arrAllPF, allPF)
-	// }
-	jinDoFileParse.ArrAllP = JinParseLogToSrtAllP(lines, linesLen)
-	ar1F, _ := strconv.ParseFloat(ar1, 64)
-	ar2F, _ := strconv.ParseFloat(ar2, 64)
-	SarganF, _ := strconv.ParseFloat(Sargan, 64)
-	HansenF, _ := strconv.ParseFloat(Hansen, 64)
-	jinDoFileParse.Ar1 = ar1F
-	jinDoFileParse.Ar2 = ar2F
-	jinDoFileParse.Sargan = SarganF
-	jinDoFileParse.Hansen = HansenF
-
-	jinDoFileParse.ExecSQL = strings.Replace(lines[0]+strings.Replace(lines[1], "> ", "", 1), "\r\n", "", -1)
-	jinDoFileParse.Er = arrAllPF[1]
-	jinDoFileParse.Er1 = arrAllPF[2]
+	jinDoFileParse.ArrAllP, jinDoFileParse.Er, jinDoFileParse.Er1 = JinParseLogToSrtAllP(lines, linesLen)
+	jinDoFileParse.Ar1 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(1)")
+	jinDoFileParse.Ar2 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(2)")
+	jinDoFileParse.Sargan = JinParseLogToSrtFilter(lines, linesLen, "Sargan test of overid.")
+	jinDoFileParse.Hansen = JinParseLogToSrtFilter(lines, linesLen, "Hansen test of overid.")
+	jinDoFileParse.ExecSQL = JinParseLogToSrtSQL(lines, linesLen)
 	return jinDoFileParse
 }
