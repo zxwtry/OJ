@@ -173,8 +173,6 @@ func (l JinDoFileParseList) Swap(i, j int) {
 
 func JinParseLog(allFile []string, allOutFile string) {
 	jinDoFileParseList := make([]JinDoFileParse, 0, 10)
-	// JinParseLogToSrtList("C:/install/Stata13MP/Stata13MP/1_3_14_A.log", &jinDoFileParseList)
-	// JinParseLogToSrtList("C:/install/Stata13MP/Stata13MP/1_3_14_2_A.log", &jinDoFileParseList)
 	for _, allFileOne := range allFile {
 		fmt.Println("allFileOne: " + allFileOne)
 		JinParseLogToSrtList(allFileOne, &jinDoFileParseList)
@@ -197,7 +195,6 @@ func JinParseLog(allFile []string, allOutFile string) {
 }
 
 func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse) {
-	//filePath := "C:/install/Stata13MP/Stata13MP/1_3_14_A.log"
 	f, err := os.Open(filePath)
 	if err != nil {
 		panic(err)
@@ -235,37 +232,57 @@ func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse)
 			if strings.Index(line, "xtabond2") != -1 && cnt2 > 1 {
 				// 	fmt.Println(lines)
 				// }
-				jinDoFileParse := JinParseLogToSrt(lines)
-				// jinDoFileParseJson, _ := json.Marshal(jinDoFileParse)
-				// fmt.Println(string(jinDoFileParseJson))
-				// time.Sleep(time.Second)
+				jinDoFileParse := JinParseLogToSrt(lines, lineIndex)
 				*jinDoFileParseList = append(*jinDoFileParseList, jinDoFileParse)
 			}
 		}
 	}
 }
 
-func JinParseLogToSrt(lines []string) JinDoFileParse {
+func JinParseLogToSrtAllP(lines []string, linesLen int) []float64 {
+	arrAllP := make([]float64, 0, 10)
+	for i := 0; i < linesLen; i++ {
+		line := lines[i]
+		if strings.Index(line, "|") != -1 {
+			arrValues := strings.Split(line, " ")
+			count := 0
+			for _, value := range arrValues {
+				if len(value) != 0 {
+					count++
+					if count == 6 {
+						valueFloat, valueFloatErr := strconv.ParseFloat(value, 64)
+						if valueFloatErr != nil {
+							arrAllP = append(arrAllP, valueFloat)
+						}
+					}
+				}
+			}
+		}
+	}
+	return arrAllP
+}
 
-	arrAllP := make([]string, 0, 10)
+func JinParseLogToSrt(lines []string, linesLen int) JinDoFileParse {
+
+	// arrAllP := make([]string, 0, 10)
 	ar1 := ""
 	ar2 := ""
 	Sargan := ""
 	Hansen := ""
 
-	// 第一个指标，全部p值
-	for line2Index := 18; line2Index <= 29; line2Index++ {
-		arrValues := strings.Split(lines[line2Index], " ")
-		count := 0
-		for _, value := range arrValues {
-			if len(value) != 0 {
-				count++
-				if count == 6 {
-					arrAllP = append(arrAllP, value)
-				}
-			}
-		}
-	}
+	// // 第一个指标，全部p值
+	// for line2Index := 18; line2Index <= 29; line2Index++ {
+	// 	arrValues := strings.Split(lines[line2Index], " ")
+	// 	count := 0
+	// 	for _, value := range arrValues {
+	// 		if len(value) != 0 {
+	// 			count++
+	// 			if count == 6 {
+	// 				arrAllP = append(arrAllP, value)
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	arrValues := strings.Split(lines[53], " ")
 	// fmt.Println(arrValues)
@@ -289,12 +306,13 @@ func JinParseLogToSrt(lines []string) JinDoFileParse {
 	// fmt.Println(Hansen)
 
 	jinDoFileParse := JinDoFileParse{}
-	arrAllPF := make([]float64, 0, len(arrAllP))
-	for _, allP := range arrAllP {
-		allPF, _ := strconv.ParseFloat(allP, 64)
-		arrAllPF = append(arrAllPF, allPF)
-	}
-	jinDoFileParse.ArrAllP = arrAllPF
+
+	// arrAllPF := make([]float64, 0, len(arrAllP))
+	// for _, allP := range arrAllP {
+	// 	allPF, _ := strconv.ParseFloat(allP, 64)
+	// 	arrAllPF = append(arrAllPF, allPF)
+	// }
+	jinDoFileParse.ArrAllP = JinParseLogToSrtAllP(lines, linesLen)
 	ar1F, _ := strconv.ParseFloat(ar1, 64)
 	ar2F, _ := strconv.ParseFloat(ar2, 64)
 	SarganF, _ := strconv.ParseFloat(Sargan, 64)
