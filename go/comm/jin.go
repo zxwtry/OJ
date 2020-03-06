@@ -58,15 +58,21 @@ func JinGenerateDeep(index, len int, args []interface{}, minValue, maxValue int,
 }
 
 type JinDoFileParse struct {
-	ExecSQL string
-	ArrAllP []float64
-	Ar1     float64
-	Ar2     float64
-	Sargan  float64
-	Hansen  float64
-	Er      float64
-	Er1     float64
-	CofM    float64
+	ExecSQL  string
+	ArrAllP  []float64
+	ArrCoef  []float64
+	Ar1      float64
+	Ar2      float64
+	Sargan   float64
+	Hansen   float64
+	Er       float64
+	Er1      float64
+	Er2      float64
+	Er22     float64
+	ErCoef   float64
+	Er1Coef  float64
+	Er2Coef  float64
+	Er22Coef float64
 }
 
 func JinGenerateDoFile(filePrefix string, fileLimitInt uint64, startValue uint64, endValue uint64, fileExec string) {
@@ -256,12 +262,9 @@ func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse)
 	}
 }
 
-func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, float64, float64) {
-	arrAllP := make([]float64, 0, 10)
-	er := float64(0)
-	er1 := float64(0)
-	erCof := float64(0)
-	er1Cof := float64(0)
+func JinParseLogToSrtAllP(lines []string, linesLen int, parse *JinDoFileParse) {
+	parse.ArrAllP = make([]float64, 0, 10)
+	parse.ArrCoef = make([]float64, 0, 10)
 	for i := 0; i < linesLen; i++ {
 		line := lines[i]
 		if strings.Index(line, "|") != -1 {
@@ -273,23 +276,36 @@ func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, flo
 					if count == 3 {
 						valueFloat, valueFloatErr := strconv.ParseFloat(value, 64)
 						if valueFloatErr == nil {
+							parse.ArrCoef = append(parse.ArrCoef, valueFloat)
 							if strings.Index(line, "er |") != -1 {
-								erCof = valueFloat
+								parse.ErCoef = valueFloat
 							}
 							if strings.Index(line, "er1 |") != -1 {
-								er1Cof = valueFloat
+								parse.Er1Coef = valueFloat
+							}
+							if strings.Index(line, "er2 |") != -1 {
+								parse.Er2Coef = valueFloat
+							}
+							if strings.Index(line, "er22 |") != -1 {
+								parse.Er22Coef = valueFloat
 							}
 						}
 					}
 					if count == 6 {
 						valueFloat, valueFloatErr := strconv.ParseFloat(value, 64)
 						if valueFloatErr == nil {
-							arrAllP = append(arrAllP, valueFloat)
+							parse.ArrAllP = append(parse.ArrAllP, valueFloat)
 							if strings.Index(line, "er |") != -1 {
-								er = valueFloat
+								parse.Er = valueFloat
 							}
 							if strings.Index(line, "er1 |") != -1 {
-								er1 = valueFloat
+								parse.Er1 = valueFloat
+							}
+							if strings.Index(line, "er2 |") != -1 {
+								parse.Er2 = valueFloat
+							}
+							if strings.Index(line, "er22 |") != -1 {
+								er22 = valueFloat
 							}
 						}
 					}
@@ -300,7 +316,7 @@ func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, flo
 	// if erCof*er1Cof  {
 	// 	// return arrAllP, 1000, 1000
 	// }
-	return arrAllP, er, er1, erCof * er1Cof
+	return
 }
 
 func JinParseLogToSrtFilter(lines []string, linesLen int, filter string) float64 {
@@ -334,7 +350,8 @@ func JinParseLogToSrtSQL(lines []string, linesLen int) string {
 
 func JinParseLogToSrt(lines []string, linesLen int) JinDoFileParse {
 	jinDoFileParse := JinDoFileParse{}
-	jinDoFileParse.ArrAllP, jinDoFileParse.Er, jinDoFileParse.Er1, jinDoFileParse.CofM = JinParseLogToSrtAllP(lines, linesLen)
+	// jinDoFileParse.ArrAllP, jinDoFileParse.Er, jinDoFileParse.Er1, jinDoFileParse.CofM, jinDoFileParse.Er2, jinDoFileParse.Er22 =
+	JinParseLogToSrtAllP(lines, linesLen, &jinDoFileParse)
 	jinDoFileParse.Ar1 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(1)")
 	jinDoFileParse.Ar2 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(2)")
 	jinDoFileParse.Sargan = JinParseLogToSrtFilter(lines, linesLen, "Sargan test of overid.")
