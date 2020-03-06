@@ -174,7 +174,7 @@ func (l JinDoFileParseList) Swap(i, j int) {
 func JinParseLog(allFile []string, allOutFile string) {
 	jinDoFileParseList := make([]JinDoFileParse, 0, 10)
 	for _, allFileOne := range allFile {
-		fmt.Println("allFileOne: " + allFileOne)
+		fmt.Println("solve: " + allFileOne)
 		JinParseLogToSrtList(allFileOne, &jinDoFileParseList)
 	}
 	os.Remove(allOutFile)
@@ -245,7 +245,7 @@ func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse)
 	}
 }
 
-func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, float64) {
+func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, float64, float64) {
 	arrAllP := make([]float64, 0, 10)
 	er := float64(0)
 	er1 := float64(0)
@@ -286,10 +286,10 @@ func JinParseLogToSrtAllP(lines []string, linesLen int) ([]float64, float64, flo
 			}
 		}
 	}
-	if erCof*er1Cof < 0 {
-		return arrAllP, 1000, 1000
-	}
-	return arrAllP, er, er1
+	// if erCof*er1Cof  {
+	// 	// return arrAllP, 1000, 1000
+	// }
+	return arrAllP, er, er1, erCof * er1Cof
 }
 
 func JinParseLogToSrtFilter(lines []string, linesLen int, filter string) float64 {
@@ -323,11 +323,24 @@ func JinParseLogToSrtSQL(lines []string, linesLen int) string {
 
 func JinParseLogToSrt(lines []string, linesLen int) JinDoFileParse {
 	jinDoFileParse := JinDoFileParse{}
-	jinDoFileParse.ArrAllP, jinDoFileParse.Er, jinDoFileParse.Er1 = JinParseLogToSrtAllP(lines, linesLen)
+	var cofM float64
+	jinDoFileParse.ArrAllP, jinDoFileParse.Er, jinDoFileParse.Er1, cofM = JinParseLogToSrtAllP(lines, linesLen)
 	jinDoFileParse.Ar1 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(1)")
 	jinDoFileParse.Ar2 = JinParseLogToSrtFilter(lines, linesLen, "Arellano-Bond test for AR(2)")
 	jinDoFileParse.Sargan = JinParseLogToSrtFilter(lines, linesLen, "Sargan test of overid.")
 	jinDoFileParse.Hansen = JinParseLogToSrtFilter(lines, linesLen, "Hansen test of overid.")
 	jinDoFileParse.ExecSQL = JinParseLogToSrtSQL(lines, linesLen)
+
+	if jinDoFileParse.Ar1 < 0.1 &&
+		jinDoFileParse.Ar2 > 0.1 &&
+		jinDoFileParse.Sargan > 0.1 &&
+		jinDoFileParse.Hansen > 0.1 &&
+		jinDoFileParse.Er < 0.1 &&
+		jinDoFileParse.Er1 < 0.1 &&
+		cofM < 0 {
+		jinDoFileParse.Er = 1000
+		jinDoFileParse.Er1 = 1000
+	}
+
 	return jinDoFileParse
 }

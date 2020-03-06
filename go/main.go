@@ -54,10 +54,7 @@ func main() {
 			}
 			allFile = append(allFile, filePath+"/"+fileName+".log")
 		}
-		for i, v := range allFile {
-			fmt.Printf("i:%d v:%s\r\n", i, v)
-		}
-		fmt.Println("outFile:" + outFile)
 		comm.JinParseLog(allFile, outFile)
+		fmt.Println("outFile:" + outFile)
 	}
 }
