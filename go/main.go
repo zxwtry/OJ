@@ -40,9 +40,10 @@ func main() {
 		fileExec := strings.Join(fileExecArr, " ")
 		comm.JinGenerateDoFile(filePrefix, fileLimitInt, startValueInt, endValueInt, fileExec)
 	case "log":
-		filePath := args[2]
+		moreAdd := args[2]
+		filePath := args[3]
 		filePath = strings.Replace(filePath, "\\", "/", -1)
-		files := args[3:]
+		files := args[4:]
 		allFile := make([]string, 0, 10)
 		outFile := ""
 		for _, fileName := range files {
@@ -54,7 +55,9 @@ func main() {
 			}
 			allFile = append(allFile, filePath+"/"+fileName+".log")
 		}
-		comm.JinParseLog(allFile, outFile)
+		comm.JinParseLog(allFile, outFile, moreAdd)
 		fmt.Println("outFile:" + outFile)
 	}
+	// go build -a -ldflags "-extldflags -static" -o jin.exe ../main.go
+
 }

@@ -188,7 +188,32 @@ func (l JinDoFileParseList) Swap(i, j int) {
 	l[i], l[j] = l[j], l[i]
 }
 
-func JinParseLog(allFile []string, allOutFile string) {
+func JinParseLog(allFile []string, allOutFile string, moreAdd string) {
+	arrMoreAdd := strings.Split(moreAdd, ";")
+	for _, valMoreAdd := range arrMoreAdd {
+		valMoreAdd = strings.ToLower(valMoreAdd)
+		switch valMoreAdd {
+		case "er":
+			JIN_ER_FACTOR += 10
+		case "er1":
+			JIN_ER1_FACTOR += 10
+		case "ar1":
+			JIN_AR1_FACTOR += 10
+		case "ar2":
+			JIN_AR2_FACTOR += 10
+		case "h":
+			JIN_H_FACTOR += 10
+		case "s":
+			JIN_S_FACTOR += 10
+		}
+	}
+	fmt.Printf("JIN_ER_FACTOR:%f\n", JIN_ER_FACTOR)
+	fmt.Printf("JIN_ER1_FACTOR:%f\n", JIN_ER1_FACTOR)
+	fmt.Printf("JIN_AR1_FACTOR:%f\n", JIN_AR1_FACTOR)
+	fmt.Printf("JIN_AR2_FACTOR:%f\n", JIN_AR2_FACTOR)
+	fmt.Printf("JIN_H_FACTOR:%f\n", JIN_H_FACTOR)
+	fmt.Printf("JIN_S_FACTOR:%f\n", JIN_S_FACTOR)
+
 	jinDoFileParseList := make([]JinDoFileParse, 0, 10)
 	for _, allFileOne := range allFile {
 		fmt.Println("solve: " + allFileOne)
@@ -217,9 +242,9 @@ func JinParseLog(allFile []string, allOutFile string) {
 		JinWriteLog.WriteString(fmt.Sprintf("Hansen:\t\t%f\r\n", jinDoFileParseList[i].Hansen))
 		JinWriteLog.WriteString(fmt.Sprintf("AllP:%+v\r\n", jinDoFileParseList[i].ArrAllP))
 		JinWriteLog.WriteString(fmt.Sprintf("ErCoef:\t\t%+v\r\n", jinDoFileParseList[i].ErCoef))
-		JinWriteLog.WriteString(fmt.Sprintf("Er1Coef:\t\t%+v\r\n", jinDoFileParseList[i].Er1Coef))
-		JinWriteLog.WriteString(fmt.Sprintf("Er2Coef:\t\t%+v\r\n", jinDoFileParseList[i].Er2Coef))
-		JinWriteLog.WriteString(fmt.Sprintf("Er22Coef:\t\t%+v\r\n", jinDoFileParseList[i].Er22Coef))
+		JinWriteLog.WriteString(fmt.Sprintf("Er1Coef:\t%+v\r\n", jinDoFileParseList[i].Er1Coef))
+		JinWriteLog.WriteString(fmt.Sprintf("Er2Coef:\t%+v\r\n", jinDoFileParseList[i].Er2Coef))
+		JinWriteLog.WriteString(fmt.Sprintf("Er22Coef:\t%+v\r\n", jinDoFileParseList[i].Er22Coef))
 		JinWriteLog.WriteString(fmt.Sprintf("ArrCoef:%+v\r\n\r\n\r\n", jinDoFileParseList[i].ArrCoef))
 	}
 }
