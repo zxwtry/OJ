@@ -249,6 +249,24 @@ func JinParseLog(allFile []string, allOutFile string, moreAdd string) {
 	}
 }
 
+func JinParseLogConvert(lines []string, linesLen int) []string {
+	strs := make([]string, 0, linesLen)
+	lineIndex := 0
+	for {
+		newStr := lines[lineIndex]
+		for lineIndex+1 < linesLen && lines[lineIndex+1][0] == '>' {
+			newStr += lines[lineIndex+1][2:]
+			lineIndex++
+		}
+		strs = append(strs, newStr)
+		lineIndex++
+		if lineIndex >= linesLen {
+			break
+		}
+	}
+	return strs
+}
+
 func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -279,7 +297,10 @@ func JinParseLogToSrtList(filePath string, jinDoFileParseList *[]JinDoFileParse)
 
 			if cnt2 > 0 {
 				// fmt.Println(lineIndex)
-				jinDoFileParse := JinParseLogToSrt(lines, lineIndex)
+
+				newLine := JinParseLogConvert(lines, lineIndex)
+
+				jinDoFileParse := JinParseLogToSrt(newLine, len(newLine))
 				*jinDoFileParseList = append(*jinDoFileParseList, jinDoFileParse)
 			}
 			cnt2++

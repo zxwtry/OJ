@@ -65,7 +65,8 @@ with tf.compat.v1.Session() as sess:
         p3 = tf.matmul(p2, W_L3) + b_L3
         nomal_result = np.array(sess.run(p3))
         end[:, i] = nomal_result[:, 11]
-        print(num)
+        if num % 10 == 0:
+            print(num)
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(X_1, X_2, end, rstride=1, cstride=1, cmap='rainbow')

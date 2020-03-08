@@ -4,8 +4,11 @@ xtabond2  dosme l1.dosme  er  er1    age  re2  ca2  cp1  de1  ab2   ,gmm(dosme ,
 jin.exe gen 0308_1852 20000 1 3 xtabond2  dosme l1.dosme  er  er1    age  re2  ca2  cp1  de1  ab2   ,gmm(dosme ,l(1 1) collapse ) gmm(re2  ,l(1 1) collapse )gmm(cp1,l(1 1) collapse )gmm( de1 ,l(1 1) collapse ) gmm(  ca2 ab2,l(1 1) collapse )    iv(l(1 1)age er er1  ) robust two
 
 
-jin.exe log  ; C:\install\Stata13MP\Stata13MP 0308_1852
+jin.exe log  ; C:\install\Stata13MP\Stata13MP 0308_1852_00000
 
 
+jin.exe log  ; C:\install\Stata13MP\Stata13MP\log do_file_tfpe__00000
 
+
+go build -a -ldflags "-extldflags -static" -o jin.exe ../main.go
 
