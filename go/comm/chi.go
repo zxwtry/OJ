@@ -146,4 +146,7 @@ func ChiSolveExcel() {
 	}
 	fmt.Println()
 	// 计算每个栏目归一值
+	for j := 0; j < len(cityStructList); j++ {
+		fmt.Printf("%.1f %.1f %.5f\n", cityStructList[j].PositionX, cityStructList[j].PositionY, cityStructList[j].Value)
+	}
 }

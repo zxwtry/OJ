@@ -124,7 +124,7 @@ writer = tf.compat.v1.summary.FileWriter('logs', sess.graph)
 with tf.compat.v1.Session() as sess:
     sess.run(tf.compat.v1.global_variables_initializer())
     # 修改便于测试
-    for _ in range(0, 5000):
+    for _ in range(0, 100000):
         sess.run(train_step, feed_dict={x: x_data, y: y_data})
 
         if _ % 100 == 0:
