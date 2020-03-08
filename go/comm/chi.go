@@ -106,6 +106,7 @@ func ChiSolveExcel() {
 		}
 	}
 
+	cityStructList := make([]ChiSolveExcelStruct, 0, 10)
 	for cityIndex := 0; cityIndex < len(cityList); cityIndex++ {
 		originData := make([]float64, len(arrVal)-3, len(arrVal)-3)
 		toOneData := make([]float64, len(arrVal)-3, len(arrVal)-3)
@@ -113,7 +114,7 @@ func ChiSolveExcel() {
 		for rowIndex := 3; rowIndex < len(arrVal); rowIndex++ {
 			originData[rowIndex-3] = arrValF[rowIndex][cityIndex]
 			toOneData[rowIndex-3] = arrToOneF[rowIndex][cityIndex]
-			value += arrToOneF[rowIndex][cityIndex] + arrValF[rowIndex][len(arrValF[0])-1]
+			value += arrToOneF[rowIndex][cityIndex] * arrValF[rowIndex][len(arrValF[0])-1]
 		}
 		cityStruct := ChiSolveExcelStruct{
 			CityName:   cityArr[cityIndex],
@@ -124,7 +125,25 @@ func ChiSolveExcel() {
 			PositionY:  0.5 + (arrValF[2][cityIndex]-yMin)/(yMax-yMin)*4,
 		}
 		// fmt.Println(cityStruct)
-		fmt.Printf("%s\t\t(%.1f,%.1f)\t\t%.5f\n", cityStruct.CityName, cityStruct.PositionX, cityStruct.PositionY, cityStruct.Value)
+		// fmt.Printf("%s\t\t(%.1f,%.1f)\t\t%.5f\n", cityStruct.CityName, cityStruct.PositionX, cityStruct.PositionY, cityStruct.Value)
+		cityStructList = append(cityStructList, cityStruct)
+
 	}
+	for j := 0; j < len(cityStructList); j++ {
+		fmt.Printf("%s ", cityStructList[j].CityName)
+	}
+	fmt.Println()
+	for i := 0; i < len(cityStructList[0].ToOneData); i++ {
+		fmt.Printf("X%d,", (i + 1))
+		for j := 0; j < len(cityStructList); j++ {
+			fmt.Printf("%.5f,", cityStructList[j].ToOneData[i]*arrValF[i+3][len(arrValF[0])-1])
+		}
+		fmt.Println()
+	}
+	fmt.Printf(",")
+	for j := 0; j < len(cityStructList); j++ {
+		fmt.Printf("%.5f,", cityStructList[j].Value)
+	}
+	fmt.Println()
 	// 计算每个栏目归一值
 }
