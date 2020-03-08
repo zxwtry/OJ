@@ -32,24 +32,24 @@ import_data, export_data = loadDataSet()
 
 exF = 'D:/code/github/sample/python/proj/chi/data/nihe_tf_train.xlsx'
 
-W_L1 = pd.read_excel(exF, sheet_name="W_L1")
-W_L2 = pd.read_excel(exF, sheet_name="W_L2")
-W_L3 = pd.read_excel(exF, sheet_name="W_L3")
-b_L1 = pd.read_excel(exF, sheet_name="b_L1")
-b_L2 = pd.read_excel(exF, sheet_name="b_L2")
-b_L3 = pd.read_excel(exF, sheet_name="b_L3")
+# W_L1 = pd.read_excel(exF, sheet_name="W_L1")
+# W_L2 = pd.read_excel(exF, sheet_name="W_L2")
+# W_L3 = pd.read_excel(exF, sheet_name="W_L3")
+# b_L1 = pd.read_excel(exF, sheet_name="b_L1")
+# b_L2 = pd.read_excel(exF, sheet_name="b_L2")
+# b_L3 = pd.read_excel(exF, sheet_name="b_L3")
 
 
-# W_L1 = np.loadtxt('W_L1.txt')
-# W_L2 = np.loadtxt('W_L2.txt')
-# W_L3 = np.loadtxt('W_L3.txt')
-# b_L1 = np.loadtxt('b_L1.txt')
-# b_L2 = np.loadtxt('b_L2.txt')
-# b_L3 = np.loadtxt('b_L3.txt')
+W_L1 = np.loadtxt('D:/code/github/sample/python/proj/chi/data/W_L1.txt')
+W_L2 = np.loadtxt('D:/code/github/sample/python/proj/chi/data/W_L2.txt')
+W_L3 = np.loadtxt('D:/code/github/sample/python/proj/chi/data/W_L4.txt')
+b_L1 = np.loadtxt('D:/code/github/sample/python/proj/chi/data/B_L1.txt')
+b_L2 = np.loadtxt('D:/code/github/sample/python/proj/chi/data/B_L2.txt')
+b_L3 = np.loadtxt('D:/code/github/sample/python/proj/chi/data/B_L4.txt')
 
 
-X_1 = np.arange(0, 1, 0.01)
-X_2 = np.arange(0, 1, 0.01)
+X_1 = np.arange(0, 5, 0.05)
+X_2 = np.arange(0, 5, 0.05)
 X_1, X_2 = np.meshgrid(X_1, X_2)
 
 with tf.compat.v1.Session() as sess:

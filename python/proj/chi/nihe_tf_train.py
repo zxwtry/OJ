@@ -106,7 +106,7 @@ with tf.name_scope('layer3'):
         prediction = Wx_4
 
 # 交叉熵代价函数
-#loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = y,logits = prediction))
+# loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = y,logits = prediction))
 
 # 二次代价函数
 with tf.name_scope('loss'):
@@ -154,7 +154,18 @@ with tf.compat.v1.Session() as sess:
     W_L3 = pd.DataFrame(sess.run(Weight_L4))
     b_L3 = pd.DataFrame(sess.run(biases_L4))
 
-    np.
+    np.savetxt(
+        "D:/code/github/sample/python/proj/chi/data/W_L1.txt", sess.run(Weight_L1))
+    np.savetxt("D:/code/github/sample/python/proj/chi/data/B_L1.txt",
+               sess.run(biases_L1))
+    np.savetxt(
+        "D:/code/github/sample/python/proj/chi/data/W_L2.txt", sess.run(Weight_L2))
+    np.savetxt("D:/code/github/sample/python/proj/chi/data/B_L2.txt",
+               sess.run(biases_L2))
+    np.savetxt("D:/code/github/sample/python/proj/chi/data/W_L4.txt",
+               sess.run(Weight_L4))
+    np.savetxt(
+        "D:/code/github/sample/python/proj/chi/data/B_L4.txt", sess.run(biases_L4))
 
     # 写入Excel文件
     writer = pd.ExcelWriter(
