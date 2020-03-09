@@ -108,6 +108,8 @@ func (l JinDoFileParseList) Len() int {
 }
 
 var JIN_ER_FACTOR float64 = 3
+var JIN_ER2_FACTOR float64 = 3
+var JIN_ER22_FACTOR float64 = 3
 var JIN_ER1_FACTOR float64 = 3
 var JIN_AR1_FACTOR float64 = 3
 var JIN_AR2_FACTOR float64 = 3
@@ -128,6 +130,20 @@ func (l JinDoFileParseList) GetSumAllP(i int) float64 {
 		sum += 0
 	} else {
 		sum += JIN_ER_FACTOR * v.Er
+	}
+
+	// 如果Er2 < 0.1 是符合预期的
+	if v.Er2 < 0.1 {
+		sum += 0
+	} else {
+		sum += JIN_ER2_FACTOR * v.Er2
+	}
+
+	// 如果Er2 < 0.1 是符合预期的
+	if v.Er22 < 0.1 {
+		sum += 0
+	} else {
+		sum += JIN_ER22_FACTOR * v.Er22
 	}
 
 	// 如果Er1 < 0.1 是符合预期的
@@ -171,7 +187,9 @@ func (l JinDoFileParseList) GetSumAllP(i int) float64 {
 		v.Hansen > 0.1 &&
 		v.Er < 0.1 &&
 		v.Er1 < 0.1 &&
-		v.ErCoef*v.Er1Coef < 0 {
+		v.ErCoef*v.Er1Coef < 0 &&
+		v.Er2 < 0.1 &&
+		v.Er22 < 0.1 {
 		sum -= 1
 	}
 
@@ -197,6 +215,10 @@ func JinParseLog(allFile []string, allOutFile string, moreAdd string) {
 			JIN_ER_FACTOR += 10
 		case "er1":
 			JIN_ER1_FACTOR += 10
+		case "er2":
+			JIN_ER2_FACTOR += 10
+		case "er22":
+			JIN_ER22_FACTOR += 10
 		case "ar1":
 			JIN_AR1_FACTOR += 10
 		case "ar2":
@@ -209,6 +231,8 @@ func JinParseLog(allFile []string, allOutFile string, moreAdd string) {
 	}
 	fmt.Printf("JIN_ER_FACTOR:%f\n", JIN_ER_FACTOR)
 	fmt.Printf("JIN_ER1_FACTOR:%f\n", JIN_ER1_FACTOR)
+	fmt.Printf("JIN_ER2_FACTOR:%f\n", JIN_ER2_FACTOR)
+	fmt.Printf("JIN_ER22_FACTOR:%f\n", JIN_ER22_FACTOR)
 	fmt.Printf("JIN_AR1_FACTOR:%f\n", JIN_AR1_FACTOR)
 	fmt.Printf("JIN_AR2_FACTOR:%f\n", JIN_AR2_FACTOR)
 	fmt.Printf("JIN_H_FACTOR:%f\n", JIN_H_FACTOR)

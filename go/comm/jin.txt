@@ -12,3 +12,7 @@ jin.exe log  ; C:\install\Stata13MP\Stata13MP\log do_file_tfpe__00000
 
 go build -a -ldflags "-extldflags -static" -o jin.exe ../main.go
 
+
+
+jin_0.6.exe log ; C:\install\Stata13MP\Stata13MP 1_3_14_A
+
