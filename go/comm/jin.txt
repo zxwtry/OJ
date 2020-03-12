@@ -16,3 +16,21 @@ go build -a -ldflags "-extldflags -static" -o jin.exe ../main.go
 
 jin_0.6.exe log ; C:\install\Stata13MP\Stata13MP 1_3_14_A
 
+
+
+jin_0.7.exe log ; C:\install\Stata13MP\Stata13MP do_file_01__00000
+
+
+
+经度113.93  纬度22.56
+
+0.32619
+
+
+
+最佳位置坐标：3.49 2.22
+反查经纬度：经度113.93  纬度22.56
+对应南山宝安交界处
+
+
+忘记给最佳值了。。。0.32619

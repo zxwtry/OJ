@@ -2,6 +2,7 @@ package comm
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -58,7 +59,7 @@ func JinGenerateDeep(index, len int, args []interface{}, minValue, maxValue int,
 }
 
 type JinDoFileParse struct {
-	ExecSQL  string
+	ExecSQL  string `json:"-"`
 	ArrAllP  []float64
 	ArrCoef  []float64
 	Ar1      float64
@@ -254,7 +255,17 @@ func JinParseLog(allFile []string, allOutFile string, moreAdd string) {
 	}
 	fmt.Printf("jinDoFileParseListLen:%d\r\n", len(jinDoFileParseList))
 	defer JinWriteLog.Close()
-	for i := 0; i < 50 && i < len(jinDoFileParseList); i++ {
+	outCount := 0
+	lastOutPutJson := ""
+	continueCount := 0
+	for i := 0; i < len(jinDoFileParseList); i++ {
+		thisOutPutJsonBs, _ := json.Marshal(jinDoFileParseList[i])
+		thisOutPutJson := string(thisOutPutJsonBs)
+		if lastOutPutJson == thisOutPutJson {
+			continueCount++
+			continue
+		}
+		lastOutPutJson = thisOutPutJson
 		JinWriteLog.WriteString(jinDoFileParseList[i].ExecSQL + "\r\n")
 		JinWriteLog.WriteString(fmt.Sprintf("Er:\t\t%5.3f\r\n", jinDoFileParseList[i].Er))
 		JinWriteLog.WriteString(fmt.Sprintf("Er1:\t\t%f\r\n", jinDoFileParseList[i].Er1))
@@ -270,7 +281,12 @@ func JinParseLog(allFile []string, allOutFile string, moreAdd string) {
 		JinWriteLog.WriteString(fmt.Sprintf("Er2Coef:\t%+v\r\n", jinDoFileParseList[i].Er2Coef))
 		JinWriteLog.WriteString(fmt.Sprintf("Er22Coef:\t%+v\r\n", jinDoFileParseList[i].Er22Coef))
 		JinWriteLog.WriteString(fmt.Sprintf("ArrCoef:%+v\r\n\r\n\r\n", jinDoFileParseList[i].ArrCoef))
+		outCount++
+		if outCount > 100 {
+			break
+		}
 	}
+	fmt.Printf("outFileFilterSameResCount:%d\r\n", continueCount)
 }
 
 func JinParseLogConvert(lines []string, linesLen int) []string {

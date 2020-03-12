@@ -2,11 +2,29 @@ package main
 
 import "fmt"
 
-func main() {
-	//comm.JinMain()
+func solve(m map[string]string) {
+	m["aaaa"] = "AAAA"
+}
 
-	m := make(map[string]bool)
-	m["aaa"] = true
-	m["bbb"] = false
-	fmt.Println(len(m))
+type A struct {
+	Test string
+}
+
+func main() {
+	// comm.ChiSolveExcel()
+	m := make(map[string]*A)
+	a := A{
+		Test: "cccc",
+	}
+	m["test"] = &a
+	for k, v := range m {
+		fmt.Printf("k:%s  v:%+v\n", k, v)
+	}
+
+	c := m["test"]
+	c.Test = "bbbb"
+
+	for k, v := range m {
+		fmt.Printf("k:%s  v:%+v\n", k, v)
+	}
 }

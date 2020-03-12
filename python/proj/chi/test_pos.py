@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-dim = 2         # 维度
-size = 10       # 粒子个数
+dim = 3         # 维度
+size = 20       # 粒子个数
 iter_num = 500  # 迭代次数
 x_max = 10
 max_vel = 0.05  # 最大速度

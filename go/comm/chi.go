@@ -34,6 +34,10 @@ type ChiSolveExcelStruct struct {
 	Value      float64
 	PositionX  float64
 	PositionY  float64
+	CXTR_Value float64
+	CXHJ_Value float64
+	CXCC_Value float64
+	QYXT_Value float64
 }
 
 func ChiSolveExcel() {
@@ -124,11 +128,27 @@ func ChiSolveExcel() {
 			PositionX:  0.5 + (arrValF[1][cityIndex]-xMin)/(xMax-xMin)*4,
 			PositionY:  0.5 + (arrValF[2][cityIndex]-yMin)/(yMax-yMin)*4,
 		}
+		for rowIndex := 3; rowIndex <= 8; rowIndex++ {
+			cityStruct.CXTR_Value += arrToOneF[rowIndex][cityIndex] * arrValF[rowIndex][len(arrValF[0])-1]
+
+		}
+		for rowIndex := 9; rowIndex <= 12; rowIndex++ {
+			cityStruct.CXHJ_Value += arrToOneF[rowIndex][cityIndex] * arrValF[rowIndex][len(arrValF[0])-1]
+		}
+		for rowIndex := 13; rowIndex <= 18; rowIndex++ {
+			cityStruct.CXCC_Value += arrToOneF[rowIndex][cityIndex] * arrValF[rowIndex][len(arrValF[0])-1]
+		}
+		for rowIndex := 19; rowIndex <= 20; rowIndex++ {
+			cityStruct.QYXT_Value += arrToOneF[rowIndex][cityIndex] * arrValF[rowIndex][len(arrValF[0])-1]
+		}
 		// fmt.Println(cityStruct)
 		// fmt.Printf("%s\t\t(%.1f,%.1f)\t\t%.5f\n", cityStruct.CityName, cityStruct.PositionX, cityStruct.PositionY, cityStruct.Value)
 		cityStructList = append(cityStructList, cityStruct)
 
 	}
+
+	fmt.Printf("最佳值: %.2f %.2f\n", 0.5+(113.93-xMin)/(xMax-xMin)*4, 0.5+(22.56-yMin)/(yMax-yMin)*4)
+
 	for j := 0; j < len(cityStructList); j++ {
 		fmt.Printf("%s ", cityStructList[j].CityName)
 	}
@@ -148,5 +168,10 @@ func ChiSolveExcel() {
 	// 计算每个栏目归一值
 	for j := 0; j < len(cityStructList); j++ {
 		fmt.Printf("%.1f %.1f %.5f\n", cityStructList[j].PositionX, cityStructList[j].PositionY, cityStructList[j].Value)
+	}
+
+	for j := 0; j < len(cityStructList); j++ {
+		c := cityStructList[j]
+		fmt.Printf("%s,%.5f,%.5f,%.5f,%.5f\n", c.CityName, c.CXTR_Value, c.CXHJ_Value, c.CXCC_Value, c.QYXT_Value)
 	}
 }
