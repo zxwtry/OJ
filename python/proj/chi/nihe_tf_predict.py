@@ -61,7 +61,7 @@ with tf.compat.v1.Session() as sess:
         oo[:, 0] = X_1[:, i]
         oo[:, 1] = X_2[:, i]
         p1 = tf.nn.relu(tf.matmul(tf.cast(oo, dtype=tf.float64), W_L1) + b_L1)
-        p2 = tf.nn.relu(tf.matmul(p1, W_L2)/4 + b_L2/4)
+        p2 = tf.nn.relu(tf.matmul(p1, W_L2)*2 + b_L2*2)
         # p3 = tf.matmul(p2, W_L3) + b_L3
         nomal_result = np.array(sess.run(p2))
         end[:, i] = nomal_result[:, 11]

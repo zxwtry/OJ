@@ -194,6 +194,10 @@ func (l JinDoFileParseList) GetSumAllP(i int) float64 {
 		sum -= 1
 	}
 
+	if v.ErCoef > 0 && v.Er2Coef > 0 && v.Er1Coef < 0 && v.Er22Coef < 0 {
+		sum += 1000
+	}
+
 	return sum
 }
 
