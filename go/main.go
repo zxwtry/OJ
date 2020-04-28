@@ -1,11 +1,7 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
+import "github.com/zxwtry/OJ/go/proj/p01"
 
 func main() {
-	t := time.Now().UnixNano() / int64(time.Millisecond)
-	fmt.Println(t)
+	p01.P01_01()
 }
