@@ -1,7 +1,15 @@
 package main
 
-import "github.com/zxwtry/OJ/go/proj/p01"
+import (
+	"fmt"
+
+	"github.com/zxwtry/OJ/go/proj/p01"
+)
 
 func main() {
+	v := ""
+	fmt.Println(len(v))
+
 	p01.P01_01()
+
 }

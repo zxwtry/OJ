@@ -1,5 +1,7 @@
 package leetcode
 
+import "fmt"
+
 func L002_01_addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	sum := l1
 	for l1 != nil || l2 != nil {
@@ -25,5 +27,7 @@ func L002_01_addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		}
 	}
 	carry := 0
-
+	fmt.Println(carry)
+	fmt.Println(sum)
+	return l1
 }
