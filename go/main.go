@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"github.com/zxwtry/OJ/go/proj/p01"
 	"strings"
 )
 
@@ -31,9 +31,9 @@ func main() {
 	// ret := comm.CommLog("%s", arr)
 	// fmt.Println(ret)
 
-	uin := uint32(115964137)
-	fmt.Println(HashFuncRobertJenkins32Bit(uin))
-
+	// uin := uint32(115964137)
+	// fmt.Println(HashFuncRobertJenkins32Bit(uin))
+	p01.P01_01_Read_file("C:\\Users\\xinweizhu\\Downloads\\曝光-部分.csv")
 }
 
 // 标签排序页，请求筛选项
