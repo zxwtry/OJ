@@ -33,7 +33,8 @@ func main() {
 
 	// uin := uint32(115964137)
 	// fmt.Println(HashFuncRobertJenkins32Bit(uin))
-	p01.P01_01_Read_file("C:\\Users\\xinweizhu\\Downloads\\曝光-部分.csv")
+	//p01.P01_01_Read_file("C:\\Users\\xinweizhu\\Downloads\\曝光-部分.csv")
+	p01.P01_02_Read_File_GBK("C:\\Users\\xinweizhu\\Downloads\\P图标签第二版.csv")
 }
 
 // 标签排序页，请求筛选项
