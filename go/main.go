@@ -39,6 +39,10 @@ func main() {
 	// p01.P01_02_Read_File_GBK("C:\\Users\\xinweizhu\\Downloads\\P图标签第二版.csv")
 
 	fmt.Println(comm.CommComplexHashCRC("479671264"))
+
+	arr := make([]string, 0, 100)
+	fmt.Printf("%+v", arr[0:0])
+
 }
 
 // 标签排序页，请求筛选项
