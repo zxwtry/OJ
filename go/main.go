@@ -20,6 +20,8 @@ func HashFuncRobertJenkins32Bit(value uint32) uint32 {
 }
 
 func main() {
+	arr := []string{"AA", "BB"}
+	fmt.Println(arr[-1])
 
 	// st := StCategoryFilter{
 	// 	TagCategory: "aaa",
@@ -39,9 +41,6 @@ func main() {
 	// p01.P01_02_Read_File_GBK("C:\\Users\\xinweizhu\\Downloads\\P图标签第二版.csv")
 
 	fmt.Println(comm.CommComplexHashCRC("479671264"))
-
-	arr := make([]string, 0, 100)
-	fmt.Printf("%+v", arr[0:0])
 
 }
 
