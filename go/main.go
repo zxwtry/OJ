@@ -20,8 +20,6 @@ func HashFuncRobertJenkins32Bit(value uint32) uint32 {
 }
 
 func main() {
-	arr := []string{"AA", "BB"}
-	fmt.Println(arr[-1])
 
 	// st := StCategoryFilter{
 	// 	TagCategory: "aaa",
@@ -42,6 +40,28 @@ func main() {
 
 	fmt.Println(comm.CommComplexHashCRC("479671264"))
 
+	fmt.Println(CommTransCamel(" "))
+
+}
+
+func CommTransCamel(s string) string {
+	arr := make([]string, 0)
+	pre := 0
+	cur := 0
+	for ; cur < len(s); cur++ {
+		if s[cur] >= 'A' && s[cur] <= 'Z' {
+			arr = append(arr, s[pre:cur])
+			pre = cur
+		}
+	}
+	arr = append(arr, s[pre:cur])
+	save := make([]string, 0)
+	for i := 0; i < len(arr); i++ {
+		if len(arr[i]) > 0 {
+			save = append(save, strings.ToUpper(arr[i]))
+		}
+	}
+	return strings.Join(save, "_")
 }
 
 // 标签排序页，请求筛选项
