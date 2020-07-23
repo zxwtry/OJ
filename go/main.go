@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -22796,7 +22797,7 @@ type A struct {
 
 type uinFuel struct {
 	uid  string
-	fuel float64
+	fuel int
 }
 
 type UinFuelList []uinFuel
@@ -22867,13 +22868,27 @@ func main() {
 				fuel: oarr[i].Value,
 			}
 		} else {
-			uinFuelVal.fuel += fuel
+			uinFuelVal.fuel += oarr[i].Value
 		}
 		// 塞回去
-		mpUinFuel[author] = uinFuelVal
+		mpUinFuel[oarr[i].Author] = uinFuelVal
+	}
+
+	// 排序
+	uinFuelList := make([]uinFuel, 0)
+	for _, uinFuel := range mpUinFuel {
+		uinFuelList = append(uinFuelList, uinFuel)
+	}
+	sort.Sort(UinFuelList(uinFuelList))
+
+	str2 := ""
+	// 导出到excel表格
+	for i := 0; i < len(uinFuelList); i++ {
+		str2 += fmt.Sprintf("%s,%d\n", uinFuelList[i].uid, uinFuelList[i].fuel)
 	}
 
 	ioutil.WriteFile("C:/a.csv", []byte(str), 0666)
+	ioutil.WriteFile("C:/b.csv", []byte(str2), 0666)
 
 	// st := StCategoryFilter{
 	// 	TagCategory: "aaa",
