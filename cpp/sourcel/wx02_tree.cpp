@@ -60,7 +60,7 @@ node_t *findNthMaxRecur(node_t *root, int n, int &cnt) {
 
 // 递归版本
 node_t *findNthMax(node_t *root, int n) {
-    if (n < 0) {
+    if (n <= 0) {
         return NULL;
     }
     if (NULL == root) {
@@ -71,16 +71,31 @@ node_t *findNthMax(node_t *root, int n) {
 }
 
 node_t *findNthMaxNoRecur(node_t *root, int n) {
-    node_t *cur = root;
+    if (n <= 0) {
+        return NULL;
+    }
+    if (NULL == root) {
+        return NULL;
+    }
     int cnt = 0;
-    while (cur != NULL) {
-        if (ele < root->data) {
-            cur = cur->lChild;
-        } else {
-            cur = cur->rChild;
+    std::stack<node_t *> stk;
+    node_t *cur = root;
+    while (cur != NULL || !stk.empty()) {
+        while (cur != NULL) {
+            stk.push(cur);
+            cur = cur->right;
+        }
+        if (!stk.empty()) {
+            cur = stk.top();
+            cnt++;
+            if (cnt == n) {
+                return cur;
+            }
+            stk.pop();
+            cur = cur->left;
         }
     }
-    return cur;
+    return NULL; //没有找到，可能是n过大
 }
 
 // 镜像
@@ -144,7 +159,7 @@ int main() {
     // root = NULL;
 
     for (int i = 0; i < 10; i++) {
-        node_t *max0 = findNthMax(root, i);
+        node_t *max0 = findNthMaxNoRecur(root, i);
         if (NULL == max0) {
             printf("i[%d] th max is null\n", i);
         } else {
@@ -152,7 +167,7 @@ int main() {
         }
     }
 
-    treeMirror(root);
+    treeMirrorNoRecur(root);
 
     if (NULL != root) {
         printf("root[%d]\n", root->value);
